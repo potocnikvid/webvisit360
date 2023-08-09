@@ -87,7 +87,7 @@ export default Videography
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
-    .expression(`folder:${process.env.CLOUDINARY_FOLDER_VIDEOGRAPHY}/*`)
+    .expression(`folder:${process.env.CLOUDINARY_FOLDER_VIDEO}/*`)
     .sort_by('public_id', 'desc')
     .max_results(400)
     .execute()
