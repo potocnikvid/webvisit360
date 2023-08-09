@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  img[loading='lazy'] {
+    clip-path: inset(0.6px);
+  }
+}
+
+@font-face {
+  font-family: BasierSquare-Regular;
+  src: url(../public/fonts/BasierSquare-Regular.ttf);
+}
+
+@font-face {
+  font-family: BasierSquare-Medium;
+  src: url(../public/fonts/BasierSquare-Medium.ttf);
+}
+
+@font-face {
+  font-family: BasierSquare-SemiBold;
+  src: url(../public/fonts/BasierSquare-SemiBold.ttf);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: BasierSquare-SemiBold;
+  scroll-behavior: smooth;
+  background-color: #fffefc;
+}
+
+.basiersquare-regular {
+  font-family: BasierSquare-Regular;
+}
+
+.basiersquare-medium {
+  font-family: BasierSquare-Medium;
+}
+
+.basiersquare-semibold {
+  font-family: BasierSquare-SemiBold;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.arrow--disabled {
+  fill: #ffffff;
+}
