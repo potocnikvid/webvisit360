@@ -15,6 +15,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/streetview/index.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/streetview/index.tsx"],
   "exclude": ["node_modules"]
 }

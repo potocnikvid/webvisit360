@@ -8,6 +8,17 @@ export interface ImageProps {
   blurDataUrl?: string
 }
 
+export interface VideoProps {
+  id: number
+  height: string
+  width: string
+  public_id: string
+  format: string
+  blurDataUrl?: string
+}
+
+
+
 export interface SharedModalProps {
   index: number
   images?: ImageProps[]
