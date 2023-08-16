@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Carousel from '../../../components/Carousel'
 import getResults from '../../../utils/cachedImages'
 import cloudinary from '../../../utils/cloudinary'
-import getBase64ImageUrl from '../../../utils/generateBlurPlaceholder'
+import { getBase64ImageUrl } from '../../../utils/generateBlurPlaceholder'
 import type { ImageProps } from '../../../utils/types'
 
 const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
@@ -22,7 +22,7 @@ const Home: NextPage = ({ currentPhoto }: { currentPhoto: ImageProps }) => {
         <meta name="twitter:image" content={currentPhotoUrl} />
       </Head>
       <main className="mx-auto max-w-[1960px] p-4">
-        <Carousel currentPhoto={currentPhoto} index={index} />
+        <Carousel currentPhoto={currentPhoto} index={index} navigation={true} />
       </main>
     </>
   )

@@ -22,13 +22,13 @@ export default function About() {
   }, [controls, inView]);
 
   return (
-    <div className="mx-auto bg-black px-16 pt-[8rem] pb-[8rem] flex max-w-7xl lg:pb-[15rem] lg:pt-[15rem]">
+    <div className="relative mx-auto bg-black px-16 pt-[8rem] pb-[8rem] flex lg:pb-[15rem] lg:pt-[15rem] z-10">
       <motion.p
         ref={ref}
         animate={controls}
         initial="hidden"
         variants={fadeIn}
-        className="w-[70rem] text-white text-2xl lg:text-5xl"
+        className="w-[70rem] text-white text-2xl lg:text-5xl z-20"
       >
         We are a multinational agency specialising in web design, web
         development and brand identity. We provide an exceptional experience for

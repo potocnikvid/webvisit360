@@ -6,9 +6,11 @@ import { useLastViewedPhoto } from '../utils/useLastViewedPhoto'
 import SharedModal from './SharedModal'
 
 export default function Carousel({
+  navigation,
   index,
   currentPhoto,
 }: {
+  navigation: boolean,
   index: number
   currentPhoto: ImageProps
 }) {
@@ -47,7 +49,7 @@ export default function Carousel({
         changePhotoId={changePhotoId}
         currentPhoto={currentPhoto}
         closeModal={closeModal}
-        navigation={false}
+        navigation={navigation}
       />
     </div>
   )
