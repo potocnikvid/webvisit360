@@ -1,8 +1,9 @@
 import Head from "next/head";
-import Video from "../components/Landing";
+import Landing from "../components/Landing";
 import References from "../components/References";
 import About from "../components/About";
 import Layout from "../components/Layout";
+import Timeline from "../components/Timeline";
 
 export default function Home() {
   return (
@@ -12,9 +13,10 @@ export default function Home() {
         <title>webvisit360</title>
       </Head>
       <Layout classN="">
-        <Video />
+        <Landing />
         <References />
         <About />
+        <Timeline/>
       </Layout>
     </>
   );

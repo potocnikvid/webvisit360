@@ -15,7 +15,7 @@ import { useLastViewedPhoto } from "../../utils/useLastViewedPhoto";
 import VideoComponent from "../../components/Video";
 import Parallaxer from "../../components/Parallax";
 
-const Videography: NextPage = ({ videos }: { videos: VideoProps[] }) => {
+const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
   const router = useRouter();
   const { photoId } = router.query;
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
@@ -72,7 +72,7 @@ const Videography: NextPage = ({ videos }: { videos: VideoProps[] }) => {
   );
 };
 
-export default Videography;
+export default VideoPage;
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search

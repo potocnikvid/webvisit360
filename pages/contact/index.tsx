@@ -4,8 +4,9 @@ import Footer from "../../components/Footer";
 import References from "../../components/References";
 import Head from "next/head";
 import Layout from "../../components/Layout";
+import { Contact } from "../../components/Contact";
 
-export default function StreetviewPage() {
+export default function ContactPage() {
   return (
     <>
       <Head>
@@ -14,8 +15,7 @@ export default function StreetviewPage() {
         <link rel="icon" href="/favicon/favicon-32x32.png" />
       </Head>
       <Layout classN="pt-36">
-        <References />
-        <About />
+        <Contact/>
       </Layout>
     </>
   );

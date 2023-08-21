@@ -10,7 +10,7 @@ export default function Footer() {
 
   return (
     <motion.nav
-      key="logo"
+      key="footer"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.5 }}

@@ -13,7 +13,7 @@ import { getBase64ImageUrl } from "../../utils/generateBlurPlaceholder";
 import type { ImageProps } from "../../utils/types";
 import { useLastViewedPhoto } from "../../utils/useLastViewedPhoto";
 
-const PhotoGallery: NextPage = ({ images }: { images: ImageProps[] }) => {
+const PhotoPage: NextPage = ({ images }: { images: ImageProps[] }) => {
   const router = useRouter();
   const { photoId } = router.query;
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
@@ -83,7 +83,7 @@ const PhotoGallery: NextPage = ({ images }: { images: ImageProps[] }) => {
   );
 };
 
-export default PhotoGallery;
+export default PhotoPage;
 
 export async function getStaticProps() {
   const results = await cloudinary.v2.search
