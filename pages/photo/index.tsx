@@ -34,7 +34,7 @@ const PhotoPage: NextPage = ({ images }: { images: ImageProps[] }) => {
         <meta name="description" />
         <link rel="icon" href="/favicon/favicon-32x32.png" />
       </Head>
-      <Layout classN="pt-36">
+      <Layout classN="pt-36" page="photo">
         <>
           <div className="mx-auto max-w-[1960px] p-4">
             {photoId && (

@@ -36,7 +36,7 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
         <meta name="description" />
         <link rel="icon" href="/favicon/favicon-32x32.png" />
       </Head>
-      <Layout classN="pt-36">
+      <Layout classN="pt-36" page="video">
         <About/>
         <Parallaxer initialImgOffset={700}/>
 

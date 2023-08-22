@@ -12,7 +12,7 @@ export default function Home() {
       <Head>
         <title>webvisit360</title>
       </Head>
-      <Layout classN="">
+      <Layout classN="" page="home">
         <Landing />
         <References />
         <About />

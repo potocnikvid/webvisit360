@@ -3,52 +3,109 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-export default function Nav() {
-  const [navbarOpen, setNavbarOpen] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+import { MenuButton } from "./MenuButton";
+export default function Nav({
+  backgroundChange,
+}: {
+  backgroundChange: boolean;
+}) {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [bgIsActive, setBgIsActive] = backgroundChange
+    ? useState(false)
+    : useState(true);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const screenHeight = window.innerHeight;
-      const threshold = screenHeight;
+  backgroundChange
+    ? useEffect(() => {
+        const handleScroll = () => {
+          const scrollY = window.scrollY;
+          const screenHeight = window.innerHeight;
+          const threshold = screenHeight;
 
-      if (scrollY >= threshold) {
-        setIsActive(true);
-      } else {
-        setIsActive(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+          if (scrollY >= threshold) {
+            setBgIsActive(true);
+          } else {
+            setBgIsActive(false);
+          }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+        };
+      }, [])
+    : 0;
 
   return (
-    <div
-      className={`pointer-events-none fixed top-0 z-40 w-full text-[#fefefe] transition duration-500 ease-in-out ${
-        isActive ? "bg-black bg-opacity-70" : ""
-      }`}
+    <nav
+      className={"pointer-events-none fixed top-0 z-40 w-full text-[#fefefe] transition duration-500 ease-in-out" + 
+      (bgIsActive ? " bg-black/50 backdrop-blur-xl border-black border-b-1" : "") + 
+      (dropdownOpen ? " pointer-events-auto" : " pointer-events-none")}
     >
-      <motion.nav
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.8 }}
-        transition={{ duration: 0.4, delay: 0.5 }}
-        className="mx-auto flex max-w-3xl justify-between px-6 py-4 lg:hidden"
-      >
-        <Link href="/">
-          <Image
-            className="pointer-events-auto"
-            src="/logo.png"
-            alt="webvisit360"
-            width={60}
-            height={60}
+      <div className="block lg:hidden">
+        <motion.nav
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2, delay: 0 }}
+          className={
+            "fixed inset-0 z-40 w-full" 
+          }
+        >
+          <div className={"fixed top-0 w-screen h-32 transition duration-500 ease-in-out" + (bgIsActive ? " bg-black/50 backdrop-blur-xl border-black border-b-1" : "")}>
+          </div>
+          <Link href="/" className="">
+            <Image
+              className={" absolute left-8 top-8"}
+              src="/logo.png"
+              alt="webvisit360"
+              width={70}
+              height={70}
+            />
+          </Link>
+          {dropdownOpen && (
+          <motion.div
+            initial={{  opacity: 0 }}
+            animate={{  opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } }}
+            exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
+          >
+              <div>
+                <div className="absolute inset-0 right-0 w-full bg-black text-white"></div>
+                <ul className="absolute grid w-full px-10 py-16">
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link className="flex w-full" href="/streetview">
+                      Google Street View
+                    </Link>
+                  </li>
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link className="flex w-full" href="/photo">
+                      Fotografija
+                    </Link>
+                  </li>
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link className="flex w-full" href="/video">
+                      Video
+                    </Link>
+                  </li>
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link className="flex w-full" href="/about">
+                      O nas
+                    </Link>
+                  </li>
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link className="flex w-full" href="/contact">
+                      Kontakt
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+          </motion.div>)}
+          <MenuButton
+            isOpen={dropdownOpen}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            className="pointer-events-auto absolute right-8 top-12 cursor-pointer leading-none outline-none focus:outline-none"
           />
-        </Link>
-        <div className="p-6">{/* <Dropdown /> */}</div>
-      </motion.nav>
-      <div className="hidden px-4 lg:block">
+        </motion.nav>
+      </div>
+
+      <div className="mx-6 hidden lg:block">
         <motion.nav
           key="nav"
           initial={{ opacity: 0 }}
@@ -66,33 +123,9 @@ export default function Nav() {
                 height={70}
               />
             </Link>
-
-            {/* <button
-                    className="cursor-pointer px-3 leading-none outline-none focus:outline-none lg:hidden pointer-events-auto"
-                    type="button"
-                    aria-label="button"
-                    onClick={() => setNavbarOpen(!navbarOpen)}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="48"
-                        height="48"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#ffffff"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button> */}
           </div>
-          <div className={"lg:flex" + (navbarOpen ? " flex" : " hidden")}>
+          <div className={"lg:flex" + (dropdownOpen ? " flex" : " hidden")}>
             <div className="pointer-events-auto flex-col space-x-16 text-lg lg:flex-grow">
-              <Link href="/">Domov</Link>
               <Link href="/streetview">Google Street View</Link>
               <Link href="/photo">Fotografija</Link>
               <Link href="/video">Video</Link>
@@ -107,6 +140,6 @@ export default function Nav() {
           </div>
         </motion.nav>
       </div>
-    </div>
+    </nav>
   );
 }
