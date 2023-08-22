@@ -132,7 +132,7 @@ export default function Nav({
               <Link href="/about">O nas</Link>
               <Link
                 href="/contact"
-                className="rounded-full bg-[#f9b03e] px-8 py-2.5 decoration-2 underline-offset-2"
+                className="rounded-lg bg-[#f9b03e] px-8 py-2.5 decoration-2 underline-offset-2"
               >
                 Kontakt
               </Link>

@@ -58,7 +58,7 @@ export default function Footer() {
             <a href="/">Home</a>
             <a
               href="/"
-              className="rounded-full bg-[#f9b03e] px-8 py-2.5 text-white decoration-2 underline-offset-2"
+              className="rounded-lg bg-[#f9b03e] px-8 py-2.5 text-white decoration-2 underline-offset-2"
             >
               Contact
             </a>
