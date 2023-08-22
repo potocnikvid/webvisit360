@@ -49,15 +49,15 @@ export default function Nav({
             "fixed inset-0 z-40 w-full" 
           }
         >
-          <div className={"fixed top-0 w-screen h-32 transition duration-500 ease-in-out" + (bgIsActive ? " bg-black/50 backdrop-blur-xl border-black border-b-1" : "")}>
+          <div className={"fixed top-0 w-screen h-[88px] transition duration-500 ease-in-out" + (bgIsActive ? " bg-black/50 backdrop-blur-xl border-black border-b-1" : "")}>
           </div>
-          <Link href="/" className="">
+          <Link href="/" className="pointer-events-auto">
             <Image
-              className={" absolute left-8 top-8"}
+              className={" absolute left-12 top-4"}
               src="/logo.png"
               alt="webvisit360"
-              width={70}
-              height={70}
+              width={50}
+              height={50}
             />
           </Link>
           {dropdownOpen && (
@@ -100,7 +100,7 @@ export default function Nav({
           <MenuButton
             isOpen={dropdownOpen}
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="pointer-events-auto absolute right-8 top-12 cursor-pointer leading-none outline-none focus:outline-none"
+            className="pointer-events-auto absolute right-8 top-8 cursor-pointer leading-none outline-none focus:outline-none"
           />
         </motion.nav>
       </div>

@@ -11,8 +11,8 @@ interface Props extends SVGMotionProps<SVGSVGElement> {
 
 const MenuButton = ({
   isOpen = false,
-  width = 32,
-  height = 32,
+  width = 24,
+  height = 24,
   strokeWidth = 3,
   color = "#ffffff",
   transition = null,
