@@ -36,24 +36,32 @@ export default function Nav({
 
   return (
     <nav
-      className={"pointer-events-none fixed top-0 z-40 w-full text-[#fefefe] transition duration-500 ease-in-out" + 
-      (bgIsActive ? " bg-black/50 backdrop-blur-xl border-black border-b-1" : "") + 
-      (dropdownOpen ? " pointer-events-auto" : " pointer-events-none")}
+      className={
+        "pointer-events-none fixed top-0 z-40 w-full text-[#fefefe] " +
+        (bgIsActive && !dropdownOpen
+          ? " border-b-1 border-black bg-black/50 backdrop-blur-xl"
+          : "") +
+        (dropdownOpen ? " pointer-events-auto" : " pointer-events-none")
+      }
     >
       <div className="block lg:hidden">
         <motion.nav
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2, delay: 0 }}
-          className={
-            "fixed inset-0 z-40 w-full" 
-          }
+          className={"fixed inset-0 z-40 w-full"}
         >
-          <div className={"fixed top-0 w-screen h-[88px] transition duration-500 ease-in-out" + (bgIsActive ? " bg-black/50 backdrop-blur-xl border-black border-b-1" : "")}>
-          </div>
+          <div
+            className={
+              "fixed top-0 h-[88px] w-screen transition duration-500 ease-in-out" +
+              (bgIsActive
+                ? " border-b-1 border-black bg-black/50 backdrop-blur-xl"
+                : "")
+            }
+          ></div>
           <Link href="/" className="pointer-events-auto">
             <Image
-              className={" absolute left-12 top-4"}
+              className="absolute z-60 left-12 top-4"
               src="/logo.png"
               alt="webvisit360"
               width={50}
@@ -61,14 +69,20 @@ export default function Nav({
             />
           </Link>
           {dropdownOpen && (
-          <motion.div
-            initial={{  opacity: 0 }}
-            animate={{  opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } }}
-            exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
-          >
-              <div>
-                <div className="absolute inset-0 right-0 w-full bg-black text-white"></div>
-                <ul className="absolute grid w-full px-10 py-16">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 0.92,
+                transition: { duration: 0.3, ease: "easeInOut" },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.3, ease: "easeInOut" },
+              }}
+            >
+              
+                <div className="absolute inset-0 right-0 w-full bg-black text-white "></div>
+                <ul className="absolute grid w-full px-10 py-16 ">
                   <li className="border-b border-neutral-700 py-5">
                     <Link className="flex w-full" href="/streetview">
                       Google Street View
@@ -95,8 +109,9 @@ export default function Nav({
                     </Link>
                   </li>
                 </ul>
-              </div>
-          </motion.div>)}
+              
+            </motion.div>
+          )}
           <MenuButton
             isOpen={dropdownOpen}
             onClick={() => setDropdownOpen(!dropdownOpen)}
