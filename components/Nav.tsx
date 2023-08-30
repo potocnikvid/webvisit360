@@ -61,7 +61,7 @@ export default function Nav({
           ></div>
           <Link href="/" className="pointer-events-auto">
             <Image
-              className="absolute z-60 left-12 top-4"
+              className="z-60 absolute left-12 top-4"
               src="/logo.png"
               alt="webvisit360"
               width={50}
@@ -80,36 +80,61 @@ export default function Nav({
                 transition: { duration: 0.3, ease: "easeInOut" },
               }}
             >
-              
-                <div className="absolute inset-0 right-0 w-full bg-black text-white "></div>
-                <ul className="absolute grid w-full px-10 py-16 ">
-                  <li className="border-b border-neutral-700 py-5">
-                    <Link className="flex w-full" href="/streetview">
-                      Google Street View
-                    </Link>
-                  </li>
-                  <li className="border-b border-neutral-700 py-5">
-                    <Link className="flex w-full" href="/photo">
-                      Fotografija
-                    </Link>
-                  </li>
-                  <li className="border-b border-neutral-700 py-5">
-                    <Link className="flex w-full" href="/video">
-                      Video
-                    </Link>
-                  </li>
-                  <li className="border-b border-neutral-700 py-5">
-                    <Link className="flex w-full" href="/about">
-                      O nas
-                    </Link>
-                  </li>
-                  <li className="border-b border-neutral-700 py-5">
-                    <Link className="flex w-full" href="/contact">
-                      Kontakt
-                    </Link>
-                  </li>
-                </ul>
-              
+              <div className="absolute inset-0 right-0 w-full bg-black text-white "></div>
+              <ul className="absolute grid w-full px-10 py-16 ">
+                <li className="border-b border-neutral-700 py-5">
+                  <Link className="flex w-full" href="/streetview">
+                    Google Street View
+                  </Link>
+                </li>
+                <li className="border-b border-neutral-700 py-5">
+                  <Link className="flex w-full" href="/photo">
+                    Fotografija
+                  </Link>
+                </li>
+                <li className="border-b border-neutral-700 py-5">
+                  <Link className="flex w-full" href="/video">
+                    Video
+                  </Link>
+                </li>
+                <li className="border-b border-neutral-700 py-5">
+                  <Link className="flex w-full" href="/about">
+                    O nas
+                  </Link>
+                </li>
+                <li className="border-b border-neutral-700 py-5">
+                  <Link className="flex w-full" href="/contact">
+                    Kontakt
+                  </Link>
+                </li>
+              </ul>
+
+              <ul className="absolute bottom-0 grid w-full px-10 py-16 ">
+                <li className="border-b border-neutral-700 py-5">
+                  <Link
+                    className="flex w-full"
+                    href="https://www.facebook.com/Webvisit360/"
+                  >
+                    Facebook
+                  </Link>
+                </li>
+                <li className="border-b border-neutral-700 py-5">
+                  <Link
+                    className="flex w-full"
+                    href="https://www.instagram.com/webvisit360/"
+                  >
+                    Instagram
+                  </Link>
+                </li>
+                <li className="border-b border-neutral-700 py-5">
+                  <Link
+                    className="flex w-full"
+                    href="https://kuula.co/profile/WEBVISIT360/collections"
+                  >
+                    Kuula
+                  </Link>
+                </li>
+              </ul>
             </motion.div>
           )}
           <MenuButton
@@ -126,7 +151,7 @@ export default function Nav({
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ duration: 0.4, delay: 0.5 }}
-          className="mx-auto flex max-w-7xl flex-col overflow-auto px-3 py-6 lg:flex-row lg:items-center lg:justify-between"
+          className="container mx-auto flex flex-col overflow-auto px-3 py-6 lg:flex-row lg:items-center lg:justify-between"
         >
           <div className="flex flex-row items-center justify-between">
             <Link href="/" className="">

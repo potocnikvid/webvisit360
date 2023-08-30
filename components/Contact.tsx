@@ -19,7 +19,7 @@ export function Contact() {
     axios.post("/api/send-email", params).then((res) => console.log(res));
   };
   return (
-    <section className="mx-auto flex h-screen w-full max-w-screen-md flex-col gap-5 p-10">
+    <section className="mx-auto flex w-full max-w-screen-md flex-col gap-5 p-10">
       <h2 className="w-full text-center text-4xl font-bold text-stone-50">
         Contact Us
       </h2>

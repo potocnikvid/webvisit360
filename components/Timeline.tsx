@@ -4,8 +4,9 @@ import Link from "next/link";
 
 export default function Timeline() {
   return (
-    <div className="relative mx-auto w-screen items-center justify-center">
+    <div className="container relative mx-auto w-screen items-center justify-center">
       <div className="relative space-y-8 pb-16 pl-16 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:-translate-x-px before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent lg:-space-y-4 lg:px-16 lg:before:mx-auto lg:before:translate-x-0">
+        
         <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
           <div className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]">
             <div className="text-8xl text-[#f9b03e]/70">1</div>

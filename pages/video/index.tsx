@@ -14,21 +14,9 @@ import type { ImageProps, VideoProps } from "../../utils/types";
 import { useLastViewedPhoto } from "../../utils/useLastViewedPhoto";
 import VideoComponent from "../../components/Video";
 import Parallaxer from "../../components/Parallax";
+import OnViewOpenComponent from "../../components/OnViewOpen";
 
 const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
-  const router = useRouter();
-  const { photoId } = router.query;
-  const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
-
-  const lastViewedPhotoRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
-    if (lastViewedPhoto && !photoId) {
-      lastViewedPhotoRef.current.scrollIntoView({ block: "center" });
-      setLastViewedPhoto(null);
-    }
-  }, [photoId, lastViewedPhoto, setLastViewedPhoto]);
   return (
     <>
       <Head>
@@ -37,20 +25,48 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
         <link rel="icon" href="/favicon/favicon-32x32.png" />
       </Head>
       <Layout classN="pt-36" page="video">
-        <About/>
-        <Parallaxer initialImgOffset={700}/>
+        <About />
+        <Parallaxer initialImgOffset={700}>
+          <div className="flex w-screen flex-col items-center justify-center space-y-16">
+            <OnViewOpenComponent className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(60%)]">
+              <div className="text-8xl text-[#f9b03e]/70">1</div>
+              <div>
+                <div className="mb-1 flex items-center justify-between space-x-2">
+                  <div className="text-3xl text-slate-900">
+                    Sastanak i procjena
+                  </div>
+                </div>
+                <div className="hidden md:block text-xl text-slate-500">
+                  Za početak predlažemo neobavezujući sastanak putem platforme
+                  Zoom, ili u prostorijama koje želite fotografirati. Odgovorimo
+                  vam na sva pitanja, objasnimo sve detalje i procjenimo koliko
+                  će to koštati
+                </div>
+              </div>
+            </OnViewOpenComponent>
+            <OnViewOpenComponent className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(60%)]">
+              <div className="text-8xl text-[#f9b03e]/70">1</div>
+              <div>
+                <div className="mb-1 flex items-center justify-between space-x-2">
+                  <div className="text-3xl text-slate-900">
+                    Sastanak i procjena
+                  </div>
+                </div>
+                <div className="hidden md:block text-xl text-slate-500">
+                  Za početak predlažemo neobavezujući sastanak putem platforme
+                  Zoom, ili u prostorijama koje želite fotografirati. Odgovorimo
+                  vam na sva pitanja, objasnimo sve detalje i procjenimo koliko
+                  će to koštati (cijena ovisi o veličini prostora). Dogovorimo
+                  termin fotografiranja i potpišemo ugovor o autorskim pravima.
+                </div>
+              </div>
+            </OnViewOpenComponent>
+          </div>
+        </Parallaxer>
+        <About />
 
-        <div className="relative z-20 bg-black">
-          <div className="mx-auto max-w-[1960px] p-4">
-            {photoId && (
-              <Modal
-                subpage={"video"}
-                images={videos}
-                onClose={() => {
-                  setLastViewedPhoto(photoId);
-                }}
-              />
-            )}
+        <div className="relative bg-black p-16">
+          <div className="container mx-auto">
             <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 ">
               {videos.map(({ id, public_id, format, blurDataUrl }) => (
                 <div key={id}>
@@ -66,7 +82,6 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
             </div>
           </div>
         </div>
-
       </Layout>
     </>
   );

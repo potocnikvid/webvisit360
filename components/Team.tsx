@@ -8,18 +8,24 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
 function Arrow(props) {
-    const disabeld = props.disabled ? " arrow--disabled" : "";
+    const disabled = props.disabled ? " arrow--disabled cursor-default" : "cursor-pointer";
+    const transition = props.disabled ? "  opacity-50" : " transition ease-in duration-100 hover:scale-110"
     return (
-        <svg
-            onClick={props.onClick}
-            className={`arrow ${props.left ? "arrow--left" : "arrow--right"} ${disabeld}`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="#332b54"
-        >
-            {props.left && <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />}
-            {!props.left && <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />}
-        </svg>
+        <div className={transition}>
+            <svg
+                onClick={props.onClick}
+                className={`arrow ${props.left ? "arrow--left" : "arrow--right"} ${disabled}`}
+                xmlns="http://www.w3.org/2000/svg"
+                width={40}
+                height={40}
+                viewBox="0 0 24 24"
+                fill="#ffffff"
+            >
+                {props.left && <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />}
+                {!props.left && <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />}
+            </svg>
+        </div>
+
     );
 }
 
@@ -29,7 +35,6 @@ export default function Team() {
     const [loaded, setLoaded] = useState(false);
     const controls = useAnimation();
     const [ref, inView] = useInView();
-
     useEffect(() => {
         if (inView) {
             controls.start("visible");
@@ -89,7 +94,7 @@ export default function Team() {
     };
 
     return (
-        <div className="mx-auto flex max-w-7xl flex-col">
+        <div className="p-8 mx-auto text-white flex container flex-col">
             <div className="flex items-center justify-between">
                 <div>
                     <motion.h2
@@ -119,7 +124,7 @@ export default function Team() {
 
                             <Arrow
                                 onClick={(e) => e.stopPropagation() || instanceRef.current?.next()}
-                                disabled={currentSlide === instanceRef.current.track.details.slides.length - 1}
+                                disabled={currentSlide === instanceRef.current.track.details.maxIdx}
                             />
                         </>
                     )}

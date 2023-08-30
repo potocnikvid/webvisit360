@@ -12,7 +12,7 @@ export default function References() {
                     <h2 className="text-4xl lg:text-5xl">Reference</h2>
                 </div>
             </div>
-            <div className="grid gap-4 mx-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
+            <div className="grid gap-4 md:mx-8 xl:mx-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
                         className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
