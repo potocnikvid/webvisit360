@@ -8,15 +8,14 @@ import Timeline from "../components/Timeline";
 export default function Home() {
   return (
     <>
-    
       <Head>
         <title>webvisit360</title>
       </Head>
-      <Layout classN="" page="home">
+      <Layout navPadding="" page="home">
         <Landing />
         <References />
         <About />
-        <Timeline/>
+        <Timeline />
       </Layout>
     </>
   );

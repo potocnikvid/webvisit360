@@ -1,7 +1,7 @@
 import Nav from "./Nav";
 import Footer from "./Footer";
 
-export default function Layout({ children, classN, page }) {
+export default function Layout({ children, navPadding, page }) {
   const backgroundChange = page === "home" ? true : false;
   return (
     <div>
@@ -9,7 +9,7 @@ export default function Layout({ children, classN, page }) {
       <main
         className={
           "flex min-h-screen h-full w-full flex-col bg-black scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-900 " +
-          classN
+          navPadding
         }
       >
         <div className="flex-grow">{children}</div>

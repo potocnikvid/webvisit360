@@ -11,7 +11,7 @@ export default function StreetviewPage() {
         <meta name="description" />
         <link rel="icon" href="/favicon/favicon-32x32.png" />
       </Head>
-      <Layout classN="pt-36" page="streetview">
+      <Layout navPadding="pt-36" page="streetview">
         <References />
         <About />
       </Layout>

@@ -1,14 +1,19 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import OnViewOpenComponent from "./OnViewOpen";
+import ButtonComponent from "./Button";
 
 export default function Timeline() {
   return (
     <div className="container relative mx-auto w-screen items-center justify-center">
       <div className="relative space-y-8 pb-16 pl-16 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:-translate-x-px before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent lg:-space-y-4 lg:px-16 lg:before:mx-auto lg:before:translate-x-0">
-        
         <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
-          <div className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]">
+          <OnViewOpenComponent
+            delay={1}
+            duration={2}
+            className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]"
+          >
             <div className="text-8xl text-[#f9b03e]/70">1</div>
             <div>
               <div className="mb-1 flex items-center justify-between space-x-2">
@@ -24,11 +29,15 @@ export default function Timeline() {
                 fotografiranja i potpišemo ugovor o autorskim pravima.
               </div>
             </div>
-          </div>
+          </OnViewOpenComponent>
         </div>
 
         <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
-          <div className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]">
+          <OnViewOpenComponent
+            delay={1}
+            duration={2}
+            className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]"
+          >
             <div className="text-8xl text-[#f9b03e]/70">2</div>
             <div>
               <div className="mb-1 flex items-center justify-between space-x-2">
@@ -43,11 +52,15 @@ export default function Timeline() {
                 pomoć, rado ćemo vam pomoći u tome.
               </div>
             </div>
-          </div>
+          </OnViewOpenComponent>
         </div>
 
         <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
-          <div className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]">
+          <OnViewOpenComponent
+            delay={1}
+            duration={2}
+            className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]"
+          >
             <div className="text-8xl text-[#f9b03e]/70">3</div>
             <div>
               <div className="mb-1 flex items-center justify-between space-x-2">
@@ -60,11 +73,15 @@ export default function Timeline() {
                 panoramama vidi sve.
               </div>
             </div>
-          </div>
+          </OnViewOpenComponent>
         </div>
 
         <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
-          <div className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]">
+          <OnViewOpenComponent
+            delay={1}
+            duration={2}
+            className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]"
+          >
             <div className="text-8xl text-[#f9b03e]/70">4</div>
             <div>
               <div className="mb-1 flex items-center justify-between space-x-2">
@@ -75,11 +92,15 @@ export default function Timeline() {
                 morbi blandit cursus risus.
               </div>
             </div>
-          </div>
+          </OnViewOpenComponent>
         </div>
 
         <div className="group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
-          <div className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]">
+          <OnViewOpenComponent
+            delay={1}
+            duration={2}
+            className="flex w-[calc(100%-4rem)] space-x-8 rounded border border-slate-200 bg-white p-4 shadow lg:w-[calc(50%-2.5rem)]"
+          >
             <div className="text-8xl text-[#f9b03e]/70">5</div>
             <div>
               <div className="mb-1 flex items-center justify-between space-x-2">
@@ -93,24 +114,11 @@ export default function Timeline() {
                 fotografija koje ovise u veličini prostora koji se fotografira.
               </div>
             </div>
-          </div>
+          </OnViewOpenComponent>
         </div>
       </div>
-      {/* <div className="relative bottom-0 inset-x-0 mx-auto pb-16">
-        <Link
-          href="/contact"
-          className="rounded-lg  text-white bg-[#f9b03e] px-12 py-3 decoration-2 underline-offset-2"
-        >
-          Kontakt
-        </Link>
-      </div> */}
       <div className="flex items-center justify-center pb-16">
-        <Link
-          href="/contact"
-          className="rounded-lg bg-[#f9b03e] px-12 py-3 text-white decoration-2 underline-offset-2"
-        >
-          Kontaktirajte nas
-        </Link>
+        <ButtonComponent className="px-12 py-3" href="/contact">Kontaktirajte nas</ButtonComponent>
       </div>
     </div>
   );

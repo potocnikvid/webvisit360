@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuButton } from "./MenuButton";
+import ButtonComponent from "./Button";
 export default function Nav({
   backgroundChange,
 }: {
@@ -170,12 +171,7 @@ export default function Nav({
               <Link href="/photo">Fotografija</Link>
               <Link href="/video">Video</Link>
               <Link href="/about">O nas</Link>
-              <Link
-                href="/contact"
-                className="rounded-lg bg-[#f9b03e] px-8 py-2.5 decoration-2 underline-offset-2"
-              >
-                Kontakt
-              </Link>
+              <ButtonComponent href="/contact">Kontakt</ButtonComponent>
             </div>
           </div>
         </motion.nav>
