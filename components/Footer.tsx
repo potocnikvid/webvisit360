@@ -12,7 +12,7 @@ export default function Footer() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.5 }}
-      className="bg-white
+      className="bg-white mt-24
       "
     >
       <div className=" container mx-auto flex w-full overflow-auto px-3 py-6 text-black lg:flex-row justify-between">
