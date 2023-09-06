@@ -36,7 +36,7 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
                     Sastanak i procjena
                   </div>
                 </div>
-                <div className="hidden md:block text-xl text-slate-500">
+                <div className="hidden text-xl text-slate-500 md:block">
                   Za početak predlažemo neobavezujući sastanak putem platforme
                   Zoom, ili u prostorijama koje želite fotografirati. Odgovorimo
                   vam na sva pitanja, objasnimo sve detalje i procjenimo koliko
@@ -52,7 +52,7 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
                     Sastanak i procjena
                   </div>
                 </div>
-                <div className="hidden md:block text-xl text-slate-500">
+                <div className="hidden text-xl text-slate-500 md:block">
                   Za početak predlažemo neobavezujući sastanak putem platforme
                   Zoom, ili u prostorijama koje želite fotografirati. Odgovorimo
                   vam na sva pitanja, objasnimo sve detalje i procjenimo koliko
@@ -67,11 +67,11 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
 
         <div className="relative bg-black p-16">
           <div className="container mx-auto">
-            <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 ">
+            <div className="columns-1 space-y-16 md:mx-4 md:columns-2 md:space-y-8">
               {videos.map(({ id, public_id, format, blurDataUrl }) => (
-                <div key={id}>
+                <div key={id} className="mx-auto">
                   <VideoComponent
-                    className="transform rounded-md brightness-90 transition will-change-auto group-hover:brightness-110"
+                    className="mx-auto transform rounded-md brightness-90 transition will-change-auto group-hover:brightness-110"
                     style={{ transform: "translate3d(0, 0, 0)" }}
                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/${public_id}.${format}`}
                     width={720}
