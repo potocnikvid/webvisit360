@@ -52,6 +52,7 @@ export default function Timeline() {
           </div>
         ))}
       </div>
+      
       <div className="flex items-center justify-center pb-16">
         <Button className="px-12 py-3" href="/contact">
           Kontaktirajte nas
