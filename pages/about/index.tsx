@@ -5,7 +5,23 @@ import About from "../../components/About";
 import Slider from "../../components/Slider";
 import FullSlider from "../../components/FullSlider";
 
-export default function ContactPage() {
+import fs from 'fs';
+import path from 'path';
+import Brands from "../../components/Brands";
+
+
+export const getStaticProps = async () => {
+  const logosDirectory = path.join(process.cwd(), 'public/logos');
+  const logos = fs.readdirSync(logosDirectory);
+
+  return {
+    props: {
+      logos,
+    },
+  };
+};
+
+export default function AboutPage({ logos }) {
   const cards = [
     {
       img: "https://wik1.vercel.app/images/stock.jpg",
@@ -59,6 +75,7 @@ export default function ContactPage() {
         <About/>
         <Slider headline={"Meet the team"} cards={cards}/>
         <FullSlider cards={cardsBig}/>
+        <Brands className={"pt-44"} logos={logos}/>
       </Layout>
     </>
   );

@@ -4,7 +4,7 @@ export default function About() {
 
   return (
     <div className="bg-black">
-    <div className="container relative px-8 mx-auto  my-8 pt-[8rem] pb-[8rem] flex lg:pb-[15rem] lg:pt-[15rem]">
+    <div className="container relative px-8  mb-16 mx-auto py-40 flex lg:pb-[15rem] lg:pt-[15rem]">
       <OnViewOpenComponent className={""}>
       <p
 

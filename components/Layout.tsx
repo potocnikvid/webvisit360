@@ -8,7 +8,7 @@ export default function Layout({ children, navPadding, page }) {
       <Nav backgroundChange={backgroundChange} />
       <main
         className={
-          "flex min-h-screen h-full w-full flex-col bg-black scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-900 " +
+          "flex min-h-screen h-full w-full flex-col bg-white text-black scrollbar scrollbar-track-gray-100 scrollbar-thumb-gray-900 " +
           navPadding
         }
       >

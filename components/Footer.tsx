@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
+import Button from "./Button";
 
 export default function Footer() {
   return (
@@ -41,12 +42,7 @@ export default function Footer() {
               </Link>
             </div>
 
-            <Link
-              href="/contact"
-              className="rounded-lg bg-[#f9b03e] px-8 py-2.5 text-white decoration-2 underline-offset-2"
-            >
-              Kontakt
-            </Link>
+            <Button href="/contact">Kontakt</Button>
           </div>
         </div>
       </div>

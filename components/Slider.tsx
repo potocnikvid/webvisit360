@@ -25,7 +25,6 @@ function Arrow(props) {
         width={40}
         height={40}
         viewBox="0 0 24 24"
-        fill="#ffffff"
       >
         {props.left && (
           <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
@@ -103,7 +102,7 @@ export default function Slider({ headline, cards }) {
   };
 
   return (
-    <div className="container mx-auto flex flex-col p-8 text-white">
+    <div className="container mx-auto flex flex-col p-8">
       <div className="flex items-center justify-between">
         <div>
           <motion.h2

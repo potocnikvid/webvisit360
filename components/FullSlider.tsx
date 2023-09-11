@@ -153,7 +153,7 @@ export default function FullSlider({ headline = "", cards, className = "" }) {
   return (
     <div
       className={
-        "container mx-auto flex flex-col p-8 text-white" + className
+        "container mx-auto flex flex-col p-8" + className
       }
     >
       <div className="flex items-center justify-between">

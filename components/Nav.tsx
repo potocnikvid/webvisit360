@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuButton } from "./MenuButton";
-import ButtonComponent from "./Button";
+import Button from "./Button";
 export default function Nav({
   backgroundChange,
 }: {
@@ -81,7 +81,7 @@ export default function Nav({
                 transition: { duration: 0.3, ease: "easeInOut" },
               }}
             >
-              <div className="absolute inset-0 right-0 w-full bg-black text-white "></div>
+              <div className="absolute inset-0 right-0 w-full bg-black"></div>
               <ul className="absolute grid w-full px-10 py-16 ">
                 <li className="border-b border-neutral-700 py-5">
                   <Link className="flex w-full" href="/streetview">
@@ -103,38 +103,38 @@ export default function Nav({
                     O nas
                   </Link>
                 </li>
-                <li className="border-b border-neutral-700 py-5">
-                  <Link className="flex w-full" href="/contact">
-                    Kontakt
-                  </Link>
-                </li>
               </ul>
 
-              <ul className="absolute bottom-0 grid w-full px-10 py-16 ">
-                <li className="border-b border-neutral-700 py-5">
-                  <Link
-                    className="flex w-full"
-                    href="https://www.facebook.com/Webvisit360/"
-                  >
-                    Facebook
-                  </Link>
-                </li>
-                <li className="border-b border-neutral-700 py-5">
-                  <Link
-                    className="flex w-full"
-                    href="https://www.instagram.com/webvisit360/"
-                  >
-                    Instagram
-                  </Link>
-                </li>
-                <li className="border-b border-neutral-700 py-5">
-                  <Link
-                    className="flex w-full"
-                    href="https://kuula.co/profile/WEBVISIT360/collections"
-                  >
-                    Kuula
-                  </Link>
-                </li>
+              <ul className="absolute bottom-0  px-10 py-16 ">
+                <div className="flex w-full flex-row space-x-4">
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link
+                      className="flex w-full"
+                      href="https://www.facebook.com/Webvisit360/"
+                    >
+                      Facebook
+                    </Link>
+                  </li>
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link
+                      className="flex w-full"
+                      href="https://www.instagram.com/webvisit360/"
+                    >
+                      Instagram
+                    </Link>
+                  </li>
+                  <li className="border-b border-neutral-700 py-5">
+                    <Link
+                      className="flex w-full"
+                      href="https://kuula.co/profile/WEBVISIT360/collections"
+                    >
+                      Kuula
+                    </Link>
+                  </li>
+                </div>
+                <div className="mt-4">
+                  <Button href="/contact">Kontakt</Button>
+                </div>
               </ul>
             </motion.div>
           )}
@@ -171,7 +171,7 @@ export default function Nav({
               <Link href="/photo">Fotografija</Link>
               <Link href="/video">Video</Link>
               <Link href="/about">O nas</Link>
-              <ButtonComponent href="/contact">Kontakt</ButtonComponent>
+              <Button href="/contact">Kontakt</Button>
             </div>
           </div>
         </motion.nav>

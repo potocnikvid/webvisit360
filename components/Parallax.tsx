@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import parallaxBackground from "../public/images/Fanuc1.png";
 
-export default function Parallaxer({ children, initialImgOffset }) {
+export default function Parallax({ children, initialImgOffset }) {
   const [accelerator, setAccelerator] = useState(0.2);
   const [imgOffset, setImgOffset] = useState(0);
   const handleScroll = () => setImgOffset(window.scrollY - initialImgOffset);
@@ -19,7 +19,7 @@ export default function Parallaxer({ children, initialImgOffset }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative bg-black">
       <div className={"relative h-[800px]  w-full"} {...attrsFlow}>
         <div className="flex h-[800px] w-screen items-center justify-center">
           {children}

@@ -20,25 +20,25 @@ export function Contact() {
   };
   return (
     <section className="mx-auto flex w-full max-w-screen-md flex-col gap-5 p-10">
-      <h2 className="w-full text-center text-4xl font-bold text-stone-50">
+      <h2 className="w-full text-center text-4xl font-bold text-neutral-900">
         Contact Us
       </h2>
       <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
         <input
           type="email"
-          className="rounded p-2"
+          className="rounded border p-2"
           placeholder="email"
           {...register("email")}
         />
         <textarea
-          className="rounded p-2 text-start"
+          className="rounded border p-2 text-start"
           rows={5}
           placeholder="message"
           {...register("message")}
         />
 
         <button
-          className="rounded bg-stone-800 p-2 text-stone-50"
+          className="rounded bg-neutral-300 p-2 text-neutral-100"
           type="submit"
         >
           <svg
@@ -47,7 +47,7 @@ export function Contact() {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="h-6 w-6 -rotate-90 text-white md:h-8 md:w-8"
+            className="h-6 w-6 -rotate-90 text-neutral-900 md:h-8 md:w-8"
           >
             <path
               strokeLinecap="round"
