@@ -152,7 +152,7 @@ export default function Nav({
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ duration: 0.4, delay: 0.5 }}
-          className="container mx-auto flex flex-col overflow-auto px-3 py-3 2xl:py-4 lg:flex-row lg:items-center lg:justify-between"
+          className="container mx-auto flex flex-col overflow-auto px-3 py-3 lg:flex-row lg:items-center lg:justify-between 2xl:py-4"
         >
           <div className="flex flex-row items-center justify-between">
             <Link href="/" className="hidden 2xl:block">
@@ -175,7 +175,7 @@ export default function Nav({
             </Link>
           </div>
           <div className={"lg:flex" + (dropdownOpen ? " flex" : " hidden")}>
-            <div className="pointer-events-auto flex-col space-x-16 text-md 2xl:text-lg lg:flex-grow">
+            <div className="text-md pointer-events-auto flex-col space-x-16 lg:flex-grow 2xl:text-lg">
               <Link href="/streetview">Google Street View</Link>
               <Link href="/photo">Fotografija</Link>
               <Link href="/video">Video</Link>

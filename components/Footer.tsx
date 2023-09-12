@@ -13,12 +13,12 @@ export default function Footer() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.5 }}
-      className="bg-white mt-24
+      className="mt-24 bg-white
       "
     >
-      <div className=" container mx-auto flex w-full overflow-auto px-3 py-6 text-black lg:flex-row justify-between">
-        <div className="flex flex-row items-center justify-between">
-          <div className="absolute">
+      <div className=" container mx-auto ">
+        <div className="flex w-full justify-between overflow-auto px-3 py-6 text-black lg:flex-row">
+          <div className="flex flex-row items-center justify-between space-x-4">
             <Link href="/">
               <Image
                 className="pointer-events-auto"
@@ -28,21 +28,51 @@ export default function Footer() {
                 height={50}
               />
             </Link>
+            <div className="text-sm">Agencija Sinhron d.o.o.</div>
+          </div>
+          <div>
+            <div className="flex flex-row space-x-12 lg:flex-grow">
+              <div className="my-auto hidden flex-col space-x-12 lg:block lg:flex-grow">
+                <Link href="mailto:info@webvisit360.com">
+                  info@webvisit360.com
+                </Link>
+                <Link href="https://www.facebook.com/Webvisit360/">
+                  Facebook
+                </Link>
+                <Link href="https://www.instagram.com/webvisit360/">
+                  Instagram
+                </Link>
+                <Link href="https://kuula.co/profile/WEBVISIT360/collections">
+                  Kuula
+                </Link>
+              </div>
+
+              <Button href="/contact">Kontakt</Button>
+            </div>
           </div>
         </div>
-        <div>
-          <div className="flex flex-row space-x-12 lg:flex-grow">
-            <div className="hidden lg:block flex-col my-auto space-x-12 lg:flex-grow">
-              <Link href="https://www.facebook.com/Webvisit360/">Facebook</Link>
-              <Link href="https://www.instagram.com/webvisit360/">
-                Instagram
-              </Link>
-              <Link href="https://kuula.co/profile/WEBVISIT360/collections">
-                Kuula
-              </Link>
+        <div className="block border-t-2">
+          <div className="flex w-full justify-between overflow-auto px-3 py-1 text-black lg:flex-row">
+            <div className="flex flex-row items-center space-x-4">
+              <div className="text-xs">
+                COPYRIGHT @ Agencija Sinhron d.o.o. Vse pravice pridržane.
+              </div>
             </div>
-
-            <Button href="/contact">Kontakt</Button>
+            <div>
+              <div className="flex flex-row space-x-12 lg:flex-grow">
+                <div className="my-auto hidden flex-col space-x-12 lg:block lg:flex-grow">
+                  <Link href="" className="text-xs">
+                    Pogoji uporabe
+                  </Link>
+                  <Link href="" className="text-xs">
+                    Piškotki
+                  </Link>
+                  <Link href="" className="text-xs">
+                    Politika varstva zasebnosti
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
