@@ -152,10 +152,10 @@ export default function Nav({
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ duration: 0.4, delay: 0.5 }}
-          className="container mx-auto flex flex-col overflow-auto px-3 py-6 lg:flex-row lg:items-center lg:justify-between"
+          className="container mx-auto flex flex-col overflow-auto px-3 py-3 2xl:py-4 lg:flex-row lg:items-center lg:justify-between"
         >
           <div className="flex flex-row items-center justify-between">
-            <Link href="/" className="">
+            <Link href="/" className="hidden 2xl:block">
               <Image
                 className="pointer-events-auto"
                 src="/logo.png"
@@ -164,9 +164,18 @@ export default function Nav({
                 height={70}
               />
             </Link>
+            <Link href="/" className="block 2xl:hidden">
+              <Image
+                className="pointer-events-auto"
+                src="/logo.png"
+                alt="webvisit360"
+                width={50}
+                height={50}
+              />
+            </Link>
           </div>
           <div className={"lg:flex" + (dropdownOpen ? " flex" : " hidden")}>
-            <div className="pointer-events-auto flex-col space-x-16 text-lg lg:flex-grow">
+            <div className="pointer-events-auto flex-col space-x-16 text-md 2xl:text-lg lg:flex-grow">
               <Link href="/streetview">Google Street View</Link>
               <Link href="/photo">Fotografija</Link>
               <Link href="/video">Video</Link>
