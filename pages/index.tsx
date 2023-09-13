@@ -4,6 +4,7 @@ import References from "../components/References";
 import About from "../components/About";
 import Layout from "../components/Layout";
 import Timeline from "../components/Timeline";
+import Zakaj from "../components/Zakaj";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Layout navPadding="" page="home">
         <Landing />
         <References />
+        <Zakaj />
         <About />
         <Timeline />
       </Layout>
