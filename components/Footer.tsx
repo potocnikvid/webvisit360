@@ -18,7 +18,7 @@ export default function Footer() {
     >
       <div className=" container mx-auto ">
         <div className="flex w-full justify-between overflow-auto px-3 py-6 text-black lg:flex-row">
-          <div className="flex flex-row items-center justify-between space-x-4">
+          <div className="flex flex-row items-center justify-between space-x-8">
             <Link href="/">
               <Image
                 className="pointer-events-auto"
@@ -28,14 +28,11 @@ export default function Footer() {
                 height={50}
               />
             </Link>
-            <div className="text-sm">Agencija Sinhron d.o.o.</div>
+            <img src="images/street_view_trusted.png" alt="webvisit360" width={150} height={50} />
           </div>
           <div>
             <div className="flex flex-row space-x-12 lg:flex-grow">
               <div className="my-auto hidden flex-col space-x-12 lg:block lg:flex-grow">
-                <Link href="mailto:info@webvisit360.com">
-                  info@webvisit360.com
-                </Link>
                 <Link href="https://www.facebook.com/Webvisit360/">
                   Facebook
                 </Link>
