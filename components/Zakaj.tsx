@@ -15,7 +15,7 @@ export default function Zakaj() {
       </div>
       <div className="grid grid-cols-1 gap-12  sm:grid-cols-2 xl:mx-16 xl:grid-cols-4 mx-8">
         <div className=" block items-center justify-center sm:flex sm:flex-col">
-          <div className="border-2 border-b-4 border-neutral-200 border-b-red-500 p-8 h-96 sm:h-[440px] md:h-80 xl:h-[460px]">
+          <div className="border-2 border-b-4 border-neutral-200 border-b-red-500 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
               <p>GOOGLE CERTIFICIRANI STRUČNJACI</p>
             </div>
@@ -37,7 +37,7 @@ export default function Zakaj() {
         </div>
 
         <div className=" block items-center justify-center sm:flex  sm:flex-col ">
-          <div className=" border-2 border-b-4 border-neutral-200 border-b-yellow-400 p-8 h-96 sm:h-[440px] md:h-80 xl:h-[460px]">
+          <div className=" border-2 border-b-4 border-neutral-200 border-b-yellow-400 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
               <p>VRHUNSKA KVALITETA IZRADE</p>
             </div>
@@ -58,7 +58,7 @@ export default function Zakaj() {
           </div>
         </div>
         <div className=" block items-center justify-center sm:flex sm:flex-col ">
-          <div className=" border-2 border-b-4 border-neutral-200 border-b-green-600 p-8 h-96 sm:h-[440px] md:h-80 xl:h-[460px]">
+          <div className=" border-2 border-b-4 border-neutral-200 border-b-green-600 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
               <p>NAŠE RADOVE SU PREPOZNALE RENOMIRANE TVRTKE</p>
             </div>
@@ -79,7 +79,7 @@ export default function Zakaj() {
           </div>
         </div>
         <div className="block items-center justify-center sm:flex sm:flex-col ">
-          <div className="border-2 border-b-4 border-neutral-200 border-b-blue-600 p-8 h-96 sm:h-[440px] md:h-80 xl:h-[460px]">
+          <div className="border-2 border-b-4 border-neutral-200 border-b-blue-600 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
               <p>VIŠE OD 64 MILIJUNA PREGLEDA</p>
             </div>
