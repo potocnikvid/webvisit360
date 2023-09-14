@@ -31,7 +31,7 @@ export default function Timeline() {
     <div className="container relative mx-auto w-screen items-center justify-center">
       <div className="before:-translate-x-px lg:before:translate-x-0 relative space-y-8 pb-16 pl-10 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-neutral-300 before:to-transparent lg:-space-y-4 lg:px-16 lg:before:mx-auto">
         {timelineItems.map((item, index) => (
-          <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
+          <div key={index + 1} className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
             <OnViewOpenComponent
               delay={1}
               duration={2}
