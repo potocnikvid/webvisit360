@@ -29,24 +29,24 @@ export default function Timeline() {
   ];
   return (
     <div className="container relative mx-auto w-screen items-center justify-center">
-      <div className="before:-tranneutral-x-px lg:before:tranneutral-x-0 relative space-y-8 pb-16 pl-16 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-neutral-300 before:to-transparent lg:-space-y-4 lg:px-16 lg:before:mx-auto">
+      <div className="before:-translate-x-px lg:before:translate-x-0 relative space-y-8 pb-16 pl-10 before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-neutral-300 before:to-transparent lg:-space-y-4 lg:px-16 lg:before:mx-auto">
         {timelineItems.map((item, index) => (
-          <div className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
+          <div key={index + 1} className="is-active group relative flex items-center justify-between lg:justify-normal lg:even:flex-row-reverse">
             <OnViewOpenComponent
               delay={1}
               duration={2}
-              className="flex w-[calc(100%-4rem)] rounded border border-neutral-200 bg-neutral-50 p-4 shadow md:space-x-8 lg:w-[calc(50%-2.5rem)]"
+              className="flex w-[calc(100%-1rem)] rounded border border-neutral-200 bg-neutral-50 p-4 shadow md:space-x-8 lg:w-[calc(50%-2.5rem)]"
             >
               <div className="hidden text-5xl text-[#f9b03e]/70 md:block md:text-8xl">
                 {index + 1}
               </div>
               <div className="space-y-2">
                 <div className="mb-1 flex items-center justify-between space-x-2">
-                  <div className="text-3xl text-neutral-900">
+                  <div className="text-2xl Slg:text-3xl text-neutral-900">
                     {item.headline}
                   </div>
                 </div>
-                <div className="text-xl text-neutral-500">{item.text}</div>
+                <div className="text-md lg:text-xl text-neutral-500">{item.text}</div>
               </div>
             </OnViewOpenComponent>
           </div>

@@ -71,7 +71,7 @@ const VideoPage: NextPage = ({ videos }: { videos: VideoProps[] }) => {
                 <div key={id} className="mx-auto">
                   <VideoComponent
                     className="mx-auto transform rounded-md brightness-90 transition will-change-auto group-hover:brightness-110"
-                    style={{ transform: "tranneutral3d(0, 0, 0)" }}
+                    style={{ transform: "translate3d(0, 0, 0)" }}
                     src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/${public_id}.${format}`}
                     width={720}
                     height={480}

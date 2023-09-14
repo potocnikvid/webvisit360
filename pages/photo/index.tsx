@@ -39,7 +39,7 @@ const PhotoPage: NextPage = ({ images }: { images: ImageProps[] }) => {
           <div className="mx-auto max-w-[1960px] p-4">
             {photoId && (
               <Modal
-                subpage={'photo'}
+                subpage={"photo"}
                 images={images}
                 onClose={() => {
                   setLastViewedPhoto(photoId);

@@ -13,7 +13,7 @@ function Arrow(props) {
     : "cursor-pointer";
   const transition = props.disabled
     ? " opacity-50"
-    : " transition ease-in duration-100 hover:scale-110";
+    : " transition ease-in duration-100 hover:scale-100";
   return (
     <div className={transition}>
       <svg
@@ -43,18 +43,20 @@ function Selector(props) {
     ? " arrow--disabled cursor-pointer"
     : "cursor-default";
   const transition = !props.disabled
-    ? " opacity-50"
-    : " transition ease-in duration-100 hover:scale-110";
+    ? " opacity-50 transition ease-in duration-100 hover:scale-110"
+    : " ";
   return (
-    <div className={transition}>
-      <div
-        className={`arrow ${
-          props.left ? "arrow--left" : "arrow--right"
-        } ${disabled} `}
-        onClick={props.onClick}
-      >
-        <img className="mx-auto" src={props.src} alt={props.alt} />
-        <h2>{props.headline}</h2>
+    <div className="py-2">
+      <div className={transition}>
+        <div
+          className={`arrow ${
+            props.left ? "arrow--left" : "arrow--right"
+          } ${disabled} `}
+          onClick={props.onClick}
+        >
+          <img className="mx-auto" src={props.src} alt={props.alt} />
+          <h2>{props.headline}</h2>
+        </div>
       </div>
     </div>
   );
@@ -74,7 +76,6 @@ export default function FullSlider({ headline = "", cards, className = "" }) {
 
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
-      loop: true,
       initial: 0,
       slideChanged(slider) {
         setCurrentSlide(slider.track.details.rel);
@@ -151,11 +152,7 @@ export default function FullSlider({ headline = "", cards, className = "" }) {
   };
 
   return (
-    <div
-      className={
-        "container mx-auto flex flex-col p-8" + className
-      }
-    >
+    <div className={"container mx-auto flex flex-col p-8" + className}>
       <div className="flex items-center justify-between">
         <motion.h2
           ref={ref}
