@@ -7,7 +7,7 @@ import OnViewOpenComponent from "./OnViewOpen";
 
 export default function Zakaj() {
   return (
-    <div className="mx-auto mb-16 max-w-[1780px] space-y-16">
+    <div className="mx-auto mb-16 lg:mb-32 max-w-[1780px] space-y-16">
       <div className="mb-0 block items-center justify-between sm:flex sm:flex-col">
         <div className="text-center">
           <h2 className="text-4xl lg:text-5xl">Zakaj izbrati nas?</h2>

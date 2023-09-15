@@ -14,8 +14,8 @@ export default function Home() {
       </Head>
       <Layout navPadding="" page="home">
         <Landing />
-        <References />
         <Zakaj />
+        <References />
         <About />
         <Timeline />
       </Layout>
