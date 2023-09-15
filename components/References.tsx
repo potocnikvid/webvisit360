@@ -21,7 +21,7 @@ export default function References() {
                         height={1200}
                     />
                     <div className="text-xl text-center mt-2">
-                        {" "}
+
                         <p>Ghetaldus Optika</p>
                     </div>
                 </div>
@@ -33,9 +33,9 @@ export default function References() {
                         height={1200}
                     />
                     <div className="text-xl text-center  mt-2">
-                        {" "}
+
                         <p>Husqvarna</p>
-                    </div>{" "}
+                    </div>
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
@@ -45,9 +45,8 @@ export default function References() {
                         height={1200}
                     />
                     <div className="text-xl text-center  mt-2">
-                        {" "}
                         <p>Optika</p>
-                    </div>{" "}
+                    </div>
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
@@ -57,9 +56,8 @@ export default function References() {
                         height={1200}
                     />
                     <div className="text-xl text-center  mt-2">
-                        {" "}
                         <p>Fanuc</p>
-                    </div>{" "}
+                    </div>
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col  items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
@@ -69,9 +67,8 @@ export default function References() {
                         height={1200}
                     />
                     <div className="text-xl text-center  mt-2">
-                        {" "}
                         <p>Bamboo</p>
-                    </div>{" "}
+                    </div>
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
@@ -81,9 +78,8 @@ export default function References() {
                         height={1200}
                     />
                     <div className="text-xl text-center  mt-2">
-                        {" "}
                         <p>Nebo</p>
-                    </div>{" "}
+                    </div>
                 </div>
             </div>
         </div>
