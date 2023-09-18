@@ -11,9 +11,10 @@ export default function About() {
             for every website we make.
           </p>
           <img
-            src="images/trusted-white.png"
+            src="images/street_view_trusted.png"
             alt=""
             className="mx-auto mt-24"
+            width={300}
           />
         </OnViewOpenComponent>
       </div>
