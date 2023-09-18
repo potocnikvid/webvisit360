@@ -13,7 +13,7 @@ export default function Zakaj() {
           <h2 className="text-4xl lg:text-5xl">Zakaj izbrati nas?</h2>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-12  sm:grid-cols-2 xl:mx-16 xl:grid-cols-4 mx-8">
+      <div className="grid grid-cols-1 gap-12  sm:grid-cols-2 xl:mx-16 xl:grid-cols-4 mx-8 md:mx-8">
         <div className=" block items-center justify-center sm:flex sm:flex-col">
           <div className="border-2 border-b-4 border-neutral-200 border-b-red-500 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">

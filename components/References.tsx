@@ -12,10 +12,10 @@ export default function References() {
                     <h2 className="text-4xl lg:text-5xl">Reference</h2>
                 </div>
             </div>
-            <div className="grid gap-4 md:mx-8 xl:mx-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
+            <div className="grid gap-4 mx-8 xl:mx-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4">
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
-                        className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
+                        className="object-cover mx-auto h-72 sm:h-144 sm:w-full"
                         src="/images/Screenshot 2022-11-26 at 23.19.57.png" alt=""
                         width={1200}
                         height={1200}
@@ -27,7 +27,7 @@ export default function References() {
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
-                        className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
+                        className="object-cover mx-auto h-72 sm:h-144 sm:w-full"
                         src="/images/Screenshot 2022-11-26 at 23.25.31.png" alt=""
                         width={1200}
                         height={1200}
@@ -39,7 +39,7 @@ export default function References() {
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
-                        className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
+                        className="object-cover mx-auto h-72 sm:h-144 sm:w-full"
                         src="/images/Screenshot 2022-11-26 at 23.56.01.png" alt=""
                         width={1200}
                         height={1200}
@@ -50,7 +50,7 @@ export default function References() {
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
-                        className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
+                        className="object-cover mx-auto h-72 sm:h-144 sm:w-full"
                         src="/images/Fanuc1.png" alt=""
                         width={1200}
                         height={1200}
@@ -61,7 +61,7 @@ export default function References() {
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col  items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
-                        className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
+                        className="object-cover mx-auto h-72 sm:h-144 sm:w-full"
                         src="/images/Screenshot 2022-11-26 at 23.48.03.png" alt=""
                         width={1200}
                         height={1200}
@@ -72,7 +72,7 @@ export default function References() {
                 </div>
                 <div className="block mt-16 sm:flex sm:flex-col items-center h-72 sm:h-96 lg:h-128 2xl:h-144 justify-center">
                     <Image
-                        className="object-cover mx-auto h-72 w-5/6 sm:h-144 sm:w-full"
+                        className="object-cover mx-auto h-72 sm:h-144 sm:w-full"
                         src="/images/Screenshot 2022-11-26 at 23.51.22.png" alt=""
                         width={1200}
                         height={1200}
