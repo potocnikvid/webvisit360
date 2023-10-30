@@ -9,9 +9,10 @@ export default function About() {
             Mi smo Google certificirani strokovnjaki za izdelavo virtualnih ogledov in 360° fotografij. 
           </p>
           <img
-            src="images/trusted-white.png"
+            src="images/street_view_trusted.png"
             alt=""
             className="mx-auto mt-24"
+            width={300}
           />
         </OnViewOpenComponent>
       </div>

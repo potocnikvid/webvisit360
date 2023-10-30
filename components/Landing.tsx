@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export default function Landing() {
   return (
-    <div className="relative mb-12 flex h-screen w-screen items-center justify-center overflow-hidden">
+    <div className="relative mb-16 lg:mb-32 flex h-screen w-screen items-center justify-center overflow-hidden">
       <div className="pointer-events-none z-30 w-full p-5 sm:w-4/5 lg:w-2/3">
         <div className="mx-auto mb-[6rem] mt-24 justify-center space-y-3 pt-4 text-center md:px-6 lg:mb-[14.5rem] lg:mt-[11rem] lg:space-y-6">
           <motion.h1
