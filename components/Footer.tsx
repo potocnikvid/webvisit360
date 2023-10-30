@@ -13,7 +13,7 @@ export default function Footer() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.5 }}
-      className="mt-24 bg-white
+      className="mt-24 bg-white 
       "
     >
       <div className=" container mx-auto ">

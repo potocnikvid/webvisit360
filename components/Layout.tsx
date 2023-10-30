@@ -12,7 +12,8 @@ export default function Layout({ children, navPadding, page }) {
           navPadding
         }
       >
-        <div className="flex-grow">{children}</div>
+        {/* <div className="flex-grow">{children}</div> */}
+        <div className="relative mt-64 mb-64 text-6xl mx-auto">Website work in progress</div>
         <Footer />
       </main>
       
