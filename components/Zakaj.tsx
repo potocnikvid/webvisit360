@@ -17,7 +17,7 @@ export default function Zakaj() {
         <div className=" block items-center justify-center sm:flex sm:flex-col">
           <div className="border-2 border-b-4 border-neutral-200 border-b-red-500 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
-              <p>GOOGLE CERTIFICIRANI STRUČNJACI</p>
+              <p>GOOGLE CERTIFICIRANI STROKOVNJAKI</p>
             </div>
             <Image
               className="mx-auto my-4"
@@ -29,8 +29,7 @@ export default function Zakaj() {
 
             <div className="mt-2 border-t-2 border-neutral-100 pt-8 text-center  text-lg">
               <p>
-                Višegodišnje iskustvo u radu sa Google moderatoratorima i Google
-                certificiranim stručnjacima.
+                Večletne delovne izkušnje s Google moderatorji in certificiranimi strokovnjaki.
               </p>
             </div>
           </div>
@@ -39,7 +38,7 @@ export default function Zakaj() {
         <div className=" block items-center justify-center sm:flex  sm:flex-col ">
           <div className=" border-2 border-b-4 border-neutral-200 border-b-yellow-400 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
-              <p>VRHUNSKA KVALITETA IZRADE</p>
+              <p>VRHUNSKA KVALITETA IZDELAVE</p>
             </div>
             <Image
               className="mx-auto my-4"
@@ -51,8 +50,7 @@ export default function Zakaj() {
 
             <div className="mt-2 border-t-2 border-neutral-100 pt-8 text-center  text-lg">
               <p>
-                Naši Google certificirani stručnjaci se drže strogih pravila i
-                normi definiranih od strane Googlea.
+                Naši Google certificirani strokovnjaki se držijo strogo določenih standardov kvalitete predpisanega s strani Google-a.
               </p>
             </div>
           </div>
@@ -60,7 +58,7 @@ export default function Zakaj() {
         <div className=" block items-center justify-center sm:flex sm:flex-col ">
           <div className=" border-2 border-b-4 border-neutral-200 border-b-green-600 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
-              <p>NAŠE RADOVE SU PREPOZNALE RENOMIRANE TVRTKE</p>
+              <p>NAŠE REFERENCE SO PRIZNANA PODJETJA</p>
             </div>
             <Image
               className="mx-auto my-4"
@@ -72,8 +70,7 @@ export default function Zakaj() {
 
             <div className="mt-2 border-t-2 border-neutral-100 pt-8 text-center  text-lg">
               <p>
-                Najbolja motivacija za nastavak i razvoj poslovanja nam je
-                pozitivna kritika naših klijenata.
+                Najboljša motivacija za naše delo so zadovoljne stranke. Naši naročniki so priznana podjetja, ki zahtevajo najvišjo kvaliteto. 
               </p>
             </div>
           </div>
@@ -81,7 +78,7 @@ export default function Zakaj() {
         <div className="block items-center justify-center sm:flex sm:flex-col ">
           <div className="border-2 border-b-4 border-neutral-200 border-b-blue-600 p-8 h-96 sm:h-[440px] md:h-88 lg:h-80 xl:h-[460px]">
             <div className="pb-4 text-center  text-xl">
-              <p>VIŠE OD 64 MILIJUNA PREGLEDA</p>
+              <p>VEČ KOT 10 MILIJONOV OGLEDOV</p>
             </div>
             <Image
               className="mx-auto my-4"
@@ -93,8 +90,7 @@ export default function Zakaj() {
 
             <div className="mt-2 border-t-2 border-neutral-100 pt-8 text-center  text-lg">
               <p>
-                Tijekom 6 godina poslovanja, naši radovi imaju više od 64
-                milijuna pregleda na Google-u te ih je svakim danom sve više.
+                Naše virtualne oglede si je ogledalo več kot 10 milijonov uporabnikov. 
               </p>
             </div>
           </div>

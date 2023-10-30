@@ -6,9 +6,7 @@ export default function About() {
       <div className="container relative mx-auto  mb-16 flex px-8 py-36">
         <OnViewOpenComponent className={""}>
           <p className=" z-20 text-2xl text-white lg:text-5xl">
-            We are a multinational agency specialising in web design, web
-            development and brand identity. We provide an exceptional experience
-            for every website we make.
+            Mi smo Google certificirani strokovnjaki za izdelavo virtualnih ogledov in 360° fotografij. 
           </p>
           <img
             src="images/trusted-white.png"
