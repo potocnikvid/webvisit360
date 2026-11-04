@@ -14,7 +14,7 @@ The token is kept OUTSIDE the repo (env GSV_TOKEN_FILE, default ~/.webvisit360-g
 import json, os, sys, urllib.parse, urllib.request
 from pathlib import Path
 
-SCOPE = "https://www.googleapis.com/auth/streetviewpublish"
+SCOPE = "openid email https://www.googleapis.com/auth/streetviewpublish"
 REDIRECT = "http://localhost"
 TOKEN_FILE = Path(os.environ.get("GSV_TOKEN_FILE", Path.home() / ".webvisit360-gsv-token.json"))
 OUT = Path(__file__).resolve().parent.parent / "raw" / "google_streetview.json"
@@ -38,7 +38,7 @@ def post(url, data):
 def auth_url():
     cid, _ = client()
     q = dict(client_id=cid, redirect_uri=REDIRECT, response_type="code", scope=SCOPE,
-             access_type="offline", prompt="consent")
+             access_type="offline", prompt="consent select_account")
     print("https://accounts.google.com/o/oauth2/v2/auth?" + urllib.parse.urlencode(q))
 
 
@@ -61,8 +61,15 @@ def access_token():
         refresh_token=rt, client_id=cid, client_secret=sec, grant_type="refresh_token"))["access_token"]
 
 
+def whoami(at):
+    info = json.load(urllib.request.urlopen(
+        "https://oauth2.googleapis.com/tokeninfo?access_token=" + at))
+    return info.get("email", "(email not granted)")
+
+
 def fetch():
     at = access_token()
+    print("Signed in as", whoami(at))
     photos, page = [], None
     while True:
         q = {"view": "BASIC", "pageSize": 100, "languageCode": "sl"}
