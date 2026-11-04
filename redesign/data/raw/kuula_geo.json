@@ -1,0 +1,1397 @@
+[
+ {
+  "id": "7d9xj",
+  "name": "Kamp Savinja",
+  "query": "Kamp Savinja",
+  "lat": 46.3390156,
+  "lng": 14.8489371,
+  "match": "Glamping Savinja, Ter, Juvanje, Ljubno, 3333, Slovenija",
+  "type": "camp_site"
+ },
+ {
+  "id": "7dqK9",
+  "name": "Hotel Occidental Ljubljana",
+  "query": "Hotel Occidental Ljubljana",
+  "lat": 46.0494347,
+  "lng": 14.502618,
+  "match": "Occidental Ljubljana hotel, Slovenska cesta, Žabjak, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7d5ZL",
+  "name": "Glamping Gril",
+  "query": "Glamping Gril",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7T32z",
+  "name": "Panorama Apartments Meli Pu",
+  "query": "Panorama Apartments Meli Pu",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7TwMg",
+  "name": "Apartments Meli Pu",
+  "query": "Apartments Meli Pu",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7D57S",
+  "name": "STOLP NA ROGLI",
+  "query": "STOLP NA ROGLI",
+  "lat": 46.4564763,
+  "lng": 15.3458368,
+  "match": "Razgledni stolp na Rogli, 701, Slovenska Bistrica, Slovenija",
+  "type": "tower"
+ },
+ {
+  "id": "71Cdy",
+  "name": "Grlica - orodje Milwaukee Tool Slovenija",
+  "query": "Grlica - orodje Milwaukee Tool Slovenija",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "71DFL",
+  "name": "BRASLOVČE",
+  "query": "BRASLOVČE",
+  "lat": 46.2803844,
+  "lng": 15.0176197,
+  "match": "Braslovče, Slovenija",
+  "type": "administrative"
+ },
+ {
+  "id": "7bQdv",
+  "name": "HAVANA CIGAR POINT",
+  "query": "HAVANA CIGAR POINT",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7Z350",
+  "name": "ŠPORTNI CENTER BARADA",
+  "query": "ŠPORTNI CENTER BARADA",
+  "lat": 46.5249608,
+  "lng": 15.6651332,
+  "match": "Športni center Barada, 20, Perhavčeva ulica, Industrijska cona Tezno, Ledina, Maribor, 2000, Slovenija",
+  "type": "sports_centre"
+ },
+ {
+  "id": "7ZJF3",
+  "name": "GOSTIŠČE PRODNIK",
+  "query": "GOSTIŠČE PRODNIK",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7KVjh",
+  "name": "Weekend house - Podcetrtek",
+  "query": "Weekend house - Podcetrtek",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7KXS1",
+  "name": "INOTHERM",
+  "query": "INOTHERM",
+  "lat": 45.8147974,
+  "lng": 15.8413447,
+  "match": "Inotherm, Samoborska cesta, Mjesni odbor Podsused, Gradska četvrt Podsused - Vrapče, Zagreb, Grad Zagreb, 10172, Hrvatska",
+  "type": "furniture"
+ },
+ {
+  "id": "7XKvn",
+  "name": "KC AVELANA",
+  "query": "KC AVELANA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7XPnV",
+  "name": "HOTEL ONE66",
+  "query": "HOTEL ONE66",
+  "lat": 46.0753508,
+  "lng": 14.4846477,
+  "match": "One66, 166, Celovška cesta, Zgornja Šiška, Četrtna skupnost Šiška, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "hostel"
+ },
+ {
+  "id": "7XNKB",
+  "name": "Ducal Wines | Vinska klet Ducal | Vina z dušo, za dušo.",
+  "query": "Ducal Wines",
+  "lat": 46.6828494,
+  "lng": 15.5882377,
+  "match": "Ducal Wines, Grenzland-Weinstraße, Plač, Kungota, 2212, Slovenija",
+  "type": "winery"
+ },
+ {
+  "id": "7X764",
+  "name": "INLES d.d., RAZSTAVNO PRODAJNI SALON RIBNICA",
+  "query": "INLES , RAZSTAVNO PRODAJNI SALON RIBNICA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7Fxyd",
+  "name": "BAZEN SLOVENJ GRADEC",
+  "query": "BAZEN SLOVENJ GRADEC",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7F6q5",
+  "name": "AJM d.o.o.",
+  "query": "AJM",
+  "lat": 46.6169797,
+  "lng": 15.6413744,
+  "match": "AJM, Gradiška, Kungota, Slovenija",
+  "type": "industrial"
+ },
+ {
+  "id": "79n7b",
+  "name": "Uniforest prodajalna Celje",
+  "query": "Uniforest prodajalna Celje",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "79MSp",
+  "name": "NEBO SHOW RESTAURANT small",
+  "query": "NEBO SHOW RESTAURANT small",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "791gc",
+  "name": "Panorama",
+  "query": "Panorama",
+  "lat": 46.4244158,
+  "lng": 15.8634387,
+  "match": "Panorama, Ptuj, 2250, Slovenija",
+  "type": "peak"
+ },
+ {
+  "id": "79Z2b",
+  "name": "NEBO SHOW RESTAURANT",
+  "query": "NEBO SHOW RESTAURANT",
+  "lat": 46.0519642,
+  "lng": 14.5028796,
+  "match": "NEBO Show Restaurant, 2, Tomšičeva ulica, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "restaurant"
+ },
+ {
+  "id": "79cy4",
+  "name": "GHETALDUS OPTIKA, KOPER",
+  "query": "GHETALDUS OPTIKA, KOPER",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "79J3s",
+  "name": "APARTMAN TRUNK, PODČETRTEK",
+  "query": "APARTMAN TRUNK, PODČETRTEK",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "79JGR",
+  "name": "Posest - 3000sqm",
+  "query": "Posest - 3000sqm",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "79JGl",
+  "name": "RAJMAX KOZJE",
+  "query": "RAJMAX KOZJE",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "79N6P",
+  "name": "OUTLET LEŽIŠČ MARIBOR",
+  "query": "OUTLET LEŽIŠČ MARIBOR",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7vgNc",
+  "name": "Bazen Bar & BBQ",
+  "query": "Bazen Bar & BBQ",
+  "lat": 46.243775,
+  "lng": 14.3514573,
+  "match": "Bazen Bar & BBQ, 25a, Stara cesta, Huje, Kranj, 4000, Slovenija",
+  "type": "bar"
+ },
+ {
+  "id": "7v6MD",
+  "name": "GEBERIT LJUBLJANA",
+  "query": "GEBERIT LJUBLJANA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7vbjW",
+  "name": "HOTEL ZARJA",
+  "query": "HOTEL ZARJA",
+  "lat": 46.4922945,
+  "lng": 15.5352479,
+  "match": "Zarja, 34, Frajhajm, Slovenska Bistrica, 2208, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7vJgx",
+  "name": "GOSTIŠČE DOLINŠEK",
+  "query": "GOSTIŠČE DOLINŠEK",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7vvBz",
+  "name": "KAMNOSEŠTVO GRAMA",
+  "query": "KAMNOSEŠTVO GRAMA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7vqbJ",
+  "name": "OBSEŠEN 07, LJUBLJANA",
+  "query": "OBSEŠEN 07, LJUBLJANA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qQ16",
+  "name": "ETIS LJUBLJANA - 360",
+  "query": "ETIS LJUBLJANA",
+  "lat": 46.0305604,
+  "lng": 14.4446321,
+  "match": "ETIS, 333, Tržaška cesta, Majlond, Četrtna skupnost Vič, Žuleva vas, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "kitchen"
+ },
+ {
+  "id": "7qwSC",
+  "name": "KOSECTIM LJUBLJANA",
+  "query": "KOSECTIM LJUBLJANA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qsxq",
+  "name": "GEBERIT HRVATSKA",
+  "query": "GEBERIT HRVATSKA",
+  "lat": 45.8127868,
+  "lng": 15.868425,
+  "match": "Geberit, Samoborska cesta, Jankomir, Mjesni odbor Stenjevec - jug, Gradska četvrt Stenjevec, Zagreb, Grad Zagreb, 10090, Hrvatska",
+  "type": "yes"
+ },
+ {
+  "id": "7qVnb",
+  "name": "MEDICOFIT Ljubljana",
+  "query": "MEDICOFIT Ljubljana",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qxSV",
+  "name": "OK LED",
+  "query": "OK LED",
+  "lat": 45.3406992,
+  "lng": 10.2342864,
+  "match": "HT-LED - ITAL DEC-OR S.R.L., Dossi, Leno, Brescia, Lombardia, 25024, Italia",
+  "type": "industrial"
+ },
+ {
+  "id": "7qgHh",
+  "name": "ETIS LJUBLJANA",
+  "query": "ETIS LJUBLJANA",
+  "lat": 46.0305604,
+  "lng": 14.4446321,
+  "match": "ETIS, 333, Tržaška cesta, Majlond, Četrtna skupnost Vič, Žuleva vas, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "kitchen"
+ },
+ {
+  "id": "7qTmZ",
+  "name": "Aronatm",
+  "query": "Aronatm",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qZyt",
+  "name": "LESNA VRATA d.o.o.",
+  "query": "LESNA VRATA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qZgz",
+  "name": "HYUNDAI ZLATECAN",
+  "query": "HYUNDAI ZLATECAN",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qZcn",
+  "name": "GRAD PODSREDA",
+  "query": "GRAD PODSREDA",
+  "lat": 46.0278113,
+  "lng": 15.590095,
+  "match": "Grad Podsreda, Podsreda, Kozje, 3257, Slovenija",
+  "type": "castle"
+ },
+ {
+  "id": "7qZYh",
+  "name": "MOVIA",
+  "query": "MOVIA",
+  "lat": 46.04979,
+  "lng": 14.5068772,
+  "match": "Vinoteka Movia, Mestni trg, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "bar"
+ },
+ {
+  "id": "7qKsT",
+  "name": "PIKOL I PIKOL LAKE VILLAGE PREMIUM",
+  "query": "PIKOL I PIKOL LAKE VILLAGE PREMIUM",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qFBr",
+  "name": "INDOOR GOLF CELJE",
+  "query": "INDOOR GOLF CELJE",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qFB8",
+  "name": "DOPPLER WINERY",
+  "query": "DOPPLER WINERY",
+  "lat": 46.6314518,
+  "lng": 15.63177,
+  "match": "Doppler wine cellar, Doppler, Plintovec, Kungota, 2201, Slovenija",
+  "type": "winery"
+ },
+ {
+  "id": "7qFB4",
+  "name": "GOLF ARBORETUM",
+  "query": "GOLF ARBORETUM",
+  "lat": 46.1990355,
+  "lng": 14.616764,
+  "match": "Golf Arboretum, 43G, Rudnik pri Radomljah, Volčji Potok, Rudnik pri Radomljah, Kamnik, Upravna Enota Kamnik, 1235, Slovenija",
+  "type": "golf_course"
+ },
+ {
+  "id": "7qFQM",
+  "name": "ARBORETUM & VRTNARSKI CENTER VOLČJI POTOK",
+  "query": "ARBORETUM & VRTNARSKI CENTER VOLČJI POTOK",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qFVg",
+  "name": "HOLDAY INN EXPRESS LJUBLJANA",
+  "query": "HOLDAY INN EXPRESS LJUBLJANA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qFNk",
+  "name": "Baloh International - Odlične talne obloge",
+  "query": "Baloh International - Odlične talne obloge",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9QX",
+  "name": "PUŠNIK NOVLJAN, Center za obrazno zdravje",
+  "query": "PUŠNIK NOVLJAN, Center za obrazno zdravje",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9CQ",
+  "name": "KG-dent, zobozdravstvene storitve d.o.o.",
+  "query": "KG-dent, zobozdravstvene storitve",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9CD",
+  "name": "Zobozdravstveni center Tredent",
+  "query": "Zobozdravstveni center Tredent",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9xb",
+  "name": "GALERIJA PARKETA MARIBOR",
+  "query": "GALERIJA PARKETA MARIBOR",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9gB",
+  "name": "NESTING RESORT - TENT 1",
+  "query": "NESTING RESORT - TENT 1",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9gC",
+  "name": "NESTING RESORT - NEST HELICHRYSUM",
+  "query": "NESTING RESORT - NEST HELICHRYSUM",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9gn",
+  "name": "NESTING RESORT - NEST LAVENDER",
+  "query": "NESTING RESORT - NEST LAVENDER",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9gb",
+  "name": "NESTING RESORT - NEST HEMP",
+  "query": "NESTING RESORT - NEST HEMP",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7q9gL",
+  "name": "NESTING RESORT (bathrooms and toilets)",
+  "query": "NESTING RESORT (bathrooms and toilets)",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7qvl0",
+  "name": "CERVASLOVENIJA.SI",
+  "query": "CERVASLOVENIJA.SI",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7krvR",
+  "name": "Kozmetika MISSHA",
+  "query": "Kozmetika MISSHA",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7kzj9",
+  "name": "MIZARSTVO GORJANC",
+  "query": "MIZARSTVO GORJANC",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7ksLF",
+  "name": "PUNKT BISTRO & BAR",
+  "query": "PUNKT BISTRO & BAR",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7kjjp",
+  "name": "NATURA FINA RESORT",
+  "query": "NATURA FINA RESORT",
+  "lat": 46.5396832,
+  "lng": 14.9568866,
+  "match": "Natura Fina Resort, 12, Gozdarska pot, Ravne na Koroškem, 2390, Slovenija",
+  "type": "resort"
+ },
+ {
+  "id": "7kngM",
+  "name": "GNEZDO - Center sonaravne gradnje",
+  "query": "GNEZDO - Center sonaravne gradnje",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7kdtt",
+  "name": "OPTIKA OFTALMOS, CELJE",
+  "query": "OPTIKA OFTALMOS, CELJE",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7kT96",
+  "name": "FANUC Adria Slovenia",
+  "query": "FANUC Adria Slovenia",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7kDTy",
+  "name": "GRAPAK.COM",
+  "query": "GRAPAK.COM",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7kDK0",
+  "name": "STV GLOBAL d.o.o.",
+  "query": "STV GLOBAL",
+  "lat": 46.1463274,
+  "lng": 14.598249,
+  "match": "Stv global, Breznikova ulica, Zgornje Domžale, Groblje, Rodica, Domžale, Upravna Enota Domžale, 1230, Slovenija",
+  "type": "household"
+ },
+ {
+  "id": "7kGzB",
+  "name": "Saniker d.o.o. Vrhnika, PE Ljubljanska",
+  "query": "Saniker  Vrhnika, PE Ljubljanska",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7YVkN",
+  "name": "OUTLET LEŽIŠČ",
+  "query": "OUTLET LEŽIŠČ",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7YZJ6",
+  "name": "BECOME LOVE, Lili Knafelc",
+  "query": "BECOME LOVE, Lili Knafelc",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7YF0t",
+  "name": "INTERNORM",
+  "query": "INTERNORM",
+  "lat": 48.2084952,
+  "lng": 14.2068836,
+  "match": "Internorm, Oedt, Traun, Bezirk Linz-Land, Oberösterreich, Österreich",
+  "type": "industrial"
+ },
+ {
+  "id": "7YvC3",
+  "name": "Kolpa BTC - Prodajni programi",
+  "query": "Kolpa BTC - Prodajni programi",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7YYsw",
+  "name": "FPL Avtocenter Pušnik",
+  "query": "FPL Avtocenter Pušnik",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7YYjv",
+  "name": "Alpcom",
+  "query": "Alpcom",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7YmVd",
+  "name": "HALDER d.o.o.",
+  "query": "HALDER",
+  "lat": 47.4758113,
+  "lng": 9.8225801,
+  "match": "Halder, Buch, Bezirk Bregenz, Vorarlberg, 6960, Österreich",
+  "type": "hamlet"
+ },
+ {
+  "id": "7PS8J",
+  "name": "Iatros - Dr. Košorok d.o.o., zasebni medicinski center",
+  "query": "Iatros - Dr. Košorok , zasebni medicinski center",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PCn8",
+  "name": "BENTON",
+  "query": "BENTON",
+  "lat": 46.1692742,
+  "lng": 14.5722678,
+  "match": "BENTON, d.o.o., 9, Prešernova cesta, Mengeš, Upravna Enota Domžale, 1234, Slovenija",
+  "type": "musical_instrument"
+ },
+ {
+  "id": "7PHWs",
+  "name": "PIRC INTERNATIONAL",
+  "query": "PIRC INTERNATIONAL",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHsS",
+  "name": "Agroteh-Impodan-7",
+  "query": "Agroteh-Impodan-7",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHgn",
+  "name": "Agroteh-Impodan-6",
+  "query": "Agroteh-Impodan-6",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHgv",
+  "name": "Agroteh-Impodan-5",
+  "query": "Agroteh-Impodan-5",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHHV",
+  "name": "Agroteh-Impodan-4",
+  "query": "Agroteh-Impodan-4",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHDl",
+  "name": "Agroteh-Impodan-3",
+  "query": "Agroteh-Impodan-3",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHD0",
+  "name": "Agroteh-Impodan-2",
+  "query": "Agroteh-Impodan-2",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PHDL",
+  "name": "Agroteh-Impodan-1",
+  "query": "Agroteh-Impodan-1",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PDP4",
+  "name": "Gracia Logatec",
+  "query": "Gracia Logatec",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PDft",
+  "name": "Salon KOLPA, BTC CITY Ljubljana",
+  "query": "Salon KOLPA, BTC CITY Ljubljana",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PXVj",
+  "name": "Galerija Parketa",
+  "query": "Galerija Parketa",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PXhf",
+  "name": "Hotel Špica Laško",
+  "query": "Hotel Špica Laško",
+  "lat": 46.1534261,
+  "lng": 15.2330628,
+  "match": "Hotel Špica, Zdraviliška cesta, Laško, 3270, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7PJJT",
+  "name": "DVERI PAX",
+  "query": "DVERI PAX",
+  "lat": 46.5594689,
+  "lng": 15.650526,
+  "match": "Vinoteka Dveri Pax, 3, Ulica Vita Kraigherja, Lent, Center, Maribor, 2000, Slovenija",
+  "type": "alcohol"
+ },
+ {
+  "id": "7PJJG",
+  "name": "ACE AVTO",
+  "query": "ACE AVTO",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PJFV",
+  "name": "TIP-TOP AVTOMOBILI",
+  "query": "TIP-TOP AVTOMOBILI",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7P9th",
+  "name": "RESTAVRACIJA OLGA",
+  "query": "RESTAVRACIJA OLGA",
+  "lat": 37.0845648,
+  "lng": 15.2802146,
+  "match": "Olga, Viale Tica, Acradina, Siracusa, Sicilia, 96100, Italia",
+  "type": "restaurant"
+ },
+ {
+  "id": "7P98z",
+  "name": "Frizerski salon, Pevec Minka s.p.",
+  "query": "Frizerski salon, Pevec Minka",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7P98n",
+  "name": "LA VIDA ES BELLA BEAUTY STUDIO",
+  "query": "LA VIDA ES BELLA BEAUTY STUDIO",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7P98h",
+  "name": "AMANZI SUP STORE",
+  "query": "AMANZI SUP STORE",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7PYys",
+  "name": "Pušnik-Novljan okulistika, optika, zobozdravstvo d.o.o.",
+  "query": "Pušnik-Novljan okulistika, optika, zobozdravstvo",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7P023",
+  "name": "TRGOVINA ČI100 - MARIBOR",
+  "query": "TRGOVINA ČI100 - MARIBOR",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7ltzF",
+  "name": "Apartmaji in wellness Skok",
+  "query": "Apartmaji in wellness Skok",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lrSD",
+  "name": "Avtohiša Strašek",
+  "query": "Avtohiša Strašek",
+  "lat": 46.2537494,
+  "lng": 15.5693271,
+  "match": "Avtohiša Strašek, Krtince, Šmarje pri Jelšah, Rogaška Slatina, 3241, Slovenija",
+  "type": "car"
+ },
+ {
+  "id": "7lrSm",
+  "name": "Pomona, Turizem na podeželju",
+  "query": "Pomona, Turizem na podeželju",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lj4Y",
+  "name": "Parcela Celje",
+  "query": "Parcela Celje",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lCTn",
+  "name": "Optika Rimc Brežice",
+  "query": "Optika Rimc Brežice",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l6zH",
+  "name": "Terme Paradiso",
+  "query": "Terme Paradiso",
+  "lat": 45.8431745,
+  "lng": 9.6621481,
+  "match": "Paradiso, Aplecchio, Antea, San Pellegrino Terme, Comunità Montana della Valle Brembana, Bergamo, Lombardia, 24016, Italia",
+  "type": "locality"
+ },
+ {
+  "id": "7l634",
+  "name": "MUZIKAFE PTUJ",
+  "query": "MUZIKAFE PTUJ",
+  "lat": 46.4191912,
+  "lng": 15.8699574,
+  "match": "MuziKafe - kavarna, 1, Vrazov trg, Center, Ptuj, 2250, Slovenija",
+  "type": "cafe"
+ },
+ {
+  "id": "7l6wY",
+  "name": "Apartments SIPPO",
+  "query": "Apartments SIPPO",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l6sV",
+  "name": "Apartments Vila Stella",
+  "query": "Apartments Vila Stella",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l6s9",
+  "name": "Apartment Star of Ljubljana",
+  "query": "Apartment Star of Ljubljana",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l6jQ",
+  "name": "Motorhome 360-view",
+  "query": "Motorhome 360-view",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l6C1",
+  "name": "Elipse Cafe",
+  "query": "Elipse Cafe",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l6Cc",
+  "name": "Outlet Optika",
+  "query": "Outlet Optika",
+  "lat": 41.2126263,
+  "lng": 9.4052305,
+  "match": "Outlet, Via Venti Settembre, La Maddalena, Gallura Nord-Est Sardegna, Sardigna/Sardegna, 07024, Italia",
+  "type": "optician"
+ },
+ {
+  "id": "7l6CX",
+  "name": "Optika MB",
+  "query": "Optika MB",
+  "lat": 46.5503749,
+  "lng": 15.6410819,
+  "match": "Optika MB, 7, Žolgarjeva ulica, Lent, Magdalena, Maribor, 2000, Slovenija",
+  "type": "optician"
+ },
+ {
+  "id": "7lnFX",
+  "name": "Hotel Korošica",
+  "query": "Hotel Korošica",
+  "lat": 46.5745175,
+  "lng": 15.0250461,
+  "match": "Hotel Korošica, 112, Dobrova pri Dravogradu, Otiški Vrh, Dravograd, 2370, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7lTKS",
+  "name": "SLV, Ljubljana",
+  "query": "SLV, Ljubljana",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lFtY",
+  "name": "Grand Hotel Union",
+  "query": "Grand Hotel Union",
+  "lat": 46.0527148,
+  "lng": 14.5063761,
+  "match": "Grand Hotel Union Eurostars, 1, Miklošičeva cesta, Ledina, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7lFrX",
+  "name": "Sky Cafe",
+  "query": "Sky Cafe",
+  "lat": 46.3736046,
+  "lng": 15.7775721,
+  "match": "Sky Cafe, 5, Lovrenc na Dravskem polju, Kidričevo, 2324, Slovenija",
+  "type": "cafe"
+ },
+ {
+  "id": "7lFBY",
+  "name": "Salon Lepa Si",
+  "query": "Salon Lepa Si",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lFSz",
+  "name": "Bolder Scena",
+  "query": "Bolder Scena",
+  "lat": 46.0731429,
+  "lng": 14.4975803,
+  "match": "Bolder Scena, 1, Magistrova ulica, Spodnja Šiška, Četrtna skupnost Šiška, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "sports_centre"
+ },
+ {
+  "id": "7l9sL",
+  "name": "Motorhome Rovando Carthago C-Tourer",
+  "query": "Motorhome Rovando Carthago C-Tourer",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l98p",
+  "name": "Sky Center, Maribor",
+  "query": "Sky Center, Maribor",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l962",
+  "name": "4 Ever Young, kozmetika in storitve, d.o.o.",
+  "query": "4 Ever Young, kozmetika in storitve",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7l9J9",
+  "name": "Classic Cars Selection Goodtimers",
+  "query": "Classic Cars Selection Goodtimers",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvsy",
+  "name": "Posestvo Pule",
+  "query": "Posestvo Pule",
+  "lat": 45.9270319,
+  "lng": 15.1839167,
+  "match": "Posestvo Pule, Zbure, Spodnja Priča, Srednje Laknice, Škocjan, Mokronog-Trebelno, 8295, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7lvCY",
+  "name": "Srebrna Žlica, Ljubljana",
+  "query": "Srebrna Žlica, Ljubljana",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvC7",
+  "name": "Restaurant Cubo",
+  "query": "Restaurant Cubo",
+  "lat": 46.0642021,
+  "lng": 14.5273682,
+  "match": "Cubo, 55, Šmartinska cesta, Zelena jama, Četrtna skupnost Jarše, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "restaurant"
+ },
+ {
+  "id": "7lvxt",
+  "name": "Nobilis, Moravci",
+  "query": "Nobilis, Moravci",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lv8y",
+  "name": "Nobilis, Portoroz",
+  "query": "Nobilis, Portoroz",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lv87",
+  "name": "Nobilis, Maribor",
+  "query": "Nobilis, Maribor",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lv6R",
+  "name": "Nobilis, Ljubljana",
+  "query": "Nobilis, Ljubljana",
+  "lat": 46.0527853,
+  "lng": 14.5116745,
+  "match": "Estetika Nobilis, Trubarjeva cesta, Ledina, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "clinic"
+ },
+ {
+  "id": "7lv6D",
+  "name": "Terme Olimia, Podcetrtek",
+  "query": "Terme Olimia, Podcetrtek",
+  "lat": 46.1647212,
+  "lng": 15.604438,
+  "match": "Camping Terme Olimia/Natura, 9, Zdraviliška cesta, Sodna vas, Podčetrtek, 3254, Slovenija",
+  "type": "camp_site"
+ },
+ {
+  "id": "7lvZD",
+  "name": "Moderna d.o.o. oprema s konceptom",
+  "query": "Moderna  oprema s konceptom",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvZf",
+  "name": "Strle Svetila",
+  "query": "Strle Svetila",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvcM",
+  "name": "Maros Ljubljana",
+  "query": "Maros Ljubljana",
+  "lat": 46.0638681,
+  "lng": 14.5267451,
+  "match": "Maros, 53, Šmartinska cesta, Zelena jama, Četrtna skupnost Jarše, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "furniture"
+ },
+ {
+  "id": "7lvcZ",
+  "name": "Natuzzi Ljubljana",
+  "query": "Natuzzi Ljubljana",
+  "lat": 46.0640075,
+  "lng": 14.5269845,
+  "match": "Natuzzi, 53, Šmartinska cesta, Zelena jama, Četrtna skupnost Jarše, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "furniture"
+ },
+ {
+  "id": "7lvFN",
+  "name": "Avena Ptuj",
+  "query": "Avena Ptuj",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvvv",
+  "name": "Restavracija Mitra, Ljutomer",
+  "query": "Restavracija Mitra, Ljutomer",
+  "lat": 46.5213424,
+  "lng": 16.1947999,
+  "match": "Mitra okrepčevalnica, 230, Ljutomer, 9240, Slovenija",
+  "type": "restaurant"
+ },
+ {
+  "id": "7lvY3",
+  "name": "Veterinarstvo Trstenjak - Zajc klinika za male živali, d.o.o. Ljubljana",
+  "query": "Veterinarstvo Trstenjak - Zajc klinika za male živali,  Ljubljana",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvmR",
+  "name": "Avena Ljutomer",
+  "query": "Avena Ljutomer",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lvmg",
+  "name": "Oaza Lepote Manta",
+  "query": "Oaza Lepote Manta",
+  "lat": 45.9585265,
+  "lng": 15.4931921,
+  "match": "Oaza lepote Manta, Cesta 4. julija, Krško, 8270, Slovenija",
+  "type": "hairdresser"
+ },
+ {
+  "id": "7lqsc",
+  "name": "Gostilna JEŽ",
+  "query": "Gostilna JEŽ",
+  "lat": 43.3029436,
+  "lng": 17.0099662,
+  "match": "Jez, Ulica kralja Petra Krešimira IV, Zelenka, Puharići, Makarska, Grad Makarska, Splitsko-dalmatinska županija, 21300, Hrvatska",
+  "type": "restaurant"
+ },
+ {
+  "id": "7lq00",
+  "name": "Alpine Dreams Chalet",
+  "query": "Alpine Dreams Chalet",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lqLg",
+  "name": "Sony-TV",
+  "query": "Sony-TV",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lqLK",
+  "name": "Central Hotel",
+  "query": "Central Hotel",
+  "lat": 46.3765141,
+  "lng": 11.6591733,
+  "match": "Central Hotel, 4, Strada Luigi Heilmann, Someda, Moena, Comun General de Fascia, Provincia di Trento, Trentino-Alto Adige/Südtirol, 38035, Italia",
+  "type": "hotel"
+ },
+ {
+  "id": "7lqLc",
+  "name": "HOTEL LEV",
+  "query": "HOTEL LEV",
+  "lat": 46.0561939,
+  "lng": 14.502028,
+  "match": "Gosposvetska, Gosposvetska cesta, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "bus_stop"
+ },
+ {
+  "id": "7lqhD",
+  "name": "PIZZERIA FONTANA",
+  "query": "PIZZERIA FONTANA",
+  "lat": 48.1247233,
+  "lng": 16.3282455,
+  "match": "Pizzeria Fontana, 71, Ortsstraße, Katastralgemeinde Vösendorf, Vösendorf, Bezirk Mödling, Niederösterreich, 2331, Österreich",
+  "type": "restaurant"
+ },
+ {
+  "id": "7lkBS",
+  "name": "Lipoglav - Vikend",
+  "query": "Lipoglav - Vikend",
+  "lat": null,
+  "lng": null,
+  "match": null,
+  "type": null
+ },
+ {
+  "id": "7lkBR",
+  "name": "Stanovanje",
+  "query": "Stanovanje",
+  "lat": 43.5143679,
+  "lng": 16.4484489,
+  "match": "Direkcija za stanovanje, 6, Bleiburških žrtava, Gradski kotar Bol, Split, Grad Split, Splitsko-dalmatinska županija, 21000, Hrvatska",
+  "type": "company"
+ },
+ {
+  "id": "7lk8C",
+  "name": "HOTEL A",
+  "query": "HOTEL A",
+  "lat": 46.2679551,
+  "lng": 15.1885548,
+  "match": "Hotel A, 20, Mala Pirešica, Petrovče, Žalec, 3301, Slovenija",
+  "type": "hotel"
+ },
+ {
+  "id": "7lk80",
+  "name": "LOREX CENTER LJUBLJANA",
+  "query": "LOREX CENTER LJUBLJANA",
+  "lat": 46.0869591,
+  "lng": 14.4769106,
+  "match": "Lorex center, Cesta v Kleče, Industrijska cona Stegne, Kamna Gorica, Četrtna skupnost Dravlje, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "video;hifi"
+ },
+ {
+  "id": "7lkFk",
+  "name": "Luxury House",
+  "query": "Luxury House",
+  "lat": 41.9085679,
+  "lng": 12.4541979,
+  "match": "Maison Candia Luxury House, 20, Via Candia, Municipio Roma I, Roma, Roma Capitale, Lazio, 00192, Italia",
+  "type": "hotel"
+ },
+ {
+  "id": "7lkkZ",
+  "name": "VANDER URBANI RESORT",
+  "query": "VANDER URBANI RESORT",
+  "lat": 46.049548,
+  "lng": 14.5059952,
+  "match": "Vander urbani resort, 6-8, Krojaška ulica, Ledina, Grajski grič, Četrtna skupnost Center, Ljubljana, Upravna Enota Ljubljana, 1000, Slovenija",
+  "type": "hotel"
+ }
+]
