@@ -61,7 +61,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .atmosphereColor("#6d8de0")
         .atmosphereAltitude(0.16)
         .globeTileEngineUrl(ESRI)
-        .globeTileEngineMaxLevel(18)
+        // ESRI has real imagery to level 19 over Slovenia; 20 is just upscaled.
+        .globeTileEngineMaxLevel(19)
         .pointOfView(START, 0);
 
       // Blue-hour lighting: a cool, dim ambient and a low warm "sunset" key light.
@@ -85,7 +86,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       let hovered: Feature | null = null;
       let showingCountries: boolean | null = null;
 
-      g.polygonAltitude((f) => ((f as Feature).properties.tour ? 0.0012 : 0.0006))
+      // Keep borders hugging the ground (~40-50 m) so they don't float when zoomed in close.
+      g.polygonAltitude((f) => ((f as Feature).properties.tour ? 0.000008 : 0.000006))
         .polygonCapMaterial((f) =>
           (f as Feature).properties.tour ? (f === hovered ? tourCapHover : tourCap) : noCap,
         )
@@ -148,7 +150,35 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         window.clearTimeout(declutterTimer);
         declutterTimer = window.setTimeout(declutter, 120);
       };
+      // Load one tile level sharper than three-slippy-map-globe's default at every
+      // altitude (its thresholds are 8 / 2^level globe radii).
+      let sharpened = false;
+      const sharpenTiles = () => {
+        if (sharpened) return;
+        g.scene().traverse((o) => {
+          const tiles = o as unknown as { thresholds?: number[] };
+          if (Array.isArray(tiles.thresholds)) {
+            tiles.thresholds = tiles.thresholds.map((_, i) => 8 / 2 ** (i + 1));
+            sharpened = true;
+          }
+        });
+      };
+      sharpenTiles();
+
+      // globe.gl fixes the camera near plane at 0.05 (~3 km), which clips the ground when
+      // zoomed in close. Scale near/far with the distance to the surface instead.
+      const R = g.getGlobeRadius();
+      const fitClipping = (alt: number) => {
+        const cam = g.camera() as import("three").PerspectiveCamera;
+        const d = alt * R;
+        cam.near = Math.min(5, Math.max(0.0004, d * 0.25));
+        cam.far = (R + d) * 4;
+        cam.updateProjectionMatrix();
+      };
+
       g.onZoom((pov) => {
+        sharpenTiles();
+        fitClipping(pov.altitude);
         applyZoom(pov.altitude);
         scheduleDeclutter();
       });
@@ -158,7 +188,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       g.htmlElementsData([])
         .htmlLat((d) => (d as Tour).lat!)
         .htmlLng((d) => (d as Tour).lng!)
-        .htmlAltitude((d) => ((d as Tour).kind === "obcina" ? 0.002 : (d as Tour).kind === "business" ? 0.0012 : 0.001))
+        .htmlAltitude(0)
         .htmlTransitionDuration(0)
         .htmlElement((d) => {
           const t = d as Tour;
@@ -185,8 +215,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       const controls = g.controls();
       controls.autoRotate = false;
-      controls.zoomSpeed = 1.4;
-      controls.minDistance = 100.4;
+      // Allow zooming down to ~160 m above the ground (globe radius = 6371 km).
+      controls.minDistance = R * (1 + 0.000025);
+      fitClipping(START.altitude);
 
       const onResize = () => g.width(el.clientWidth).height(el.clientHeight);
       window.addEventListener("resize", onResize);

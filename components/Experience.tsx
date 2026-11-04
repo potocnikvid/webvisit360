@@ -6,6 +6,7 @@ import type { Filter, Tour, ToursFile } from "@/lib/types";
 import { compact, fmt, panoramas } from "@/lib/types";
 import type { Focus } from "./Globe";
 import PanoPreview from "./PanoPreview";
+import GoogleTour from "./GoogleTour";
 
 const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
@@ -297,7 +298,11 @@ export default function Experience() {
 
       {tourOpen && selected && (
         <div className="tour" role="dialog" aria-label={`Sprehod: ${selected.name}`}>
-          <iframe src={selected.url} title={selected.name} allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer" allowFullScreen />
+          {selected.source === "google" ? (
+            <GoogleTour tour={selected} />
+          ) : (
+            <iframe src={selected.url} title={selected.name} allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer" allowFullScreen />
+          )}
           <div className="tour__bar">
             <button className="btn btn--dark" onClick={() => setTourOpen(false)}>
               ← Nazaj na zemljevid

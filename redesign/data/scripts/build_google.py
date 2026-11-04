@@ -14,6 +14,8 @@ from pathlib import Path
 DATA = Path(__file__).resolve().parent.parent
 RAW = DATA / "raw" / "google_photos.json"
 TOURS = DATA / "tours.json"
+# Per-place panorama lists for the in-site viewer, loaded on demand by the site.
+SCENES = DATA.parent.parent / "public" / "data" / "google-scenes.json"
 
 # Reported on the public profile (Fotografije tab); the export doesn't carry it.
 PROFILE_VIEWS = 28_465_975
@@ -68,7 +70,7 @@ def main():
             continue
         groups[pl.get("placeId") or pl["name"]].append(p)
 
-    added, merged = [], 0
+    added, merged, scenes = [], 0, {}
     for key, photos in groups.items():
         pl = photos[0]["place"]
         lat, lng = pl.get("lat"), pl.get("lng")
@@ -84,8 +86,9 @@ def main():
             "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1s" + rep["id"]
             + f"!2m2!1d{rep['lat'] or lat}!2d{rep['lng'] or lng}!3f0!4f0!5f0.78"
         )
-        maps = (f"https://www.google.com/maps/place/?q=place_id:{pl['placeId']}"
-                if pl.get("placeId") else f"https://www.google.com/maps/search/?api=1&query={lat},{lng}")
+        # Opens Google Maps straight in the 360 view of the representative photo.
+        plat, plng = rep["lat"] or lat, rep["lng"] or lng
+        maps = f"https://www.google.com/maps/@{plat},{plng},3a,75y,90t/data=!3m4!1e1!3m2!1s{rep['id']}!2e10"
 
         # Already shown as a Kuula/3DVista tour? Link it instead of adding a duplicate.
         tk = tokens(pl["name"])
@@ -101,8 +104,15 @@ def main():
             merged += 1
             continue
 
+        gid = "g-" + re.sub(r"[^A-Za-z0-9_-]", "", key)[-24:]
+        # [photoId, image base url (append "=w…-h…-k-no"), lat, lng]; representative first.
+        ordered = [rep] + [p for p in photos if p is not rep]
+        scenes[gid] = [[p["id"], base(p["thumb"]),
+                        round(p["lat"], 6) if p["lat"] is not None else None,
+                        round(p["lng"], 6) if p["lng"] is not None else None]
+                       for p in ordered if p.get("thumb")]
         added.append({
-            "id": "g-" + re.sub(r"[^A-Za-z0-9_-]", "", key)[-24:],
+            "id": gid,
             "kind": "google",
             "source": "google",
             "name": pl["name"],
@@ -129,6 +139,7 @@ def main():
     st["googleViews"] = PROFILE_VIEWS
     st["placed"] = sum(1 for t in tours["items"] if t["lat"] is not None)
     json.dump(tours, open(TOURS, "w"), ensure_ascii=False, indent=1)
+    json.dump(scenes, open(SCENES, "w"), separators=(",", ":"))
     print(f"google places: {len(groups)} -> added {len(added)}, linked to existing {merged}")
 
 
