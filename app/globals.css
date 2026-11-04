@@ -87,9 +87,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   opacity: 0; transition: opacity .2s; pointer-events: none;
 }
-[data-labels="on"] .marker--obcina:not(.is-crowded) .marker__label { opacity: 1; }
-[data-near="on"] .marker--business:not(.is-crowded) .marker__label,
-[data-near="on"] .marker--google:not(.is-crowded) .marker__label,
+.marker.has-label .marker__label,
 .marker:hover .marker__label,
 .marker:focus-visible .marker__label,
 .marker.is-selected .marker__label { opacity: 1; z-index: 2; }

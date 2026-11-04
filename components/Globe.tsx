@@ -6,7 +6,7 @@ import type { Tour } from "@/lib/types";
 
 type Feature = {
   type: "Feature";
-  properties: { k: "c" | "m"; tour: string | null; name?: string };
+  properties: { k: "c" | "m"; tour: string | null; n?: string };
   geometry: unknown;
 };
 
@@ -25,10 +25,32 @@ type Props = {
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 const START = { lat: 38, lng: 2, altitude: 2.4 };
 
-// Above this altitude we draw country outlines; below it, municipalities.
-const COUNTRY_ALT = 0.55;
-// Below this altitude marker labels become visible.
-const LABEL_ALT = 0.5;
+// Border layers overlap between these altitudes so neither pops in or out at once:
+// countries are drawn above COUNTRY_MIN, municipalities below MUNI_MAX.
+const COUNTRY_MIN = 0.3;
+const MUNI_MAX = 0.9;
+// Below this altitude municipality names may be labelled; other places below PLACE_ALT.
+const MUNI_LABEL_ALT = 0.5;
+const PLACE_LABEL_ALT = 0.25;
+// Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
+const GOOGLE_VIEWS_PER_PHOTO = 2700;
+
+/** How important a place is when competing for label space. */
+const importance = (t: Tour) =>
+  t.kind === "obcina"
+    ? 1e12 + (t.scenes ?? 0)
+    : t.views ?? (t.scenes ?? 0) * (t.source === "google" ? GOOGLE_VIEWS_PER_PHOTO : 1000);
+
+/** Map label: municipality without "Občina", business up to its first separator, max ~30 chars. */
+const shortLabel = (t: Tour) => {
+  if (t.kind === "obcina") return t.name.replace(/^Občina /, "");
+  let s = t.name.split(/\s+[|–-]\s+|,\s+/)[0].trim();
+  if (s.length > 30) s = s.slice(0, 29).trimEnd() + "…";
+  return s;
+};
+
+/** Most labels on screen at once, growing as you zoom in. */
+const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 0.015 ? 40 : 60);
 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
@@ -40,6 +62,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const toursRef = useRef(tours);
+  const labelsRef = useRef<() => void>(() => {});
   toursRef.current = tours;
 
   // ---- create the globe once -------------------------------------------------
@@ -110,48 +133,81 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           if (id) onSelectRef.current(id);
         });
 
+      const countriesOutsideSlovenia = countries.filter((f) => f.properties.n !== "Slovenia");
+      let borderMode = "";
       const applyZoom = (alt: number) => {
-        const wantCountries = alt > COUNTRY_ALT;
-        if (wantCountries !== showingCountries) {
-          showingCountries = wantCountries;
-          g.polygonsData(wantCountries ? countries : munis);
-        }
-        el.dataset.labels = alt < LABEL_ALT ? "on" : "off";
-        el.dataset.near = alt < 0.03 ? "on" : "off";
+        const mode = alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
+        if (mode === borderMode) return;
+        borderMode = mode;
+        g.polygonsData(mode === "c" ? countries : mode === "m" ? munis : [...countriesOutsideSlovenia, ...munis]);
       };
-      // Greedy label de-cluttering: bigger tours keep their label, overlapping ones hide.
-      let declutterTimer = 0;
+
+      // ---- Labels: greedy placement by importance, using projected screen positions
+      // (no DOM measuring), so it can run every frame while the globe moves.
+      const LABEL_H = 24;
+      const labelW = new Map<string, number>();
+      const shown = new Set<string>();
       const declutter = () => {
-        const near = el.dataset.near === "on";
-        const labelsOn = el.dataset.labels === "on";
-        const rank = (t: Tour) =>
-          (t.kind === "obcina" ? 1e9 : t.kind === "business" ? 1e8 : 0) + (t.views ?? 0) + (t.scenes ?? 0);
-        const byId = new Map(toursRef.current.map((t) => [t.id, t]));
-        const list = [...markers.current.entries()]
-          .map(([id, m]) => ({ m, t: byId.get(id) }))
-          .filter((x) => x.t && x.m.isConnected && (x.t.kind === "obcina" ? labelsOn : near))
-          // The selected marker always wins.
-          .sort((a, b) =>
-            Number(b.m.classList.contains("is-selected")) - Number(a.m.classList.contains("is-selected")) ||
-            rank(b.t!) - rank(a.t!),
-          );
-        const placed: DOMRect[] = [];
-        markers.current.forEach((m) => m.classList.remove("is-crowded"));
-        for (const { m } of list) {
-          const r = m.querySelector(".marker__label")!.getBoundingClientRect();
-          const hit = placed.some(
-            (p) => r.left < p.right + 4 && r.right > p.left - 4 && r.top < p.bottom + 2 && r.bottom > p.top - 2,
-          );
-          m.classList.toggle("is-crowded", hit);
-          if (!hit) placed.push(r);
+        const alt = g.pointOfView().altitude;
+        const cam = g.camera().position;
+        const camLen2 = cam.x * cam.x + cam.y * cam.y + cam.z * cam.z;
+        const W = el.clientWidth;
+        const H = el.clientHeight;
+        const budget = labelBudget(alt);
+        const selected = [...markers.current.entries()].find(([, m]) => m.classList.contains("is-selected"))?.[0];
+
+        const candidates = toursRef.current
+          .filter((t) => t.lat != null && (t.kind === "obcina" ? alt < MUNI_LABEL_ALT : alt < PLACE_LABEL_ALT) || t.id === selected)
+          .sort((a, b) => Number(b.id === selected) - Number(a.id === selected) || importance(b) - importance(a));
+
+        // Keep labels clear of the page's own text and controls.
+        const host = el.getBoundingClientRect();
+        const placed: { l: number; r: number; t: number; b: number }[] = [];
+        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .topbar > *, .finder, .panel, .enquiry").forEach((n) => {
+          const r = n.getBoundingClientRect();
+          if (r.width && r.height && getComputedStyle(n).opacity !== "0")
+            placed.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });
+        });
+        const next = new Set<string>();
+        for (const t of candidates) {
+          if (next.size >= budget && t.id !== selected) break;
+          const m = markers.current.get(t.id);
+          if (!m || !m.isConnected) continue;
+          // Skip points on the far side of the globe (p·c must exceed R² to be in view).
+          const p = g.getCoords(t.lat!, t.lng!, 0);
+          if (p.x * cam.x + p.y * cam.y + p.z * cam.z <= R * R * (1 + 1e-9) && camLen2 > R * R) continue;
+          const sc = g.getScreenCoords(t.lat!, t.lng!, 0);
+          if (sc.x < 0 || sc.y < 0 || sc.x > W || sc.y > H) continue;
+          let w = labelW.get(t.id);
+          if (w == null) {
+            w = (m.querySelector(".marker__label")!.textContent ?? "").length * 6.9 + 18;
+            labelW.set(t.id, w);
+          }
+          const lift = t.kind === "obcina" ? 15 : 11;
+          const box = { l: sc.x - w / 2 - 4, r: sc.x + w / 2 + 4, t: sc.y - lift - LABEL_H - 3, b: sc.y - lift + 3 };
+          if (placed.some((q) => box.l < q.r && box.r > q.l && box.t < q.b && box.b > q.t)) continue;
+          placed.push(box);
+          next.add(t.id);
         }
+        for (const id of shown) if (!next.has(id)) markers.current.get(id)?.classList.remove("has-label");
+        for (const id of next) if (!shown.has(id)) markers.current.get(id)?.classList.add("has-label");
+        shown.clear();
+        next.forEach((id) => shown.add(id));
       };
+      let declutterRaf = 0;
+      let declutterTimer = 0;
       const scheduleDeclutter = () => {
+        // At most once per frame while moving, plus once more when the motion settles.
+        if (!declutterRaf) declutterRaf = requestAnimationFrame(() => { declutterRaf = 0; declutter(); });
         window.clearTimeout(declutterTimer);
-        declutterTimer = window.setTimeout(declutter, 120);
+        declutterTimer = window.setTimeout(declutter, 200);
       };
+      labelsRef.current = scheduleDeclutter;
+
       // Load one tile level sharper than three-slippy-map-globe's default at every
-      // altitude (its thresholds are 8 / 2^level globe radii).
+      // altitude (its thresholds are 8 / 2^level globe radii). Never use levels 0-2:
+      // ESRI's lowest levels are a lighter, hazier mosaic, so the whole globe would
+      // visibly change tone when level 3 loads.
       let sharpened = false;
       const sharpenTiles = () => {
         if (sharpened) return;
@@ -159,6 +215,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           const tiles = o as unknown as { thresholds?: number[] };
           if (Array.isArray(tiles.thresholds)) {
             tiles.thresholds = tiles.thresholds.map((_, i) => 8 / 2 ** (i + 1));
+            (tiles as unknown as { minLevel: number }).minLevel = 3;
             sharpened = true;
           }
         });
@@ -200,8 +257,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             m.className = `marker marker--${t.kind}`;
             m.setAttribute("aria-label", t.name);
             m.innerHTML = `<span class="marker__dot"></span><span class="marker__label"></span>`;
-            m.querySelector(".marker__label")!.textContent =
-              t.kind === "obcina" ? t.name.replace(/^Občina /, "") : t.name;
+            m.querySelector(".marker__label")!.textContent = shortLabel(t);
+            m.title = t.name;
             m.addEventListener("click", (e) => {
               e.stopPropagation();
               onSelectRef.current(t.id);
@@ -223,6 +280,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       window.addEventListener("resize", onResize);
 
       globe.current = g;
+      // Handy for automated visual checks in development.
+      if (process.env.NODE_ENV !== "production") (window as unknown as { __globe: GlobeInstance }).__globe = g;
       g.htmlElementsData(toursRef.current.filter((t) => t.lat != null));
       onReady?.();
 
@@ -232,6 +291,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       cleanup = () => {
         window.clearTimeout(t);
         window.clearTimeout(declutterTimer);
+        cancelAnimationFrame(declutterRaf);
         window.removeEventListener("resize", onResize);
         g._destructor?.();
         el.innerHTML = "";
@@ -253,6 +313,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
   useEffect(() => {
     markers.current.forEach((m, id) => m.classList.toggle("is-selected", id === selectedId));
+    labelsRef.current();
   }, [selectedId, tours]);
 
   useEffect(() => {
