@@ -1,7 +1,7 @@
 export type Tour = {
   id: string;
-  kind: "obcina" | "business";
-  source: "3dvista" | "kuula";
+  kind: "obcina" | "business" | "google";
+  source: "3dvista" | "kuula" | "google";
   name: string;
   place: string | null;
   lat: number | null;
@@ -14,6 +14,12 @@ export type Tour = {
   views: number | null;
   highlights: string[];
   created?: string;
+  category?: string | null;
+  address?: string | null;
+  /** Google Maps place page (google items). */
+  mapsUrl?: string;
+  /** Same place also published on Google Maps (Kuula/3DVista items). */
+  gmaps?: { url: string; embed: string; scenes: number };
 };
 
 export type ToursFile = {
@@ -23,11 +29,14 @@ export type ToursFile = {
     placed: number;
     scenes: number;
     kuulaViews: number;
+    google?: number;
+    googlePhotos?: number;
+    googleViews?: number;
   };
   items: Tour[];
 };
 
-export type Filter = "all" | "obcina" | "business";
+export type Filter = "all" | "obcina" | "business" | "google";
 
 export const fmt = (n: number) => n.toLocaleString("sl-SI");
 

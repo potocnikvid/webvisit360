@@ -122,9 +122,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const declutter = () => {
         const near = el.dataset.near === "on";
         const labelsOn = el.dataset.labels === "on";
-        const rank = (t: Tour) => (t.kind === "obcina" ? 1e9 : 0) + (t.views ?? 0) + (t.scenes ?? 0);
+        const rank = (t: Tour) =>
+          (t.kind === "obcina" ? 1e9 : t.kind === "business" ? 1e8 : 0) + (t.views ?? 0) + (t.scenes ?? 0);
+        const byId = new Map(toursRef.current.map((t) => [t.id, t]));
         const list = [...markers.current.entries()]
-          .map(([id, m]) => ({ m, t: toursRef.current.find((x) => x.id === id) }))
+          .map(([id, m]) => ({ m, t: byId.get(id) }))
           .filter((x) => x.t && x.m.isConnected && (x.t.kind === "obcina" ? labelsOn : near))
           // The selected marker always wins.
           .sort((a, b) =>
@@ -156,7 +158,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       g.htmlElementsData([])
         .htmlLat((d) => (d as Tour).lat!)
         .htmlLng((d) => (d as Tour).lng!)
-        .htmlAltitude((d) => ((d as Tour).kind === "obcina" ? 0.002 : 0.001))
+        .htmlAltitude((d) => ((d as Tour).kind === "obcina" ? 0.002 : (d as Tour).kind === "business" ? 0.0012 : 0.001))
         .htmlTransitionDuration(0)
         .htmlElement((d) => {
           const t = d as Tour;

@@ -122,3 +122,19 @@ Built on this branch, replacing the 2023 pages-router app (old `public/` assets 
   `redesign/data/scripts/rewind.py`; re-run it after regenerating geo.json.
 - Not done on purpose (prototype): enquiry form, "Kako deluje"/"Cenik" pages, English,
   Google Maps layer (chip shown as "kmalu"), licensed tile source.
+
+## Google Maps layer (added 2026-11-04)
+
+- Source: the "Webvisit360 – FPhoto" contributor profile (10,607 photos, 28.5M views).
+  Google lists only 10 photos to signed-out visitors, so the owner ran
+  `scripts/gmaps_console_export.js` in their signed-in browser; the result is
+  `raw/google_photos.json`. The profile setting "show photos on profile" was turned on
+  for this and can be turned off again.
+- `scripts/build_google.py` groups photos by place (680 places) and merges them into
+  `tours.json`: 630 new items (`kind`/`source` = "google"); 50 places that already have a
+  Kuula/3DVista tour get a `gmaps` link instead of a duplicate point. Copy tours.json to
+  `public/data/` after rebuilding.
+- Google items: `url` = Street View embed (iframe-able), `mapsUrl` = place page,
+  `cover` = full 2048×1024 equirectangular from lh3 (CORS ok) for the live preview.
+- The Street View Publish API returned 0 photos for the account that signed in; the photos
+  are tagged as API uploads, so the right account would probably work too. Not needed now.

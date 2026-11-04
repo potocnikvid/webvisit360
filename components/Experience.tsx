@@ -15,6 +15,8 @@ const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 const norm = (s: string) =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
+const rankKind = (t: Tour) => (t.kind === "obcina" ? 0 : t.kind === "business" ? 1 : 2);
+
 const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
   const seen = new Set<string>();
   return xs.filter((x) => {
@@ -60,7 +62,7 @@ export default function Experience() {
     // Municipalities first, then most-viewed.
     return list.sort(
       (a, b) =>
-        (a.kind === "obcina" ? 0 : 1) - (b.kind === "obcina" ? 0 : 1) ||
+        rankKind(a) - rankKind(b) ||
         (b.views ?? b.scenes ?? 0) - (a.views ?? a.scenes ?? 0),
     );
   }, [visible, query]);
@@ -77,7 +79,7 @@ export default function Experience() {
       setSelectedId(id);
       setEnquiry(false);
       setSearchOpen(false);
-      if (t.lat != null && t.lng != null) fly(t.lat, t.lng, t.kind === "obcina" ? 0.03 : 0.012, undefined, true);
+      if (t.lat != null && t.lng != null) fly(t.lat, t.lng, t.kind === "obcina" ? 0.03 : 0.01, undefined, true);
     },
     [byId, fly],
   );
@@ -101,7 +103,9 @@ export default function Experience() {
   }, [tourOpen, searchOpen, selectedId, close]);
 
   const stats = data?.stats;
-  const totalViews = stats ? stats.kuulaViews : 0;
+  const totalViews = stats ? stats.kuulaViews + (stats.googleViews ?? 0) : 0;
+  const totalScenes = stats ? stats.scenes + (stats.googlePhotos ?? 0) : 0;
+  const totalPlaces = stats ? stats.business + (stats.google ?? 0) : 0;
 
   return (
     <main className={`app ${selected ? "has-panel" : ""} ${ready ? "is-ready" : ""}`}>
@@ -147,12 +151,12 @@ export default function Experience() {
               <dd>{stats.obcine}</dd>
             </div>
             <div>
-              <dt>podjetij</dt>
-              <dd>{stats.business}+</dd>
+              <dt>podjetij in krajev</dt>
+              <dd>{fmt(Math.floor(totalPlaces / 10) * 10)}+</dd>
             </div>
             <div>
               <dt>panoram</dt>
-              <dd>{fmt(stats.scenes)}</dd>
+              <dd>{fmt(totalScenes)}</dd>
             </div>
             <div>
               <dt>ogledov</dt>
@@ -169,6 +173,7 @@ export default function Experience() {
               ["all", "Vse"],
               ["obcina", "Občine"],
               ["business", "Podjetja"],
+              ["google", "Google Zemljevidi"],
             ] as const
           ).map(([k, label]) => (
             <button
@@ -182,10 +187,6 @@ export default function Experience() {
               {label}
             </button>
           ))}
-          <button className="chip" disabled title="Kmalu">
-            <i className="swatch swatch--gmaps" />
-            Google Zemljevidi <small>kmalu</small>
-          </button>
         </div>
 
         <div className={`search ${searchOpen ? "is-open" : ""}`}>
@@ -236,15 +237,24 @@ export default function Experience() {
           </div>
           <div className="panel__body">
             <p className="panel__kicker">
-              {selected.kind === "obcina" ? "Občina" : "Podjetje"}
+              {selected.kind === "obcina" ? "Občina" : selected.kind === "google" ? "Google Zemljevidi" : "Podjetje"}
               {selected.place && selected.kind !== "obcina" ? ` · ${selected.place}` : ""}
+              {selected.category ? ` · ${selected.category}` : ""}
               {selected.approx && <span title="Lokacija je približna (kraj)"> · približna lokacija</span>}
             </p>
             <h2>{selected.name}</h2>
             <ul className="panel__meta">
               {selected.scenes != null && <li>{panoramas(selected.scenes)}</li>}
               {selected.views != null && <li>{fmt(selected.views)} ogledov</li>}
+              {selected.gmaps && (
+                <li>
+                  <a className="panel__link" href={selected.gmaps.url} target="_blank" rel="noopener">
+                    + {panoramas(selected.gmaps.scenes)} na Google Zemljevidih ↗
+                  </a>
+                </li>
+              )}
             </ul>
+            {selected.address && <p className="panel__address">{selected.address}</p>}
             {selected.highlights.length > 0 && (
               <ul className="panel__tags">
                 {uniqueBy(selected.highlights, norm).slice(0, 9).map((h) => (
@@ -259,6 +269,11 @@ export default function Experience() {
               <button className="btn btn--ghost" onClick={() => setEnquiry(true)}>
                 Želim takšen sprehod
               </button>
+              {selected.mapsUrl && (
+                <a className="panel__link panel__link--center" href={selected.mapsUrl} target="_blank" rel="noopener">
+                  Odpri v Google Zemljevidih ↗
+                </a>
+              )}
             </div>
           </div>
         </aside>

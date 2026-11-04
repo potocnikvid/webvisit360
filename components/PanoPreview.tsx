@@ -128,7 +128,10 @@ export default function PanoPreview({ src, alt }: { src: string; alt: string }) 
   return (
     <div className="pano" ref={host} role="img" aria-label={`360° predogled: ${alt}`} data-state={state}>
       {state === "loading" && <span className="pano__hint">Nalagam panoramo…</span>}
-      {state === "error" && <span className="pano__hint">Predogled ni na voljo</span>}
+      {state === "error" && (
+        // WebGL texture failed (network/CORS): show the panorama as a flat image instead.
+        <img className="panel__cover" src={src} alt="" onError={(e) => (e.currentTarget.style.display = "none")} />
+      )}
       {state === "ready" && <span className="pano__drag">Povlecite za razgled</span>}
     </div>
   );
