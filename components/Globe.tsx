@@ -137,6 +137,28 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           if (id) onSelectRef.current(id);
         });
 
+      // three-globe draws every border line 1e-4 globe radii (~640 m) above its filled area.
+      // Zoomed in close, that parallax moves the lines hundreds of metres off the areas that
+      // react to the pointer, so hover/click seemed to pick a neighbour. Before each frame,
+      // pull the lines back down to just above their fill.
+      const STROKE_LIFT = 0.000002; // ~13 m
+      let polygonLayer: import("three").Object3D | null = null;
+      g.scene().onBeforeRender = () => {
+        if (!polygonLayer)
+          g.scene().traverse((o) => {
+            if (!polygonLayer && (o as { __globeObjType?: string }).__globeObjType === "polygon") polygonLayer = o.parent;
+          });
+        for (const o of polygonLayer?.children ?? []) {
+          const [fill, stroke] = o.children;
+          if (!stroke) continue;
+          const s = fill.scale.x + STROKE_LIFT;
+          if (stroke.scale.x !== s) {
+            stroke.scale.setScalar(s);
+            stroke.updateMatrixWorld();
+          }
+        }
+      };
+
       const countriesOutsideSlovenia = countries.filter((f) => f.properties.n !== "Slovenia");
       let borderMode = "";
       const applyZoom = (alt: number) => {
