@@ -106,3 +106,19 @@ scenes, views (Kuula only), highlights[] (cleaned scene names, 3DVista only)`.
    report it to the owner. If not, say so.
 3. Get the owner's reaction, then write the design doc and plan for the full
    site. Do not merge to `main` or touch production without the owner's OK.
+
+## Prototype status (cloud session, 2026-11-04)
+
+Built on this branch, replacing the 2023 pages-router app (old `public/` assets kept):
+
+- `app/` Next.js 15 App Router, `components/Experience.tsx` (UI state, hero, finder,
+  panel, enquiry stub, tour overlay), `components/Globe.tsx` (globe.gl: ESRI imagery
+  tiles, blue-hour lighting, country outlines far out / municipality borders up close,
+  tour municipalities filled amber, HTML markers with label de-cluttering, fly-in),
+  `components/PanoPreview.tsx` (draggable three.js 360 preview of 3DVista covers).
+- Data is served from `public/data/` (copies of `redesign/data/tours.json`, `geo.json`).
+- `geo.json` municipality rings were counter-clockwise (RFC 7946); globe.gl/d3 needs
+  clockwise exteriors or each polygon fills the whole globe. Fixed with
+  `redesign/data/scripts/rewind.py`; re-run it after regenerating geo.json.
+- Not done on purpose (prototype): enquiry form, "Kako deluje"/"Cenik" pages, English,
+  Google Maps layer (chip shown as "kmalu"), licensed tile source.
