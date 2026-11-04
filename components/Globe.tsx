@@ -121,6 +121,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           return p.tour ? "rgba(255,210,122,0.9)" : "rgba(214,224,245,0.28)";
         })
         .polygonsTransitionDuration(0)
+        // Only the filled areas should react to the pointer. globe.gl's default line
+        // threshold (0.2 units ≈ 13 km) let border lines - often a neighbour's - catch
+        // the pointer from far away once zoomed in.
+        .lineHoverPrecision(0)
         .onPolygonHover((f) => {
           const next = f && (f as Feature).properties.tour ? (f as Feature) : null;
           if (next === hovered) return;
