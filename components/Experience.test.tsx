@@ -104,3 +104,32 @@ test("no marker when the location is unknown", async () => {
   await screen.findByRole("button", { name: t.near.precise });
   expect(props()?.you ?? null).toBeNull();
 });
+
+test("shows only the public contact address, never a personal one", async () => {
+  render(<Experience visitor={null} />);
+  const mail = await screen.findByRole("link", { name: "info@webvisit360.com" });
+  expect(mail.getAttribute("href")).toBe("mailto:info@webvisit360.com");
+  expect(document.body.innerHTML).not.toMatch(/vid\.slovenia7|gmail\.com/);
+});
+
+test("shows the Street View Trusted badge and links to the About page", async () => {
+  render(<Experience visitor={null} />);
+  expect(await screen.findByAltText("Google Street View Trusted")).toBeTruthy();
+  const links = screen.getAllByRole("link", { name: t.nav.about });
+  expect(links.length).toBe(2); // topbar, and the footer for phones (where the topbar hides links)
+  for (const l of links) expect(l.getAttribute("href")).toBe("/o-nas");
+});
+
+test("?tour=<id> opens that place, so the About page can link to references", async () => {
+  window.history.replaceState(null, "", "/?tour=zalec");
+  render(<Experience visitor={null} />);
+  expect(await screen.findByRole("heading", { name: "Občina Žalec" })).toBeTruthy();
+  window.history.replaceState(null, "", "/");
+});
+
+test("?povprasevanje opens the enquiry chat", async () => {
+  window.history.replaceState(null, "", "/?povprasevanje");
+  render(<Experience visitor={null} />);
+  expect(await screen.findByLabelText(t.chat.placeholder)).toBeTruthy();
+  window.history.replaceState(null, "", "/");
+});

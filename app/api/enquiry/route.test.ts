@@ -40,10 +40,10 @@ describe("POST /api/enquiry", () => {
     expect(send).not.toHaveBeenCalled();
   });
 
-  test("rejects an invalid enquiry with a mailto fallback", async () => {
+  test("rejects an invalid enquiry with a mailto to the public address, never ENQUIRY_TO", async () => {
     const res = await post({ enquiry: { ...enquiry, email: undefined }, context, transcript: [] });
     expect(res.status).toBe(400);
-    expect((await res.json()).mailto).toMatch(/^mailto:vid@example\.com/);
+    expect((await res.json()).mailto).toMatch(/^mailto:info@webvisit360\.com/);
   });
 
   test("returns a mailto with the summary when Resend fails", async () => {

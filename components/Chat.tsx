@@ -7,8 +7,8 @@ import { MAX_MESSAGE_CHARS, MAX_VISITOR_MESSAGES, firstMessage } from "@/lib/cha
 import { EnquirySchema, mailtoHref, type ChatContext, type Proposal, type TranscriptLine } from "@/lib/enquiry";
 import type { Copy } from "@/lib/i18n";
 import { readNdjson } from "@/lib/ndjson";
+import { CONTACT } from "@/lib/contact";
 
-export const ENQUIRY_TO = process.env.NEXT_PUBLIC_ENQUIRY_TO || "vid.slovenia7@gmail.com";
 
 type Props = {
   copy: Copy;
@@ -58,7 +58,7 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
     transcript(ls).map((l) => `${l.role === "visitor" ? "Jaz" : "Webvisit360"}: ${l.text}`).join("\n\n");
 
   const showFallback = (text: string, body: string, href?: string) =>
-    setFallback({ text, mailto: href ?? mailtoHref(ENQUIRY_TO, "Povpraševanje za 360° sprehod", body.slice(0, 1500)) });
+    setFallback({ text, mailto: href ?? mailtoHref(CONTACT.email, "Povpraševanje za 360° sprehod", body.slice(0, 1500)) });
 
   const visitorCount = lines.filter((l) => l.role === "visitor").length;
   const lastAssistant = [...lines].reverse().find((l) => l.role === "assistant" && !l.streaming)?.text ?? "";
@@ -222,7 +222,7 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
         {status === "sent" && <p className="chat__msg chat__msg--assistant chat__msg--done">{t.chat.sent}</p>}
         {fallback && (
           <p className="chat__msg chat__msg--assistant chat__fallback">
-            {fallback.text} <a href={fallback.mailto}>{t.chat.emailUs(ENQUIRY_TO)}</a>
+            {fallback.text} <a href={fallback.mailto}>{t.chat.emailUs(CONTACT.email)}</a>
           </p>
         )}
       </div>

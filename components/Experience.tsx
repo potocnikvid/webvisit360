@@ -4,14 +4,16 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PlaceType, Tour, ToursFile } from "@/lib/types";
 import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
-import { copy, pickLang, type Lang } from "@/lib/i18n";
+import { copy } from "@/lib/i18n";
+import { useLang } from "@/lib/useLang";
+import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 import { isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus } from "./Globe";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
 import NearYou from "./NearYou";
-import Chat, { ENQUIRY_TO } from "./Chat";
+import Chat from "./Chat";
 import PrivacyNotice from "./PrivacyNotice";
 
 const Globe = dynamic(() => import("./Globe"), { ssr: false });
@@ -28,8 +30,6 @@ const NEAR_COUNT = 5;
 /** A view showing the visitor and the places near them. */
 const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) =>
   frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
-
-const LANG_KEY = "wv360-lang";
 
 const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
   const seen = new Set<string>();
@@ -48,7 +48,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   const [moreTypes, setMoreTypes] = useState(false);
   const [visitor, setVisitor] = useState(ipVisitor);
   const [locationError, setLocationError] = useState(false);
-  const [lang, setLang] = useState<Lang>("sl");
+  const { lang, switchLang } = useLang();
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -71,26 +71,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   const t = copy[lang];
   const [navigatorLang, setNavigatorLang] = useState("");
 
-  useEffect(() => {
-    let saved: string | null = null;
-    try {
-      saved = localStorage.getItem(LANG_KEY);
-    } catch {}
-    setLang(saved === "sl" || saved === "en" ? saved : pickLang(navigator.languages ?? [navigator.language]));
-    setNavigatorLang(navigator.language);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
-
-  const switchLang = () => {
-    const next = lang === "sl" ? "en" : "sl";
-    setLang(next);
-    try {
-      localStorage.setItem(LANG_KEY, next);
-    } catch {}
-  };
+  useEffect(() => setNavigatorLang(navigator.language), []);
 
   useEffect(() => {
     fetch("/data/tours.json").then((r) => r.json()).then(setData);
@@ -145,6 +126,17 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
     },
     [byId, fly],
   );
+
+  // Deep links from the About page: /?tour=<id> opens a place, /?povprasevanje opens the chat.
+  const linked = useRef(false);
+  useEffect(() => {
+    if (!data || linked.current) return;
+    linked.current = true;
+    const q = new URLSearchParams(window.location.search);
+    const id = q.get("tour");
+    if (id && byId.has(id)) select(id);
+    else if (q.has("povprasevanje")) setEnquiry(true);
+  }, [data, byId, select]);
 
   const home = useMemo(() => (near.length ? frame(origin!, near) : SLOVENIA), [near]);
 
@@ -243,6 +235,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
           </span>
         </a>
         <nav className="nav">
+          <a className="nav__link" href="/o-nas">{t.nav.about}</a>
           <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
             {t.langSwitch.label}
           </button>
@@ -275,6 +268,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
             </div>
           </dl>
         )}
+        <img className="trusted" src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={150} height={38} />
       </section>
 
       <div className="finder">
@@ -429,14 +423,15 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
 
       <footer className="footer">
         <span>{t.footer.company}</span>
-        <a className="footer__mail" href={`mailto:${ENQUIRY_TO}`}>{ENQUIRY_TO}</a>
+        <a href="/o-nas">{t.nav.about}</a>
+        <a className="footer__mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         <a href="https://www.facebook.com/Webvisit360" target="_blank" rel="noopener">Facebook</a>
         <a href="https://www.instagram.com/webvisit360" target="_blank" rel="noopener">Instagram</a>
         <a href="https://kuula.co/profile/WEBVISIT360" target="_blank" rel="noopener">Kuula</a>
         <button onClick={() => setPrivacyOpen(true)}>{t.footer.privacy}</button>
       </footer>
 
-      {privacyOpen && <PrivacyNotice copy={t} contact={ENQUIRY_TO} onClose={() => setPrivacyOpen(false)} />}
+      {privacyOpen && <PrivacyNotice copy={t} contact={CONTACT.email} onClose={() => setPrivacyOpen(false)} />}
 
       {!ready && <div className="loader">{t.loading}</div>}
     </main>

@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { EnquirySchema, mailtoHref, renderEnquiryEmail, type ChatContext, type TranscriptLine } from "@/lib/enquiry";
 import { clientIp, limit } from "@/lib/limits";
+import { CONTACT } from "@/lib/contact";
 
 export const runtime = "nodejs";
 
@@ -21,10 +22,11 @@ const Body = z.object({
   website: z.string().optional(),
 });
 
+/** Where enquiries are delivered. Server-only: never sent to the browser, which only shows CONTACT.email. */
 const to = () => process.env.ENQUIRY_TO || "vid.slovenia7@gmail.com";
 
 const fail = (status: number, subject: string, body: string) =>
-  Response.json({ ok: false, mailto: mailtoHref(to(), subject, body.slice(0, 1500)) }, { status });
+  Response.json({ ok: false, mailto: mailtoHref(CONTACT.email, subject, body.slice(0, 1500)) }, { status });
 
 export async function POST(req: Request) {
   const parsed = Body.safeParse(await req.json().catch(() => null));

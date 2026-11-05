@@ -19,6 +19,7 @@ const slPlural = (n: number, one: string, two: string, few: string, many: string
 const sl = {
   brandHome: "Webvisit360 domov",
   wantOwn: "Želim svoj sprehod",
+  nav: { about: "O nas" },
   langSwitch: { label: "EN", aria: "Preklopi v angleščino" },
   hero: {
     title: "Sprehodite se, preden pridete.",
@@ -86,7 +87,7 @@ const sl = {
     label: "Povpraševanje",
     title: "Pokažite se v 360°.",
     greeting:
-      "Živjo! Sem Vidov pomočnik za 360° sprehode. Povejte mi, kaj bi radi pokazali obiskovalcem, in pripravimo vam osebno ponudbo.",
+      "Živjo! Sem Pano, pomočnik ekipe Webvisit360. Povejte mi, kaj bi radi pokazali obiskovalcem, in pripravimo vam osebno ponudbo.",
     greetingFrom: (name: string) =>
       `Vam je všeč ${name}? Takšen sprehod lahko posnamemo tudi za vas. Kaj bi radi pokazali obiskovalcem?`,
     placeholder: "Napišite sporočilo…",
@@ -99,7 +100,7 @@ const sl = {
     confirm: "Pošlji povpraševanje",
     edit: "Popravi",
     sending: "Pošiljam…",
-    sent: "Hvala! Vid vam v kratkem pošlje osebno ponudbo.",
+    sent: "Hvala! V kratkem vam pošljemo osebno ponudbo.",
     unavailable: "Klepet trenutno ne deluje. Pišite nam po e-pošti, sporočilo je že pripravljeno:",
     limit: "Danes je pogovorov res veliko. Pišite nam po e-pošti, sporočilo je že pripravljeno:",
     tooMany: "Pogovor je že kar dolg. Pošljite nam ga po e-pošti:",
@@ -126,6 +127,7 @@ export type Copy = typeof sl;
 const en: Copy = {
   brandHome: "Webvisit360 home",
   wantOwn: "Get your own tour",
+  nav: { about: "About" },
   langSwitch: { label: "SL", aria: "Switch to Slovenian" },
   hero: {
     title: "Walk around before you arrive.",
@@ -192,7 +194,7 @@ const en: Copy = {
   chat: {
     label: "Enquiry",
     title: "Show yourself in 360°.",
-    greeting: "Hi! I'm Vid's assistant for 360° tours. Tell me what you'd like to show your visitors and we'll prepare a personal offer.",
+    greeting: "Hi! I'm Pano, the Webvisit360 team's helper. Tell me what you'd like to show your visitors and we'll prepare a personal offer.",
     greetingFrom: (name: string) => `Like ${name}? We can film a tour like that for you too. What would you like to show your visitors?`,
     placeholder: "Write a message…",
     send: "Send",
@@ -204,7 +206,7 @@ const en: Copy = {
     confirm: "Send enquiry",
     edit: "Change",
     sending: "Sending…",
-    sent: "Thank you! Vid will send you a personal offer shortly.",
+    sent: "Thank you! We'll send you a personal offer shortly.",
     unavailable: "The chat isn't working right now. Email us instead, your message is ready:",
     limit: "We've had a lot of chats today. Email us instead, your message is ready:",
     tooMany: "This chat is getting long. Send it to us by email:",
