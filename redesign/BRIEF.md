@@ -138,3 +138,15 @@ Built on this branch, replacing the 2023 pages-router app (old `public/` assets 
   `cover` = full 2048×1024 equirectangular from lh3 (CORS ok) for the live preview.
 - The Street View Publish API returned 0 photos for the account that signed in; the photos
   are tagged as API uploads, so the right account would probably work too. Not needed now.
+
+## Finished site (2026-11-05)
+
+Built from `docs/superpowers/specs/2026-11-05-webvisit360-site-design.md` and the plan in
+`docs/superpowers/plans/2026-11-05-webvisit360-site.md`:
+
+- Fly-in to the visitor's approximate location (Vercel IP headers, SI/HR/AT/IT/HU only),
+  "closest to you" card, type chips (13 types from `scripts/classify.py`), exact-location button.
+- SL/EN page copy in `lib/i18n.ts` with a toggle; the chat answers in the visitor's language.
+- Enquiry chat on Claude Haiku 5.5 (`/api/chat`), confirm card, email via Resend
+  (`/api/enquiry`), mailto fallback, Upstash rate limits, privacy notice, footer.
+- Env vars and owner setup steps: `README.md`.
