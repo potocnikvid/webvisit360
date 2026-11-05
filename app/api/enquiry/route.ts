@@ -14,7 +14,10 @@ const Body = z.object({
     viewed: z.array(z.string()).max(50),
     lang: z.string(),
   }),
-  transcript: z.array(z.object({ role: z.enum(["visitor", "assistant"]), text: z.string().max(4000) })).max(60),
+  // Long lines are shortened rather than refused: the enquiry matters more than the transcript.
+  transcript: z
+    .array(z.object({ role: z.enum(["visitor", "assistant"]), text: z.string().transform((t) => t.slice(0, 4000)) }))
+    .max(60),
   website: z.string().optional(),
 });
 

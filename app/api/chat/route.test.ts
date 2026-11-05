@@ -5,7 +5,8 @@ vi.mock("@anthropic-ai/sdk", () => ({ default: vi.fn(function () { return { mess
 const limit = vi.fn();
 vi.mock("@/lib/limits", () => ({ limit, clientIp: () => "1.2.3.4" }));
 
-const { POST } = await import("./route");
+const route = await import("./route");
+const { POST } = route;
 
 const context = { town: "Celje", country: "SI", type: "nastanitve", viewed: [], lang: "sl" };
 const enquiryInput = {
@@ -80,6 +81,55 @@ describe("POST /api/chat", () => {
     const out = await events({ history: [{ role: "user", content: "hi" }], context });
     expect(out.map((e) => e.type)).toEqual(["done"]);
     expect(out[0].toolResults[0]).toMatchObject({ tool_use_id: "tu_2", is_error: true });
+  });
+
+  test("message 0 is sent exactly as the client stored it, whatever the current context", async () => {
+    const ok = () => fakeStream([], { content: [{ type: "text", text: "ok" }], stop_reason: "end_turn" });
+    stream.mockImplementation(ok);
+    const history = [
+      { role: "user", content: [{ type: "text", text: "<context>…</context>" }, { type: "text", text: "hi" }] },
+      { role: "assistant", content: [{ type: "text", text: "Živjo" }] },
+      { role: "user", content: "Imamo hotel." },
+    ];
+    await events({ history, context });
+    await events({ history, context: { ...context, type: "vino", lang: "en" } });
+    const [a, b] = stream.mock.calls.map((c) => c[0].messages);
+    expect(a[0]).toEqual(history[0]);
+    expect(b[0]).toEqual(history[0]);
+  });
+
+  test("every request counts against a global daily message cap, not only first turns", async () => {
+    stream.mockReturnValue(fakeStream([], { content: [{ type: "text", text: "ok" }], stop_reason: "end_turn" }));
+    const history = [{ role: "user", content: "a" }, { role: "assistant", content: [{ type: "text", text: "b" }] }, { role: "user", content: "c" }];
+    await events({ history, context });
+    expect(limit).toHaveBeenCalledWith("message", "global");
+  });
+
+  test("a proposal cut off by max_tokens is not shown and the model is told to retry", async () => {
+    const toolUse = { type: "tool_use", id: "tu_3", name: "propose_enquiry", input: enquiryInput };
+    stream.mockReturnValue(fakeStream([], { content: [toolUse], stop_reason: "max_tokens" }));
+    const out = await events({ history: [{ role: "user", content: "hi" }], context });
+    expect(out.map((e) => e.type)).toEqual(["done"]);
+    expect(out[0].toolResults[0]).toMatchObject({ tool_use_id: "tu_3", is_error: true });
+  });
+
+  test("asks for room to think and keeps server-side validation of the tool input", async () => {
+    stream.mockReturnValue(fakeStream([], { content: [{ type: "text", text: "ok" }], stop_reason: "end_turn" }));
+    await events({ history: [{ role: "user", content: "hi" }], context });
+    const params = stream.mock.calls[0][0];
+    expect(params.max_tokens).toBeGreaterThanOrEqual(2048);
+    expect(params.tools[0]).not.toHaveProperty("eager_input_streaming");
+  });
+
+  test("a long browsing session (many viewed tours) still chats", async () => {
+    stream.mockReturnValue(fakeStream(["ok"], { content: [{ type: "text", text: "ok" }], stop_reason: "end_turn" }));
+    const viewed = Array.from({ length: 80 }, (_, i) => `Tour ${i}`);
+    const out = await events({ history: [{ role: "user", content: "hi" }], context: { ...context, viewed } });
+    expect(out.at(-1).type).toBe("done");
+  });
+
+  test("allows a minute for a streamed reply", () => {
+    expect(route.maxDuration).toBe(60);
   });
 
   test("a refusal makes the chat unavailable", async () => {

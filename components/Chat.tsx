@@ -3,7 +3,7 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { useEffect, useRef, useState } from "react";
 import type { ChatEvent } from "@/lib/chat";
-import { MAX_MESSAGE_CHARS, MAX_VISITOR_MESSAGES } from "@/lib/chat";
+import { MAX_MESSAGE_CHARS, MAX_VISITOR_MESSAGES, firstMessage } from "@/lib/chat";
 import { mailtoHref, type ChatContext, type Enquiry, type TranscriptLine } from "@/lib/enquiry";
 import type { Copy } from "@/lib/i18n";
 import { readNdjson } from "@/lib/ndjson";
@@ -17,6 +17,8 @@ type Props = {
   from: string | null;
   onClose: () => void;
   onPrivacy: () => void;
+  /** Closed but kept mounted, so the conversation survives. */
+  hidden?: boolean;
 };
 
 type Line = TranscriptLine & { streaming?: boolean };
@@ -26,7 +28,7 @@ type Fallback = { text: string; mailto: string };
 const ASKS_SIZE = /velik|koliko (sob|prostor)|obseg|prostor|dron|how (big|many)|rooms|size|spaces|drone/i;
 const ASKS_TIMING = /kdaj|termin|when|timing|timeline/i;
 
-export default function Chat({ copy: t, context, from, onClose, onPrivacy }: Props) {
+export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidden = false }: Props) {
   const greeting = from ? t.chat.greetingFrom(from) : t.chat.greeting;
   const [lines, setLines] = useState<Line[]>([{ role: "assistant", text: greeting }]);
   const [history, setHistory] = useState<Anthropic.MessageParam[]>([]);
@@ -73,8 +75,12 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy }: Pro
     if (text.length > MAX_MESSAGE_CHARS) return setNotice(t.chat.tooLong);
     setNotice(null);
     setProposal(null);
-    const content: Anthropic.MessageParam["content"] = toolResults.length ? [...toolResults, { type: "text", text }] : text;
-    const next: Anthropic.MessageParam[] = [...history, { role: "user", content }];
+    // The first message carries the context once; earlier messages are never rewritten.
+    const message: Anthropic.MessageParam =
+      history.length === 0
+        ? firstMessage(text, context)
+        : { role: "user", content: toolResults.length ? [...toolResults, { type: "text", text }] : text };
+    const next: Anthropic.MessageParam[] = [...history, message];
     let shown: Line[] = [...lines, { role: "visitor", text }, { role: "assistant", text: "", streaming: true }];
     setLines(shown);
     setInput("");
@@ -89,7 +95,7 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy }: Pro
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ history: next, context, website: honeypot || undefined }),
+        body: JSON.stringify({ history: next, website: honeypot || undefined }),
       });
       if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
       let finished = false;
@@ -102,6 +108,8 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy }: Pro
           update((l) => ({ ...l, streaming: false }));
           setHistory([...next, { role: "assistant", content: e.assistant }]);
           setToolResults(e.toolResults);
+          if (shown.filter((l) => l.role === "visitor").length >= MAX_VISITOR_MESSAGES)
+            showFallback(t.chat.tooMany, transcriptText(shown));
         } else if (e.type === "error") {
           finished = true;
           // Drop the empty reply bubble; keep what the visitor wrote in the email.
@@ -149,7 +157,7 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy }: Pro
   const locked = status !== "idle" || !!fallback || visitorCount >= MAX_VISITOR_MESSAGES;
 
   return (
-    <div className="chat" role="dialog" aria-label={t.chat.label}>
+    <div className="chat" role="dialog" aria-label={t.chat.label} hidden={hidden}>
       <button className="panel__close" onClick={onClose} aria-label={t.panel.close}>
         ×
       </button>
@@ -215,7 +223,6 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy }: Pro
             ref={inputRef}
             rows={2}
             value={input}
-            maxLength={MAX_MESSAGE_CHARS}
             placeholder={t.chat.placeholder}
             disabled={locked}
             onChange={(e) => setInput(e.target.value)}

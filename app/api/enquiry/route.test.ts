@@ -48,6 +48,12 @@ describe("POST /api/enquiry", () => {
     expect(decodeURIComponent(mailto)).toContain("Hotel Lipa");
   });
 
+  test("a very long chat line doesn't block the enquiry", async () => {
+    const res = await post({ enquiry, context, transcript: [{ role: "assistant", text: "x".repeat(6000) }] });
+    expect(res.status).toBe(200);
+    expect(send).toHaveBeenCalledTimes(1);
+  });
+
   test("the visitor's fallback email never shows the internal price estimate", async () => {
     send.mockResolvedValue({ data: null, error: { message: "boom" } });
     const { mailto } = await (await post({ enquiry, context, transcript: [] })).json();

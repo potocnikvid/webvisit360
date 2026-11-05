@@ -44,7 +44,6 @@ export const PROPOSE_TOOL: Anthropic.Tool = {
   description:
     "Show the visitor a summary of their virtual-tour enquiry to confirm. Call only when the place, its size, the timing, their name and an email or phone are known.",
   strict: true,
-  eager_input_streaming: true,
   input_schema: {
     type: "object",
     additionalProperties: false,
@@ -87,7 +86,8 @@ export function checkHistory(
     if (m.role === "user") {
       if (typeof m.content !== "string" && m.content.some((b) => b.type !== "text" && b.type !== "tool_result"))
         return { ok: false, reason: "bad_shape" };
-      if (textOf(m).some((t) => t.length > MAX_MESSAGE_CHARS)) return { ok: false, reason: "too_long" };
+      if (textOf(m).some((t) => t.length > MAX_MESSAGE_CHARS && !t.startsWith(CONTEXT_OPEN)))
+        return { ok: false, reason: "too_long" };
     }
     total += JSON.stringify(m.content).length;
     // A proposal (tool_use) must be answered by tool_result blocks at the start of the next turn.
@@ -104,22 +104,27 @@ export function checkHistory(
   return { ok: true };
 }
 
+const CONTEXT_OPEN = "<context>";
+/** Most recent opened tours sent to the model. */
+const MAX_VIEWED = 15;
+
 function contextBlock(ctx: ChatContext): string {
   const where = [ctx.town, ctx.country].filter(Boolean).join(", ");
   return [
-    "<context>",
+    CONTEXT_OPEN,
     `Visitor's approximate location: ${where || "unknown"}`,
     `Type of place selected on the site: ${ctx.type === "all" ? copy.sl.filter.all : copy.sl.types[ctx.type]}`,
-    `Tours the visitor opened: ${ctx.viewed.length ? ctx.viewed.join(", ") : "none yet"}`,
+    `Tours the visitor opened: ${ctx.viewed.length ? ctx.viewed.slice(-MAX_VIEWED).join(", ") : "none yet"}`,
     `Browser language: ${ctx.lang || "unknown"}`,
     "</context>",
   ].join("\n");
 }
 
-/** Adds the visitor's context to the first message; later messages stay byte-identical for caching. */
-export function buildMessages(history: Anthropic.MessageParam[], ctx: ChatContext): Anthropic.MessageParam[] {
-  const [first, ...rest] = history;
-  const blocks: Anthropic.ContentBlockParam[] =
-    typeof first.content === "string" ? [{ type: "text", text: first.content }] : first.content;
-  return [{ role: "user", content: [{ type: "text", text: contextBlock(ctx) }, ...blocks] }, ...rest];
+/**
+ * The visitor's first message, with what the site knows about them in front. The client builds
+ * it once and keeps it in the history unchanged: editing an earlier message later (say, after a
+ * language toggle) would invalidate the model's thinking blocks and the prompt cache.
+ */
+export function firstMessage(text: string, ctx: ChatContext): Anthropic.MessageParam {
+  return { role: "user", content: [{ type: "text", text: contextBlock(ctx) }, { type: "text", text }] };
 }

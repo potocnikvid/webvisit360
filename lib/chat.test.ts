@@ -1,6 +1,6 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { describe, expect, test } from "vitest";
-import { SYSTEM_PROMPT, buildMessages, checkHistory } from "./chat";
+import { SYSTEM_PROMPT, checkHistory, firstMessage } from "./chat";
 import type { ChatContext } from "./enquiry";
 
 const ctx: ChatContext = { town: "Celje", country: "SI", type: "nastanitve", viewed: ["Hotel A plus"], lang: "sl-SI" };
@@ -41,20 +41,25 @@ describe("checkHistory", () => {
   });
 });
 
-describe("buildMessages", () => {
-  const history = [user("Pozdravljeni"), assistant("Živijo!"), user("Imamo hotel.")];
-  const built = buildMessages(history, ctx);
+describe("firstMessage", () => {
+  const first = firstMessage("Pozdravljeni", ctx).content as Anthropic.TextBlockParam[];
 
-  test("adds the context to the first visitor message only", () => {
-    const first = built[0].content as Anthropic.TextBlockParam[];
+  test("puts the context in front of the visitor's text", () => {
     expect(first[0].text).toContain("<context>");
     expect(first[0].text).toContain("Nastanitve");
     expect(first[0].text).toContain("Celje");
     expect(first.at(-1)).toEqual({ type: "text", text: "Pozdravljeni" });
   });
 
-  test("leaves later messages untouched", () => {
-    expect(built.slice(1)).toEqual(history.slice(1));
+  test("sends only the 15 most recently opened tours", () => {
+    const many = firstMessage("x", { ...ctx, viewed: Array.from({ length: 30 }, (_, i) => `T${i}`) }).content as Anthropic.TextBlockParam[];
+    expect(many[0].text).toContain("T29");
+    expect(many[0].text).not.toContain("T14,");
+  });
+
+  test("a long context doesn't count as an over-long visitor message", () => {
+    const big = firstMessage("x", { ...ctx, viewed: Array.from({ length: 15 }, () => "y".repeat(90)) });
+    expect(checkHistory([big])).toEqual({ ok: true });
   });
 });
 

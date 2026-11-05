@@ -62,6 +62,12 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   const [chatFrom, setChatFrom] = useState<string | null>(null);
   const [viewed, setViewed] = useState<string[]>([]);
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  // Once opened, the chat stays mounted (hidden when closed) so the conversation survives
+  // looking at tours.
+  const [chatStarted, setChatStarted] = useState(false);
+  useEffect(() => {
+    if (enquiry) setChatStarted(true);
+  }, [enquiry]);
   const [focus, setFocus] = useState<Focus | null>(null);
   const [ready, setReady] = useState(false);
   const focusKey = useRef(0);
@@ -310,6 +316,11 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
             </ul>
           )}
         </div>
+        {!origin && !selected && !enquiry && (
+          <button className="near__precise near__precise--alone" onClick={usePreciseLocation}>
+            {locationError ? t.near.denied : t.near.precise}
+          </button>
+        )}
         {!selected && !enquiry && near[0] && (
           <NearYou
             place={near[0].tour}
@@ -382,8 +393,9 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
         </aside>
       )}
 
-      {enquiry && (
+      {(enquiry || chatStarted) && (
         <Chat
+          hidden={!enquiry}
           copy={t}
           from={chatFrom}
           context={{ town: visitor?.city ?? null, country: visitor?.country ?? null, type, viewed, lang: `${navigatorLang || "unknown"} (site shown in ${lang})` }}
