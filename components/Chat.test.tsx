@@ -91,3 +91,12 @@ test("the summary card asks for name, email and phone and sends only when all th
   await screen.findByText(t.chat.sent);
   expect(sent[0]).toMatchObject({ enquiry: { contactName: "Ana Novak", email: "ana@lipa.si", phone: "041 123 456" } });
 });
+
+test("the assistant introduces itself as Webvisit360's helper, not a person's", () => {
+  for (const c of [copy.sl, copy.en]) {
+    render(<Chat copy={c} context={ctx} from={null} onClose={() => {}} onPrivacy={() => {}} />);
+    expect(screen.getByText(c.chat.greeting).textContent).toMatch(/Webvisit360/);
+    cleanup();
+    expect(`${c.chat.greeting} ${c.chat.sent}`).not.toMatch(/\bVid/);
+  }
+});
