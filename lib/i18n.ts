@@ -81,11 +81,42 @@ const sl = {
     next: "Naslednja panorama",
     panorama: (n: number) => `Panorama ${n}`,
   },
-  enquiry: {
+  chat: {
     label: "Povpraševanje",
     title: "Pokažite se v 360°.",
-    text: "Posnamemo vaš kraj, hotel ali trgovino z dronom in 360° kamero ter pripravimo sprehod, ki ga vgradite na svojo stran in Google Zemljevide.",
+    greeting:
+      "Živjo! Sem Vidov pomočnik za 360° sprehode. Povejte mi, kaj bi radi pokazali obiskovalcem, in pripravimo vam osebno ponudbo.",
+    greetingFrom: (name: string) =>
+      `Vam je všeč ${name}? Takšen sprehod lahko posnamemo tudi za vas. Kaj bi radi pokazali obiskovalcem?`,
+    placeholder: "Napišite sporočilo…",
+    send: "Pošlji",
+    sizes: ["Nekaj prostorov", "Cel objekt", "Cela občina", "Z dronom"],
+    timings: ["Čim prej", "V naslednjih mesecih", "Še ne vem"],
+    summary: "Povzetek povpraševanja",
+    fields: { place: "Kaj", size: "Obseg", timing: "Kdaj", contact: "Kontakt" },
+    confirm: "Pošlji povpraševanje",
+    edit: "Popravi",
+    sending: "Pošiljam…",
+    sent: "Hvala! Vid vam v kratkem pošlje osebno ponudbo.",
+    unavailable: "Klepet trenutno ne deluje. Pišite nam po e-pošti, sporočilo je že pripravljeno:",
+    limit: "Danes je pogovorov res veliko. Pišite nam po e-pošti, sporočilo je že pripravljeno:",
+    tooMany: "Pogovor je že kar dolg. Pošljite nam ga po e-pošti:",
+    tooLong: "Sporočilo je predolgo, skrajšajte ga, prosim.",
+    emailUs: (to: string) => `Pišite na ${to}`,
+    privacyLine: "Vaše podatke uporabimo samo za pripravo ponudbe.",
+    privacyMore: "Več o zasebnosti",
   },
+  privacy: {
+    title: "Zasebnost",
+    body: [
+      "Upravljavec podatkov je Agencija Sinhron d.o.o. (Webvisit360).",
+      "Ko nam pišete prek klepeta, zberemo vsebino pogovora, vaše ime in e-pošto ali telefon ter približen kraj, ki ga brskalnik razkrije prek naslova IP. Kraja ne shranjujemo.",
+      "Podatke uporabimo samo za pripravo ponudbe za virtualni sprehod. Pogovor obdela Anthropic (model Claude), e-pošto nam dostavi Resend, stran gostuje Vercel. Povpraševanje hranimo v našem e-poštnem predalu.",
+      "Za vpogled ali izbris svojih podatkov nam pišite na e-poštni naslov spodaj.",
+    ],
+    close: "Zapri",
+  },
+  footer: { company: "© Agencija Sinhron d.o.o.", privacy: "Zasebnost" },
 };
 
 export type Copy = typeof sl;
@@ -155,11 +186,40 @@ const en: Copy = {
     next: "Next panorama",
     panorama: (n: number) => `Panorama ${n}`,
   },
-  enquiry: {
+  chat: {
     label: "Enquiry",
     title: "Show yourself in 360°.",
-    text: "We film your town, hotel or shop with a drone and a 360° camera and build a tour you can embed on your site and on Google Maps.",
+    greeting: "Hi! I'm Vid's assistant for 360° tours. Tell me what you'd like to show your visitors and we'll prepare a personal offer.",
+    greetingFrom: (name: string) => `Like ${name}? We can film a tour like that for you too. What would you like to show your visitors?`,
+    placeholder: "Write a message…",
+    send: "Send",
+    sizes: ["A few rooms", "A whole venue", "A whole municipality", "With drone views"],
+    timings: ["As soon as possible", "In the next few months", "Not sure yet"],
+    summary: "Your enquiry",
+    fields: { place: "What", size: "Size", timing: "When", contact: "Contact" },
+    confirm: "Send enquiry",
+    edit: "Change",
+    sending: "Sending…",
+    sent: "Thank you! Vid will send you a personal offer shortly.",
+    unavailable: "The chat isn't working right now. Email us instead, your message is ready:",
+    limit: "We've had a lot of chats today. Email us instead, your message is ready:",
+    tooMany: "This chat is getting long. Send it to us by email:",
+    tooLong: "That message is too long, please shorten it.",
+    emailUs: (to: string) => `Write to ${to}`,
+    privacyLine: "We use your details only to prepare an offer.",
+    privacyMore: "Privacy",
   },
+  privacy: {
+    title: "Privacy",
+    body: [
+      "The data controller is Agencija Sinhron d.o.o. (Webvisit360).",
+      "When you write to us in the chat, we collect the conversation, your name and email or phone, and the approximate town your browser reveals through its IP address. We don't store the town.",
+      "We use this only to prepare an offer for a virtual tour. The chat is processed by Anthropic (the Claude model), email is delivered to us by Resend, and the site is hosted by Vercel. Enquiries are kept in our email inbox.",
+      "To see or delete your data, email us at the address below.",
+    ],
+    close: "Close",
+  },
+  footer: { company: "© Agencija Sinhron d.o.o.", privacy: "Privacy" },
 };
 
 export const copy: Record<Lang, Copy> = { sl, en };

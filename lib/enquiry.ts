@@ -35,10 +35,15 @@ export type TranscriptLine = { role: "visitor" | "assistant"; text: string };
 /** Internal rule of thumb, never shown to visitors: 20–70 € per panorama. */
 export const priceRange = (panoramas: number) => ({ low: panoramas * 20, high: panoramas * 70 });
 
-export function renderEnquiryEmail(e: Enquiry, ctx: ChatContext, transcript: TranscriptLine[]) {
+/**
+ * The email to Vid. With `forVisitor`, only what the visitor told us: it becomes the body of
+ * the visitor's own fallback email, so the internal estimate and site context stay out.
+ */
+export function renderEnquiryEmail(e: Enquiry, ctx: ChatContext, transcript: TranscriptLine[], { forVisitor = false } = {}) {
   const { low, high } = priceRange(e.estimatedPanoramas);
+  const internal = !forVisitor;
   const lines = [
-    "Novo povpraševanje z webvisit360.com",
+    internal ? "Novo povpraševanje z webvisit360.com" : "Povpraševanje za 360° virtualni sprehod",
     "",
     `Kdo: ${e.contactName}`,
     e.email && `E-pošta: ${e.email}`,
@@ -47,11 +52,11 @@ export function renderEnquiryEmail(e: Enquiry, ctx: ChatContext, transcript: Tra
     e.size && `Obseg: ${e.size}`,
     e.details && `Podrobnosti: ${e.details}`,
     e.timing && `Kdaj: ${e.timing}`,
-    `Ocena: ~${e.estimatedPanoramas} panoram → ${low}–${high} € (20–70 € / panoramo)`,
-    `Jezik: ${e.language}`,
-    ctx.town || ctx.country ? `Obiskovalec približno iz: ${[ctx.town, ctx.country].filter(Boolean).join(", ")}` : null,
-    `Izbrana vrsta na strani: ${ctx.type === "all" ? copy.sl.filter.all : copy.sl.types[ctx.type]}`,
-    ctx.viewed.length ? `Ogledani sprehodi: ${ctx.viewed.join(", ")}` : null,
+    internal && `Ocena: ~${e.estimatedPanoramas} panoram → ${low}–${high} € (20–70 € / panoramo)`,
+    internal && `Jezik: ${e.language}`,
+    internal && (ctx.town || ctx.country) ? `Obiskovalec približno iz: ${[ctx.town, ctx.country].filter(Boolean).join(", ")}` : null,
+    internal && `Izbrana vrsta na strani: ${ctx.type === "all" ? copy.sl.filter.all : copy.sl.types[ctx.type]}`,
+    internal && ctx.viewed.length ? `Ogledani sprehodi: ${ctx.viewed.join(", ")}` : null,
   ].filter((l): l is string => typeof l === "string");
   if (transcript.length) {
     lines.push("", "— Pogovor —");

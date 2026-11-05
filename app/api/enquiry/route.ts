@@ -37,7 +37,8 @@ export async function POST(req: Request) {
     return fail(400, "Povpraševanje", lines.map((l) => l.text).join("\n"));
   }
   const { subject, text } = renderEnquiryEmail(enquiry.data, ctx, lines);
-  const summary = renderEnquiryEmail(enquiry.data, ctx, []).text;
+  // What the visitor sees in their own fallback email: no internal estimate.
+  const summary = renderEnquiryEmail(enquiry.data, ctx, [], { forVisitor: true }).text;
 
   if (!(await limit("send", clientIp(req)))) return fail(429, subject, summary);
   if (!process.env.RESEND_API_KEY) return fail(503, subject, summary);

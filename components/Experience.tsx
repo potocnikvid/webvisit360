@@ -11,6 +11,8 @@ import type { Focus } from "./Globe";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
 import NearYou from "./NearYou";
+import Chat, { ENQUIRY_TO } from "./Chat";
+import PrivacyNotice from "./PrivacyNotice";
 
 const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
@@ -56,11 +58,16 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [tourOpen, setTourOpen] = useState(false);
   const [enquiry, setEnquiry] = useState(false);
+  // Tour the chat was opened from (for its greeting), and every tour opened so far.
+  const [chatFrom, setChatFrom] = useState<string | null>(null);
+  const [viewed, setViewed] = useState<string[]>([]);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
   const [focus, setFocus] = useState<Focus | null>(null);
   const [ready, setReady] = useState(false);
   const focusKey = useRef(0);
 
   const t = copy[lang];
+  const [navigatorLang, setNavigatorLang] = useState("");
 
   useEffect(() => {
     let saved: string | null = null;
@@ -68,6 +75,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
       saved = localStorage.getItem(LANG_KEY);
     } catch {}
     setLang(saved === "sl" || saved === "en" ? saved : pickLang(navigator.languages ?? [navigator.language]));
+    setNavigatorLang(navigator.language);
   }, []);
 
   useEffect(() => {
@@ -129,6 +137,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
       if (!t) return;
       setSelectedId(id);
       setEnquiry(false);
+      setViewed((v) => (v.includes(t.name) ? v : [...v, t.name]));
       setSearchOpen(false);
       if (t.lat != null && t.lng != null) fly(t.lat, t.lng, t.kind === "obcina" ? 0.03 : 0.01, undefined, true);
     },
@@ -182,13 +191,14 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      if (tourOpen) setTourOpen(false);
+      if (privacyOpen) setPrivacyOpen(false);
+      else if (tourOpen) setTourOpen(false);
       else if (searchOpen) setSearchOpen(false);
       else if (selectedId) close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [tourOpen, searchOpen, selectedId, close]);
+  }, [privacyOpen, tourOpen, searchOpen, selectedId, close]);
 
   const stats = data?.stats;
   const totalViews = stats ? stats.kuulaViews + (stats.googleViews ?? 0) : 0;
@@ -196,7 +206,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   const totalPlaces = stats ? stats.business + (stats.google ?? 0) : 0;
 
   return (
-    <main className={`app ${selected ? "has-panel" : ""} ${ready ? "is-ready" : ""}`}>
+    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${ready ? "is-ready" : ""}`}>
       <div className="sky" aria-hidden />
       {geo && data && (
         <Globe
@@ -223,7 +233,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
           <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
             {t.langSwitch.label}
           </button>
-          <button className="btn btn--ghost" onClick={() => { setSelectedId(null); setEnquiry(true); }}>
+          <button className="btn btn--ghost" onClick={() => { setSelectedId(null); setChatFrom(null); setEnquiry(true); }}>
             {t.wantOwn}
           </button>
         </nav>
@@ -359,7 +369,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
               <button className="btn btn--amber" onClick={() => setTourOpen(true)}>
                 {t.panel.enter}
               </button>
-              <button className="btn btn--ghost" onClick={() => setEnquiry(true)}>
+              <button className="btn btn--ghost" onClick={() => { setChatFrom(selected.name); setSelectedId(null); setEnquiry(true); }}>
                 {t.panel.wantThis}
               </button>
               {selected.mapsUrl && (
@@ -373,13 +383,13 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
       )}
 
       {enquiry && (
-        <div className="enquiry" role="dialog" aria-label={t.enquiry.label}>
-          <button className="panel__close" onClick={() => setEnquiry(false)} aria-label={t.panel.close}>
-            ×
-          </button>
-          <h2>{t.enquiry.title}</h2>
-          <p>{t.enquiry.text}</p>
-        </div>
+        <Chat
+          copy={t}
+          from={chatFrom}
+          context={{ town: visitor?.city ?? null, country: visitor?.country ?? null, type, viewed, lang: `${navigatorLang || "unknown"} (site shown in ${lang})` }}
+          onClose={() => setEnquiry(false)}
+          onPrivacy={() => setPrivacyOpen(true)}
+        />
       )}
 
       {tourOpen && selected && (
@@ -397,6 +407,17 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
           </div>
         </div>
       )}
+
+      <footer className="footer">
+        <span>{t.footer.company}</span>
+        <a className="footer__mail" href={`mailto:${ENQUIRY_TO}`}>{ENQUIRY_TO}</a>
+        <a href="https://www.facebook.com/Webvisit360" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/webvisit360" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://kuula.co/profile/WEBVISIT360" target="_blank" rel="noopener">Kuula</a>
+        <button onClick={() => setPrivacyOpen(true)}>{t.footer.privacy}</button>
+      </footer>
+
+      {privacyOpen && <PrivacyNotice copy={t} contact={ENQUIRY_TO} onClose={() => setPrivacyOpen(false)} />}
 
       {!ready && <div className="loader">{t.loading}</div>}
     </main>

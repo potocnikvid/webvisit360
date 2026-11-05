@@ -47,4 +47,10 @@ describe("POST /api/enquiry", () => {
     const { mailto } = await res.json();
     expect(decodeURIComponent(mailto)).toContain("Hotel Lipa");
   });
+
+  test("the visitor's fallback email never shows the internal price estimate", async () => {
+    send.mockResolvedValue({ data: null, error: { message: "boom" } });
+    const { mailto } = await (await post({ enquiry, context, transcript: [] })).json();
+    expect(decodeURIComponent(mailto)).not.toMatch(/€|Ocena/);
+  });
 });
