@@ -11,6 +11,8 @@ type Feature = {
   geometry: unknown;
 };
 
+export type Look = "satellite" | "soft" | "illustrated";
+
 export type Focus = { lat: number; lng: number; altitude: number; ms?: number; panel?: boolean; key: number };
 
 type Props = {
@@ -29,6 +31,7 @@ type Props = {
   you?: { lat: number; lng: number; precise: boolean; label: string } | null;
   /** The type chosen in the chips: its places get big dots and names, the rest small dots. */
   focusType?: PlaceType | "all";
+  look: Look;
 };
 
 type You = NonNullable<Props["you"]>;
@@ -41,6 +44,8 @@ const START = { lat: 38, lng: 2, altitude: 2.4 };
 // countries are drawn above COUNTRY_MIN, municipalities below MUNI_MAX.
 const COUNTRY_MIN = 0.3;
 const MUNI_MAX = 0.9;
+// Illustrated look: dotted continents above this altitude, flat land shapes below.
+const ILLUS_DOTS_ALT = 0.35;
 // Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
 const GOOGLE_VIEWS_PER_PHOTO = 2700;
 
@@ -63,8 +68,31 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
+// Sentinel-2 cloudless 2016 by EOX (CC BY 4.0, commercial use allowed with attribution).
+// The 2018+ mosaics are CC BY-NC-SA, so they can't be used on a commercial site.
+const EOX = (x: number, y: number, l: number) =>
+  `https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/${l}/${y}/${x}.jpg`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all" }: Props) {
+type LookStyle = {
+  tiles: ((x: number, y: number, l: number) => string) | null;
+  maxLevel: number;
+  /** Closest zoom, as altitude in globe radii. */
+  minAlt: number;
+  ambient: [string, number];
+  sun: [string, number];
+  atmosphere: [string, number];
+};
+
+const LOOKS: Record<Look, LookStyle> = {
+  // Photographic, "blue hour over the Alps".
+  satellite: { tiles: ESRI, maxLevel: 19, minAlt: 0.000025, ambient: ["#7f97d8", 2.1], sun: ["#ffc98a", 1.1], atmosphere: ["#6d8de0", 0.16] },
+  // Realistic but calmer: even-toned 10 m mosaic, soft daylight, no deep zoom.
+  soft: { tiles: EOX, maxLevel: 13, minAlt: 0.0006, ambient: ["#e3e9f6", 1.85], sun: ["#fff0d8", 0.55], atmosphere: ["#a9c1f2", 0.2] },
+  // Illustrated: no imagery; dotted continents and flat municipality shapes.
+  illustrated: { tiles: null, maxLevel: 0, minAlt: 0.0008, ambient: ["#ffffff", 2.4], sun: ["#ffffff", 0.5], atmosphere: ["#4f74d9", 0.22] },
+};
+
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all", look }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -98,6 +126,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     ...toursRef.current.filter((t) => t.lat != null),
     ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
   ];
+  const lookRef = useRef<Look>(look);
+  const applyLookRef = useRef<(l: Look) => void>(() => {});
   toursRef.current = tours;
 
   // ---- create the globe once -------------------------------------------------
@@ -116,18 +146,14 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .height(el.clientHeight)
         .backgroundColor("rgba(0,0,0,0)")
         .showAtmosphere(true)
-        .atmosphereColor("#6d8de0")
-        .atmosphereAltitude(0.16)
-        .globeTileEngineUrl(ESRI)
-        // ESRI has real imagery to level 19 over Slovenia; 20 is just upscaled.
-        .globeTileEngineMaxLevel(19)
         .pointOfView(START, 0);
 
-      // Blue-hour lighting: a cool, dim ambient and a low warm "sunset" key light.
-      const ambient = new THREE.AmbientLight("#7f97d8", 2.1);
-      const sun = new THREE.DirectionalLight("#ffc98a", 1.1);
+      // Lighting is restyled per look (see LOOKS); the sun sits low for a dusk feel.
+      const ambient = new THREE.AmbientLight();
+      const sun = new THREE.DirectionalLight();
       sun.position.set(-1, 0.35, 0.6);
       g.lights([ambient, sun]);
+      const globeMat = g.globeMaterial() as import("three").MeshPhongMaterial;
 
       // ---- polygons: country outlines far out, municipality borders up close
       const tourCap = new THREE.MeshBasicMaterial({
@@ -139,20 +165,33 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const tourCapHover = tourCap.clone();
       tourCapHover.opacity = 0.42;
       const noCap = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+      // Illustrated look: flat, opaque municipality shapes.
+      const flatCap = new THREE.MeshBasicMaterial({ color: "#2c4592" });
+      const flatTour = new THREE.MeshBasicMaterial({ color: "#c8862f" });
+      const flatTourHover = new THREE.MeshBasicMaterial({ color: "#f6a93b" });
+      const flatLand = new THREE.MeshBasicMaterial({ color: "#22397f" });
       const countries = geo.filter((f) => f.properties.k === "c");
       const munis = geo.filter((f) => f.properties.k === "m");
       let hovered: Feature | null = null;
       let showingCountries: boolean | null = null;
 
       // Keep borders hugging the ground (~40-50 m) so they don't float when zoomed in close.
-      g.polygonAltitude((f) => ((f as Feature).properties.tour ? 0.000008 : 0.000006))
-        .polygonCapMaterial((f) =>
-          (f as Feature).properties.tour ? (f === hovered ? tourCapHover : tourCap) : noCap,
-        )
+      g.polygonAltitude((f) => {
+        const p = (f as Feature).properties;
+        return p.tour ? 0.000008 : p.k === "m" ? 0.000006 : 0.000003;
+      })
+        .polygonCapMaterial((f) => {
+          const illus = lookRef.current === "illustrated";
+          if (illus && (f as Feature).properties.k === "c") return flatLand;
+          const flat = illus && (f as Feature).properties.k === "m";
+          if ((f as Feature).properties.tour) return f === hovered ? (flat ? flatTourHover : tourCapHover) : flat ? flatTour : tourCap;
+          return flat ? flatCap : noCap;
+        })
         .polygonSideColor(() => "rgba(0,0,0,0)")
         .polygonStrokeColor((f) => {
           const p = (f as Feature).properties;
-          if (p.k === "c") return "rgba(214,224,245,0.32)";
+          if (p.k === "c") return lookRef.current === "illustrated" ? "rgba(147,163,196,0.4)" : "rgba(214,224,245,0.32)";
+          if (lookRef.current === "illustrated") return p.tour ? "#ffd27a" : "rgba(8,18,54,0.7)";
           return p.tour ? "rgba(255,210,122,0.9)" : "rgba(214,224,245,0.28)";
         })
         .polygonsTransitionDuration(0)
@@ -195,12 +234,33 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
 
       const countriesOutsideSlovenia = countries.filter((f) => f.properties.n !== "Slovenia");
+      // h3 (used for the illustrated dots) rejects Natural Earth's North Korea outline.
+      const dotCountries = countriesOutsideSlovenia.filter((f) => f.properties.n !== "North Korea");
+      // Building the dots takes a moment, so do it once and afterwards only toggle visibility.
+      let dotsBuilt = false;
+      const showDots = (on: boolean) => {
+        if (on && !dotsBuilt) {
+          dotsBuilt = true;
+          g.hexPolygonsData(dotCountries);
+          // The layer builds its meshes on the next update; re-apply visibility then.
+          window.setTimeout(() => showDots(lookRef.current === "illustrated" && borderMode === "dots"), 300);
+        }
+        g.scene().traverse((o) => {
+          if ((o as unknown as { __globeObjType?: string }).__globeObjType === "hexPolygon") o.visible = on;
+        });
+      };
       let borderMode = "";
       const applyZoom = (alt: number) => {
-        const mode = alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
+        // Illustrated: dotted continents from far away; up close (where the fixed-size dots
+        // would turn into huge discs) neighbouring countries become flat land shapes.
+        const illus = lookRef.current === "illustrated";
+        const mode = illus ? (alt > ILLUS_DOTS_ALT ? "dots" : "land") : alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
         if (mode === borderMode) return;
         borderMode = mode;
-        g.polygonsData(mode === "c" ? countries : mode === "m" ? munis : [...countriesOutsideSlovenia, ...munis]);
+        if (illus) showDots(mode === "dots");
+        g.polygonsData(
+          mode === "c" ? countries : mode === "m" || mode === "dots" ? munis : [...countriesOutsideSlovenia, ...munis],
+        );
       };
 
       // ---- Labels: greedy placement by importance, using projected screen positions
@@ -349,9 +409,45 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       const controls = g.controls();
       controls.autoRotate = false;
-      // Allow zooming down to ~160 m above the ground (globe radius = 6371 km).
-      controls.minDistance = R * (1 + 0.000025);
       fitClipping(START.altitude);
+
+      // Dotted continents for the illustrated look (Slovenia itself is drawn as municipalities).
+      g.hexPolygonResolution(3)
+        .hexPolygonMargin(0.42)
+        .hexPolygonUseDots(true)
+        .hexPolygonDotResolution(6)
+        .hexPolygonAltitude(0.0004)
+        .hexPolygonColor(() => "rgba(147,163,196,0.55)")
+        .hexPolygonsTransitionDuration(0);
+
+      const applyLook = (l: Look) => {
+        lookRef.current = l;
+        const st = LOOKS[l];
+        ambient.color.set(st.ambient[0]);
+        ambient.intensity = st.ambient[1];
+        sun.color.set(st.sun[0]);
+        sun.intensity = st.sun[1];
+        g.atmosphereColor(st.atmosphere[0]).atmosphereAltitude(st.atmosphere[1]);
+        // Swap imagery: drop the old tiles, then point the engine at the new source (or none).
+        g.globeTileEngineClearCache();
+        g.globeTileEngineUrl(st.tiles as unknown as (x: number, y: number, l: number) => string);
+        if (st.tiles) g.globeTileEngineMaxLevel(st.maxLevel);
+        // Ocean colour for the illustrated look; black (hidden under tiles) otherwise.
+        globeMat.color.set(l === "illustrated" ? "#081236" : "#000000");
+        globeMat.emissive?.set(l === "illustrated" ? "#060f2e" : "#000000");
+        globeMat.shininess = l === "illustrated" ? 0 : 30;
+        if (l !== "illustrated") showDots(false);
+        // Respect the look's closest zoom; nudge the camera out if it's already closer.
+        controls.minDistance = R * (1 + st.minAlt);
+        const pov = g.pointOfView();
+        if (pov.altitude < st.minAlt) g.pointOfView({ ...pov, altitude: st.minAlt * 1.5 }, 400);
+        borderMode = "";
+        applyZoom(pov.altitude);
+        g.polygonCapMaterial(g.polygonCapMaterial()).polygonStrokeColor(g.polygonStrokeColor());
+        el.dataset.look = l;
+      };
+      applyLookRef.current = applyLook;
+      applyLook(lookRef.current);
 
       const onResize = () => g.width(el.clientWidth).height(el.clientHeight);
       window.addEventListener("resize", onResize);
@@ -430,6 +526,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       reduced ? 0 : focus.ms ?? 1600,
     );
   }, [focus]);
+
+  useEffect(() => {
+    if (look !== lookRef.current) applyLookRef.current(look);
+  }, [look]);
 
   useEffect(() => {
     const g = globe.current;

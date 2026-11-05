@@ -7,7 +7,7 @@ import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
 import { copy, pickLang, type Lang } from "@/lib/i18n";
 import { isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
-import type { Focus } from "./Globe";
+import type { Focus, Look } from "./Globe";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
 import NearYou from "./NearYou";
@@ -17,6 +17,13 @@ import PrivacyNotice from "./PrivacyNotice";
 const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
+
+const LOOK_OPTIONS: { id: Look; label: string; credit: string }[] = [
+  { id: "satellite", label: "Satelit", credit: "Posnetki: Esri, Maxar, Earthstar Geographics" },
+  { id: "soft", label: "Mehka Zemlja", credit: "Sentinel-2 cloudless – s2maps.eu, EOX IT Services (Copernicus 2016)" },
+  { id: "illustrated", label: "Ilustracija", credit: "Meje: geoBoundaries, Natural Earth" },
+];
+const LOOK_KEY = "wv360-look";
 
 // Strip diacritics so "lasko" finds "Laško".
 const norm = (s: string) =>
@@ -66,6 +73,20 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   }, [enquiry]);
   const [focus, setFocus] = useState<Focus | null>(null);
   const [ready, setReady] = useState(false);
+  const [look, setLook] = useState<Look>("satellite");
+  // Remember the chosen look per browser (storage may be unavailable; that's fine).
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(LOOK_KEY) as Look | null;
+      if (saved && LOOK_OPTIONS.some((o) => o.id === saved)) setLook(saved);
+    } catch {}
+  }, []);
+  const chooseLook = (l: Look) => {
+    setLook(l);
+    try {
+      localStorage.setItem(LOOK_KEY, l);
+    } catch {}
+  };
   const focusKey = useRef(0);
 
   const t = copy[lang];
@@ -232,6 +253,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
           paused={tourOpen}
           onSelect={select}
           onReady={() => setReady(true)}
+          look={look}
         />
       )}
 
@@ -242,6 +264,19 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
             webvisit<b>360</b>
           </span>
         </a>
+        <div className="looks" role="radiogroup" aria-label="Videz zemljevida">
+          {LOOK_OPTIONS.map((o) => (
+            <button
+              key={o.id}
+              role="radio"
+              aria-checked={look === o.id}
+              className={look === o.id ? "is-on" : ""}
+              onClick={() => chooseLook(o.id)}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
         <nav className="nav">
           <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
             {t.langSwitch.label}
@@ -437,6 +472,8 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
       </footer>
 
       {privacyOpen && <PrivacyNotice copy={t} contact={ENQUIRY_TO} onClose={() => setPrivacyOpen(false)} />}
+
+      <p className="credit">{LOOK_OPTIONS.find((o) => o.id === look)?.credit}</p>
 
       {!ready && <div className="loader">{t.loading}</div>}
     </main>
