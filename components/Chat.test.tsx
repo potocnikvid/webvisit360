@@ -58,3 +58,36 @@ test("after 20 messages the visitor gets the reason and an email way out", async
   expect(screen.getByText(t.chat.tooMany, { exact: false })).toBeTruthy();
   expect(screen.getByRole("link", { name: /Write to/ }).getAttribute("href")).toMatch(/^mailto:/);
 });
+
+test("the summary card asks for name, email and phone and sends only when all three are filled", async () => {
+  const proposal = {
+    placeType: "Hotel", placeName: "Hotel Lipa", town: "Laško", size: "30 sob", details: "", timing: "spomladi",
+    contactName: "Ana Novak", language: "sl", estimatedPanoramas: 30,
+  };
+  const sent: unknown[] = [];
+  vi.stubGlobal("fetch", vi.fn(async (url: string, opts: RequestInit) => {
+    if (url.includes("/api/enquiry")) {
+      sent.push(JSON.parse(String(opts.body)));
+      return Response.json({ ok: true });
+    }
+    const done = { type: "done", assistant: [{ type: "text", text: "Here you go." }], toolResults: [] };
+    return new Response([{ type: "proposal", enquiry: proposal, toolUseId: "tu_1" }, done].map((e) => JSON.stringify(e)).join("\n") + "\n");
+  }));
+  render(<Chat copy={t} context={ctx} from={null} onClose={() => {}} onPrivacy={() => {}} />);
+  fireEvent.change(screen.getByLabelText(t.chat.placeholder), { target: { value: "Hotel Lipa, 30 rooms, spring, Ana Novak" } });
+  fireEvent.click(screen.getByRole("button", { name: t.chat.send }));
+
+  const name = (await screen.findByLabelText(t.chat.fields.name)) as HTMLInputElement;
+  expect(name.value).toBe("Ana Novak");
+  const confirm = screen.getByRole("button", { name: t.chat.confirm }) as HTMLButtonElement;
+  expect(confirm.disabled).toBe(true);
+
+  fireEvent.change(screen.getByLabelText(t.chat.fields.email), { target: { value: "ana@lipa.si" } });
+  expect(confirm.disabled).toBe(true);
+  fireEvent.change(screen.getByLabelText(t.chat.fields.phone), { target: { value: "041 123 456" } });
+  expect(confirm.disabled).toBe(false);
+
+  fireEvent.click(confirm);
+  await screen.findByText(t.chat.sent);
+  expect(sent[0]).toMatchObject({ enquiry: { contactName: "Ana Novak", email: "ana@lipa.si", phone: "041 123 456" } });
+});

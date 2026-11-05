@@ -1,6 +1,6 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { copy } from "./i18n";
-import type { ChatContext, Enquiry } from "./enquiry";
+import type { ChatContext, Proposal } from "./enquiry";
 
 export const MODEL = "claude-haiku-5-5";
 
@@ -11,7 +11,7 @@ export const MODEL = "claude-haiku-5-5";
  */
 export type ChatEvent =
   | { type: "text"; text: string }
-  | { type: "proposal"; enquiry: Enquiry; toolUseId: string }
+  | { type: "proposal"; enquiry: Proposal; toolUseId: string }
   | { type: "done"; assistant: Anthropic.ContentBlock[]; toolResults: Anthropic.ToolResultBlockParam[] }
   | { type: "error"; reason: "limit" | "unavailable" | "too_long" | "too_many" };
 export const MAX_VISITOR_MESSAGES = 20;
@@ -28,21 +28,21 @@ Your job: help the visitor ask for a virtual tour, and collect what Vid needs to
 1. what they would like filmed: the type of place and its name (skip if the context already says),
 2. roughly how big it is: how many rooms or spaces, indoor and/or outdoor, whether aerial drone views are wanted,
 3. when they would like it,
-4. their name, and an email address or a phone number (at least one).
+4. their name, email address and phone number (Vid needs all three).
 Ask one short question at a time. Do not ask for something the visitor or the context already told you.
 
 Questions you may answer: anything about getting a virtual tour with Webvisit360 — how it works, what is included, what affects the price, how long filming takes, what happens next, and what the tours on this site are. If asked about anything else, say briefly and kindly that you can only help with virtual-tour enquiries, and steer back. Never invent facts about Webvisit360 beyond what is written here; if you don't know, say Vid will answer that personally.
 
 Price: never state a price, a price range, or a price per panorama, even if pressed. Explain that the price depends on the number of panoramas and on the size and type of the project, and that Vid will send a personal offer shortly ("v kratkem").
 
-When you know all four things, call the propose_enquiry tool with a short summary and your estimate of how many panoramas the project needs. The visitor then sees a summary card and confirms it themselves; nothing is sent until they do. If they want to change something after that, update the details and call propose_enquiry again.
+When you know the place, its size and the timing, and have asked for their contact details, call the propose_enquiry tool with a short summary and your estimate of how many panoramas the project needs. Pass any contact detail they did not give as null: the visitor then sees a summary card with name, email and phone fields to complete or correct, and confirms it themselves; nothing is sent until they do. If they want to change something after that, update the details and call propose_enquiry again.
 
 Style: reply in the visitor's language (Slovenian if you are unsure), short and warm, a little playful, professional. Plain sentences, no headings, no lists unless asked.`;
 
 export const PROPOSE_TOOL: Anthropic.Tool = {
   name: "propose_enquiry",
   description:
-    "Show the visitor a summary of their virtual-tour enquiry to confirm. Call only when the place, its size, the timing, their name and an email or phone are known.",
+    "Show the visitor a summary of their virtual-tour enquiry, with name, email and phone fields they complete or correct before confirming. Call once the place, its size and the timing are known and you have asked for their contact details.",
   strict: true,
   input_schema: {
     type: "object",

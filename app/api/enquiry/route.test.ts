@@ -7,7 +7,7 @@ const { POST } = await import("./route");
 
 const enquiry = {
   placeType: "Hotel", placeName: "Hotel Lipa", town: "Laško", size: "30 sob", details: "dron", timing: "spomladi",
-  contactName: "Ana Novak", email: "ana@hotel-lipa.si", language: "sl", estimatedPanoramas: 30,
+  contactName: "Ana Novak", email: "ana@hotel-lipa.si", phone: "041 123 456", language: "sl", estimatedPanoramas: 30,
 };
 const context = { town: "Celje", country: "SI", type: "nastanitve", viewed: [], lang: "sl" };
 const post = (body: unknown) =>
@@ -31,6 +31,12 @@ describe("POST /api/enquiry", () => {
   test("pretends success but sends nothing when the honeypot is filled", async () => {
     const res = await post({ enquiry, context, transcript: [], website: "spam.example" });
     expect(await res.json()).toEqual({ ok: true });
+    expect(send).not.toHaveBeenCalled();
+  });
+
+  test("refuses an enquiry without a phone number", async () => {
+    const res = await post({ enquiry: { ...enquiry, phone: undefined }, context, transcript: [] });
+    expect(res.status).toBe(400);
     expect(send).not.toHaveBeenCalled();
   });
 

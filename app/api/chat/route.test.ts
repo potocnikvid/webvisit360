@@ -75,8 +75,15 @@ describe("POST /api/chat", () => {
     expect(out[3].toolResults).toEqual([{ type: "tool_result", tool_use_id: "tu_1", content: "Shown to the visitor for confirmation." }]);
   });
 
+  test("a proposal without contact details still shows the card, so the visitor can fill them in", async () => {
+    const toolUse = { type: "tool_use", id: "tu_4", name: "propose_enquiry", input: { ...enquiryInput, contactName: "", email: null, phone: null } };
+    stream.mockReturnValue(fakeStream([], { content: [toolUse], stop_reason: "tool_use" }));
+    const out = await events({ history: [{ role: "user", content: "hi" }], context });
+    expect(out.map((e) => e.type)).toEqual(["proposal", "done"]);
+  });
+
   test("an invalid proposal shows no card and tells the model what was missing", async () => {
-    const toolUse = { type: "tool_use", id: "tu_2", name: "propose_enquiry", input: { ...enquiryInput, email: null } };
+    const toolUse = { type: "tool_use", id: "tu_2", name: "propose_enquiry", input: { ...enquiryInput, placeName: "" } };
     stream.mockReturnValue(fakeStream([], { content: [toolUse], stop_reason: "tool_use" }));
     const out = await events({ history: [{ role: "user", content: "hi" }], context });
     expect(out.map((e) => e.type)).toEqual(["done"]);
