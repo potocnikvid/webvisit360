@@ -27,7 +27,6 @@ to pretend to be somewhere, e.g. `DEV_VISITOR=46.2397,15.2677,Celje,SI`.
 | `ENQUIRY_TO` | where enquiries go | `vid.slovenia7@gmail.com` now, `webvisit360@gmail.com` in production |
 | `NEXT_PUBLIC_ENQUIRY_TO` | address shown in the footer and email fallbacks | same as `ENQUIRY_TO` |
 | `ENQUIRY_FROM` | sender | default `Webvisit360 <onboarding@resend.dev>`; after verifying the domain e.g. `Webvisit360 <ponudbe@webvisit360.com>` |
-| `NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY` | Google 360 tours via the official Maps Embed API | browser key from Google Cloud, restricted to the site's domains and the Maps Embed API |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | rate limits | set by the Upstash integration on Vercel |
 | `CHAT_DAILY_CONVERSATIONS` | global daily chat cap | default `500` |
 | `DEV_VISITOR` | local testing only | `lat,lng,City,CC` |

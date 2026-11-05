@@ -1,66 +1,28 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { Tour } from "@/lib/types";
 import type { Copy } from "@/lib/i18n";
 import { streetViewEmbedUrl } from "@/lib/streetview";
 
-/** When to nudge the frame after it loads (ms). */
-const NUDGES = [600, 1600, 3200];
-
 /**
- * A place's Google Maps 360 tour in Google's own Street View viewer, with its arrows and
- * connections between panoramas: the official Maps Embed API when
- * NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY is set, otherwise the stored keyless embed.
- *
- * Google's embed paints the first panorama black until its frame is resized, so after
- * loading (and whenever the tab comes back into view) the frame is briefly narrowed and
- * restored, which makes it repaint.
+ * A place's Google Maps 360 tour in Google's own Street View embed, with its arrows and the
+ * connections between panoramas.
  */
 export default function GoogleTour({ tour, copy: t }: { tour: Tour; copy: Copy }) {
-  const frame = useRef<HTMLIFrameElement>(null);
   const [loaded, setLoaded] = useState(false);
-  const timers = useRef<number[]>([]);
-  const src = streetViewEmbedUrl(tour, process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY);
-
-  const nudge = useCallback(() => {
-    const f = frame.current;
-    if (!f) return;
-    f.style.width = "99%";
-    timers.current.push(window.setTimeout(() => (f.style.width = "100%"), 250));
-  }, []);
-
-  const onLoad = () => {
-    setLoaded(true);
-    for (const ms of NUDGES) timers.current.push(window.setTimeout(nudge, ms));
-  };
-
-  useEffect(() => {
-    const onVisible = () => {
-      if (document.visibilityState !== "hidden") nudge();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    window.addEventListener("focus", onVisible);
-    const pending = timers.current;
-    return () => {
-      document.removeEventListener("visibilitychange", onVisible);
-      window.removeEventListener("focus", onVisible);
-      pending.forEach(clearTimeout);
-    };
-  }, [nudge]);
+  const src = streetViewEmbedUrl(tour);
 
   return (
     <div className="gtour">
       <iframe
-        ref={frame}
         key={src}
         src={src}
         title={tour.name}
-        style={{ width: "100%" }}
         allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer"
         allowFullScreen
-        referrerPolicy="no-referrer-when-downgrade"
-        onLoad={onLoad}
+        referrerPolicy="strict-origin-when-cross-origin"
+        onLoad={() => setLoaded(true)}
       />
       {!loaded && <div className="gtour__empty">{t.viewer.loadingTour}</div>}
       {tour.mapsUrl && (
