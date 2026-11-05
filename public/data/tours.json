@@ -39,7 +39,8 @@
     "Mladika",
     "Muzej",
     "Nanos"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "nazarje",
@@ -69,7 +70,8 @@
     "url": "https://www.google.com/maps/@46.32009189485279,14.950479549602006,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCCymC8wf3XW1nsoUWgtxJW!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCCymC8wf3XW1nsoUWgtxJW!2m2!1d46.32009189485279!2d14.950479549602006!3f0!4f0!5f0.78",
     "scenes": 7
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "luce",
@@ -100,7 +102,8 @@
     "Podvolovljek",
     "Podvolovljek Cerkev",
     "Savinja"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "braslovce",
@@ -136,7 +139,8 @@
     "url": "https://www.google.com/maps/@46.27706337437601,15.036539889528914,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhAPVBHV3Nrsev2DK2cIBRmU!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhAPVBHV3Nrsev2DK2cIBRmU!2m2!1d46.27706337437601!2d15.036539889528914!3f0!4f0!5f0.78",
     "scenes": 36
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "sredisce",
@@ -167,7 +171,8 @@
     "Maneza",
     "Ribnik",
     "Salovci"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "zalec",
@@ -199,7 +204,8 @@
     "url": "https://www.google.com/maps/@46.25328980738812,15.162789650463054,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCDNnZhI1VhSkSI-AVzkWr4!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCDNnZhI1VhSkSI-AVzkWr4!2m2!1d46.25328980738812!2d15.162789650463054!3f0!4f0!5f0.78",
     "scenes": 43
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "slovenj-gradec",
@@ -219,7 +225,8 @@
     "Bazen Sl Gradec",
     "Dron Slovenj Gradec",
     "Hostel Slovenj Gradec"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "recica",
@@ -250,7 +257,8 @@
     "Menina",
     "Sv.Janez Krstnik",
     "Vzletisce"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "solcava",
@@ -281,7 +289,8 @@
     "url": "https://www.google.com/maps/@46.42006751541552,14.69195903918827,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhBJzxdvJ6IWtNGJU9ksO0D7!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhBJzxdvJ6IWtNGJU9ksO0D7!2m2!1d46.42006751541552!2d14.69195903918827!3f0!4f0!5f0.78",
     "scenes": 3
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "trbovlje",
@@ -313,7 +322,8 @@
     "url": "https://www.google.com/maps/@46.1562884617039,15.05568481050313,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhBeLBgxL3lsOOuTmdHfXQZ7!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhBeLBgxL3lsOOuTmdHfXQZ7!2m2!1d46.1562884617039!2d15.05568481050313!3f0!4f0!5f0.78",
     "scenes": 8
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "prebold",
@@ -349,7 +359,8 @@
     "url": "https://www.google.com/maps/@46.24003985637304,15.092819564690473,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCWL6WX-vqINHX1OoqWCGgL!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCWL6WX-vqINHX1OoqWCGgL!2m2!1d46.24003985637304!2d15.092819564690473!3f0!4f0!5f0.78",
     "scenes": 8
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "sentilj",
@@ -380,7 +391,8 @@
     "Hrib",
     "Septarija",
     "Sportni Center"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "kozje",
@@ -416,7 +428,8 @@
     "url": "https://www.google.com/maps/@46.071704788436406,15.554239813112977,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhB8pgEwO-Z2GBXzXcSQwitV!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhB8pgEwO-Z2GBXzXcSQwitV!2m2!1d46.071704788436406!2d15.554239813112977!3f0!4f0!5f0.78",
     "scenes": 4
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "tabor",
@@ -447,7 +460,8 @@
     "Sola Tabor",
     "Kozolec",
     "Na jasi"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "polzela",
@@ -483,7 +497,8 @@
     "url": "https://www.google.com/maps/@46.28131005122406,15.07342187775284,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhADyc5UghZaK2fYe8QADPH_!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhADyc5UghZaK2fYe8QADPH_!2m2!1d46.28131005122406!2d15.07342187775284!3f0!4f0!5f0.78",
     "scenes": 17
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "menges",
@@ -514,7 +529,8 @@
     "Dvorana",
     "Spomenik Janezu Trdini",
     "Sportni park"
-   ]
+   ],
+   "type": "obcina"
   },
   {
    "id": "mozirje",
@@ -550,7 +566,8 @@
     "url": "https://www.google.com/maps/@46.33825985684501,14.964475471128472,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCAdHu7rl8E1tKnrOLM6Ywd!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCAdHu7rl8E1tKnrOLM6Ywd!2m2!1d46.33825985684501!2d14.964475471128472!3f0!4f0!5f0.78",
     "scenes": 2
-   }
+   },
+   "type": "obcina"
   },
   {
    "id": "inotherm",
@@ -568,7 +585,8 @@
    "views": null,
    "highlights": [
     "Vrata +"
-   ]
+   ],
+   "type": "podjetja"
   },
   {
    "id": "gszalec",
@@ -596,7 +614,8 @@
     "url": "https://www.google.com/maps/@46.255408491634896,15.163066916656295,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhAq6JbIUnF2Qrk6C7QmLJxd!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhAq6JbIUnF2Qrk6C7QmLJxd!2m2!1d46.255408491634896!2d15.163066916656295!3f0!4f0!5f0.78",
     "scenes": 11
-   }
+   },
+   "type": "javno"
   },
   {
    "id": "grand-plaza",
@@ -620,7 +639,8 @@
     "url": "https://www.google.com/maps/@46.05711371528563,14.506257387438254,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICz9_6UxgE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICz9_6UxgE!2m2!1d46.05711371528563!2d14.506257387438254!3f0!4f0!5f0.78",
     "scenes": 103
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "7d9xj",
@@ -637,7 +657,8 @@
    "scenes": 10,
    "views": 340,
    "highlights": [],
-   "created": "2026"
+   "created": "2026",
+   "type": "nastanitve"
   },
   {
    "id": "7dqK9",
@@ -659,7 +680,8 @@
     "url": "https://www.google.com/maps/@46.049543199999995,14.502536399999999,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCBpM5nTaqjkWyepuOVQHOS!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCBpM5nTaqjkWyepuOVQHOS!2m2!1d46.049543199999995!2d14.502536399999999!3f0!4f0!5f0.78",
     "scenes": 48
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "7d5ZL",
@@ -676,7 +698,8 @@
    "scenes": 7,
    "views": 532,
    "highlights": [],
-   "created": "2026"
+   "created": "2026",
+   "type": "nastanitve"
   },
   {
    "id": "7T32z",
@@ -693,7 +716,8 @@
    "scenes": 27,
    "views": 1732,
    "highlights": [],
-   "created": "2026"
+   "created": "2026",
+   "type": "nastanitve"
   },
   {
    "id": "7TwMg",
@@ -710,7 +734,8 @@
    "scenes": 4,
    "views": 210,
    "highlights": [],
-   "created": "2026"
+   "created": "2026",
+   "type": "nastanitve"
   },
   {
    "id": "7D57S",
@@ -727,7 +752,8 @@
    "scenes": 3,
    "views": 113,
    "highlights": [],
-   "created": "2025"
+   "created": "2025",
+   "type": "znamenitosti"
   },
   {
    "id": "71Cdy",
@@ -744,7 +770,8 @@
    "scenes": 5,
    "views": 10,
    "highlights": [],
-   "created": "2025"
+   "created": "2025",
+   "type": "trgovine"
   },
   {
    "id": "71DFL",
@@ -761,7 +788,8 @@
    "scenes": 3,
    "views": 10,
    "highlights": [],
-   "created": "2025"
+   "created": "2025",
+   "type": "kraji"
   },
   {
    "id": "7bQdv",
@@ -778,7 +806,8 @@
    "scenes": 10,
    "views": 35,
    "highlights": [],
-   "created": "2025"
+   "created": "2025",
+   "type": "trgovine"
   },
   {
    "id": "7Z350",
@@ -800,7 +829,8 @@
     "url": "https://www.google.com/maps/@46.52485339896951,15.665144838798305,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDPt6flew!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDPt6flew!2m2!1d46.52485339896951!2d15.665144838798305!3f0!4f0!5f0.78",
     "scenes": 13
-   }
+   },
+   "type": "sport"
   },
   {
    "id": "7ZJF3",
@@ -817,7 +847,8 @@
    "scenes": 35,
    "views": 139,
    "highlights": [],
-   "created": "2024"
+   "created": "2024",
+   "type": "gostinstvo"
   },
   {
    "id": "7KVjh",
@@ -834,7 +865,8 @@
    "scenes": 5,
    "views": 99,
    "highlights": [],
-   "created": "2024"
+   "created": "2024",
+   "type": "nastanitve"
   },
   {
    "id": "7KXS1",
@@ -851,7 +883,8 @@
    "scenes": 30,
    "views": 103,
    "highlights": [],
-   "created": "2024"
+   "created": "2024",
+   "type": "podjetja"
   },
   {
    "id": "7XKvn",
@@ -868,7 +901,8 @@
    "scenes": 10,
    "views": 29,
    "highlights": [],
-   "created": "2023"
+   "created": "2023",
+   "type": "javno"
   },
   {
    "id": "7XPnV",
@@ -890,7 +924,8 @@
     "url": "https://www.google.com/maps/@46.07550568033789,14.484540658070582,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDuh8HnzwE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDuh8HnzwE!2m2!1d46.07550568033789!2d14.484540658070582!3f0!4f0!5f0.78",
     "scenes": 44
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "7XNKB",
@@ -912,7 +947,8 @@
     "url": "https://www.google.com/maps/@46.68252196679337,15.588178680185145,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIC5sI6DXQ!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIC5sI6DXQ!2m2!1d46.68252196679337!2d15.588178680185145!3f0!4f0!5f0.78",
     "scenes": 12
-   }
+   },
+   "type": "vino"
   },
   {
    "id": "7X764",
@@ -929,7 +965,8 @@
    "scenes": 28,
    "views": 850,
    "highlights": [],
-   "created": "2023"
+   "created": "2023",
+   "type": "trgovine"
   },
   {
    "id": "7Fxyd",
@@ -946,7 +983,8 @@
    "scenes": 6,
    "views": 13,
    "highlights": [],
-   "created": "2023"
+   "created": "2023",
+   "type": "sport"
   },
   {
    "id": "7F6q5",
@@ -963,7 +1001,8 @@
    "scenes": 35,
    "views": 16999,
    "highlights": [],
-   "created": "2023"
+   "created": "2023",
+   "type": "drugo"
   },
   {
    "id": "79n7b",
@@ -980,7 +1019,8 @@
    "scenes": 16,
    "views": 145,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "trgovine"
   },
   {
    "id": "791gc",
@@ -997,7 +1037,8 @@
    "scenes": 4,
    "views": 97,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nepremicnine"
   },
   {
    "id": "79Z2b",
@@ -1019,7 +1060,8 @@
     "url": "https://www.google.com/maps/@46.05195860992412,14.503145550074223,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgID215fyBA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgID215fyBA!2m2!1d46.05195860992412!2d14.503145550074223!3f0!4f0!5f0.78",
     "scenes": 21
-   }
+   },
+   "type": "gostinstvo"
   },
   {
    "id": "79cy4",
@@ -1041,7 +1083,8 @@
     "url": "https://www.google.com/maps/@45.54728576738837,13.725833431543865,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICGj-zXMQ!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICGj-zXMQ!2m2!1d45.54728576738837!2d13.725833431543865!3f0!4f0!5f0.78",
     "scenes": 7
-   }
+   },
+   "type": "zdravje"
   },
   {
    "id": "79J3s",
@@ -1058,7 +1101,8 @@
    "scenes": 13,
    "views": 125,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "79JGR",
@@ -1075,7 +1119,8 @@
    "scenes": 9,
    "views": 167,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nepremicnine"
   },
   {
    "id": "79JGl",
@@ -1092,7 +1137,8 @@
    "scenes": 26,
    "views": 39,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "drugo"
   },
   {
    "id": "79N6P",
@@ -1109,7 +1155,8 @@
    "scenes": 11,
    "views": 1213067,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "trgovine"
   },
   {
    "id": "7vgNc",
@@ -1131,7 +1178,8 @@
     "url": "https://www.google.com/maps/@46.24400527823413,14.351022645825676,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICu1uXgzAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICu1uXgzAE!2m2!1d46.24400527823413!2d14.351022645825676!3f0!4f0!5f0.78",
     "scenes": 19
-   }
+   },
+   "type": "gostinstvo"
   },
   {
    "id": "7v6MD",
@@ -1148,7 +1196,8 @@
    "scenes": 25,
    "views": 476,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7vbjW",
@@ -1170,7 +1219,8 @@
     "url": "https://www.google.com/maps/@46.49221206293637,15.535181483687586,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDOqP77Yw!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDOqP77Yw!2m2!1d46.49221206293637!2d15.535181483687586!3f0!4f0!5f0.78",
     "scenes": 36
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "7vJgx",
@@ -1187,7 +1237,8 @@
    "scenes": 12,
    "views": 32,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "gostinstvo"
   },
   {
    "id": "7vvBz",
@@ -1204,7 +1255,8 @@
    "scenes": 28,
    "views": 29517,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7vqbJ",
@@ -1221,7 +1273,8 @@
    "scenes": 20,
    "views": 496,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nepremicnine"
   },
   {
    "id": "7qQ16",
@@ -1243,7 +1296,8 @@
     "url": "https://www.google.com/maps/@46.030901634158035,14.444739633194377,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhASh-NZUSe0o3in5ARmqoe5!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhASh-NZUSe0o3in5ARmqoe5!2m2!1d46.030901634158035!2d14.444739633194377!3f0!4f0!5f0.78",
     "scenes": 49
-   }
+   },
+   "type": "podjetja"
   },
   {
    "id": "7qwSC",
@@ -1260,7 +1314,8 @@
    "scenes": 21,
    "views": 21194,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7qsxq",
@@ -1282,7 +1337,8 @@
     "url": "https://www.google.com/maps/@45.81273982227067,15.868326432884375,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDWoY6exQE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDWoY6exQE!2m2!1d45.81273982227067!2d15.868326432884375!3f0!4f0!5f0.78",
     "scenes": 27
-   }
+   },
+   "type": "podjetja"
   },
   {
    "id": "7qVnb",
@@ -1299,7 +1355,8 @@
    "scenes": 25,
    "views": 11313,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "zdravje"
   },
   {
    "id": "7qxSV",
@@ -1316,7 +1373,8 @@
    "scenes": 12,
    "views": 42115,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7qgHh",
@@ -1333,7 +1391,8 @@
    "scenes": 57,
    "views": 1039,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7qTmZ",
@@ -1350,7 +1409,8 @@
    "scenes": 20,
    "views": 321,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "drugo"
   },
   {
    "id": "7qZyt",
@@ -1367,7 +1427,8 @@
    "scenes": 22,
    "views": 228066,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7qZgz",
@@ -1384,7 +1445,8 @@
    "scenes": 25,
    "views": 274,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "trgovine"
   },
   {
    "id": "7qZcn",
@@ -1406,7 +1468,8 @@
     "url": "https://www.google.com/maps/@46.02749973783873,15.590282006368192,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCjn5BUiFewfx0SK5o_jQ37!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCjn5BUiFewfx0SK5o_jQ37!2m2!1d46.02749973783873!2d15.590282006368192!3f0!4f0!5f0.78",
     "scenes": 32
-   }
+   },
+   "type": "znamenitosti"
   },
   {
    "id": "7qZYh",
@@ -1423,7 +1486,8 @@
    "scenes": 19,
    "views": 27,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7qKsT",
@@ -1440,7 +1504,8 @@
    "scenes": 13,
    "views": 98,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "drugo"
   },
   {
    "id": "7qFBr",
@@ -1457,7 +1522,8 @@
    "scenes": 17,
    "views": 21,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "sport"
   },
   {
    "id": "7qFB8",
@@ -1479,7 +1545,8 @@
     "url": "https://www.google.com/maps/@46.631406412597094,15.631864327953675,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICCqeH55QE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICCqeH55QE!2m2!1d46.631406412597094!2d15.631864327953675!3f0!4f0!5f0.78",
     "scenes": 15
-   }
+   },
+   "type": "vino"
   },
   {
    "id": "7qFB4",
@@ -1501,7 +1568,8 @@
     "url": "https://www.google.com/maps/@46.19611068959783,14.615465672438056,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICCwqi8aA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICCwqi8aA!2m2!1d46.19611068959783!2d14.615465672438056!3f0!4f0!5f0.78",
     "scenes": 3
-   }
+   },
+   "type": "sport"
   },
   {
    "id": "7qFQM",
@@ -1518,7 +1586,8 @@
    "scenes": 35,
    "views": 290,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "znamenitosti"
   },
   {
    "id": "7qFVg",
@@ -1535,7 +1604,8 @@
    "scenes": 59,
    "views": 704,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "7qFNk",
@@ -1552,7 +1622,8 @@
    "scenes": 30,
    "views": 143,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "podjetja"
   },
   {
    "id": "7q9QX",
@@ -1569,7 +1640,8 @@
    "scenes": 7,
    "views": 72,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "zdravje"
   },
   {
    "id": "7q9CQ",
@@ -1586,7 +1658,8 @@
    "scenes": 28,
    "views": 481,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "zdravje"
   },
   {
    "id": "7q9CD",
@@ -1603,7 +1676,8 @@
    "scenes": 9,
    "views": 151,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "zdravje"
   },
   {
    "id": "7q9xb",
@@ -1620,7 +1694,8 @@
    "scenes": 9,
    "views": 104,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "trgovine"
   },
   {
    "id": "7q9gB",
@@ -1637,7 +1712,8 @@
    "scenes": 4,
    "views": 156,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "7q9gC",
@@ -1654,7 +1730,8 @@
    "scenes": 5,
    "views": 2954,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "7q9gn",
@@ -1671,7 +1748,8 @@
    "scenes": 5,
    "views": 5262,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "7q9gb",
@@ -1688,7 +1766,8 @@
    "scenes": 4,
    "views": 5272,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "7q9gL",
@@ -1705,7 +1784,8 @@
    "scenes": 9,
    "views": 10028,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "nastanitve"
   },
   {
    "id": "7qvl0",
@@ -1722,7 +1802,8 @@
    "scenes": 21,
    "views": 3826,
    "highlights": [],
-   "created": "2022"
+   "created": "2022",
+   "type": "drugo"
   },
   {
    "id": "7krvR",
@@ -1739,7 +1820,8 @@
    "scenes": 14,
    "views": 333,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "zdravje"
   },
   {
    "id": "7kzj9",
@@ -1756,7 +1838,8 @@
    "scenes": 20,
    "views": 23246,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7ksLF",
@@ -1773,7 +1856,8 @@
    "scenes": 13,
    "views": 333,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "gostinstvo"
   },
   {
    "id": "7kjjp",
@@ -1795,7 +1879,8 @@
     "url": "https://www.google.com/maps/@46.539569644069985,14.956823983313592,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICG9JSyugE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICG9JSyugE!2m2!1d46.539569644069985!2d14.956823983313592!3f0!4f0!5f0.78",
     "scenes": 25
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "7kngM",
@@ -1812,7 +1897,8 @@
    "scenes": 12,
    "views": 110,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "drugo"
   },
   {
    "id": "7kdtt",
@@ -1834,7 +1920,8 @@
     "url": "https://www.google.com/maps/@46.243431863698326,15.277983189699691,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICRiemxYA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICRiemxYA!2m2!1d46.243431863698326!2d15.277983189699691!3f0!4f0!5f0.78",
     "scenes": 14
-   }
+   },
+   "type": "zdravje"
   },
   {
    "id": "7kT96",
@@ -1851,7 +1938,8 @@
    "scenes": 19,
    "views": 902,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7kDTy",
@@ -1868,7 +1956,8 @@
    "scenes": 18,
    "views": 106,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7kDK0",
@@ -1890,7 +1979,8 @@
     "url": "https://www.google.com/maps/@46.146478874590876,14.598214414339882,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIC68_a6uwE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIC68_a6uwE!2m2!1d46.146478874590876!2d14.598214414339882!3f0!4f0!5f0.78",
     "scenes": 12
-   }
+   },
+   "type": "drugo"
   },
   {
    "id": "7kGzB",
@@ -1907,7 +1997,8 @@
    "scenes": 13,
    "views": 756,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7YVkN",
@@ -1924,7 +2015,8 @@
    "scenes": 13,
    "views": 1796408,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "trgovine"
   },
   {
    "id": "7YZJ6",
@@ -1941,7 +2033,8 @@
    "scenes": 8,
    "views": 5650,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "drugo"
   },
   {
    "id": "7YF0t",
@@ -1958,7 +2051,8 @@
    "scenes": 21,
    "views": 3972,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7YvC3",
@@ -1975,7 +2069,8 @@
    "scenes": 8,
    "views": 112,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "trgovine"
   },
   {
    "id": "7YYsw",
@@ -1992,7 +2087,8 @@
    "scenes": 40,
    "views": 439,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "trgovine"
   },
   {
    "id": "7YYjv",
@@ -2009,7 +2105,8 @@
    "scenes": 16,
    "views": 114,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7YmVd",
@@ -2026,7 +2123,8 @@
    "scenes": 21,
    "views": 312,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "podjetja"
   },
   {
    "id": "7PS8J",
@@ -2043,7 +2141,8 @@
    "scenes": 19,
    "views": 698,
    "highlights": [],
-   "created": "2021"
+   "created": "2021",
+   "type": "zdravje"
   },
   {
    "id": "7PCn8",
@@ -2065,7 +2164,8 @@
     "url": "https://www.google.com/maps/@46.169175855253386,14.572128712491075,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICircy4aw!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICircy4aw!2m2!1d46.169175855253386!2d14.572128712491075!3f0!4f0!5f0.78",
     "scenes": 10
-   }
+   },
+   "type": "podjetja"
   },
   {
    "id": "7PHWs",
@@ -2082,7 +2182,8 @@
    "scenes": 14,
    "views": 41,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "podjetja"
   },
   {
    "id": "7PHDL",
@@ -2099,7 +2200,8 @@
    "scenes": 2,
    "views": 60,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "podjetja"
   },
   {
    "id": "7PDP4",
@@ -2116,7 +2218,8 @@
    "scenes": 4,
    "views": 22,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7PDft",
@@ -2133,7 +2236,8 @@
    "scenes": 82,
    "views": 82582,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7PXVj",
@@ -2150,7 +2254,8 @@
    "scenes": 10,
    "views": 54468,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7PXhf",
@@ -2172,7 +2277,8 @@
     "url": "https://www.google.com/maps/@46.153455156656776,15.233071591825148,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICC1eSF_wE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICC1eSF_wE!2m2!1d46.153455156656776!2d15.233071591825148!3f0!4f0!5f0.78",
     "scenes": 45
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "7PJJT",
@@ -2189,7 +2295,8 @@
    "scenes": 31,
    "views": 389,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "podjetja"
   },
   {
    "id": "7PJJG",
@@ -2206,7 +2313,8 @@
    "scenes": 24,
    "views": 1074,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7PJFV",
@@ -2223,7 +2331,8 @@
    "scenes": 19,
    "views": 167,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7P9th",
@@ -2240,7 +2349,8 @@
    "scenes": 10,
    "views": 7941,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "gostinstvo"
   },
   {
    "id": "7P98z",
@@ -2257,7 +2367,8 @@
    "scenes": 6,
    "views": 27,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7P98n",
@@ -2274,7 +2385,8 @@
    "scenes": 6,
    "views": 22,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7P98h",
@@ -2291,7 +2403,8 @@
    "scenes": 5,
    "views": 94,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7PYys",
@@ -2308,7 +2421,8 @@
    "scenes": 25,
    "views": 197038,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7P023",
@@ -2325,7 +2439,8 @@
    "scenes": 10,
    "views": 23724,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7ltzF",
@@ -2342,7 +2457,8 @@
    "scenes": 16,
    "views": 249,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7lrSD",
@@ -2364,7 +2480,8 @@
     "url": "https://www.google.com/maps/@46.25390278605198,15.56954765699696,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgID8jfyAhQE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgID8jfyAhQE!2m2!1d46.25390278605198!2d15.56954765699696!3f0!4f0!5f0.78",
     "scenes": 50
-   }
+   },
+   "type": "trgovine"
   },
   {
    "id": "7lrSm",
@@ -2381,7 +2498,8 @@
    "scenes": 20,
    "views": 5274,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7lj4Y",
@@ -2398,7 +2516,8 @@
    "scenes": 5,
    "views": 144,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nepremicnine"
   },
   {
    "id": "7lCTn",
@@ -2415,7 +2534,8 @@
    "scenes": 10,
    "views": 81,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7l6zH",
@@ -2432,7 +2552,8 @@
    "scenes": 30,
    "views": 260,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7l634",
@@ -2449,7 +2570,8 @@
    "scenes": 30,
    "views": 141,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "gostinstvo"
   },
   {
    "id": "7l6wY",
@@ -2466,7 +2588,8 @@
    "scenes": 15,
    "views": 21,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7l6sV",
@@ -2483,7 +2606,8 @@
    "scenes": 16,
    "views": 22,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7l6s9",
@@ -2500,7 +2624,8 @@
    "scenes": 5,
    "views": 15,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7l6jQ",
@@ -2517,7 +2642,8 @@
    "scenes": 7,
    "views": 975,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7l6C1",
@@ -2534,7 +2660,8 @@
    "scenes": 7,
    "views": 26,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "gostinstvo"
   },
   {
    "id": "7l6Cc",
@@ -2551,7 +2678,8 @@
    "scenes": 4,
    "views": 7,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7l6CX",
@@ -2573,7 +2701,8 @@
     "url": "https://www.google.com/maps/@46.550437282135384,15.641079138578371,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDs8qOMvgE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDs8qOMvgE!2m2!1d46.550437282135384!2d15.641079138578371!3f0!4f0!5f0.78",
     "scenes": 9
-   }
+   },
+   "type": "zdravje"
   },
   {
    "id": "7lnFX",
@@ -2590,7 +2719,8 @@
    "scenes": 18,
    "views": 38,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7lTKS",
@@ -2607,7 +2737,8 @@
    "scenes": 8,
    "views": 53,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lFtY",
@@ -2624,7 +2755,8 @@
    "scenes": 34,
    "views": 19437,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7lFrX",
@@ -2646,7 +2778,8 @@
     "url": "https://www.google.com/maps/@46.37351098312545,15.777634941246724,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICshezz5gE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICshezz5gE!2m2!1d46.37351098312545!2d15.777634941246724!3f0!4f0!5f0.78",
     "scenes": 7
-   }
+   },
+   "type": "gostinstvo"
   },
   {
    "id": "7lFBY",
@@ -2663,7 +2796,8 @@
    "scenes": 11,
    "views": 90,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7lFSz",
@@ -2685,7 +2819,8 @@
     "url": "https://www.google.com/maps/@46.073200597471065,14.497605780292446,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICswa3S1QE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICswa3S1QE!2m2!1d46.073200597471065!2d14.497605780292446!3f0!4f0!5f0.78",
     "scenes": 22
-   }
+   },
+   "type": "sport"
   },
   {
    "id": "7l9sL",
@@ -2702,7 +2837,8 @@
    "scenes": 8,
    "views": 719,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7l98p",
@@ -2719,7 +2855,8 @@
    "scenes": 13,
    "views": 73,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7l962",
@@ -2736,7 +2873,8 @@
    "scenes": 26,
    "views": 280,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7l9J9",
@@ -2753,7 +2891,8 @@
    "scenes": 27,
    "views": 514,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "trgovine"
   },
   {
    "id": "7lvsy",
@@ -2770,7 +2909,8 @@
    "scenes": 46,
    "views": 475,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lvCY",
@@ -2787,7 +2927,8 @@
    "scenes": 10,
    "views": 11,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "gostinstvo"
   },
   {
    "id": "7lvC7",
@@ -2809,7 +2950,8 @@
     "url": "https://www.google.com/maps/@46.06419273427662,14.527373620220635,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgID4lYbbOg!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgID4lYbbOg!2m2!1d46.06419273427662!2d14.527373620220635!3f0!4f0!5f0.78",
     "scenes": 26
-   }
+   },
+   "type": "gostinstvo"
   },
   {
    "id": "7lvxt",
@@ -2826,7 +2968,8 @@
    "scenes": 5,
    "views": 6,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lv8y",
@@ -2843,7 +2986,8 @@
    "scenes": 6,
    "views": 13,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lv87",
@@ -2860,7 +3004,8 @@
    "scenes": 9,
    "views": 10,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lv6R",
@@ -2882,7 +3027,8 @@
     "url": "https://www.google.com/maps/@46.052806901072394,14.511738947303773,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsOSd5QE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsOSd5QE!2m2!1d46.052806901072394!2d14.511738947303773!3f0!4f0!5f0.78",
     "scenes": 8
-   }
+   },
+   "type": "drugo"
   },
   {
    "id": "7lv6D",
@@ -2899,7 +3045,8 @@
    "scenes": 18,
    "views": 24,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "nastanitve"
   },
   {
    "id": "7lvZD",
@@ -2916,7 +3063,8 @@
    "scenes": 18,
    "views": 272,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lvZf",
@@ -2933,7 +3081,8 @@
    "scenes": 11,
    "views": 13,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "podjetja"
   },
   {
    "id": "7lvcM",
@@ -2955,7 +3104,8 @@
     "url": "https://www.google.com/maps/@46.06392450346246,14.52680170789618,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsLSzJA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsLSzJA!2m2!1d46.06392450346246!2d14.52680170789618!3f0!4f0!5f0.78",
     "scenes": 26
-   }
+   },
+   "type": "drugo"
   },
   {
    "id": "7lvcZ",
@@ -2977,7 +3127,8 @@
     "url": "https://www.google.com/maps/@46.063997171055014,14.526925452769335,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsIzBoAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsIzBoAE!2m2!1d46.063997171055014!2d14.526925452769335!3f0!4f0!5f0.78",
     "scenes": 26
-   }
+   },
+   "type": "trgovine"
   },
   {
    "id": "7lvFN",
@@ -2994,7 +3145,8 @@
    "scenes": 13,
    "views": 15,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "drugo"
   },
   {
    "id": "7lvvv",
@@ -3016,7 +3168,8 @@
     "url": "https://www.google.com/maps/@46.52158440731796,16.19501615534576,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMss7qEA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMss7qEA!2m2!1d46.52158440731796!2d16.19501615534576!3f0!4f0!5f0.78",
     "scenes": 11
-   }
+   },
+   "type": "gostinstvo"
   },
   {
    "id": "7lvY3",
@@ -3033,7 +3186,8 @@
    "scenes": 18,
    "views": 25614,
    "highlights": [],
-   "created": "2020"
+   "created": "2020",
+   "type": "zdravje"
   },
   {
    "id": "7lvmR",
@@ -3050,7 +3204,8 @@
    "scenes": 9,
    "views": 37,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "drugo"
   },
   {
    "id": "7lvmg",
@@ -3072,7 +3227,8 @@
     "url": "https://www.google.com/maps/@45.958537793583794,15.493085668298898,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDM3vPCzAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDM3vPCzAE!2m2!1d45.958537793583794!2d15.493085668298898!3f0!4f0!5f0.78",
     "scenes": 4
-   }
+   },
+   "type": "zdravje"
   },
   {
    "id": "7lqsc",
@@ -3089,7 +3245,8 @@
    "scenes": 11,
    "views": 136,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "gostinstvo"
   },
   {
    "id": "7lq00",
@@ -3106,7 +3263,8 @@
    "scenes": 21,
    "views": 154,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nastanitve"
   },
   {
    "id": "7lqLK",
@@ -3123,7 +3281,8 @@
    "scenes": 13,
    "views": 223,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nastanitve"
   },
   {
    "id": "7lqLc",
@@ -3140,7 +3299,8 @@
    "scenes": 21,
    "views": 51,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nastanitve"
   },
   {
    "id": "7lqhD",
@@ -3157,7 +3317,8 @@
    "scenes": 7,
    "views": 93,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "gostinstvo"
   },
   {
    "id": "7lkBS",
@@ -3174,7 +3335,8 @@
    "scenes": 9,
    "views": 2680,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nepremicnine"
   },
   {
    "id": "7lkBR",
@@ -3191,7 +3353,8 @@
    "scenes": 16,
    "views": 116,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nepremicnine"
   },
   {
    "id": "7lk8C",
@@ -3208,7 +3371,8 @@
    "scenes": 44,
    "views": 15790,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nastanitve"
   },
   {
    "id": "7lk80",
@@ -3230,7 +3394,8 @@
     "url": "https://www.google.com/maps/@46.08701299735235,14.476664315309682,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDM8OKBuAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDM8OKBuAE!2m2!1d46.08701299735235!2d14.476664315309682!3f0!4f0!5f0.78",
     "scenes": 20
-   }
+   },
+   "type": "trgovine"
   },
   {
    "id": "7lkFk",
@@ -3247,7 +3412,8 @@
    "scenes": 29,
    "views": 4552,
    "highlights": [],
-   "created": "2019"
+   "created": "2019",
+   "type": "nepremicnine"
   },
   {
    "id": "7lkkZ",
@@ -3269,7 +3435,8 @@
     "url": "https://www.google.com/maps/@46.04968181396206,14.505845623207492,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDUjf_Y7wE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDUjf_Y7wE!2m2!1d46.04968181396206!2d14.505845623207492!3f0!4f0!5f0.78",
     "scenes": 31
-   }
+   },
+   "type": "nastanitve"
   },
   {
    "id": "g-JLWOJHnV5b0cRH3twtcL9YvM",
@@ -3288,7 +3455,8 @@
    "pano": true,
    "scenes": 122,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JW7XO8ZLLekcRIDjwHYrq4kE",
@@ -3307,7 +3475,8 @@
    "pano": true,
    "scenes": 104,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JSzLWk2cyZUcRvV3iSQ8AHiI",
@@ -3326,7 +3495,8 @@
    "pano": true,
    "scenes": 80,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JFfTbOrLZZEcRTvEGH82E9Q0",
@@ -3345,7 +3515,8 @@
    "pano": true,
    "scenes": 62,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JxxiXIHKPZUcRvphsnfiyJwk",
@@ -3364,7 +3535,8 @@
    "pano": true,
    "scenes": 61,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JbQoy0Nt2b0cRbvQXqbkD1X8",
@@ -3383,7 +3555,8 @@
    "pano": true,
    "scenes": 59,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "drugo"
   },
   {
    "id": "g-JA2iVMSXNekcRFXx7RfeJpcI",
@@ -3402,7 +3575,8 @@
    "pano": true,
    "scenes": 57,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jfx7bMOYJZUcR9FIthWTNXRk",
@@ -3421,7 +3595,8 @@
    "pano": true,
    "scenes": 56,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JeeLetSIzZUcRvzVePs5oB84",
@@ -3440,7 +3615,8 @@
    "pano": true,
    "scenes": 55,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JvdYrbJIzZUcR9mBxLcoAwdI",
@@ -3459,7 +3635,8 @@
    "pano": true,
    "scenes": 55,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-Jl7v1Ah2Bb0cRI7g6PKT8rVI",
@@ -3478,7 +3655,8 @@
    "pano": true,
    "scenes": 54,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JJ8u9n8N3ZUcRKV4oetQHkzI",
@@ -3497,7 +3675,8 @@
    "pano": true,
    "scenes": 51,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JH1z06S24ZUcRJIU2IAOsFx4",
@@ -3516,7 +3695,8 @@
    "pano": true,
    "scenes": 51,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JoZmFC2hoe0cRa8EC2jzG6lQ",
@@ -3535,7 +3715,8 @@
    "pano": true,
    "scenes": 50,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JrTbFH0ooe0cRRtcuwR61Euk",
@@ -3554,7 +3735,8 @@
    "pano": true,
    "scenes": 49,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J991agOAJZUcR3ZvNz6cILmY",
@@ -3573,7 +3755,8 @@
    "pano": true,
    "scenes": 48,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J-4dpXoDRZUcRyNfRo2PrTtM",
@@ -3592,7 +3775,8 @@
    "pano": true,
    "scenes": 47,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JSxW-dsRmb0cRAFiLoZjNoMM",
@@ -3611,7 +3795,8 @@
    "pano": true,
    "scenes": 47,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J2Q0IXd__ZEcRx-JBueOGrto",
@@ -3630,7 +3815,8 @@
    "pano": true,
    "scenes": 46,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J-4S6MXQmZUcRMzuRRxfqVFs",
@@ -3649,7 +3835,8 @@
    "pano": true,
    "scenes": 45,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "drugo"
   },
   {
    "id": "g-JvV9cjGH0b0cRkEdapV79idM",
@@ -3668,7 +3855,8 @@
    "pano": true,
    "scenes": 45,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JySvWcycBe0cRj4W6qHV2CV8",
@@ -3687,7 +3875,8 @@
    "pano": true,
    "scenes": 44,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JS6mNR07NekcR8_g7-owcno0",
@@ -3706,7 +3895,8 @@
    "pano": true,
    "scenes": 43,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jxf6M3drSekcR6o5jZFT4IBg",
@@ -3725,7 +3915,8 @@
    "pano": true,
    "scenes": 43,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JN5ydISh-b0cRDSojJL_fSAI",
@@ -3744,7 +3935,8 @@
    "pano": true,
    "scenes": 42,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JO9v7r3mhZEcRH75b5cs5kkY",
@@ -3763,7 +3955,8 @@
    "pano": true,
    "scenes": 40,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JcwT0D185b0cRm9ngoWJ192U",
@@ -3782,7 +3975,8 @@
    "pano": true,
    "scenes": 40,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JdQBx58UtZUcRjIPoAfDPnwM",
@@ -3801,7 +3995,8 @@
    "pano": true,
    "scenes": 40,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JI1AyLXDTekcRiP7labzvtto",
@@ -3820,7 +4015,8 @@
    "pano": true,
    "scenes": 40,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J4SNJfaP1b0cRGO9NO6CtT5o",
@@ -3839,7 +4035,8 @@
    "pano": true,
    "scenes": 40,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-Jq6qqqsHxb0cRXvcsHbbYGQA",
@@ -3858,7 +4055,8 @@
    "pano": true,
    "scenes": 39,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JDQK06-1wZUcRSnr8ZvbsAeI",
@@ -3877,7 +4075,8 @@
    "pano": true,
    "scenes": 39,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JJSxbCIkyZUcRZyxGw9fyjo4",
@@ -3896,7 +4095,8 @@
    "pano": true,
    "scenes": 39,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JvXJ0X6CQZUcRjrS153IZ3Yo",
@@ -3915,7 +4115,8 @@
    "pano": true,
    "scenes": 38,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Ju6qxRBA9b0cRF-Glyje3i_4",
@@ -3934,7 +4135,8 @@
    "pano": true,
    "scenes": 38,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JfVYN34r0b0cRWfsGCwv61F8",
@@ -3953,7 +4155,8 @@
    "pano": true,
    "scenes": 38,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JuesbowD7YUcRXvdXNQslbtQ",
@@ -3972,7 +4175,8 @@
    "pano": true,
    "scenes": 37,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JexUCtGNvZUcRJ6jy8B3B-cE",
@@ -3991,7 +4195,8 @@
    "pano": true,
    "scenes": 37,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J_4shofp1b0cRKSNZg9vuDJE",
@@ -4010,7 +4215,8 @@
    "pano": true,
    "scenes": 37,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jp8c8pshaZUcRGrXh4Dysa1o",
@@ -4029,7 +4235,8 @@
    "pano": true,
    "scenes": 36,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JMRN4q_s0ZUcRCJPmqjBbQVA",
@@ -4048,7 +4255,8 @@
    "pano": true,
    "scenes": 36,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JHTAvgPdKZUcRShXe8BzBmQY",
@@ -4067,7 +4275,8 @@
    "pano": true,
    "scenes": 36,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JAdmOWr0yZUcRSn0XyP_W2eI",
@@ -4086,7 +4295,8 @@
    "pano": true,
    "scenes": 36,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JVSoy0WJHb0cRSEhhjcaPimU",
@@ -4105,7 +4315,8 @@
    "pano": true,
    "scenes": 35,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JkzoqOBAzZUcRTbVHmEjwjCQ",
@@ -4124,7 +4335,8 @@
    "pano": true,
    "scenes": 35,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JXcLtIN_nZEcR4Y-KgHahzsk",
@@ -4143,7 +4355,8 @@
    "pano": true,
    "scenes": 34,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JBUJVCYB2b0cR-ApX8yGhluQ",
@@ -4162,7 +4375,8 @@
    "pano": true,
    "scenes": 34,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Ja5GJAuh5b0cRNXq5mG-hkUQ",
@@ -4181,7 +4395,8 @@
    "pano": true,
    "scenes": 34,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JaVqmoVh3b0cRQXPNxSh2KYk",
@@ -4200,7 +4415,8 @@
    "pano": true,
    "scenes": 34,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JNxvZt2cyZUcR_WY1M6qgm2Y",
@@ -4219,7 +4435,8 @@
    "pano": true,
    "scenes": 33,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jsc2hwLRgZUcREcD4QyquSE4",
@@ -4238,7 +4455,8 @@
    "pano": true,
    "scenes": 32,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J03jdmz98ZUcR_iLXdZorAHs",
@@ -4257,7 +4475,8 @@
    "pano": true,
    "scenes": 32,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jo29Wm_dzZUcRUMJNUBzlZPE",
@@ -4276,7 +4495,8 @@
    "pano": true,
    "scenes": 32,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JQxQ0t7qQZUcR88Fq-ZXAXNk",
@@ -4295,7 +4515,8 @@
    "pano": true,
    "scenes": 32,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JZb3dWVynZUcR2-NRH4NR63k",
@@ -4314,7 +4535,8 @@
    "pano": true,
    "scenes": 32,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J6VudzZJpe0cRAQUdoAlCrmU",
@@ -4333,7 +4555,8 @@
    "pano": true,
    "scenes": 31,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jd_a5bypme0cRv2ENAKQ4C90",
@@ -4352,7 +4575,8 @@
    "pano": true,
    "scenes": 31,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JGUGIOfX5b0cRSolkUHsqs8M",
@@ -4371,7 +4595,8 @@
    "pano": true,
    "scenes": 31,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JjdvK9AN1b0cRQ_KnxYDennY",
@@ -4390,7 +4615,8 @@
    "pano": true,
    "scenes": 31,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JtTPIeqhvZUcRnF1bWa0aobs",
@@ -4409,7 +4635,8 @@
    "pano": true,
    "scenes": 30,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JNxeMQ2oyZUcRjd6pDGmwE04",
@@ -4428,7 +4655,8 @@
    "pano": true,
    "scenes": 30,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JwQ9AlCtme0cRxsajH6s_rzI",
@@ -4447,7 +4675,8 @@
    "pano": true,
    "scenes": 30,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JDfhZFW1vZUcR-u2UpNYU-gs",
@@ -4466,7 +4695,8 @@
    "pano": true,
    "scenes": 30,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jfexp7nwzZUcR_o-Xr9QAcOU",
@@ -4485,7 +4715,8 @@
    "pano": true,
    "scenes": 30,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JWxfC9Ct3b0cRXrHlTFnZxu4",
@@ -4504,7 +4735,8 @@
    "pano": true,
    "scenes": 29,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jk1n340j3b0cRXdeWaN6CrsA",
@@ -4523,7 +4755,8 @@
    "pano": true,
    "scenes": 29,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JuxoQ9RU1ZUcRlQ1NUZ7zN8Y",
@@ -4542,7 +4775,8 @@
    "pano": true,
    "scenes": 29,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JNYUVahv1b0cRLHMccXgiWPw",
@@ -4561,7 +4795,8 @@
    "pano": true,
    "scenes": 29,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JIa7G6nwtZUcRRq7p894bphM",
@@ -4580,7 +4815,8 @@
    "pano": true,
    "scenes": 29,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JN9JUH7VgZUcR51Vq1XsWKFc",
@@ -4599,7 +4835,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JFbyIDUl3b0cRKBFXnqT4WeE",
@@ -4618,7 +4855,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JHyLbNektZUcRBaYgMkHjj1E",
@@ -4637,7 +4875,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JG1B4IX4tZUcR8z1-4jfGlLY",
@@ -4656,7 +4895,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JCywn4ofnZEcRSwosJBUYpDM",
@@ -4675,7 +4915,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JfatClugJZUcRZ1wR-wWc6Sw",
@@ -4694,7 +4935,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JWcATIpNwZUcRGwgFl8pfCeU",
@@ -4713,7 +4955,8 @@
    "pano": true,
    "scenes": 28,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JbXe2NMlvZUcRGFJ5ewG0FpQ",
@@ -4732,7 +4975,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JQZzLkohoZUcRCqZJ66-RHkE",
@@ -4751,7 +4995,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J9whd6EwBZUcRZhAaHE_4onQ",
@@ -4770,7 +5015,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JJ-8ApUdvZUcRy80eYEPVpJs",
@@ -4789,7 +5035,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JofWCUVc-b0cRj3ykeDXAqEg",
@@ -4808,7 +5055,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JZ9fSQXR3b0cRzA1uArvubeg",
@@ -4827,7 +5075,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JWUk1VtwyZUcReird4VWBEc0",
@@ -4846,7 +5095,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jpa7CQbZ3b0cRetQeAK_Yzhk",
@@ -4865,7 +5115,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JZf5Z-FynZUcR19mJ8RWnewo",
@@ -4884,7 +5135,8 @@
    "pano": true,
    "scenes": 27,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JgeBw3nxdZUcRTe1UHFraMB0",
@@ -4903,7 +5155,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J5TdZUGifb0cR0GYsGlNu_pU",
@@ -4922,7 +5175,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-Jp7RthCAAZUcRWxjdMuVha0g",
@@ -4941,7 +5195,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JQbPulDHNekcRKZWJMiwAmx8",
@@ -4960,7 +5215,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jd-OKp8Mxe0cRtujWZk_jbmo",
@@ -4979,7 +5235,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jl7RC1513b0cRubGar3c6TxE",
@@ -4998,7 +5255,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JnQCAg4xwZUcR7JXh4v3Wqoc",
@@ -5017,7 +5275,8 @@
    "pano": true,
    "scenes": 26,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jx44N32VhZUcRBcJhKrgYHDA",
@@ -5036,7 +5295,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JvRWLwsYtZUcRBIS-hA_iFDA",
@@ -5055,7 +5315,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JDyMz-4xxb0cRt_DJmwmsU-Q",
@@ -5074,7 +5335,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JX7RjWWQyZUcR-Nc3xOZGF1k",
@@ -5093,7 +5355,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J0RJzkyGRZUcRB4csCQvPshw",
@@ -5112,7 +5375,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J8xIw7RuYZUcRD0EcmVbIbVk",
@@ -5131,7 +5395,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jh3OEFBVwZUcR8lB202dGY6A",
@@ -5150,7 +5415,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JDTqVM4jNekcRGeVKGIwS9f4",
@@ -5169,7 +5435,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JvyMaHzgAZUcRT3ZpIDq3HLE",
@@ -5188,7 +5455,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JCSCLLa6zZUcR-ClzeOLbRP4",
@@ -5207,7 +5475,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JJ7YUJFqnZUcRbQ1KPHjQR4c",
@@ -5226,7 +5495,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JR45tANgIZUcRaSowiixf86g",
@@ -5245,7 +5515,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JB2s8VOEJZUcRTxgaMO_Yir4",
@@ -5264,7 +5535,8 @@
    "pano": true,
    "scenes": 25,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jnw1Nsnudb0cR-rfoCqeLc-k",
@@ -5283,7 +5555,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jc_lFOVprZUcRpiCLJVx0cfo",
@@ -5302,7 +5575,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JoTDN2FC7ZUcRHtri6qlFQQE",
@@ -5321,7 +5595,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JI_KdahQyZUcRND-qhiHjwSo",
@@ -5340,7 +5615,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JJy4fBQH6b0cRghSsCw87SUw",
@@ -5359,7 +5635,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JFWWmEdhdZUcRoxO1XLGEgls",
@@ -5378,7 +5655,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J4f27VbZ3b0cRrqLhmuHubuw",
@@ -5397,7 +5675,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JB0lucdvSekcRhg5LMeppKxU",
@@ -5416,7 +5695,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JDz6VyHt3b0cRRpY56VujukA",
@@ -5435,7 +5715,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JPY_TR89mb0cRM9KzMgqckpk",
@@ -5454,7 +5735,8 @@
    "pano": true,
    "scenes": 24,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JMzKHg4zzb0cRQ32Ghtk5Q2U",
@@ -5473,7 +5755,8 @@
    "pano": true,
    "scenes": 23,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J0XNfPNkFZUcR2pIkMyff3tE",
@@ -5492,7 +5775,8 @@
    "pano": true,
    "scenes": 23,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J-9s0osAZb0cR3AIC07n2OIg",
@@ -5511,7 +5795,8 @@
    "pano": true,
    "scenes": 23,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J9c6lcyq7ZUcRZ7pkywhboaE",
@@ -5530,7 +5815,8 @@
    "pano": true,
    "scenes": 23,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jk9swIhI0ZUcRX9tAYgli2OI",
@@ -5549,7 +5835,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JM4rmhJpoe0cR-lxFNIcHSHQ",
@@ -5568,7 +5855,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JVaINHs36b0cRbaI34HRaJ2Y",
@@ -5587,7 +5875,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JuzZu1Blpe0cRY3cTZ2JW2QE",
@@ -5606,7 +5895,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JLZqsIp4yZUcRgbWiKLq1898",
@@ -5625,7 +5915,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jl0mgJ5twZUcR0qdtbejyQb0",
@@ -5644,7 +5935,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JBXaw9R76b0cRHWjgaP6oD7o",
@@ -5663,7 +5955,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jw2pUw8CKb0cR7OeLhvF3xLI",
@@ -5682,7 +5975,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jj3WmER3TekcR9YIRlN2fh0c",
@@ -5701,7 +5995,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JT0rwHNpvZUcRqBuhMMO2dKI",
@@ -5720,7 +6015,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J5WAbyp0yZUcRoG4Q48fx820",
@@ -5739,7 +6035,8 @@
    "pano": true,
    "scenes": 22,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JE1sHbkpvZUcRzM4q1AJU63Q",
@@ -5758,7 +6055,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JCb9HOVprZUcR8ST0AeRlPLw",
@@ -5777,7 +6075,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Je5uDjVQbZUcRpJLRsi5swlw",
@@ -5796,7 +6095,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JVYjI6cMxe0cRkrX-upJmsQY",
@@ -5815,7 +6115,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JBeQmjFEtZUcR5Vv-FwZcXhg",
@@ -5834,7 +6135,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JmbN2KPh_b0cRlMc6c7T_5f8",
@@ -5853,7 +6155,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JLUPfTX1_b0cRqpMwb5kEGvU",
@@ -5872,7 +6175,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JM4AG4qI1ZUcRjZfsHP2aqak",
@@ -5891,7 +6195,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JhxJV_ZKFZUcRCuR-aMGw3Yg",
@@ -5910,7 +6215,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J35u9nZJ5b0cR9Pd59qeLXWM",
@@ -5929,7 +6235,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jlzseh32rekcRpQRy4M_oNJM",
@@ -5948,7 +6255,8 @@
    "pano": true,
    "scenes": 21,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JxTaudvxlZUcRZEYmRiBCKGE",
@@ -5967,7 +6275,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JO2PE4kCDZUcR15rNPSqOI2Q",
@@ -5986,7 +6295,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J3XcgMuaeb0cRIUYroxsKh0M",
@@ -6005,7 +6315,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JEVU0o6MzZUcRC6ik8H9Kyas",
@@ -6024,7 +6335,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JESMaDT8_b0cRKAR5vB26Xg8",
@@ -6043,7 +6355,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J35emABTNekcRuEGvefNThfI",
@@ -6062,7 +6375,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JefD_-sldZUcRa0cLiGX0lb0",
@@ -6081,7 +6395,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JE5AI5mYtZUcRaaY5v_ftdQ8",
@@ -6100,7 +6415,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JecZJW54yZUcRz_thtWi4_yc",
@@ -6119,7 +6435,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JH1DuvTUtZUcR1MQzpCTkwMs",
@@ -6138,7 +6455,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jt9AhXPZcZUcRtSz41P5I9Jc",
@@ -6157,7 +6475,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JvVgWKjwtZUcR9GAvmPlUlZQ",
@@ -6176,7 +6495,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jcck_IMAzZUcRGh3SflL8b-k",
@@ -6195,7 +6515,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JM_zEynoyZUcRkxHHX2bmFDg",
@@ -6214,7 +6535,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JA-WGFIthZUcRpmxu8Ed1qus",
@@ -6233,7 +6555,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jiad2o3e3ekcRKUy9BojVlQM",
@@ -6252,7 +6575,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JJ82cFkt3b0cRMGCbMuC-RG0",
@@ -6271,7 +6595,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JtTXx-_4tZUcRGmXEwNDoZnw",
@@ -6290,7 +6615,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JOUrCtXSFZUcRvclRZvUuIow",
@@ -6309,7 +6635,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JH5HBcIOXZUcRATpcJJwD8_Y",
@@ -6328,7 +6655,8 @@
    "pano": true,
    "scenes": 20,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JC2NZY4xcZUcR2t9ekgTpprQ",
@@ -6347,7 +6675,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JLyrRewAzZUcRQ8PUjj2YGXc",
@@ -6366,7 +6695,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JPTRJDgB5b0cRZt2JJovMDjI",
@@ -6385,7 +6715,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JEfAJAoyqZUcR8WTyj65AAyY",
@@ -6404,7 +6735,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JpZTH7UCfb0cR80DceAjh328",
@@ -6423,7 +6755,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JoxzTYE8VZUcR0aVC16P1iZA",
@@ -6442,7 +6775,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jp4rpYFlrZUcRMCpRQMTZghU",
@@ -6461,7 +6795,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Je5mSqehwZUcRIaBkbkpCyFc",
@@ -6480,7 +6815,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JbT3pXM6EZUcRIfzRr8qy9Fo",
@@ -6499,7 +6835,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JaUsYmOB2ZUcRJRQd2YV7KUg",
@@ -6518,7 +6855,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JPU5nIX9-ZUcRrNYzBDLTVBs",
@@ -6537,7 +6875,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-Jf0HlrmO3ZUcR6-u5WZ61Ysc",
@@ -6556,7 +6895,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JkUHgWbU3ZUcRvdtNpPU0g7o",
@@ -6575,7 +6915,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JXbkrxEgtZUcRbzErYjhjT_U",
@@ -6594,7 +6935,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JCXl-tD_1b0cRZM6ggNg9vXY",
@@ -6613,7 +6955,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J8yEwki2fb0cRgu1-QvSyHd4",
@@ -6632,7 +6975,8 @@
    "pano": true,
    "scenes": 19,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-J-UUQlLOXekcR9--SQem9Uu8",
@@ -6651,7 +6995,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jcatn2NZmZUcR7O2TdP8t9N0",
@@ -6670,7 +7015,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JQ94xmoR3b0cR7VX9QiiXlsU",
@@ -6689,7 +7035,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J6fGcgGQtZUcR9uE0p0nP4y0",
@@ -6708,7 +7055,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JpWxqOWDdZEcRSEpDnhxB89o",
@@ -6727,7 +7075,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JO-QL6L53b0cRc3zs7mcXJ3A",
@@ -6746,7 +7095,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JY81L92MtZUcR9mz7aqTZPHA",
@@ -6765,7 +7115,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jv_ohE04zZUcRotcALNoAyZI",
@@ -6784,7 +7135,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JI1q-ry_NekcRnuubfKSt0bo",
@@ -6803,7 +7155,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J--CSpUgzZUcRC6TJQyykrhk",
@@ -6822,7 +7175,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JlevG6iWqZUcRfz9spPsgeOI",
@@ -6841,7 +7195,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JPfEW6dJ3ZUcRFpHFoY1S7lY",
@@ -6860,7 +7215,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JF3BQr72QZUcRsmOcylN-xmo",
@@ -6879,7 +7235,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JmbuQwcdvZUcRBkySaLN9rA8",
@@ -6898,7 +7255,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JY_qQUaWFZUcRs_Qq8mAZbKE",
@@ -6917,7 +7275,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JZ9YaNpEyZUcRmQOY50v049M",
@@ -6936,7 +7295,8 @@
    "pano": true,
    "scenes": 18,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J0W1wXQANb0cRw_eRGafZEsM",
@@ -6955,7 +7315,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JPy81o3VoZUcR41eoxcOnqpk",
@@ -6974,7 +7335,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "drugo"
   },
   {
    "id": "g-JZUOYUkx6b0cR1szV8ucCWqc",
@@ -6993,7 +7355,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JJdaRLKEXb0cRmPeugVWfkR8",
@@ -7012,7 +7375,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JSaEokJj3b0cR7XU2qDI0a4M",
@@ -7031,7 +7395,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JSzz7ZDXJekcR1invBRJ3v7Y",
@@ -7050,7 +7415,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J37VvcuPMekcRS_i8DDb3MSk",
@@ -7069,7 +7435,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JH_Izv3i3ZUcRSywminz8_Tw",
@@ -7088,7 +7455,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JqdXbsp8Ve0cRu8QGZKFoyqY",
@@ -7107,7 +7475,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JE57BUbC5ekcRjfzE0tEGmZ0",
@@ -7126,7 +7495,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J-5dR8fhxZUcRuhhl8dh_kLY",
@@ -7145,7 +7515,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JWWmIdklwZUcRkcNa-vFnZnE",
@@ -7164,7 +7535,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J1Zvn5T9nb0cRG1ISQAHL3eg",
@@ -7183,7 +7555,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JIeTZuTmRekcRrAcB3TGDzYM",
@@ -7202,7 +7575,8 @@
    "pano": true,
    "scenes": 17,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JUQoYHKxbZUcRSxvIesshmOw",
@@ -7221,7 +7595,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J3ZHFScNbZUcRJ9zk2xJabNY",
@@ -7240,7 +7615,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JeaE-YQBpZUcRs_gHuaEP3hY",
@@ -7259,7 +7635,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JgxwSMgChb0cRN8Z_Wn7Yvvg",
@@ -7278,7 +7655,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JT1CRW1NmZUcRWIvjnnImshM",
@@ -7297,7 +7675,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JHSRjskxrZUcRqCOB9gFxy7U",
@@ -7316,7 +7695,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JlSguK_afb0cRxn0TFJkXzpg",
@@ -7335,7 +7715,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JP2eJpepvb0cRloJV8AB0bmM",
@@ -7354,7 +7735,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J0VlwPdw_b0cRJl8v5QzIvpQ",
@@ -7373,7 +7755,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JycuydnAzZUcRzlYtc9qNoqs",
@@ -7392,7 +7775,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J1TV9emBxZUcROlXXZ9JI46g",
@@ -7411,7 +7795,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jj9EpZri6ZUcRez3lIyG7t9Q",
@@ -7430,7 +7815,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JxZa7rn93b0cR7LLnHDmz0L8",
@@ -7449,7 +7835,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jv3ub8gznXEcRWhriG6EErag",
@@ -7468,7 +7855,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JDxZuELSqaEcR7UFcTXXPgXw",
@@ -7487,7 +7875,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JlY-2F4gBe0cRC-tYg__DMI4",
@@ -7506,7 +7895,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JeYkIOMWSb0cRJ-hJR9OKOPg",
@@ -7525,7 +7915,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J1Vrkc9JgZUcRk6rTpqp_2Os",
@@ -7544,7 +7935,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jb1na7eo1ZUcRxL5N1ekrk1c",
@@ -7563,7 +7955,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J-RWQa2FVZEcRR7xk5hPWiL4",
@@ -7582,7 +7975,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JPfksfVUbZUcR2v8z8oaAX30",
@@ -7601,7 +7995,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JL6ND38b_ZEcRT1jEdJRi5q4",
@@ -7620,7 +8015,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jb6Rzpp8yZUcRAKXFY2gbOwA",
@@ -7639,7 +8035,8 @@
    "pano": true,
    "scenes": 16,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JC5LJef6XekcR23K12z2Hnbk",
@@ -7658,7 +8055,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JGaQonVZhb0cRDMbCAPRPf5s",
@@ -7677,7 +8075,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JIzCYHs36b0cRaOndHbmHa4s",
@@ -7696,7 +8095,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JUZIxlGKRZUcRiUiQaw4sst0",
@@ -7715,7 +8115,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JH0SUw7stZUcRDfEIDAJplN8",
@@ -7734,7 +8135,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JG0f-4Wbxb0cRP5S039Hx-50",
@@ -7753,7 +8155,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JiwOg5ImFZUcRIMwsG6V8zsk",
@@ -7772,7 +8175,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jh0Zzh4KAZUcRnbkPDWCTLu0",
@@ -7791,7 +8195,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "javno"
   },
   {
    "id": "g-Jg-WT_IX1b0cRC7d8BP-l4cA",
@@ -7810,7 +8215,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J4fxHWdI1ZUcRwsPQK5YP_HY",
@@ -7829,7 +8235,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jq6quRLR3b0cRyoIJhzZJchc",
@@ -7848,7 +8255,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JJeuinPF3b0cRS50mCNnmeo4",
@@ -7867,7 +8275,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Juz0VVZBvZUcRmbJXhf16cqo",
@@ -7886,7 +8295,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JtbmR2ILgekcRymN9ZHSXdss",
@@ -7905,7 +8315,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J5znEjTcAZUcRR0NaF6YIR0s",
@@ -7924,7 +8335,8 @@
    "pano": true,
    "scenes": 15,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JZTVc1NBle0cRzE3HJLruCm4",
@@ -7943,7 +8355,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JlXtfn1yfb0cRQ0s6r6r5feA",
@@ -7962,7 +8375,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JoZGHyxw1ZUcRjO3TJ_YS4Jo",
@@ -7981,7 +8395,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JBZg7-Oc-b0cRje7WeniwbLw",
@@ -8000,7 +8415,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JQWLXKnFoZUcRBYILyHiASYU",
@@ -8019,7 +8435,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JOfv31fotZUcRPCV4iQkzWjQ",
@@ -8038,7 +8455,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jc67x1AtAZUcR0akYhnLs4sQ",
@@ -8057,7 +8475,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jm2mhQTzNekcR2SLMdcZ76SE",
@@ -8076,7 +8495,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jr5CvnwCTb0cROpfY6GUQreg",
@@ -8095,7 +8515,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-Ji1tDRVynZUcRCwwixVMitcQ",
@@ -8114,7 +8535,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J7-PnSptbZUcRPdJwdV6rHZU",
@@ -8133,7 +8555,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-Jsd2QqvNnZUcRmFzKoFFUCPo",
@@ -8152,7 +8575,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JH3_xB1x3b0cRfHVctTjFPMs",
@@ -8171,7 +8595,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J2xXDwb0zZUcRfxI_MFDx4_8",
@@ -8190,7 +8615,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JH5c4C9_2b0cRc8xWcZA2fsA",
@@ -8209,7 +8635,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JybuKs7ope0cRIbqNb1mi0X8",
@@ -8228,7 +8655,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JRVUjL_d1b0cRp4tVXpJKn00",
@@ -8247,7 +8675,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JN4s6XMXSekcRuZRNuCw97rU",
@@ -8266,7 +8695,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JQxUrDOb_ZEcRwGBbEsBd91Y",
@@ -8285,7 +8715,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JLdRokSxnZUcRo4d575WopMk",
@@ -8304,7 +8735,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JIU31iA25ZUcRVHc7ece20_4",
@@ -8323,7 +8755,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J6-RoFZB3ZUcR_WplxigKeLE",
@@ -8342,7 +8775,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JW7_ZDmItZUcRrMSOEQp9YxI",
@@ -8361,7 +8795,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JN1PXgeZ3b0cRhiXJSVjCea4",
@@ -8380,7 +8815,8 @@
    "pano": true,
    "scenes": 14,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J2-NSLOJFb0cRlw37i3j0LUE",
@@ -8399,7 +8835,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JSY_YeQBrZUcRqp8ujGzOIic",
@@ -8418,7 +8855,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-Jh9NT6QwtZUcRZwp4KI645kE",
@@ -8437,7 +8875,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JmxV_CldrZUcR8HaMQXzYdfw",
@@ -8456,7 +8895,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JmTTC5XNhb0cRlum_Gx9vW0I",
@@ -8475,7 +8915,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JFx_U9E09ZUcRkzwx60yhxcA",
@@ -8494,7 +8935,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JJV5cjGH0b0cR80Q6Kkgbhu8",
@@ -8513,7 +8955,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JycMx3WtCZUcR3P3ur3g_fko",
@@ -8532,7 +8975,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JHfg32Ml3b0cRFZtbUQgxo0Y",
@@ -8551,7 +8995,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JV9k3VtIUZUcRjfluvstCT54",
@@ -8570,7 +9015,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jd4e2l4nNekcRuEEjft2R4zw",
@@ -8589,7 +9035,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JJXKTXb8yZUcRKrZHs7-26uY",
@@ -8608,7 +9055,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J7_rvp0COZUcRWeMEBUo00xM",
@@ -8627,7 +9075,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JN4Gj__twZUcRuayH-GxK1do",
@@ -8646,7 +9095,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JDzPzuZPWekcRKPgjsE2k4jM",
@@ -8665,7 +9115,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JRyZvZQBHe0cR5O1y1wqEMXg",
@@ -8684,7 +9135,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JU0J5TdS3ekcRauucke3YJwY",
@@ -8703,7 +9155,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JXXlkLtEBe0cRTOys5G9_w-U",
@@ -8722,7 +9175,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JryBvdgByb0cRrdeIUBnz-lA",
@@ -8741,7 +9195,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JpbbrQI41ZUcRSy8RBcz2fo0",
@@ -8760,7 +9215,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JSUaa4laXZUcRz3j2qAWRuSk",
@@ -8779,7 +9235,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JfZV1WDgtZUcRVhj8LBI96SM",
@@ -8798,7 +9255,8 @@
    "pano": true,
    "scenes": 13,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JhWiv_fyXZUcRzd_hBP_6KtI",
@@ -8817,7 +9275,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JOUV0NOVjb0cRNv99m3pm1ZI",
@@ -8836,7 +9295,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J-Qfy-OG3ekcR1YjkeknuXOA",
@@ -8855,7 +9315,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J_T2wHuQBZUcRFFBkpiDUxcg",
@@ -8874,7 +9335,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JXa3lPPQxZUcRz1imRfAAwuk",
@@ -8893,7 +9355,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JGWKfFzEzZUcR0zdq_AHYEzM",
@@ -8912,7 +9375,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JV-w4Fd41ZUcR2yQWopI9EYE",
@@ -8931,7 +9395,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JXR28lNx3b0cRLW2q8f6E_dw",
@@ -8950,7 +9415,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jq6YrviczZUcR4WHoJFr3M3Q",
@@ -8969,7 +9435,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JMy0-X5V3b0cRTX_na3hpHPE",
@@ -8988,7 +9455,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JfdkuRI1wZUcR3AFMBgtV7qs",
@@ -9007,7 +9475,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JkToEY2pnb0cRNLYTov0H884",
@@ -9026,7 +9495,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J3SV-DQY1ZUcRUGPnf1lDdp0",
@@ -9045,7 +9515,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jh6bRmAN3b0cR_OgSPLY9Lxc",
@@ -9064,7 +9535,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JO3uV2tW6ZUcRirR1v4Fb3Ck",
@@ -9083,7 +9555,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JUZQXL4UyZUcRlTTGLVczrfI",
@@ -9102,7 +9575,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J-6Y0V1ynZUcROJPHw-9rN_k",
@@ -9121,7 +9595,8 @@
    "pano": true,
    "scenes": 12,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J8WHGWbhcZUcREG6_bGtpmM0",
@@ -9140,7 +9615,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J18h2RQChb0cRfOEbcShGhAc",
@@ -9159,7 +9635,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JX8dUoZtbZUcRu-sVqW1ibxw",
@@ -9178,7 +9655,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JIaMLxDJaZUcRuE1GJqE8n0k",
@@ -9197,7 +9675,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JeRnDT169ZUcRMYhVSf23du0",
@@ -9216,7 +9695,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JxyU-K1prZUcR2BOHdVSLrBg",
@@ -9235,7 +9715,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JGSpsF4xcZUcR3eFPez7kyEQ",
@@ -9254,7 +9735,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JYR_VFCF3b0cR5AbGqkPjJmM",
@@ -9273,7 +9755,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J4eMvOAJxb0cRUOALPo9fQ3U",
@@ -9292,7 +9775,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J2YK8aGYzZUcR9189Gvs9OTU",
@@ -9311,7 +9795,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JXSyqQKVvZUcRMeLILRdseq4",
@@ -9330,7 +9815,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J6TrGUd8lZUcRbHykI8LLcw4",
@@ -9349,7 +9835,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JiQt1Twdub0cRdQqr4e2_f_k",
@@ -9368,7 +9855,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JiXeGADDLekcRTplcxo9OaPE",
@@ -9387,7 +9875,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JnfzVheVxZUcR4rgb0GdpXC8",
@@ -9406,7 +9895,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jm1hVKB7IekcRdaIcMjc1NL4",
@@ -9425,7 +9915,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JUSyy56EtZUcRBtbER6G4Wbs",
@@ -9444,7 +9935,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JW2EIC_l3b0cRKfgZgJ5MA4w",
@@ -9463,7 +9955,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J6zDXSgd3b0cRzbl0U-spLow",
@@ -9482,7 +9975,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JgbRUde4NZUcRfY3nxS5C5WI",
@@ -9501,7 +9995,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JE6HLeOoyZUcRJeIM4ffX5zQ",
@@ -9520,7 +10015,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JLzPwskYzZUcR_XwsHdcZZq4",
@@ -9539,7 +10035,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JB1WBs6qcZUcR7K_qbRXbPww",
@@ -9558,7 +10055,8 @@
    "pano": true,
    "scenes": 11,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JtRgNZblcZUcR2p6RNH_rEIE",
@@ -9577,7 +10075,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J-wVOYplCZUcRMyd95O8Bpcc",
@@ -9596,7 +10095,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JoVrHI4hKZUcRC4BzbBPTiME",
@@ -9615,7 +10115,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JAUN7k-glZUcRDBOYen7yaP4",
@@ -9634,7 +10135,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JITbDJmVoZUcRMIJng9aBEoc",
@@ -9653,7 +10155,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J2T6mKGEtZUcReVkndiMBP5A",
@@ -9672,7 +10175,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JY9UqtLXwb0cRfEa-lCZKenQ",
@@ -9691,7 +10195,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JxbG2H5MyZUcRsgjYWncIc7c",
@@ -9710,7 +10215,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JX3c5BbGGZUcRJ7tjsQGMTYI",
@@ -9729,7 +10235,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JE6PBtXvdZEcR378bnfw884Q",
@@ -9748,7 +10255,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JsWDAbWEyZUcR3Js4HMkDOe8",
@@ -9767,7 +10275,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jh-F6fE8VZUcRBBFSPLMm6jM",
@@ -9786,7 +10295,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J39sT7M0UZUcRdfM2Eqp_Tig",
@@ -9805,7 +10315,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J-2jvhZRhZUcRwIMIYRSuoHQ",
@@ -9824,7 +10335,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J855Xkmwoe0cRUMcjhoRaoJE",
@@ -9843,7 +10355,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JMV5xxvttb0cRn06s36z-Dd4",
@@ -9862,7 +10375,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JD6vDyjJnZUcRRWLxPwK0yfg",
@@ -9881,7 +10395,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JIzVq9GuWekcR2FY-L34NqjU",
@@ -9900,7 +10415,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JzTbeFRIzZUcRwF_IIZP4ry8",
@@ -9919,7 +10435,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JDdWkWjN3b0cRchkJH8hl6lM",
@@ -9938,7 +10455,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J_xaBpRQ0ZUcR334Wp1FnB8Q",
@@ -9957,7 +10475,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JyZ3mrNB_b0cRVMKXxQJ8h5A",
@@ -9976,7 +10495,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JkRcAQ-Y1ZUcRV4nxtGyNq1s",
@@ -9995,7 +10515,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JaVyNFGBwZUcRVmDS1AKiAV0",
@@ -10014,7 +10535,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J3_vYUkCnZUcRSdgC5cp5nEc",
@@ -10033,7 +10555,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JAdytIjJvZUcR0ckxO4fdGFA",
@@ -10052,7 +10575,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jsw4G_ih-b0cRVa1_yclVMfU",
@@ -10071,7 +10595,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JC_RWiU4MZUcRqRpOJXZzuoE",
@@ -10090,7 +10615,8 @@
    "pano": true,
    "scenes": 10,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-Jxdw3WqZvZUcRB52lcXFfYR4",
@@ -10109,7 +10635,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JdUaLBlxbZUcRn2-S6NrbrBY",
@@ -10128,7 +10655,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JiQnc3expZUcRewORz4hlraE",
@@ -10147,7 +10675,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JiSL1MD6YZUcRdpItaAktw8I",
@@ -10166,7 +10695,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JSQWTYtWXZUcRkyLk_xBfwjo",
@@ -10185,7 +10715,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JSf2-xeVrZUcRAkmZodqz78E",
@@ -10204,7 +10735,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JCcpGxl9dZUcRAvMiJhcbaRY",
@@ -10223,7 +10755,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J0wQsDgB3b0cRDP2R1-pGh9w",
@@ -10242,7 +10775,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JtT4bRgAzZUcRpJ_rRQ_C7VA",
@@ -10261,7 +10795,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JE_r3haF3b0cRxNFsn-HFzSg",
@@ -10280,7 +10815,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JtyF7ZZ13b0cRNRCbDFNO2Yk",
@@ -10299,7 +10835,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JkWo2BxtpZUcRzihtYIMCuPs",
@@ -10318,7 +10855,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JsywoH4rnZEcRy0vqV0e8ksU",
@@ -10337,7 +10875,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J5auiCMRmb0cRfLfThcqeP8k",
@@ -10356,7 +10895,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JoUW1zHNhb0cR8kTp1U1BraE",
@@ -10375,7 +10915,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JBfgNiK4UZUcRfVoPiG7LnR8",
@@ -10394,7 +10935,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JiV9FKh0AZUcRZV0j501zFKE",
@@ -10413,7 +10955,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J0Yqw87Txb0cRZxDgm_yzNUk",
@@ -10432,7 +10975,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "javno"
   },
   {
    "id": "g-Jj_xwZUrwb0cRVrXcS6sOXLU",
@@ -10451,7 +10995,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JHZ_pPKItZUcRa4F3zvCEdr0",
@@ -10470,7 +11015,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JC5oon3j0b0cRz8EKzIRxDus",
@@ -10489,7 +11035,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J4cLDvNzJekcRFcUEFZ8k22M",
@@ -10508,7 +11055,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jt26s29F3ZUcRT_44fy5Hcbo",
@@ -10527,7 +11075,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J8RNdhf8dZUcRz-TfLjO8e-A",
@@ -10546,7 +11095,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JnQNU4qh3b0cROC9YJbpysAM",
@@ -10565,7 +11115,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JdRKHK6uEZUcRX5CoIfbNMOM",
@@ -10584,7 +11135,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JAQBQxQwAZUcRp9sM3M-A67w",
@@ -10603,7 +11155,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JgSCN5ct3b0cR7NcL7p9tgz0",
@@ -10622,7 +11175,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JvX6QKnX1b0cRNdAR6oESbc0",
@@ -10641,7 +11195,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J35_WP3YmZUcRV5vNb_mbks0",
@@ -10660,7 +11215,8 @@
    "pano": true,
    "scenes": 9,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jn4p9wRqXekcRTeLZ3SN8q28",
@@ -10679,7 +11235,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JYfY7dR8xe0cRZro5wKVGezI",
@@ -10698,7 +11255,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JX086pA9dZUcRdJsnfR3fs6E",
@@ -10717,7 +11275,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JO0Orzv5uZUcRNYOhBTH7F8k",
@@ -10736,7 +11295,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JnayLLuVvZUcRW4_b1enRQto",
@@ -10755,7 +11315,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jlb2Xm0JvZUcRAyoZjmuibp0",
@@ -10774,7 +11335,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JJX4ND0MLb0cRglzpwxtaOio",
@@ -10793,7 +11355,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JLedgIWBTZUcRbQRXKbCDJDo",
@@ -10812,7 +11375,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JpwUuObVbZUcR222smOnLxd0",
@@ -10831,7 +11395,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JkaZH5IVpZUcR-y7XFQw9gTU",
@@ -10850,7 +11415,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JEcSiclNpZUcRl2xEZlxa2Gw",
@@ -10869,7 +11435,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JbUP0ydgLZUcRunl9HHQEha8",
@@ -10888,7 +11455,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JxRCA__xwZUcRewvfA48Rzl8",
@@ -10907,7 +11475,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jn5JUJFprZUcRmSXSeoCIDFU",
@@ -10926,7 +11495,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jv-tlKABpZUcRPYtg4OHuv3I",
@@ -10945,7 +11515,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JdeAseztnZUcRClaX9T_nQ2I",
@@ -10964,7 +11535,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J2_jOBhctZUcR6zKkqfbDdXQ",
@@ -10983,7 +11555,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J6TVG2AY1ZUcRkuEN07QOPTY",
@@ -11002,7 +11575,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JBWnTtl5rZUcRxbUKFBxXE1k",
@@ -11021,7 +11595,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JE34ywHUtZUcROkkga-qyaK8",
@@ -11040,7 +11615,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JL63tVD0GqkERxMIov4glBCo",
@@ -11059,7 +11635,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JRQ8oyFZtb0cROD7YAiDR8C0",
@@ -11078,7 +11655,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "javno"
   },
   {
    "id": "g-JMxIlrmX0b0cR8TCElZcXECg",
@@ -11097,7 +11675,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JCe3mdcE-b0cRvf7GzGfTrCw",
@@ -11116,7 +11695,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JmUyXsruaekcRI4F4NPRrrfA",
@@ -11135,7 +11715,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JqxT6xs2Tb0cRk6VNz5z6QXI",
@@ -11154,7 +11735,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JZ0OPFcYtZUcRmQ-6eW6mMpY",
@@ -11173,7 +11755,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J0dFzhL53b0cRmWatholwtRw",
@@ -11192,7 +11775,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JE5978CB_ZUcR4lTes-2X8ts",
@@ -11211,7 +11795,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J868bE8R3b0cRBIgmABNKzPE",
@@ -11230,7 +11815,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Js_21XWh3b0cRarjeMeC8grI",
@@ -11249,7 +11835,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-J43aDHhKjZUcREyVLiPdL6qg",
@@ -11268,7 +11855,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jm_pN4Du3ZUcR-IVGaxWV04Y",
@@ -11287,7 +11875,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JAfpsIUq3ZUcRwAaAcVxhosA",
@@ -11306,7 +11895,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JmaHWWWwtZUcR4wdsjy25xE4",
@@ -11325,7 +11915,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JzTbeFRIzZUcRP0yhDZhkfH0",
@@ -11344,7 +11935,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jybsz6vSPZUcRVyR1Dt2F-lo",
@@ -11363,7 +11955,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JoXvYKIfgekcRjMLadoTMiZw",
@@ -11382,7 +11975,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JUbwARkCsZUcRv6bRXCWv1I4",
@@ -11401,7 +11995,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J5e4852YtZUcR17xWnk670Nc",
@@ -11420,7 +12015,8 @@
    "pano": true,
    "scenes": 8,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JvYTaZv5xZUcRCIkBj2DavVg",
@@ -11439,7 +12035,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JHaGDaKZvZUcRQeeaKFeDM74",
@@ -11458,7 +12055,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jr5QVLQChb0cRhrF4nK9ikiY",
@@ -11477,7 +12075,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jb0sQuCk1ZUcRBblL9G-dIHg",
@@ -11496,7 +12095,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jf03Osk5rZUcR1zSpM7Jku5Q",
@@ -11515,7 +12115,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JCRdkZDRpZUcRVYGJ6XqXSJQ",
@@ -11534,7 +12135,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J_1qMqONnZUcRVG8SdefgVmw",
@@ -11553,7 +12155,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JLQSlPok0ZUcRymS4wAeMAxM",
@@ -11572,7 +12175,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JfzAjans0ZUcR0LTv4QRvZ4M",
@@ -11591,7 +12195,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JeT5oVABpZUcRwjTn7ufzxJk",
@@ -11610,7 +12215,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jm4KqNNBoZUcRTrwZ1nXVLkU",
@@ -11629,7 +12235,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JMVkCuGcyZUcRc8zBlVfVKUw",
@@ -11648,7 +12255,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JF9yuJKWqZUcR5624LQ9Z_Wc",
@@ -11667,7 +12275,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JJWFx9zg0ZUcRsebihwlL8dk",
@@ -11686,7 +12295,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JsT9KbSgAZUcRfM6RkbGcGZU",
@@ -11705,7 +12315,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JOxfNw-18ekcRN6Vr8-OfQrQ",
@@ -11724,7 +12335,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J3Z2zvWk5ZUcRLLwR0POG-UI",
@@ -11743,7 +12355,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jr6HCuRWnZUcRAUrUOBYfwUI",
@@ -11762,7 +12375,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JVbbUS_R3b0cR1LZ4XTnZts8",
@@ -11781,7 +12395,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JuXF0RfCVZUcRAqke9UxNRHI",
@@ -11800,7 +12415,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JdTgOq-w-b0cRy6iFEj47TzE",
@@ -11819,7 +12435,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JBZ6CiUQtZUcRi1yZAJZI5XE",
@@ -11838,7 +12455,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J8eM3OQfMZUcRRpJROTwSIZU",
@@ -11857,7 +12475,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JoWajUal3b0cRkLN4mDTD8mc",
@@ -11876,7 +12495,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JfyYiwBa3ZUcRY6Rm7gNX54k",
@@ -11895,7 +12515,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J27WAed97b0cR6OfOPapdwWQ",
@@ -11914,7 +12535,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JPQDTxeZPZEcRHZTKyVZIKq4",
@@ -11933,7 +12555,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JMTAbeJGzZUcRT1Hzk7ELUr4",
@@ -11952,7 +12575,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JF9is0PzWZUcRQTv6_MfYk7o",
@@ -11971,7 +12595,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J-1jm3zItZUcRBEHPMo78Kro",
@@ -11990,7 +12615,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JITeXBi8tZUcRM8E7hpW0cf4",
@@ -12009,7 +12635,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jma3nqEIyZUcRuxNWoDNBXB8",
@@ -12028,7 +12655,8 @@
    "pano": true,
    "scenes": 7,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JjyKTBQBdZUcRbakchjSZR7Q",
@@ -12047,7 +12675,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JtdbYno5cZUcRdKwOfUIQ2YI",
@@ -12066,7 +12695,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jt6YZuuWsekcRW4Z8pvjxNnY",
@@ -12085,7 +12715,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-Je_TCyENqZUcRp3FFLAbMxBI",
@@ -12104,7 +12735,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J8QUvw729ZUcRsvErZR9EbJc",
@@ -12123,7 +12755,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JK2P-0VxrZUcR-b6VBClLn_c",
@@ -12142,7 +12775,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JgbH-PABrZUcROFqG1umI648",
@@ -12161,7 +12795,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JrSi3JChvZUcROd97vtMtuwU",
@@ -12180,7 +12815,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JpdjgbTRpZUcRgtnFmmA9u3Q",
@@ -12199,7 +12835,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J44xgzQ1oZUcRgZyCS76UGOc",
@@ -12218,7 +12855,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JUQrTsY9oZUcRQsNg5DFi23E",
@@ -12237,7 +12875,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JJ_isTAAVZUcRXoYtZObXbCI",
@@ -12256,7 +12895,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J624HlJxnZUcRwpULOLvTiY4",
@@ -12275,7 +12915,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JPdKbtE01ZUcRI9Gov60tre8",
@@ -12294,7 +12935,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JldEg8c41ZUcRjkWpU47Z1MQ",
@@ -12313,7 +12955,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J2RRa830tZUcRFfHiQcSNLuU",
@@ -12332,7 +12975,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JuaDFIYMBe0cRI1x6tnS6iEo",
@@ -12351,7 +12995,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J9aGUNL5oe0cREruwu1q41hY",
@@ -12370,7 +13015,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J3WsOT4Z3b0cRN0hcd_xsBTk",
@@ -12389,7 +13035,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JXx6Mc3wzZUcRKnhQiDGs8zw",
@@ -12408,7 +13055,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JA4xARIsyZUcRDqozEWJEWOc",
@@ -12427,7 +13075,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J2weXocS5ZUcRyBvAF1ZsiUA",
@@ -12446,7 +13095,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JE_a4kQQ1ZUcRBN2fjiHAYTA",
@@ -12465,7 +13115,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JFSiOSwQ1ZUcR6qxatflWM8s",
@@ -12484,7 +13135,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JrSkc60s0ZUcRDV-UoY2WQqo",
@@ -12503,7 +13155,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-J6QXTNow1ZUcRlxTe7JCW-lc",
@@ -12522,7 +13175,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jb-4Bz0xgb0cRcint5SjlfWc",
@@ -12541,7 +13195,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J_VYlJWWFZUcRr0y7pd1IKOI",
@@ -12560,7 +13215,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JKdE2lNd6e0cR-FWsePYYeb4",
@@ -12579,7 +13235,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J62z70-ObZUcRuQ0af_A9Mgc",
@@ -12598,7 +13255,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Js1KWIS2nZUcRREhmjc6kh8c",
@@ -12617,7 +13275,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JJeo5E70yZUcRNGi63MpWTHo",
@@ -12636,7 +13295,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J_VCEdPZvZUcRlstywVST4SA",
@@ -12655,7 +13315,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JoUqJANYtZUcRsJdritjZ3n8",
@@ -12674,7 +13335,8 @@
    "pano": true,
    "scenes": 6,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-J29Q-Ks9vZUcR3USjo_mXccI",
@@ -12693,7 +13355,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Je1f1ImVvZUcRsAVVcew6H1g",
@@ -12712,7 +13375,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JaT2GXaZvZUcRQnHqNrO1ZT0",
@@ -12731,7 +13395,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J-5hJpFcLb0cRocT9P3dEtLM",
@@ -12750,7 +13415,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JEZc8dPafb0cR5XXE0oD66ow",
@@ -12769,7 +13435,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J07qsVoOfb0cRs5wl-QjnK58",
@@ -12788,7 +13455,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J1bXEuuxvZUcRh_0DuIAqDrk",
@@ -12807,7 +13475,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JYS7kTPFcZUcR5Q2QjUhCZMM",
@@ -12826,7 +13495,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JNSNSv-xpZUcRzi-_SYl4CIs",
@@ -12845,7 +13515,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JlSSbc8aXZUcR8ZIf3XPsyBs",
@@ -12864,7 +13535,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jv-B2lwCXZUcRA4ov1axsf5o",
@@ -12883,7 +13555,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jy1Xkp5eYZUcReXhFXCovF10",
@@ -12902,7 +13575,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JVVVVOZGXZUcRyoZyjDKIH7Y",
@@ -12921,7 +13595,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JOShHupM0ZUcREdicyXN5Ejg",
@@ -12940,7 +13615,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JqRreW-ZrZUcRPcwTMthT8W4",
@@ -12959,7 +13635,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JY6KtB2FrZUcRoCXXfCBGqzc",
@@ -12978,7 +13655,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JdTER3c9uZUcRTu3LCBHzqq0",
@@ -12997,7 +13675,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JNR5bDNFoZUcRmyRWO4eigUE",
@@ -13016,7 +13695,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JkR1LGTBpZUcRD8_MjE6f2A8",
@@ -13035,7 +13715,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JW6OJEIZoZUcRY3rDvszVcSA",
@@ -13054,7 +13735,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JtQyxEfhKZUcRjA1yObOaQIU",
@@ -13073,7 +13755,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J47uUMwD1b0cR7O-g8slISg0",
@@ -13092,7 +13775,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JuxeXjMZrZUcRZ7xN4FjUpmQ",
@@ -13111,7 +13795,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JO8MC4LBvZUcRO8pV980dPmg",
@@ -13130,7 +13815,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JSe1fCrA1ZUcRCjTAtRWztIg",
@@ -13149,7 +13835,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JJ-8MBAAzZUcRI7RHwvSNAQs",
@@ -13168,7 +13855,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JTX1Z89d9ekcR_BENb2Eec6w",
@@ -13187,7 +13875,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Js4VlMqmcb0cRmYekT65aVak",
@@ -13206,7 +13895,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-Jf8ew_8z6b0cRIbocOKJ08zg",
@@ -13225,7 +13915,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JXTMxFTRLZUcRAYO6XXwCCAU",
@@ -13244,7 +13935,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JFcYCSqQzZUcRJzu9NcfFck0",
@@ -13263,7 +13955,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JwZ3cxRIEb0cR4ZbpD265gy0",
@@ -13282,7 +13975,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JwVeBrQ_1b0cR80HIxq_MO3k",
@@ -13301,7 +13995,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JxWaq7-bNekcRyGYQfeJbPRA",
@@ -13320,7 +14015,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Je5T3swM1ZUcR4px-JLz7rGM",
@@ -13339,7 +14035,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JS8K0h6Z1b0cRA5tc34CH884",
@@ -13358,7 +14055,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JP4Etd9l2b0cRhl9Pr6I0HjM",
@@ -13377,7 +14075,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-Jc5RKbkZhb0cR2qQMMw0bs0U",
@@ -13396,7 +14095,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JoQ6XLYUyZUcRNX3c_LVvksI",
@@ -13415,7 +14115,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JdUxvxUgtZUcRE5d4komhBbA",
@@ -13434,7 +14135,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jnd1Yt_87b0cRd3tSQjmPRWk",
@@ -13453,7 +14155,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JXcLGkaAyZUcRcHEyUR34AA8",
@@ -13472,7 +14175,8 @@
    "pano": true,
    "scenes": 5,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JzwO8HABRZUcR2dj8J4z-q0Q",
@@ -13491,7 +14195,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JFar7KABvZUcRi3qARUqtGJ0",
@@ -13510,7 +14215,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JBa2QBDNbZUcRHNN2rffckNA",
@@ -13529,7 +14235,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JZzHeSClFZUcRVJvMtjYtNYU",
@@ -13548,7 +14255,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JLWBHm1lbZUcR0bxJyFgrcao",
@@ -13567,7 +14275,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J0U1YWgBbZUcRa6x_7XL4OYI",
@@ -13586,7 +14295,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JHSRn-UFdZUcR8t_I43GpgNw",
@@ -13605,7 +14315,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J91xX5r1bZUcRDcNCgBwuMXQ",
@@ -13624,7 +14335,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JdTu9CwBdZUcRz3lFOANvMy8",
@@ -13643,7 +14355,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JNx8X20-rekcRzRBmovrdPX0",
@@ -13662,7 +14375,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JkTZ4jDarekcRnVCECG8s_JM",
@@ -13681,7 +14395,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JN13vZgBpZUcRO9jVoYUNtOU",
@@ -13700,7 +14415,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J0YfCr6m9ZUcRfaMgZPgeRSI",
@@ -13719,7 +14435,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JyVEeLWGYZUcRfnodGO5FXJs",
@@ -13738,7 +14455,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JeeKT9R41ZUcRi4T1fJkJpqI",
@@ -13757,7 +14475,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JkzAASt41ZUcR2sYnKcZze_A",
@@ -13776,7 +14495,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JsWsGdrQ1ZUcRd1qp1rFxM50",
@@ -13795,7 +14515,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JVWj3sTNpZUcRv0r45K_21s0",
@@ -13814,7 +14535,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JJUHCUX9pZUcR26oRBL7MLT8",
@@ -13833,7 +14555,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JC96BKQBpZUcR0FZIhNTPY0Q",
@@ -13852,7 +14575,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Js6P2iwBoZUcRnEGFWapcFd0",
@@ -13871,7 +14595,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jhd0z5axnZUcRoE4W_V2flTk",
@@ -13890,7 +14615,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J2THCqV9fZUcR7LjIiVxspHw",
@@ -13909,7 +14635,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jf7aj6sJ7b0cRfYPB9cq9SRg",
@@ -13928,7 +14655,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jo6IBHt67ZUcRvetCRpFXjgQ",
@@ -13947,7 +14675,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JEypdAuxFb0cRGvf9hzfNS_o",
@@ -13966,7 +14695,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "podjetja"
   },
   {
    "id": "g-JZb4xAGBwZUcRSm2yUu1OV_g",
@@ -13985,7 +14715,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J7-UZH6t3b0cRzW3McuGZVeI",
@@ -14004,7 +14735,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JA0l_w9J3b0cRfqQVHqItIAA",
@@ -14023,7 +14755,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JD6fV0Uxgb0cRxLNQxR8-CZQ",
@@ -14042,7 +14775,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JrfIWJ1qnZUcRW1gE4HuuolU",
@@ -14061,7 +14795,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jt-QbURN3ZUcR5vJSSi5SBUE",
@@ -14080,7 +14815,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JD14egRoBe0cRsFV--8H0ALw",
@@ -14099,7 +14835,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JAQAAfRoBe0cRXIzhSouh668",
@@ -14118,7 +14855,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JV8hQ-Ah3b0cRkSFAjnjCLWY",
@@ -14137,7 +14875,8 @@
    "pano": true,
    "scenes": 4,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JjzTOxUxbZUcRW8oLX2cf3Cs",
@@ -14156,7 +14895,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JcbZFM6lvZUcR4XGvxVuUS7Q",
@@ -14175,7 +14915,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JcfJZ8xJbZUcRdXMcqj3uq5U",
@@ -14194,7 +14935,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JnS4l14xcZUcR2LmUN28MveI",
@@ -14213,7 +14955,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JjfanJLBbZUcRzcahBzqC8L0",
@@ -14232,7 +14975,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jxa3KoHJUZUcRdsT773phuJM",
@@ -14251,7 +14995,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-J9cKYJKO9ZUcRb1UAqdhQuqY",
@@ -14270,7 +15015,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JP3zOcb29ZUcRe8LSZ1GG6RI",
@@ -14289,7 +15035,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JHQGkQwCXZUcRgWS6Z1BPLJ8",
@@ -14308,7 +15055,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "javno"
   },
   {
    "id": "g-J-80ruUaYZUcRifAXjkmNLfQ",
@@ -14327,7 +15075,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JrUw3CD69ZUcRK85Yn-vIt8A",
@@ -14346,7 +15095,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-Jc3Qg-5CXZUcR3C-ue-5GEME",
@@ -14365,7 +15115,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JWdd6XACXZUcR4fx538JU5h0",
@@ -14384,7 +15135,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JTfA4UXA1ZUcRYNy_1iyd_5o",
@@ -14403,7 +15155,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-Jiwulyzs1ZUcRsVu8gWDk4TE",
@@ -14422,7 +15175,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JQ-BvhEdsZUcRe3HTFaNolgQ",
@@ -14441,7 +15195,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-Jb2dVY2FrZUcRYCefeVJZMZQ",
@@ -14460,7 +15215,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JCaJJMZZuZUcRL5TkdMubiKs",
@@ -14479,7 +15235,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JGwCZo5FuZUcRhdZeaKr2FVo",
@@ -14498,7 +15255,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JT8ev-CRoZUcRarDmnGgzIjc",
@@ -14517,7 +15275,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JLSX1Co9oZUcRUVzeA34N6Q0",
@@ -14536,7 +15295,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JB5fytrXwb0cRc84KGio_n2w",
@@ -14555,7 +15315,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J-dT3gGD0b0cRLXJ3-1sIcOE",
@@ -14574,7 +15335,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-J8_8g62MtZUcR0wuGXfaS1yg",
@@ -14593,7 +15355,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J0c-aHZcyZUcR3RhBMP4PLMs",
@@ -14612,7 +15375,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JH9Wah1C3ekcRAwdq0kcx2Vk",
@@ -14631,7 +15395,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-Jg0nq3JwyZUcRwKlzEin0B7U",
@@ -14650,7 +15415,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JZSqwFJwyZUcRH1NrV4Xj5ok",
@@ -14669,7 +15435,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JCxxukp0yZUcR03m0FTlyZDw",
@@ -14688,7 +15455,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JewbEE-DNekcRLHXvhgVKM_8",
@@ -14707,7 +15475,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-JOR3MrAczZUcRkfiOI-n3mjo",
@@ -14726,7 +15495,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JgTNgZkybZUcReO8rW7TPgp0",
@@ -14745,7 +15515,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JAdb4sgLRZUcRUP6JWtMrd78",
@@ -14764,7 +15535,8 @@
    "pano": true,
    "scenes": 3,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "trgovine"
   },
   {
    "id": "g-JwcBiC7BEZUcRYn4WlMfOIS4",
@@ -14783,7 +15555,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JezmRvatFZUcRHSAGAJatAQY",
@@ -14802,7 +15575,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JR_q00StqZUcRBN_pGT1EePg",
@@ -14821,7 +15595,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JVSq9svJcZUcREqqB4fLIgt0",
@@ -14840,7 +15615,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-JIaL3iBa9ZUcRnmAN4vfDuKk",
@@ -14859,7 +15635,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JJR5HRI-ZZUcR-y_2uyg3u3g",
@@ -14878,7 +15655,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J9bSYlciZZUcR1CVWGvbzAR0",
@@ -14897,7 +15675,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-Jw_ZtSDOXZUcRd7FSf3s6iK4",
@@ -14916,7 +15695,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jt1s2WdM1ZUcRGOyO-jopQW0",
@@ -14935,7 +15715,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JVSW-_hE1ZUcR2wdQceQgOZs",
@@ -14954,7 +15735,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-J2bK_m_U1ZUcR7qhNaYgU-w0",
@@ -14973,7 +15755,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JrfAaxK5sZUcRFp3-z3Nu6rU",
@@ -14992,7 +15775,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Ja4hktONpZUcRli0Hhl3PoWM",
@@ -15011,7 +15795,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JzZL600MzZUcRfepq61zsbXc",
@@ -15030,7 +15815,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jj8DBqlqnZUcRA7D9v9OempA",
@@ -15049,7 +15835,8 @@
    "pano": true,
    "scenes": 2,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-J4UbfJ8dZZUcR96omIJ92mCI",
@@ -15068,7 +15855,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-Jm4MMcZVpZUcRpLY39hHWWAw",
@@ -15087,7 +15875,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JkUHdSs9pZUcR7b8mCkhrphQ",
@@ -15106,7 +15895,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JEdyu5t9pZUcRYLvKwcXtFBM",
@@ -15125,7 +15915,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JazCGcyHVKxMRQrStHVqIry8",
@@ -15144,7 +15935,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JjQz6Utx8ekcRUAe7zhViYo8",
@@ -15163,7 +15955,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "znamenitosti"
   },
   {
    "id": "g-JG2OELnV9ekcR26IonuGqrfs",
@@ -15182,7 +15975,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-Jhc-vJ2Wdb0cRzkIjDzVTK6g",
@@ -15201,7 +15995,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J4W7Bea93b0cRa49FzmLSCpo",
@@ -15220,7 +16015,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J0wzMkdd9ZUcRcjd6r6i9654",
@@ -15239,7 +16035,8 @@
    "pano": true,
    "scenes": 1,
    "views": null,
-   "highlights": []
+   "highlights": [],
+   "type": "kraji"
   }
  ]
 }

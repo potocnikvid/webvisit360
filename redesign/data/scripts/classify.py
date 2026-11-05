@@ -2,6 +2,8 @@
 
 Input:  tours.json
 Output: locations-by-type.csv (one row per place: type, name, town, source, why)
+        With --write, also stores each item's `type` in tours.json and
+        public/data/tours.json.
 
 Google places are typed from their Google Maps category, everything else from its
 name. Rules are checked in order and the first match wins, so the more specific
@@ -11,6 +13,7 @@ Fix a wrong row with an entry in OVERRIDES (item id -> type).
 import csv
 import json
 import re
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -98,10 +101,12 @@ def classify(item: dict) -> tuple[str, str]:
 
 
 def main() -> None:
-    items = json.loads((DATA / "tours.json").read_text())["items"]
+    tours = json.loads((DATA / "tours.json").read_text())
+    items = tours["items"]
     rows = []
     for it in items:
         key, why = classify(it)
+        it["type"] = key
         rows.append({
             "type": key,
             "type_sl": TYPES[key][0],
@@ -118,6 +123,10 @@ def main() -> None:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader()
         w.writerows(rows)
+    if "--write" in sys.argv:
+        out = json.dumps(tours, ensure_ascii=False, indent=1) + "\n"
+        (DATA / "tours.json").write_text(out)
+        (DATA.parent.parent / "public" / "data" / "tours.json").write_text(out)
     counts = Counter(r["type"] for r in rows)
     for key in order:
         print(f"{counts[key]:4d}  {TYPES[key][0]}")

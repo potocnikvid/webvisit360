@@ -1,6 +1,29 @@
+/** Visitor-facing place types (see redesign/data/scripts/classify.py). */
+export const PLACE_TYPES = [
+  "obcina",
+  "nastanitve",
+  "vino",
+  "gostinstvo",
+  "zdravje",
+  "znamenitosti",
+  "sport",
+  "kraji",
+  "nepremicnine",
+  "trgovine",
+  "podjetja",
+  "javno",
+  "drugo",
+] as const;
+
+export type PlaceType = (typeof PLACE_TYPES)[number];
+
+/** Chips always shown; the rest sit behind "Več". */
+export const MAIN_TYPES: readonly PlaceType[] = ["obcina", "nastanitve", "vino", "gostinstvo", "trgovine", "zdravje"];
+
 export type Tour = {
   id: string;
   kind: "obcina" | "business" | "google";
+  type: PlaceType;
   source: "3dvista" | "kuula" | "google";
   name: string;
   place: string | null;
