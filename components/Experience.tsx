@@ -374,7 +374,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           </dl>
         )}
         <button className="why" onClick={openStory}>
-          <img src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={128} height={32} />
+          {/* Phones only: there the corner is taken by the finder. */}
+          <img className="why__badge" src={TRUSTED_BADGE.src} alt="" width={128} height={32} />
           <span className="why__text">
             <b>{a.entry.title}</b>
             <span>{a.entry.text}</span>
@@ -547,6 +548,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           </div>
         </div>
       )}
+
+      <img className="trusted-corner" src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={210} height={53} />
 
       <footer className="footer">
         <span>{t.footer.company}</span>
