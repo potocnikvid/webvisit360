@@ -412,7 +412,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
       )}
 
       {tourOpen && selected && (
-        <div className="tour" role="dialog" aria-label={t.tour.label(selected.name)}>
+        <div className={`tour ${selected.source === "google" ? "tour--google" : ""}`} role="dialog" aria-label={t.tour.label(selected.name)}>
           {selected.source === "google" ? (
             <GoogleTour tour={selected} copy={t} />
           ) : (
