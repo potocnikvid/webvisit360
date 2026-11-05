@@ -97,6 +97,8 @@ a { color: inherit; text-decoration: none; }
 .marker:focus-visible { outline: none; }
 .marker:focus-visible .marker__dot { outline: 2px solid var(--snow); outline-offset: 3px; }
 .marker:hover, .marker.is-selected { z-index: 10; }
+.marker.is-near .marker__dot { box-shadow: 0 0 0 3px rgba(246, 169, 59, .35), 0 0 14px rgba(246, 169, 59, .8); }
+.marker.is-near { z-index: 5; }
 
 @keyframes beacon {
   0% { transform: scale(.6); opacity: .9; }
@@ -153,6 +155,28 @@ a { color: inherit; text-decoration: none; }
 .chip.is-on { color: var(--night); background: var(--snow); border-color: var(--snow); }
 .chip:disabled { opacity: .55; cursor: default; }
 .chip small { font-size: 11px; opacity: .8; }
+.chip--more { border-style: dashed; }
+.lang {
+  padding: 6px 10px; border-radius: 8px; font: 600 12.5px/1 var(--text); letter-spacing: .04em;
+  color: var(--mist); border: 1px solid var(--line); background: transparent;
+}
+.lang:hover { color: var(--snow); }
+
+/* "Closest to you" card, stacked above the search box */
+.near {
+  padding: 14px 16px 12px; border-radius: 14px;
+  background: rgba(10, 20, 52, .82); border: 1px solid var(--line);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  animation: panel-in .45s cubic-bezier(.2, .8, .2, 1);
+}
+.near__kicker { margin: 0 0 4px; color: var(--amber); font-size: 13px; font-weight: 500; }
+.near__title { margin: 0; font: 600 19px/1.15 var(--display); letter-spacing: -.02em; }
+.near__others { margin: 4px 0 0; color: var(--mist); font-size: 13.5px; }
+.near__actions { display: flex; align-items: center; gap: 14px; margin-top: 10px; flex-wrap: wrap; }
+.near__actions .btn { padding: 9px 14px; font-size: 14px; }
+.near__precise { color: var(--mist); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; }
+.near__precise:hover { color: var(--snow); }
+
 .swatch { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .swatch--obcina { background: var(--ember); box-shadow: 0 0 0 2px rgba(255, 210, 122, .3); }
 .swatch--business { background: var(--amber); width: 6px; height: 6px; }

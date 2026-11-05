@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import PanoPreview from "./PanoPreview";
 import type { Tour } from "@/lib/types";
+import type { Copy } from "@/lib/i18n";
 
 /** [photoId, image base url, lat, lng] */
 type Scene = [string, string, number | null, number | null];
@@ -17,7 +18,7 @@ const loadScenes = () =>
 const img = (base: string, w: number) => `${base}=w${w}-h${w / 2}-k-no`;
 
 /** Full-screen in-site viewer for a place's Google Maps 360 photos. */
-export default function GoogleTour({ tour }: { tour: Tour }) {
+export default function GoogleTour({ tour, copy: t }: { tour: Tour; copy: Copy }) {
   const [scenes, setScenes] = useState<Scene[] | null>(null);
   const [failed, setFailed] = useState(false);
   const [i, setI] = useState(0);
@@ -60,27 +61,27 @@ export default function GoogleTour({ tour }: { tour: Tour }) {
   if (failed || (scenes && n === 0)) {
     return (
       <div className="gtour__empty">
-        <p>Sprehoda trenutno ni mogoče naložiti.</p>
+        <p>{t.viewer.failed}</p>
         {tour.mapsUrl && (
           <a className="btn btn--amber" href={tour.mapsUrl} target="_blank" rel="noopener">
-            Odpri v Google Zemljevidih ↗
+            {t.panel.openInMaps}
           </a>
         )}
       </div>
     );
   }
-  if (!scenes) return <div className="gtour__empty">Nalagam sprehod…</div>;
+  if (!scenes) return <div className="gtour__empty">{t.viewer.loadingTour}</div>;
 
   const cur = scenes[i];
   return (
     <div className="gtour">
-      <PanoPreview full src={[img(cur[1], 1024), img(cur[1], hi)]} alt={`${tour.name}, panorama ${i + 1}`} />
+      <PanoPreview full copy={t} src={[img(cur[1], 1024), img(cur[1], hi)]} alt={`${tour.name}, ${t.viewer.panorama(i + 1)}`} />
       {n > 1 && (
         <>
-          <button className="gtour__arrow gtour__arrow--prev" onClick={() => go(-1)} aria-label="Prejšnja panorama">
+          <button className="gtour__arrow gtour__arrow--prev" onClick={() => go(-1)} aria-label={t.viewer.prev}>
             ‹
           </button>
-          <button className="gtour__arrow gtour__arrow--next" onClick={() => go(1)} aria-label="Naslednja panorama">
+          <button className="gtour__arrow gtour__arrow--next" onClick={() => go(1)} aria-label={t.viewer.next}>
             ›
           </button>
         </>
@@ -92,7 +93,7 @@ export default function GoogleTour({ tour }: { tour: Tour }) {
         {n > 1 && (
           <div className="gtour__strip" ref={strip}>
             {scenes.map((s, k) => (
-              <button key={s[0]} data-i={k} className={k === i ? "is-on" : ""} onClick={() => setI(k)} aria-label={`Panorama ${k + 1}`}>
+              <button key={s[0]} data-i={k} className={k === i ? "is-on" : ""} onClick={() => setI(k)} aria-label={t.viewer.panorama(k + 1)}>
                 <img src={`${s[1]}=w160-h90-k-no`} alt="" loading="lazy" />
               </button>
             ))}

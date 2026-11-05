@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type * as THREE_NS from "three";
+import type { Copy } from "@/lib/i18n";
 
 type Props = {
   /** Equirectangular image(s), lowest resolution first; each one replaces the previous when loaded. */
@@ -9,6 +10,7 @@ type Props = {
   alt: string;
   /** Full-screen tour mode: no idle auto-pan, wider zoom range, no drag hint. */
   full?: boolean;
+  copy: Copy;
 };
 
 type Viewer = {
@@ -19,7 +21,7 @@ type Viewer = {
 };
 
 /** Draggable, zoomable 360° viewer for equirectangular images. */
-export default function PanoPreview({ src, alt, full = false }: Props) {
+export default function PanoPreview({ src, alt, full = false, copy: t }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const viewer = useRef<Viewer | null>(null);
   const [ready, setReady] = useState(false);
@@ -200,15 +202,15 @@ export default function PanoPreview({ src, alt, full = false }: Props) {
       className={`pano ${full ? "pano--full" : ""}`}
       ref={host}
       role="img"
-      aria-label={`360° ${full ? "sprehod" : "predogled"}: ${alt}`}
+      aria-label={`360° ${full ? t.viewer.tour : t.viewer.preview}: ${alt}`}
       data-state={state}
     >
-      {state === "loading" && <span className="pano__hint">Nalagam panoramo…</span>}
+      {state === "loading" && <span className="pano__hint">{t.viewer.loadingPano}</span>}
       {state === "error" && (
         // WebGL texture failed (network/CORS): show the panorama as a flat image instead.
         <img className="panel__cover" src={srcs[0]} alt="" onError={(e) => (e.currentTarget.style.display = "none")} />
       )}
-      {state === "ready" && !full && <span className="pano__drag">Povlecite za razgled</span>}
+      {state === "ready" && !full && <span className="pano__drag">{t.viewer.drag}</span>}
     </div>
   );
 }

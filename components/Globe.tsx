@@ -20,6 +20,10 @@ type Props = {
   paused: boolean;
   onSelect: (id: string) => void;
   onReady?: () => void;
+  /** Where the opening fly-in ends (defaults to all of Slovenia). */
+  initialView?: { lat: number; lng: number; altitude: number };
+  /** Places to ring as "near you". */
+  highlightIds?: string[];
 };
 
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
@@ -55,7 +59,7 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady }: Props) {
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -63,6 +67,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   onSelectRef.current = onSelect;
   const toursRef = useRef(tours);
   const labelsRef = useRef<() => void>(() => {});
+  const nearRef = useRef(new Set<string>());
+  nearRef.current = new Set(highlightIds);
   toursRef.current = tours;
 
   // ---- create the globe once -------------------------------------------------
@@ -180,11 +186,16 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const W = el.clientWidth;
         const H = el.clientHeight;
         const budget = labelBudget(alt);
+        const near = nearRef.current;
         const selected = [...markers.current.entries()].find(([, m]) => m.classList.contains("is-selected"))?.[0];
 
         const candidates = toursRef.current
-          .filter((t) => t.lat != null && (t.kind === "obcina" ? alt < MUNI_LABEL_ALT : alt < PLACE_LABEL_ALT) || t.id === selected)
-          .sort((a, b) => Number(b.id === selected) - Number(a.id === selected) || importance(b) - importance(a));
+          .filter((t) => t.lat != null && (t.kind === "obcina" ? alt < MUNI_LABEL_ALT : alt < PLACE_LABEL_ALT) || t.id === selected || near.has(t.id))
+          .sort((a, b) =>
+            Number(b.id === selected) - Number(a.id === selected) ||
+            Number(near.has(b.id)) - Number(near.has(a.id)) ||
+            importance(b) - importance(a),
+          );
 
         // Keep labels clear of the page's own text and controls.
         const host = el.getBoundingClientRect();
@@ -291,6 +302,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             });
             // Stop the globe's drag controls from swallowing the click.
             m.addEventListener("pointerdown", (e) => e.stopPropagation());
+            m.classList.toggle("is-near", nearRef.current.has(t.id));
             markers.current.set(t.id, m);
           }
           return m;
@@ -311,8 +323,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       g.htmlElementsData(toursRef.current.filter((t) => t.lat != null));
       onReady?.();
 
-      // Orchestrated fly-in to Slovenia.
-      const t = window.setTimeout(() => g.pointOfView(SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700);
+      // Orchestrated fly-in to the visitor, or to all of Slovenia.
+      const t = window.setTimeout(() => g.pointOfView(initialView ?? SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700);
 
       cleanup = () => {
         window.clearTimeout(t);
@@ -341,6 +353,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     markers.current.forEach((m, id) => m.classList.toggle("is-selected", id === selectedId));
     labelsRef.current();
   }, [selectedId, tours]);
+
+  useEffect(() => {
+    markers.current.forEach((m, id) => m.classList.toggle("is-near", nearRef.current.has(id)));
+    labelsRef.current();
+  }, [highlightIds, tours]);
 
   useEffect(() => {
     if (!focus || !globe.current) return;

@@ -2,11 +2,15 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { Filter, Tour, ToursFile } from "@/lib/types";
-import { compact, fmt, panoramas } from "@/lib/types";
+import type { PlaceType, Tour, ToursFile } from "@/lib/types";
+import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
+import { copy, pickLang, type Lang } from "@/lib/i18n";
+import { isNearCountry, type Visitor } from "@/lib/visitor";
+import { countWithin, nearest } from "@/lib/nearby";
 import type { Focus } from "./Globe";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
+import NearYou from "./NearYou";
 
 const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
@@ -16,7 +20,18 @@ const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 const norm = (s: string) =>
   s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
-const rankKind = (t: Tour) => (t.kind === "obcina" ? 0 : t.kind === "business" ? 1 : 2);
+/** How many nearest places to ring and frame when a type is chosen. */
+const NEAR_COUNT = 5;
+
+/** A view that fits a set of places: centred on their mean, zoomed out to the farthest. */
+const frame = (places: { tour: Tour; km: number }[]) => {
+  const lat = places.reduce((s, p) => s + p.tour.lat!, 0) / places.length;
+  const lng = places.reduce((s, p) => s + p.tour.lng!, 0) / places.length;
+  const maxKm = Math.max(...places.map((p) => p.km));
+  return { lat, lng, altitude: Math.min(0.35, Math.max(0.012, maxKm / 2500)) };
+};
+
+const LANG_KEY = "wv360-lang";
 
 const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
   const seen = new Set<string>();
@@ -28,10 +43,14 @@ const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
   });
 };
 
-export default function Experience() {
+export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | null }) {
   const [data, setData] = useState<ToursFile | null>(null);
   const [geo, setGeo] = useState<any[] | null>(null);
-  const [filter, setFilter] = useState<Filter>("all");
+  const [type, setType] = useState<PlaceType | "all">("obcina");
+  const [moreTypes, setMoreTypes] = useState(false);
+  const [visitor, setVisitor] = useState(ipVisitor);
+  const [locationError, setLocationError] = useState(false);
+  const [lang, setLang] = useState<Lang>("sl");
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -40,6 +59,28 @@ export default function Experience() {
   const [focus, setFocus] = useState<Focus | null>(null);
   const [ready, setReady] = useState(false);
   const focusKey = useRef(0);
+
+  const t = copy[lang];
+
+  useEffect(() => {
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem(LANG_KEY);
+    } catch {}
+    setLang(saved === "sl" || saved === "en" ? saved : pickLang(navigator.languages ?? [navigator.language]));
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  const switchLang = () => {
+    const next = lang === "sl" ? "en" : "sl";
+    setLang(next);
+    try {
+      localStorage.setItem(LANG_KEY, next);
+    } catch {}
+  };
 
   useEffect(() => {
     fetch("/data/tours.json").then((r) => r.json()).then(setData);
@@ -50,23 +91,32 @@ export default function Experience() {
   const byId = useMemo(() => new Map(all.map((t) => [t.id, t])), [all]);
   const selected = selectedId ? byId.get(selectedId) ?? null : null;
 
-  const visible = useMemo(
-    () => all.filter((t) => filter === "all" || t.kind === filter),
-    [all, filter],
-  );
-
   const results = useMemo(() => {
     const q = norm(query.trim());
-    const list = visible.filter(
-      (t) => !q || norm(t.name).includes(q) || (t.place && norm(t.place).includes(q)),
+    const list = all.filter(
+      (x) => !q || norm(x.name).includes(q) || (x.place && norm(x.place).includes(q)),
     );
-    // Municipalities first, then most-viewed.
+    // The chosen type first, then most-viewed.
     return list.sort(
       (a, b) =>
-        rankKind(a) - rankKind(b) ||
+        Number(b.type === type) - Number(a.type === type) ||
         (b.views ?? b.scenes ?? 0) - (a.views ?? a.scenes ?? 0),
     );
-  }, [visible, query]);
+  }, [all, query, type]);
+
+  // "Near you" only for visitors in Slovenia and its neighbours.
+  const origin = visitor && isNearCountry(visitor.country) ? visitor : null;
+  const near = useMemo(
+    () => (origin ? nearest(all, origin, { type: type === "all" ? undefined : type, limit: NEAR_COUNT }) : []),
+    [all, origin, type],
+  );
+  const nearOthers = useMemo(
+    () => (origin && near.length ? countWithin(all, origin, 25, type === "all" ? undefined : type) - 1 : 0),
+    [all, origin, near, type],
+  );
+  const highlightIds = useMemo(() => near.map((n) => n.tour.id), [near]);
+  // Computed once, when the globe mounts: where the opening fly-in ends.
+  const initialView = useMemo(() => (near.length ? frame(near) : undefined), [data !== null]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fly = useCallback((lat: number, lng: number, altitude: number, ms?: number, panel?: boolean) => {
     focusKey.current += 1;
@@ -85,11 +135,48 @@ export default function Experience() {
     [byId, fly],
   );
 
+  const home = useMemo(() => (near.length ? frame(near) : SLOVENIA), [near]);
+
   const close = useCallback(() => {
     setSelectedId(null);
     setEnquiry(false);
-    fly(SLOVENIA.lat, SLOVENIA.lng, SLOVENIA.altitude, 1400);
-  }, [fly]);
+    fly(home.lat, home.lng, home.altitude, 1400);
+  }, [fly, home]);
+
+  const chooseType = (next: PlaceType | "all") => {
+    setType(next);
+    setSelectedId(null);
+    if (!origin) return;
+    const places = nearest(all, origin, { type: next === "all" ? undefined : next, limit: NEAR_COUNT });
+    if (places.length) {
+      const v = frame(places);
+      fly(v.lat, v.lng, v.altitude, 1600);
+    }
+  };
+
+  const usePreciseLocation = () => {
+    navigator.geolocation?.getCurrentPosition(
+      (pos) => {
+        const next = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+          city: null,
+          // Keep the IP country; precise location without one is still "near".
+          country: visitor?.country ?? "SI",
+        };
+        setVisitor(next);
+        const places = nearest(all, next, { type: type === "all" ? undefined : type, limit: NEAR_COUNT });
+        if (places.length) {
+          const v = frame(places);
+          fly(v.lat, v.lng, v.altitude, 1600);
+        }
+      },
+      () => {
+        setLocationError(true);
+        window.setTimeout(() => setLocationError(false), 4000);
+      },
+    );
+  };
 
   // Esc closes the tour overlay first, then the panel.
   useEffect(() => {
@@ -113,7 +200,9 @@ export default function Experience() {
       <div className="sky" aria-hidden />
       {geo && data && (
         <Globe
-          tours={visible}
+          tours={all}
+          initialView={initialView}
+          highlightIds={highlightIds}
           geo={geo}
           selectedId={selectedId}
           focus={focus}
@@ -124,43 +213,41 @@ export default function Experience() {
       )}
 
       <header className="topbar">
-        <a className="brand" href="/" aria-label="Webvisit360 domov">
+        <a className="brand" href="/" aria-label={t.brandHome}>
           <img src="/logo.png" alt="" width={36} height={36} />
           <span>
             webvisit<b>360</b>
           </span>
         </a>
         <nav className="nav">
-          <a href="#kako">Kako deluje</a>
-          <a href="#cenik">Cenik</a>
+          <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
+            {t.langSwitch.label}
+          </button>
           <button className="btn btn--ghost" onClick={() => { setSelectedId(null); setEnquiry(true); }}>
-            Želim svoj sprehod
+            {t.wantOwn}
           </button>
         </nav>
       </header>
 
       <section className="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">Sprehodite se, preden pridete.</h1>
-        <p>
-          360° virtualni sprehodi za občine, hotele, vinarje in trgovine. Vsaka lučka na zemljevidu
-          je resničen sprehod, ki ga lahko odprete takoj.
-        </p>
+        <h1 id="hero-title">{t.hero.title}</h1>
+        <p>{t.hero.text}</p>
         {stats && (
           <dl className="stats">
             <div>
-              <dt>občin</dt>
+              <dt>{t.stats.obcine}</dt>
               <dd>{stats.obcine}</dd>
             </div>
             <div>
-              <dt>podjetij in krajev</dt>
+              <dt>{t.stats.places}</dt>
               <dd>{fmt(Math.floor(totalPlaces / 10) * 10)}+</dd>
             </div>
             <div>
-              <dt>panoram</dt>
+              <dt>{t.stats.panoramas}</dt>
               <dd>{fmt(totalScenes)}</dd>
             </div>
             <div>
-              <dt>ogledov</dt>
+              <dt>{t.stats.views}</dt>
               <dd>{compact(totalViews)}</dd>
             </div>
           </dl>
@@ -168,89 +255,94 @@ export default function Experience() {
       </section>
 
       <div className="finder">
-        <div className="chips" role="radiogroup" aria-label="Prikaži">
-          {(
-            [
-              ["all", "Vse"],
-              ["obcina", "Občine"],
-              ["business", "Podjetja"],
-              ["google", "Google Zemljevidi"],
-            ] as const
-          ).map(([k, label]) => (
+        <div className="chips" role="radiogroup" aria-label={t.filter.label}>
+          {[...MAIN_TYPES, ...(moreTypes ? PLACE_TYPES.filter((x) => !MAIN_TYPES.includes(x)) : []), "all" as const].map((k) => (
             <button
               key={k}
               role="radio"
-              aria-checked={filter === k}
-              className={`chip ${filter === k ? "is-on" : ""}`}
-              onClick={() => setFilter(k)}
+              aria-checked={type === k}
+              className={`chip ${type === k ? "is-on" : ""}`}
+              onClick={() => chooseType(k)}
             >
-              {k !== "all" && <i className={`swatch swatch--${k}`} />}
-              {label}
+              {k === "all" ? t.filter.all : t.types[k]}
             </button>
           ))}
+          <button className="chip chip--more" aria-expanded={moreTypes} onClick={() => setMoreTypes((v) => !v)}>
+            {moreTypes ? t.filter.less : t.filter.more}
+          </button>
         </div>
 
         <div className={`search ${searchOpen ? "is-open" : ""}`}>
           <input
             type="search"
-            placeholder="Poiščite občino, hotel, kraj…"
+            placeholder={t.search.placeholder}
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
               setSearchOpen(true);
             }}
             onFocus={() => setSearchOpen(true)}
-            aria-label="Iskanje sprehodov"
+            aria-label={t.search.label}
           />
           {searchOpen && (
             <ul className="results" role="listbox">
-              {results.slice(0, 60).map((t) => (
-                <li key={t.id}>
-                  <button role="option" aria-selected={t.id === selectedId} onClick={() => select(t.id)}>
-                    <i className={`swatch swatch--${t.kind}`} />
-                    <span className="results__name">{t.name}</span>
-                    <span className="results__place">{t.lat == null ? "brez lokacije" : t.place}</span>
+              {results.slice(0, 60).map((x) => (
+                <li key={x.id}>
+                  <button role="option" aria-selected={x.id === selectedId} onClick={() => select(x.id)}>
+                    <i className={`swatch swatch--${x.kind}`} />
+                    <span className="results__name">{x.name}</span>
+                    <span className="results__place">{x.lat == null ? t.search.noLocation : x.place}</span>
                   </button>
                 </li>
               ))}
-              {results.length === 0 && <li className="results__empty">Ni zadetkov.</li>}
-              {results.length > 60 && (
-                <li className="results__empty">in še {results.length - 60}… zožite iskanje</li>
-              )}
+              {results.length === 0 && <li className="results__empty">{t.search.none}</li>}
+              {results.length > 60 && <li className="results__empty">{t.search.more(results.length - 60)}</li>}
             </ul>
           )}
         </div>
+        {!selected && !enquiry && near[0] && (
+          <NearYou
+            place={near[0].tour}
+            km={near[0].km}
+            others={nearOthers}
+            copy={t}
+            locationError={locationError}
+            onOpen={() => select(near[0].tour.id)}
+            onPrecise={usePreciseLocation}
+          />
+        )}
       </div>
 
       {searchOpen && <div className="scrim" onClick={() => setSearchOpen(false)} />}
 
+
       {selected && (
         <aside className="panel" aria-label={selected.name}>
-          <button className="panel__close" onClick={close} aria-label="Zapri">
+          <button className="panel__close" onClick={close} aria-label={t.panel.close}>
             ×
           </button>
           <div className="panel__media">
             {selected.pano && selected.cover ? (
-              <PanoPreview key={selected.cover} src={selected.cover} alt={selected.name} />
+              <PanoPreview key={selected.cover} copy={t} src={selected.cover} alt={selected.name} />
             ) : selected.cover ? (
               <img className="panel__cover" src={selected.cover} alt="" />
             ) : null}
           </div>
           <div className="panel__body">
             <p className="panel__kicker">
-              {selected.kind === "obcina" ? "Občina" : selected.kind === "google" ? "Google Zemljevidi" : "Podjetje"}
+              {selected.kind === "obcina" ? t.panel.obcina : t.types[selected.type]}
               {selected.place && selected.kind !== "obcina" ? ` · ${selected.place}` : ""}
-              {selected.category ? ` · ${selected.category}` : ""}
-              {selected.approx && <span title="Lokacija je približna (kraj)"> · približna lokacija</span>}
+              {selected.source === "google" ? ` · ${t.panel.google}` : ""}
+              {selected.approx && <span title={t.panel.approxTitle}> · {t.panel.approx}</span>}
             </p>
             <h2>{selected.name}</h2>
             <ul className="panel__meta">
-              {selected.scenes != null && <li>{panoramas(selected.scenes)}</li>}
-              {selected.views != null && <li>{fmt(selected.views)} ogledov</li>}
+              {selected.scenes != null && <li>{t.panoramas(selected.scenes)}</li>}
+              {selected.views != null && <li>{t.panel.views(fmt(selected.views))}</li>}
               {selected.gmaps && (
                 <li>
                   <a className="panel__link" href={selected.gmaps.url} target="_blank" rel="noopener">
-                    + {panoramas(selected.gmaps.scenes)} na Google Zemljevidih ↗
+                    {t.panel.onGoogle(t.panoramas(selected.gmaps.scenes))}
                   </a>
                 </li>
               )}
@@ -265,14 +357,14 @@ export default function Experience() {
             )}
             <div className="panel__actions">
               <button className="btn btn--amber" onClick={() => setTourOpen(true)}>
-                Vstopite v sprehod
+                {t.panel.enter}
               </button>
               <button className="btn btn--ghost" onClick={() => setEnquiry(true)}>
-                Želim takšen sprehod
+                {t.panel.wantThis}
               </button>
               {selected.mapsUrl && (
                 <a className="panel__link panel__link--center" href={selected.mapsUrl} target="_blank" rel="noopener">
-                  Odpri v Google Zemljevidih ↗
+                  {t.panel.openInMaps}
                 </a>
               )}
             </div>
@@ -281,38 +373,32 @@ export default function Experience() {
       )}
 
       {enquiry && (
-        <div className="enquiry" role="dialog" aria-label="Povpraševanje">
-          <button className="panel__close" onClick={() => setEnquiry(false)} aria-label="Zapri">
+        <div className="enquiry" role="dialog" aria-label={t.enquiry.label}>
+          <button className="panel__close" onClick={() => setEnquiry(false)} aria-label={t.panel.close}>
             ×
           </button>
-          <h2>Pokažite se v 360°.</h2>
-          <p>
-            Posnamemo vaš kraj, hotel ali trgovino z dronom in 360° kamero ter pripravimo sprehod,
-            ki ga vgradite na svojo stran in Google Zemljevide.
-          </p>
-          <p className="enquiry__note">
-            Prototip: obrazec za povpraševanje bo dodan v naslednji fazi.
-          </p>
+          <h2>{t.enquiry.title}</h2>
+          <p>{t.enquiry.text}</p>
         </div>
       )}
 
       {tourOpen && selected && (
-        <div className="tour" role="dialog" aria-label={`Sprehod: ${selected.name}`}>
+        <div className="tour" role="dialog" aria-label={t.tour.label(selected.name)}>
           {selected.source === "google" ? (
-            <GoogleTour tour={selected} />
+            <GoogleTour tour={selected} copy={t} />
           ) : (
             <iframe src={selected.url} title={selected.name} allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer" allowFullScreen />
           )}
           <div className="tour__bar">
             <button className="btn btn--dark" onClick={() => setTourOpen(false)}>
-              ← Nazaj na zemljevid
+              {t.tour.back}
             </button>
             <span>{selected.name}</span>
           </div>
         </div>
       )}
 
-      {!ready && <div className="loader">Nalagam zemljevid…</div>}
+      {!ready && <div className="loader">{t.loading}</div>}
     </main>
   );
 }
