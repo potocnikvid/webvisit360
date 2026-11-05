@@ -77,10 +77,6 @@ const sl = {
     loadingPano: "Nalagam panoramo…",
     drag: "Povlecite za razgled",
     loadingTour: "Nalagam sprehod…",
-    failed: "Sprehoda trenutno ni mogoče naložiti.",
-    prev: "Prejšnja panorama",
-    next: "Naslednja panorama",
-    panorama: (n: number) => `Panorama ${n}`,
   },
   chat: {
     label: "Povpraševanje",
@@ -184,10 +180,6 @@ const en: Copy = {
     loadingPano: "Loading the panorama…",
     drag: "Drag to look around",
     loadingTour: "Loading the tour…",
-    failed: "This tour can't be loaded right now.",
-    prev: "Previous panorama",
-    next: "Next panorama",
-    panorama: (n: number) => `Panorama ${n}`,
   },
   chat: {
     label: "Enquiry",
