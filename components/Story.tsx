@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEvent } from "react";
+import { Fragment, useEffect, useRef, type MouseEvent } from "react";
 import { REFERENCES, type AboutCopy } from "@/lib/about";
 import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 
@@ -14,6 +14,8 @@ type Props = {
   onReference: (id: string) => void;
   onPrivacy: () => void;
   privacyLabel: string;
+  /** The story scrolled (px from the top): the globe slides the ground along. */
+  onScroll?: (px: number) => void;
 };
 
 /** Plain links still work without JavaScript; with it, they act in place. */
@@ -22,8 +24,47 @@ const inPlace = (fn: () => void) => (e: MouseEvent) => {
   fn();
 };
 
-/** The About story: a sheet over the globe, zoomed into the studio. */
-export default function Story({ copy: a, leaving = false, onBack, onEnquire, onReference, onPrivacy, privacyLabel }: Props) {
+/** Words of the title, each inked in a little after the one before. */
+const Ink = ({ text, delay = 0.25, step = 0.09 }: { text: string; delay?: number; step?: number }) => (
+  <>
+    {text.split(" ").map((w, i) => (
+      <Fragment key={i}>
+        {i > 0 && " "}
+        <span className="ink" style={{ animationDelay: `${delay + i * step}s` }}>
+          {w}
+        </span>
+      </Fragment>
+    ))}
+  </>
+);
+
+/**
+ * The About story, full screen over the globe zoomed into the studio's streets. The text is
+ * "written on the map": it inks in as it comes into view, and the ground scrolls with it.
+ */
+export default function Story({ copy: a, leaving = false, onBack, onEnquire, onReference, onPrivacy, privacyLabel, onScroll }: Props) {
+  const root = useRef<HTMLElement>(null);
+
+  // Each section inks in the first time it scrolls into view.
+  useEffect(() => {
+    const sections = root.current?.querySelectorAll<HTMLElement>("[data-ink]") ?? [];
+    if (typeof IntersectionObserver === "undefined") {
+      sections.forEach((el) => el.classList.add("is-in"));
+      return;
+    }
+    const seen = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add("is-in");
+          seen.unobserve(e.target);
+        }),
+      { root: root.current, threshold: 0.12 },
+    );
+    sections.forEach((el) => seen.observe(el));
+    return () => seen.disconnect();
+  }, []);
+
   const company: [keyof typeof a.company.labels, React.ReactNode][] = [
     ["company", CONTACT.company],
     ["brand", CONTACT.brand],
@@ -37,18 +78,22 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
   ];
 
   return (
-    <article className={`story__sheet ${leaving ? "is-leaving" : ""}`} aria-labelledby="story-title">
-      <header className="story__bar">
-        <a className="btn btn--dark story__back" href="/" onClick={inPlace(onBack)}>
-          ← {a.back}
-        </a>
-        <span className="story__here">{a.here}</span>
-      </header>
+    <article
+      ref={root}
+      className={`story ${leaving ? "is-leaving" : ""}`}
+      aria-labelledby="story-title"
+      onScroll={(e) => onScroll?.(e.currentTarget.scrollTop)}
+    >
+      <a className="btn btn--dark story__back" href="/" onClick={inPlace(onBack)}>
+        ← {a.back}
+      </a>
 
       <div className="about">
         <section className="about__hero">
           <p className="about__kicker">{a.hero.kicker}</p>
-          <h1 id="story-title">{a.hero.title}</h1>
+          <h1 id="story-title">
+            <Ink text={a.hero.title} />
+          </h1>
           <p className="about__lead">{a.hero.lead}</p>
           <div className="about__facts">
             <dl className="stats">
@@ -63,14 +108,14 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           </div>
         </section>
 
-        <section className="about__problem">
+        <section className="about__problem" data-ink>
           <h2>{a.problem.title}</h2>
           {a.problem.text.map((p) => (
             <p key={p}>{p}</p>
           ))}
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.why.title}</h2>
           <ul className="about__grid">
             {a.why.items.map((x) => (
@@ -82,7 +127,7 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           </ul>
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.services.title}</h2>
           <div className="about__services">
             {a.services.items.map((s) => (
@@ -101,7 +146,7 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           </aside>
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.included.title}</h2>
           <ul className="about__checks">
             {a.included.items.map((x) => (
@@ -114,7 +159,7 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           <p className="about__price">{a.included.price}</p>
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.process.title}</h2>
           <p>{a.process.lead}</p>
           <ol className="about__steps" aria-label={a.process.title}>
@@ -127,7 +172,7 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           </ol>
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.references.title}</h2>
           <h3 className="about__sub">{a.references.obcine}</h3>
           <p className="about__hint">{a.references.hint}</p>
@@ -144,12 +189,12 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           <p>{a.references.industries.join(" · ")}</p>
         </section>
 
-        <section className="about__person">
+        <section className="about__person" data-ink>
           <h2>{a.person.title}</h2>
           <p>{a.person.text}</p>
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.faq.title}</h2>
           <div className="about__faq">
             {a.faq.items.map((x) => (
@@ -161,7 +206,7 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           </div>
         </section>
 
-        <section className="about__cta">
+        <section className="about__cta" data-ink>
           <h2>{a.cta.title}</h2>
           <p>{a.cta.text}</p>
           <a className="btn btn--amber" href="/?povprasevanje" onClick={inPlace(onEnquire)}>
@@ -169,7 +214,7 @@ export default function Story({ copy: a, leaving = false, onBack, onEnquire, onR
           </a>
         </section>
 
-        <section>
+        <section data-ink>
           <h2>{a.company.title}</h2>
           <dl className="about__company">
             {company.map(([k, v]) => (

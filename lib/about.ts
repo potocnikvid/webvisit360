@@ -19,16 +19,15 @@ export const REFERENCES = [
   { id: "menges", name: "Mengeš" },
 ] as const;
 
-/** Where the dive ends: the studio in Slovenska Bistrica (Tomšičeva 12). */
-export const STUDIO = { lat: 46.3926, lng: 15.5726, altitude: 0.001 } as const;
+/** Where the dive ends: above the studio's streets in Slovenska Bistrica (~640 m up). */
+export const STUDIO = { lat: 46.3926, lng: 15.5726, altitude: 0.0001 } as const;
 
 const sl = {
   back: "Nazaj na zemljevid",
-  here: "Slovenska Bistrica · tu nastajajo naši sprehodi",
   pin: "Webvisit360 · Slovenska Bistrica",
   entry: { title: "Zakaj 360°?", text: "Kdo smo in kako delamo" },
   hero: {
-    kicker: "O nas",
+    kicker: "O nas · Slovenska Bistrica",
     title: "Najprej se zaljubijo na prvi pogled. Potem pridejo.",
     lead: "Smo Webvisit360, blagovna znamka Agencije Sinhron d.o.o. Od leta 2017 izdelujemo 360° virtualne sprehode v 3D in jih kot Google Street View Trusted partner objavljamo neposredno na Google Zemljevidih. Tako vaša lokacija ni le na vaši spletni strani, ampak povsod, kjer vas ljudje iščejo: na Google Zemljevidih, v Google Earth in v Iskanju.",
     facts: [
@@ -147,11 +146,10 @@ export type AboutCopy = typeof sl;
 
 const en: AboutCopy = {
   back: "Back to the map",
-  here: "Slovenska Bistrica · where our tours are made",
   pin: "Webvisit360 · Slovenska Bistrica",
   entry: { title: "Why 360°?", text: "Who we are and how we work" },
   hero: {
-    kicker: "About",
+    kicker: "About · Slovenska Bistrica",
     title: "First they fall in love at first sight. Then they come.",
     lead: "We are Webvisit360, a brand of Agencija Sinhron d.o.o. Since 2017 we have been making 3D 360° virtual tours, and as a Google Street View Trusted partner we publish them straight to Google Maps. So your place isn't only on your own website, but wherever people look for you: on Google Maps, in Google Earth and in Search.",
     facts: [

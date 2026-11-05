@@ -19,7 +19,7 @@ export type Focus = {
   ms?: number;
   /** Keep the point clear of the side panel / bottom sheet. */
   panel?: boolean;
-  /** Keep the point clear of the About story sheet (wider; higher on phones). */
+  /** Frame the point for the full-screen About story: up and to the right of the text. */
   story?: boolean;
   /** Fly in an arc that rises to this altitude on the way (pull back, then dive). */
   arc?: number;
@@ -27,11 +27,16 @@ export type Focus = {
 };
 
 /** What the page can ask the globe once it's ready. */
-export type GlobeApi = { pov: () => Pov };
+export type GlobeApi = {
+  pov: () => Pov;
+  /** Slide the ground with the story's scroll (px), so its text reads as written on the map. */
+  scrollGround: (px: number) => void;
+};
 
-/** Width of the story sheet on wide screens, and where it starts on phones (share of height). */
-export const STORY_WIDTH = (w: number) => Math.min(680, w * 0.56);
-export const STORY_TOP = 0.42;
+/** Where the studio pin sits on screen during the story (share of width / height). */
+const storyPin = (w: number) => (w <= 760 ? { x: 0.5, y: 0.17 } : { x: 0.74, y: 0.3 });
+/** Rough visible half-height in degrees for globe.gl's default 50° fov. */
+const halfHeightDeg = (altitude: number) => 26.8 * altitude;
 
 type Props = {
   tours: Tour[];
@@ -107,6 +112,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const studioRef = useRef(studio);
   studioRef.current = studio;
   const studioEl = useRef<HTMLElement | null>(null);
+  /** Where the story's flight landed (the ground scrolls from here), and whether we're flying. */
+  const storyBase = useRef<Pov | null>(null);
+  const flying = useRef(false);
 
   /** The studio pin: a pulsing beacon with its label always shown. */
   const studioMarker = (label: string) => {
@@ -271,7 +279,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         // Keep labels clear of the page's own text and controls.
         const host = el.getBoundingClientRect();
         const placed: { l: number; r: number; t: number; b: number }[] = [];
-        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .panel, .chat, .footer, .trusted-corner, .story__sheet").forEach((n) => {
+        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .panel, .chat, .footer, .corner").forEach((n) => {
           const r = n.getBoundingClientRect();
           if (r.width && r.height && getComputedStyle(n).opacity !== "0")
             placed.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });
@@ -403,7 +411,23 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       // Handy for automated visual checks in development.
       if (process.env.NODE_ENV !== "production") (window as unknown as { __globe: GlobeInstance }).__globe = g;
       g.htmlElementsData(markerData());
-      onReady?.({ pov: () => g.pointOfView() });
+      let groundRaf = 0;
+      let groundPx = 0;
+      onReady?.({
+        pov: () => g.pointOfView(),
+        scrollGround: (px) => {
+          groundPx = px;
+          if (groundRaf) return;
+          groundRaf = requestAnimationFrame(() => {
+            groundRaf = 0;
+            const base = storyBase.current;
+            if (!base || flying.current) return;
+            // Scrolling down moves the text up; move the camera south so the ground follows.
+            const degPerPx = (2 * halfHeightDeg(base.altitude)) / window.innerHeight;
+            g.pointOfView({ ...base, lat: base.lat - groundPx * degPerPx }, 0);
+          });
+        },
+      });
 
       // Orchestrated fly-in to the visitor, or to all of Slovenia.
       const t = intro ? window.setTimeout(() => g.pointOfView(initialView ?? SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700) : 0;
@@ -458,22 +482,22 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     const g = globe.current;
     if (!focus || !g) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Rough visible half-extent in degrees for globe.gl's default 50° fov.
-    const halfH = 26.8 * focus.altitude;
+    const halfH = halfHeightDeg(focus.altitude);
     const w = window.innerWidth;
     const h = window.innerHeight;
     const halfW = (halfH * (w / h)) / Math.cos((focus.lat * Math.PI) / 180);
     let { lat, lng } = focus;
-    if (focus.story && w <= 760) {
-      lat -= halfH * (1 - STORY_TOP); // centre the point in the strip above the sheet
-    } else if (focus.story) {
-      lng += halfW * (STORY_WIDTH(w) / w);
+    if (focus.story) {
+      const pin = storyPin(w);
+      lat -= (0.5 - pin.y) * 2 * halfH;
+      lng -= (pin.x - 0.5) * 2 * halfW;
     } else if (focus.panel && w <= 760) {
       lat -= halfH * 0.55; // keep the point in the strip above the bottom sheet
     } else if (focus.panel) {
       lng += halfW * (Math.min(460, w * 0.4) / w); // nudge left of the side panel
     }
     const to = { lat, lng, altitude: focus.altitude };
+    storyBase.current = focus.story ? to : null;
     const ms = reduced ? 0 : focus.ms ?? 1600;
     if (!focus.arc || ms === 0) {
       g.pointOfView(to, ms);
@@ -484,18 +508,24 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     const start = performance.now();
     let raf = 0;
     let timer = 0;
+    flying.current = true;
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / ms);
       g.pointOfView(arcPov(from, to, t, focus.arc!), 0);
       if (t < 1) raf = requestAnimationFrame(step);
-      // Land once more a moment later: the tile engine can miss a camera that moved while it
-      // was still starting up, and a fresh position makes it load the sharp tiles.
-      else timer = window.setTimeout(() => g.pointOfView(to, 0), 250);
+      else {
+        flying.current = false;
+        // Land once more a moment later: the tile engine can miss a camera that moved while it
+        // was still starting up, and a fresh position makes it load the sharp tiles.
+        // (Re-applies wherever the camera is now, in case the visitor already scrolled.)
+        timer = window.setTimeout(() => g.pointOfView(g.pointOfView(), 0), 250);
+      }
     };
     raf = requestAnimationFrame(step);
     return () => {
       cancelAnimationFrame(raf);
       window.clearTimeout(timer);
+      flying.current = false;
     };
   }, [focus]);
 

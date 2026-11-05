@@ -146,7 +146,7 @@ const a = about.en;
 test("'Why 360°?' dives to the studio and opens the story; back returns to the map", async () => {
   reducedMotion();
   render(<Experience visitor={null} />);
-  fireEvent.click(await screen.findByRole("button", { name: new RegExp(a.entry.title) }));
+  fireEvent.click((await screen.findAllByRole("button", { name: new RegExp(a.entry.title) }))[0]);
   expect(await screen.findByRole("heading", { level: 1, name: a.hero.title })).toBeTruthy();
   expect(window.location.pathname).toBe("/o-nas");
   expect(props().focus).toMatchObject({ lat: 46.3926, lng: 15.5726, story: true });
@@ -162,7 +162,7 @@ test("'Why 360°?' dives to the studio and opens the story; back returns to the 
 test("the browser's back button closes the story too", async () => {
   reducedMotion();
   render(<Experience visitor={null} />);
-  fireEvent.click(await screen.findByRole("button", { name: new RegExp(a.entry.title) }));
+  fireEvent.click((await screen.findAllByRole("button", { name: new RegExp(a.entry.title) }))[0]);
   await screen.findByRole("heading", { level: 1, name: a.hero.title });
   window.history.replaceState(null, "", "/");
   fireEvent.popState(window);

@@ -45,3 +45,11 @@ test("publishes no unsourced statistics and no personal email", () => {
   renderStory();
   expect(document.body.textContent).not.toMatch(/\d+\s?%|vid\.slovenia7|gmail/);
 });
+
+test("reports its scroll position, so the ground can move with the text", () => {
+  const onScroll = vi.fn();
+  render(<Story copy={a} privacyLabel="Privacy" onBack={vi.fn()} onEnquire={vi.fn()} onReference={vi.fn()} onPrivacy={vi.fn()} onScroll={onScroll} />);
+  const story = screen.getByRole("article");
+  fireEvent.scroll(story, { target: { scrollTop: 320 } });
+  expect(onScroll).toHaveBeenCalledWith(320);
+});

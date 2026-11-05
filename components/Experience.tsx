@@ -34,13 +34,13 @@ const NEAR_COUNT = 5;
 const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) =>
   frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
 
-/** The About story: the camera dives to the studio, then the sheet slides up. */
+/** The About story: the camera dives into the studio's streets, then the page inks in over the map. */
 type StoryPhase = "closed" | "diving" | "open" | "leaving";
-const DIVE_MS = 3400;
-/** Share of the dive after which the sheet starts to appear. */
-const REVEAL_AT = 0.78;
-const RETURN_MS = 2600;
-const LEAVE_MS = 380;
+const DIVE_MS = 4200;
+/** Share of the dive after which the page starts to appear over the map. */
+const REVEAL_AT = 0.86;
+const RETURN_MS = 3000;
+const LEAVE_MS = 450;
 /** How high to pull back on the way: a little above the higher end of the flight. */
 const peakFor = (a: number, b: number) => Math.min(2.5, Math.max(0.15, Math.max(a, b) * 1.8));
 const reducedMotion = () => !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -299,6 +299,15 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   const totalScenes = stats ? stats.scenes + (stats.googlePhotos ?? 0) : 0;
   const totalPlaces = stats ? stats.business + (stats.google ?? 0) : 0;
   const a = about[lang];
+  const whyText = (
+    <>
+      <span className="why__text">
+        <b>{a.entry.title}</b>
+        <span>{a.entry.text}</span>
+      </span>
+      <span className="why__go" aria-hidden>→</span>
+    </>
+  );
   const aboutLink = (e: React.MouseEvent) => {
     e.preventDefault();
     openStory();
@@ -373,14 +382,10 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             </div>
           </dl>
         )}
-        <button className="why" onClick={openStory}>
-          {/* Phones only: there the corner is taken by the finder. */}
+        {/* Phones: under the numbers, with a small badge (the corner is taken by the finder). */}
+        <button className="why why--hero" onClick={openStory}>
           <img className="why__badge" src={TRUSTED_BADGE.src} alt="" width={128} height={32} />
-          <span className="why__text">
-            <b>{a.entry.title}</b>
-            <span>{a.entry.text}</span>
-          </span>
-          <span className="why__go" aria-hidden>→</span>
+          {whyText}
         </button>
       </section>
 
@@ -530,6 +535,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           onReference={showReference}
           onPrivacy={() => setPrivacyOpen(true)}
           privacyLabel={t.footer.privacy}
+          onScroll={(px) => globeApi.current?.scrollGround(px)}
         />
       )}
 
@@ -549,7 +555,13 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
         </div>
       )}
 
-      <img className="trusted-corner" src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={210} height={53} />
+      {/* Wider screens: "Why 360°?" and the Trusted badge together in the bottom-right corner. */}
+      <div className="corner">
+        <button className="why" onClick={openStory}>
+          {whyText}
+        </button>
+        <img className="trusted-corner" src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={210} height={53} />
+      </div>
 
       <footer className="footer">
         <span>{t.footer.company}</span>
