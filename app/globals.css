@@ -168,10 +168,11 @@ a { color: inherit; text-decoration: none; }
   margin: 0; color: #c9d3ea; font-size: 17px; max-width: 400px;
   text-shadow: 0 1px 16px rgba(8, 18, 48, .9);
 }
-.stats { display: flex; gap: 26px; margin: 26px 0 0; }
-.stats div { display: flex; flex-direction: column-reverse; }
-.stats dd { margin: 0; font: 600 24px/1.1 var(--display); color: var(--ember); letter-spacing: -.02em; }
-.stats dt { color: var(--mist); font-size: 13px; }
+/* Always one row: numbers and labels never wrap; on narrow screens they shrink instead. */
+.stats { display: flex; flex-wrap: nowrap; gap: clamp(8px, 2.6vw, 26px); margin: 26px 0 0; }
+.stats div { display: flex; flex-direction: column-reverse; flex: none; }
+.stats dd { margin: 0; font: 600 clamp(14px, 4.2vw, 24px)/1.1 var(--display); color: var(--ember); letter-spacing: -.02em; white-space: nowrap; }
+.stats dt { color: var(--mist); font-size: clamp(10px, 2.75vw, 13px); white-space: nowrap; }
 
 .has-panel .hero { opacity: 0; transform: translateY(-8px); }
 
@@ -414,8 +415,7 @@ a { color: inherit; text-decoration: none; }
   .brand span { font-size: 14px; }
   .hero { top: 76px; right: var(--gutter); }
   .hero p { font-size: 15px; }
-  .stats { gap: 18px; margin-top: 16px; }
-  .stats dd { font-size: 19px; }
+  .stats { margin-top: 16px; }
   .panel, .chat {
     top: auto; left: 0; right: 0; bottom: 0; width: 100%;
     max-height: 78vh; border-radius: 18px 18px 0 0; border-bottom: 0;
