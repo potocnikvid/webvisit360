@@ -18,10 +18,10 @@ const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 
-const LOOK_OPTIONS: { id: Look; label: string; credit: string }[] = [
-  { id: "satellite", label: "Satelit", credit: "Posnetki: Esri, Maxar, Earthstar Geographics" },
-  { id: "soft", label: "Mehka Zemlja", credit: "Sentinel-2 cloudless – s2maps.eu, EOX IT Services (Copernicus 2016)" },
-  { id: "illustrated", label: "Ilustracija", credit: "Meje: geoBoundaries, Natural Earth" },
+const LOOK_OPTIONS: { id: Look; label: Record<Lang, string>; credit: string }[] = [
+  { id: "satellite", label: { sl: "Satelit", en: "Satellite" }, credit: "Posnetki: Esri, Maxar, Earthstar Geographics" },
+  { id: "soft", label: { sl: "Mehka Zemlja", en: "Soft Earth" }, credit: "Sentinel-2 cloudless – s2maps.eu, EOX IT Services (Copernicus 2016)" },
+  { id: "illustrated", label: { sl: "Ilustracija", en: "Illustrated" }, credit: "Meje: geoBoundaries, Natural Earth" },
 ];
 const LOOK_KEY = "wv360-look";
 
@@ -264,7 +264,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
             webvisit<b>360</b>
           </span>
         </a>
-        <div className="looks" role="radiogroup" aria-label="Videz zemljevida">
+        <div className="looks" role="radiogroup" aria-label={lang === "sl" ? "Videz zemljevida" : "Map style"}>
           {LOOK_OPTIONS.map((o) => (
             <button
               key={o.id}
@@ -273,7 +273,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
               className={look === o.id ? "is-on" : ""}
               onClick={() => chooseLook(o.id)}
             >
-              {o.label}
+              {o.label[lang]}
             </button>
           ))}
         </div>
