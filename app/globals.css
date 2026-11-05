@@ -397,7 +397,6 @@ a { color: inherit; text-decoration: none; }
   .tour--google .tour__bar { top: auto; bottom: 34px; }
   .gtour__maps { display: none; }
 }
-}
 
 /* ---------- mobile ---------- */
 @media (max-width: 760px) {
