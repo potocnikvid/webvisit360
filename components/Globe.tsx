@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import type { GlobeInstance } from "globe.gl";
-import type { Tour } from "@/lib/types";
+import type { PlaceType, Tour } from "@/lib/types";
+import { isDimmed, labelEligible } from "@/lib/markers";
 
 type Feature = {
   type: "Feature";
@@ -26,6 +27,8 @@ type Props = {
   highlightIds?: string[];
   /** The visitor's own position ("You are here"); approximate ones are drawn wider. */
   you?: { lat: number; lng: number; precise: boolean; label: string } | null;
+  /** The type chosen in the chips: its places get big dots and names, the rest small dots. */
+  focusType?: PlaceType | "all";
 };
 
 type You = NonNullable<Props["you"]>;
@@ -38,9 +41,6 @@ const START = { lat: 38, lng: 2, altitude: 2.4 };
 // countries are drawn above COUNTRY_MIN, municipalities below MUNI_MAX.
 const COUNTRY_MIN = 0.3;
 const MUNI_MAX = 0.9;
-// Below this altitude municipality names may be labelled; other places below PLACE_ALT.
-const MUNI_LABEL_ALT = 0.5;
-const PLACE_LABEL_ALT = 0.25;
 // Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
 const GOOGLE_VIEWS_PER_PHOTO = 2700;
 
@@ -64,7 +64,7 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you }: Props) {
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all" }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -74,6 +74,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const labelsRef = useRef<() => void>(() => {});
   const nearRef = useRef(new Set<string>());
   nearRef.current = new Set(highlightIds);
+  const focusRef = useRef(focusType);
+  focusRef.current = focusType;
   const youRef = useRef(you);
   youRef.current = you;
   const youEl = useRef<HTMLElement | null>(null);
@@ -217,7 +219,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const selected = [...markers.current.entries()].find(([, m]) => m.classList.contains("is-selected"))?.[0];
 
         const candidates = toursRef.current
-          .filter((t) => t.lat != null && (t.kind === "obcina" ? alt < MUNI_LABEL_ALT : alt < PLACE_LABEL_ALT) || t.id === selected || near.has(t.id))
+          .filter((t) => t.lat != null && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
           .sort((a, b) =>
             Number(b.id === selected) - Number(a.id === selected) ||
             Number(near.has(b.id)) - Number(near.has(a.id)) ||
@@ -338,6 +340,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             // Stop the globe's drag controls from swallowing the click.
             m.addEventListener("pointerdown", (e) => e.stopPropagation());
             m.classList.toggle("is-near", nearRef.current.has(t.id));
+            m.classList.toggle("is-dim", isDimmed(t, focusRef.current));
+            m.classList.toggle("is-focus", focusRef.current !== "all" && t.type === focusRef.current);
             markers.current.set(t.id, m);
           }
           return m;
@@ -395,6 +399,17 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     markers.current.forEach((m, id) => m.classList.toggle("is-near", nearRef.current.has(id)));
     labelsRef.current();
   }, [highlightIds, tours]);
+
+  useEffect(() => {
+    const byId = new Map(tours.map((t) => [t.id, t]));
+    markers.current.forEach((m, id) => {
+      const t = byId.get(id);
+      if (!t) return;
+      m.classList.toggle("is-dim", isDimmed(t, focusType));
+      m.classList.toggle("is-focus", focusType !== "all" && t.type === focusType);
+    });
+    labelsRef.current();
+  }, [focusType, tours]);
 
   useEffect(() => {
     if (!focus || !globe.current) return;

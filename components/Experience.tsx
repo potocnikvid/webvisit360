@@ -225,6 +225,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
           initialView={initialView}
           you={origin ? { lat: origin.lat, lng: origin.lng, precise: !!origin.precise, label: origin.precise ? t.you.here : t.you.around } : null}
           highlightIds={highlightIds}
+          focusType={type}
           geo={geo}
           selectedId={selectedId}
           focus={focus}
