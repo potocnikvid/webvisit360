@@ -49,6 +49,14 @@ test("nudges again when the tab comes back into view", () => {
   expect(frame.style.width).toBe("100%");
 });
 
+test("uses Google's official Embed API when a key is configured", () => {
+  vi.stubEnv("NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY", "AIzaTEST");
+  render(<GoogleTour tour={tour} copy={t} />);
+  const src = screen.getByTitle(tour.name).getAttribute("src")!;
+  vi.unstubAllEnvs();
+  expect(src).toContain("https://www.google.com/maps/embed/v1/streetview?key=AIzaTEST&pano=CIHM0ogKEICAgICLvNmClAE");
+});
+
 test("offers the same panorama in Google Maps as a fallback", () => {
   render(<GoogleTour tour={tour} copy={t} />);
   expect(screen.getByRole("link", { name: t.panel.openInMaps }).getAttribute("href")).toBe(tour.mapsUrl);

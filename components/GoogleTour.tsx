@@ -3,13 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Tour } from "@/lib/types";
 import type { Copy } from "@/lib/i18n";
+import { streetViewEmbedUrl } from "@/lib/streetview";
 
 /** When to nudge the frame after it loads (ms). */
 const NUDGES = [600, 1600, 3200];
 
 /**
  * A place's Google Maps 360 tour in Google's own Street View viewer, with its arrows and
- * connections between panoramas.
+ * connections between panoramas: the official Maps Embed API when
+ * NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY is set, otherwise the stored keyless embed.
  *
  * Google's embed paints the first panorama black until its frame is resized, so after
  * loading (and whenever the tab comes back into view) the frame is briefly narrowed and
@@ -19,6 +21,7 @@ export default function GoogleTour({ tour, copy: t }: { tour: Tour; copy: Copy }
   const frame = useRef<HTMLIFrameElement>(null);
   const [loaded, setLoaded] = useState(false);
   const timers = useRef<number[]>([]);
+  const src = streetViewEmbedUrl(tour, process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_KEY);
 
   const nudge = useCallback(() => {
     const f = frame.current;
@@ -50,8 +53,8 @@ export default function GoogleTour({ tour, copy: t }: { tour: Tour; copy: Copy }
     <div className="gtour">
       <iframe
         ref={frame}
-        key={tour.url}
-        src={tour.url}
+        key={src}
+        src={src}
         title={tour.name}
         style={{ width: "100%" }}
         allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer"
