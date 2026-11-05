@@ -2,23 +2,39 @@ import { z } from "zod";
 import { copy } from "./i18n";
 import type { PlaceType } from "./types";
 
-/** What the chat proposes and the visitor confirms before it is emailed to Vid. */
-export const EnquirySchema = z
-  .object({
-    placeType: z.string().min(1).max(100),
-    placeName: z.string().min(1).max(200),
-    town: z.string().max(100),
-    size: z.string().max(500),
-    details: z.string().max(1000),
-    timing: z.string().max(200),
-    contactName: z.string().min(1).max(200),
-    email: z.email().max(200).optional(),
-    phone: z.string().min(5).max(40).optional(),
-    language: z.string().max(20),
-    estimatedPanoramas: z.number().int().min(1).max(2000),
-  })
-  .refine((e) => e.email || e.phone, { message: "email or phone required", path: ["email"] });
+const Project = z.object({
+  placeType: z.string().min(1).max(100),
+  placeName: z.string().min(1).max(200),
+  town: z.string().max(100),
+  size: z.string().max(500),
+  details: z.string().max(1000),
+  timing: z.string().max(200),
+  language: z.string().max(20),
+  estimatedPanoramas: z.number().int().min(1).max(2000),
+});
 
+/** What the chat proposes: the contact details may still be missing; the summary card asks for them. */
+export const ProposalSchema = Project.extend({
+  contactName: z.string().max(200),
+  email: z.string().max(200).optional(),
+  phone: z.string().max(40).optional(),
+});
+
+/** Digits, spaces and + ( ) / . - only, with at least 6 digits. */
+const PHONE = /^\+?[\d\s()\/.-]{6,25}$/;
+
+/** What the visitor confirms and is emailed to Vid: name, email and phone all required. */
+export const EnquirySchema = Project.extend({
+  contactName: z.string().trim().min(1).max(200),
+  email: z.email().max(200),
+  phone: z
+    .string()
+    .trim()
+    .regex(PHONE)
+    .refine((p) => p.replace(/\D/g, "").length >= 6),
+});
+
+export type Proposal = z.infer<typeof ProposalSchema>;
 export type Enquiry = z.infer<typeof EnquirySchema>;
 
 /** What the site knows about the visitor when they chat; sent along with the enquiry. */

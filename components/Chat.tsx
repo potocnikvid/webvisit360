@@ -4,7 +4,7 @@ import type Anthropic from "@anthropic-ai/sdk";
 import { useEffect, useRef, useState } from "react";
 import type { ChatEvent } from "@/lib/chat";
 import { MAX_MESSAGE_CHARS, MAX_VISITOR_MESSAGES, firstMessage } from "@/lib/chat";
-import { mailtoHref, type ChatContext, type Enquiry, type TranscriptLine } from "@/lib/enquiry";
+import { EnquirySchema, mailtoHref, type ChatContext, type Proposal, type TranscriptLine } from "@/lib/enquiry";
 import type { Copy } from "@/lib/i18n";
 import { readNdjson } from "@/lib/ndjson";
 
@@ -33,7 +33,9 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
   const [lines, setLines] = useState<Line[]>([{ role: "assistant", text: greeting }]);
   const [history, setHistory] = useState<Anthropic.MessageParam[]>([]);
   const [toolResults, setToolResults] = useState<Anthropic.ToolResultBlockParam[]>([]);
-  const [proposal, setProposal] = useState<Enquiry | null>(null);
+  const [proposal, setProposal] = useState<Proposal | null>(null);
+  // The card's contact fields, pre-filled from the proposal and editable by the visitor.
+  const [contact, setContact] = useState({ name: "", email: "", phone: "" });
   const [status, setStatus] = useState<"idle" | "streaming" | "sending" | "sent">("idle");
   const [notice, setNotice] = useState<string | null>(null);
   const [fallback, setFallback] = useState<Fallback | null>(null);
@@ -102,7 +104,10 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
       await readNdjson(res, (raw) => {
         const e = raw as ChatEvent;
         if (e.type === "text") update((l) => ({ ...l, text: l.text + e.text }));
-        else if (e.type === "proposal") setProposal(e.enquiry);
+        else if (e.type === "proposal") {
+          setProposal(e.enquiry);
+          setContact({ name: e.enquiry.contactName ?? "", email: e.enquiry.email ?? "", phone: e.enquiry.phone ?? "" });
+        }
         else if (e.type === "done") {
           finished = true;
           update((l) => ({ ...l, streaming: false }));
@@ -132,13 +137,13 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
   }
 
   async function confirm() {
-    if (!proposal) return;
+    if (!proposal || !enquiry.success) return;
     setStatus("sending");
     try {
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ enquiry: proposal, context, transcript: transcript(lines), website: honeypot || undefined }),
+        body: JSON.stringify({ enquiry: enquiry.data, context, transcript: transcript(lines), website: honeypot || undefined }),
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; mailto?: string };
       if (json.ok) {
@@ -153,6 +158,9 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
       showFallback(t.chat.unavailable, transcriptText(lines));
     }
   }
+
+  // Name, email and phone are all required before the enquiry can be sent.
+  const enquiry = EnquirySchema.safeParse({ ...proposal, contactName: contact.name, email: contact.email, phone: contact.phone });
 
   const locked = status !== "idle" || !!fallback || visitorCount >= MAX_VISITOR_MESSAGES;
 
@@ -178,11 +186,31 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
               <dd>{[proposal.size, proposal.details].filter(Boolean).join(" · ")}</dd>
               <dt>{t.chat.fields.timing}</dt>
               <dd>{proposal.timing}</dd>
-              <dt>{t.chat.fields.contact}</dt>
-              <dd>{[proposal.contactName, proposal.email, proposal.phone].filter(Boolean).join(" · ")}</dd>
             </dl>
+            <div className="chat__contact">
+              {(
+                [
+                  ["name", "text", "name"],
+                  ["email", "email", "email"],
+                  ["phone", "tel", "tel"],
+                ] as const
+              ).map(([key, type, autoComplete]) => (
+                <label key={key}>
+                  <span>{t.chat.fields[key]}</span>
+                  <input
+                    type={type}
+                    autoComplete={autoComplete}
+                    value={contact[key]}
+                    onChange={(e) => setContact((c) => ({ ...c, [key]: e.target.value }))}
+                    disabled={status === "sending"}
+                    required
+                  />
+                </label>
+              ))}
+            </div>
+            {!enquiry.success && <p className="chat__card-hint">{t.chat.contactMissing}</p>}
             <div className="chat__card-actions">
-              <button className="btn btn--amber" onClick={confirm} disabled={status === "sending"}>
+              <button className="btn btn--amber" onClick={confirm} disabled={status === "sending" || !enquiry.success}>
                 {status === "sending" ? t.chat.sending : t.chat.confirm}
               </button>
               <button className="btn btn--ghost" onClick={() => { setProposal(null); inputRef.current?.focus(); }} disabled={status === "sending"}>

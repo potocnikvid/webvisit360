@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { MODEL, PROPOSE_TOOL, SYSTEM_PROMPT, checkHistory, type ChatEvent } from "@/lib/chat";
-import { EnquirySchema } from "@/lib/enquiry";
+import { ProposalSchema } from "@/lib/enquiry";
 import { clientIp, limit } from "@/lib/limits";
 
 export const runtime = "nodejs";
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         if (block.type !== "tool_use") continue;
         // A reply cut off by max_tokens may carry a plausible but truncated proposal.
         const complete = final.stop_reason !== "max_tokens";
-        const enquiry = complete && block.name === PROPOSE_TOOL.name ? EnquirySchema.safeParse(dropNulls(block.input)) : null;
+        const enquiry = complete && block.name === PROPOSE_TOOL.name ? ProposalSchema.safeParse(dropNulls(block.input)) : null;
         if (enquiry?.success) {
           send({ type: "proposal", enquiry: enquiry.data, toolUseId: block.id });
           toolResults.push({ type: "tool_result", tool_use_id: block.id, content: "Shown to the visitor for confirmation." });

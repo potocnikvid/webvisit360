@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { EnquirySchema, mailtoHref, priceRange, renderEnquiryEmail, type ChatContext, type Enquiry } from "./enquiry";
+import { EnquirySchema, ProposalSchema, mailtoHref, priceRange, renderEnquiryEmail, type ChatContext, type Enquiry } from "./enquiry";
 
 const enquiry: Enquiry = {
   placeType: "Hotel",
@@ -10,6 +10,7 @@ const enquiry: Enquiry = {
   timing: "spomladi",
   contactName: "Ana Novak",
   email: "ana@hotel-lipa.si",
+  phone: "041 123 456",
   language: "sl",
   estimatedPanoramas: 30,
 };
@@ -17,18 +18,25 @@ const enquiry: Enquiry = {
 const ctx: ChatContext = { town: "Celje", country: "SI", type: "nastanitve", viewed: ["Hotel A plus", "Apartments Hanny"], lang: "sl" };
 
 describe("EnquirySchema", () => {
-  test("accepts email only", () => expect(EnquirySchema.safeParse(enquiry).success).toBe(true));
-  test("accepts phone only", () => {
-    const { email: _email, ...rest } = enquiry;
-    expect(EnquirySchema.safeParse({ ...rest, phone: "041 123 456" }).success).toBe(true);
-  });
-  test("rejects neither email nor phone", () => {
-    const { email: _email, ...rest } = enquiry;
+  test("accepts name, email and phone", () => expect(EnquirySchema.safeParse(enquiry).success).toBe(true));
+  test.each(["contactName", "email", "phone"] as const)("rejects an enquiry without %s", (field) => {
+    const { [field]: _gone, ...rest } = enquiry;
     expect(EnquirySchema.safeParse(rest).success).toBe(false);
+  });
+  test("rejects a blank name or a malformed email or phone", () => {
+    expect(EnquirySchema.safeParse({ ...enquiry, contactName: "  " }).success).toBe(false);
+    expect(EnquirySchema.safeParse({ ...enquiry, email: "ana@" }).success).toBe(false);
+    expect(EnquirySchema.safeParse({ ...enquiry, phone: "abc" }).success).toBe(false);
   });
   test("rejects zero panoramas", () => {
     expect(EnquirySchema.safeParse({ ...enquiry, estimatedPanoramas: 0 }).success).toBe(false);
   });
+});
+
+test("a proposal from the chat may still lack contact details (the card asks for them)", () => {
+  const { email: _e, phone: _p, ...rest } = enquiry;
+  expect(ProposalSchema.safeParse({ ...rest, contactName: "" }).success).toBe(true);
+  expect(ProposalSchema.safeParse({ ...rest, placeName: "" }).success).toBe(false);
 });
 
 test("priceRange uses 20–70 € per panorama", () => {
