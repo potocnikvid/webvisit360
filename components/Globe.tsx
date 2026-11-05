@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import type { GlobeInstance } from "globe.gl";
 import type { PlaceType, Tour } from "@/lib/types";
 import { isDimmed, labelEligible } from "@/lib/markers";
+import { arcPov, type Pov } from "@/lib/flight";
 
 type Feature = {
   type: "Feature";
@@ -11,7 +12,26 @@ type Feature = {
   geometry: unknown;
 };
 
-export type Focus = { lat: number; lng: number; altitude: number; ms?: number; panel?: boolean; key: number };
+export type Focus = {
+  lat: number;
+  lng: number;
+  altitude: number;
+  ms?: number;
+  /** Keep the point clear of the side panel / bottom sheet. */
+  panel?: boolean;
+  /** Keep the point clear of the About story sheet (wider; higher on phones). */
+  story?: boolean;
+  /** Fly in an arc that rises to this altitude on the way (pull back, then dive). */
+  arc?: number;
+  key: number;
+};
+
+/** What the page can ask the globe once it's ready. */
+export type GlobeApi = { pov: () => Pov };
+
+/** Width of the story sheet on wide screens, and where it starts on phones (share of height). */
+export const STORY_WIDTH = (w: number) => Math.min(680, w * 0.56);
+export const STORY_TOP = 0.42;
 
 type Props = {
   tours: Tour[];
@@ -20,7 +40,7 @@ type Props = {
   focus: Focus | null;
   paused: boolean;
   onSelect: (id: string) => void;
-  onReady?: () => void;
+  onReady?: (api: GlobeApi) => void;
   /** Where the opening fly-in ends (defaults to all of Slovenia). */
   initialView?: { lat: number; lng: number; altitude: number };
   /** Places to ring as "near you". */
@@ -29,10 +49,15 @@ type Props = {
   you?: { lat: number; lng: number; precise: boolean; label: string } | null;
   /** The type chosen in the chips: its places get big dots and names, the rest small dots. */
   focusType?: PlaceType | "all";
+  /** Play the opening fly-in (off when the page drives the first flight itself). */
+  intro?: boolean;
+  /** The studio pin shown during the About story. */
+  studio?: { lat: number; lng: number; label: string } | null;
 };
 
 type You = NonNullable<Props["you"]>;
 const YOU_ID = "__you";
+const STUDIO_ID = "__studio";
 
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 const START = { lat: 38, lng: 2, altitude: 2.4 };
@@ -64,7 +89,7 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all" }: Props) {
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all", studio, intro = true }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -79,6 +104,22 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const youRef = useRef(you);
   youRef.current = you;
   const youEl = useRef<HTMLElement | null>(null);
+  const studioRef = useRef(studio);
+  studioRef.current = studio;
+  const studioEl = useRef<HTMLElement | null>(null);
+
+  /** The studio pin: a pulsing beacon with its label always shown. */
+  const studioMarker = (label: string) => {
+    let m = studioEl.current;
+    if (!m) {
+      m = document.createElement("div");
+      m.className = "studio";
+      m.innerHTML = `<span class="studio__ring"></span><span class="studio__dot"></span><span class="studio__label"></span>`;
+      studioEl.current = m;
+    }
+    m.querySelector(".studio__label")!.textContent = label;
+    return m;
+  };
 
   /** The visitor's marker: not interactive, label always shown. */
   const youMarker = (me: You) => {
@@ -97,6 +138,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const markerData = () => [
     ...toursRef.current.filter((t) => t.lat != null),
     ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
+    ...(studioRef.current ? [{ id: STUDIO_ID, lat: studioRef.current.lat, lng: studioRef.current.lng }] : []),
   ];
   toursRef.current = tours;
 
@@ -229,7 +271,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         // Keep labels clear of the page's own text and controls.
         const host = el.getBoundingClientRect();
         const placed: { l: number; r: number; t: number; b: number }[] = [];
-        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .topbar > *, .finder, .panel, .chat, .footer").forEach((n) => {
+        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .panel, .chat, .footer, .story__sheet").forEach((n) => {
           const r = n.getBoundingClientRect();
           if (r.width && r.height && getComputedStyle(n).opacity !== "0")
             placed.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });
@@ -322,6 +364,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .htmlTransitionDuration(0)
         .htmlElement((d) => {
           if ((d as { id: string }).id === YOU_ID) return youMarker(youRef.current!);
+          if ((d as { id: string }).id === STUDIO_ID) return studioMarker(studioRef.current!.label);
           const t = d as Tour;
           let m = markers.current.get(t.id);
           if (!m) {
@@ -360,10 +403,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       // Handy for automated visual checks in development.
       if (process.env.NODE_ENV !== "production") (window as unknown as { __globe: GlobeInstance }).__globe = g;
       g.htmlElementsData(markerData());
-      onReady?.();
+      onReady?.({ pov: () => g.pointOfView() });
 
       // Orchestrated fly-in to the visitor, or to all of Slovenia.
-      const t = window.setTimeout(() => g.pointOfView(initialView ?? SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700);
+      const t = intro ? window.setTimeout(() => g.pointOfView(initialView ?? SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700) : 0;
 
       cleanup = () => {
         window.clearTimeout(t);
@@ -388,7 +431,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     globe.current?.htmlElementsData(markerData());
     labelsRef.current();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tours, you?.lat, you?.lng, you?.precise, you?.label]);
+  }, [tours, you?.lat, you?.lng, you?.precise, you?.label, studio?.lat, studio?.lng, studio?.label]);
 
   useEffect(() => {
     markers.current.forEach((m, id) => m.classList.toggle("is-selected", id === selectedId));
@@ -412,23 +455,48 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   }, [focusType, tours]);
 
   useEffect(() => {
-    if (!focus || !globe.current) return;
+    const g = globe.current;
+    if (!focus || !g) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // Rough visible half-extent in degrees for globe.gl's default 50° fov.
     const halfH = 26.8 * focus.altitude;
     const w = window.innerWidth;
     const h = window.innerHeight;
+    const halfW = (halfH * (w / h)) / Math.cos((focus.lat * Math.PI) / 180);
     let { lat, lng } = focus;
-    if (focus.panel && w <= 760) {
+    if (focus.story && w <= 760) {
+      lat -= halfH * (1 - STORY_TOP); // centre the point in the strip above the sheet
+    } else if (focus.story) {
+      lng += halfW * (STORY_WIDTH(w) / w);
+    } else if (focus.panel && w <= 760) {
       lat -= halfH * 0.55; // keep the point in the strip above the bottom sheet
     } else if (focus.panel) {
-      const halfW = (halfH * (w / h)) / Math.cos((lat * Math.PI) / 180);
       lng += halfW * (Math.min(460, w * 0.4) / w); // nudge left of the side panel
     }
-    globe.current.pointOfView(
-      { lat, lng, altitude: focus.altitude },
-      reduced ? 0 : focus.ms ?? 1600,
-    );
+    const to = { lat, lng, altitude: focus.altitude };
+    const ms = reduced ? 0 : focus.ms ?? 1600;
+    if (!focus.arc || ms === 0) {
+      g.pointOfView(to, ms);
+      return;
+    }
+    // An arc: drive the camera frame by frame (globe.gl's own tween only flies straight).
+    const from = g.pointOfView();
+    const start = performance.now();
+    let raf = 0;
+    let timer = 0;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / ms);
+      g.pointOfView(arcPov(from, to, t, focus.arc!), 0);
+      if (t < 1) raf = requestAnimationFrame(step);
+      // Land once more a moment later: the tile engine can miss a camera that moved while it
+      // was still starting up, and a fresh position makes it load the sharp tiles.
+      else timer = window.setTimeout(() => g.pointOfView(to, 0), 250);
+    };
+    raf = requestAnimationFrame(step);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+    };
   }, [focus]);
 
   useEffect(() => {

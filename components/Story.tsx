@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import { about, REFERENCES } from "@/lib/about";
+import type { MouseEvent } from "react";
+import { REFERENCES, type AboutCopy } from "@/lib/about";
 import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
-import { copy } from "@/lib/i18n";
-import { useLang } from "@/lib/useLang";
-import PrivacyNotice from "./PrivacyNotice";
 
-const ENQUIRE = "/?povprasevanje";
+type Props = {
+  copy: AboutCopy;
+  /** "leaving" plays the exit animation before the sheet unmounts. */
+  leaving?: boolean;
+  onBack: () => void;
+  onEnquire: () => void;
+  /** A reference municipality was picked: show it on the globe. */
+  onReference: (id: string) => void;
+  onPrivacy: () => void;
+  privacyLabel: string;
+};
 
-export default function About() {
-  const { lang, switchLang } = useLang();
-  const a = about[lang];
-  const t = copy[lang];
-  const [privacyOpen, setPrivacyOpen] = useState(false);
+/** Plain links still work without JavaScript; with it, they act in place. */
+const inPlace = (fn: () => void) => (e: MouseEvent) => {
+  e.preventDefault();
+  fn();
+};
 
+/** The About story: a sheet over the globe, zoomed into the studio. */
+export default function Story({ copy: a, leaving = false, onBack, onEnquire, onReference, onPrivacy, privacyLabel }: Props) {
   const company: [keyof typeof a.company.labels, React.ReactNode][] = [
     ["company", CONTACT.company],
     ["brand", CONTACT.brand],
@@ -28,27 +37,18 @@ export default function About() {
   ];
 
   return (
-    <div className="about-page">
-      <header className="about__top">
-        <a className="brand" href="/" aria-label={t.brandHome}>
-          <img src="/logo.png" alt="" width={36} height={36} />
-          <span>
-            webvisit<b>360</b>
-          </span>
+    <article className={`story__sheet ${leaving ? "is-leaving" : ""}`} aria-labelledby="story-title">
+      <header className="story__bar">
+        <a className="btn btn--dark story__back" href="/" onClick={inPlace(onBack)}>
+          ← {a.back}
         </a>
-        <nav className="nav">
-          <a className="nav__link" href="/">{a.back}</a>
-          <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
-            {t.langSwitch.label}
-          </button>
-          <a className="btn btn--ghost" href={ENQUIRE}>{a.cta.button}</a>
-        </nav>
+        <span className="story__here">{a.here}</span>
       </header>
 
-      <main className="about">
+      <div className="about">
         <section className="about__hero">
           <p className="about__kicker">{a.hero.kicker}</p>
-          <h1>{a.hero.title}</h1>
+          <h1 id="story-title">{a.hero.title}</h1>
           <p className="about__lead">{a.hero.lead}</p>
           <div className="about__facts">
             <dl className="stats">
@@ -86,13 +86,13 @@ export default function About() {
           <h2>{a.services.title}</h2>
           <div className="about__services">
             {a.services.items.map((s) => (
-              <article key={s.title} className="about__card about__card--big">
+              <div key={s.title} className="about__card about__card--big">
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>
                 <p className="about__for">
                   <b>{a.services.forLabel}:</b> {s.for}
                 </p>
-              </article>
+              </div>
             ))}
           </div>
           <aside className="about__note">
@@ -115,7 +115,7 @@ export default function About() {
         </section>
 
         <section>
-          <h2 id="process-title">{a.process.title}</h2>
+          <h2>{a.process.title}</h2>
           <p>{a.process.lead}</p>
           <ol className="about__steps" aria-label={a.process.title}>
             {a.process.steps.map((s) => (
@@ -134,7 +134,9 @@ export default function About() {
           <ul className="about__refs">
             {REFERENCES.map((r) => (
               <li key={r.id}>
-                <a className="chip" href={`/?tour=${r.id}`}>{r.name}</a>
+                <a className="chip" href={`/?tour=${r.id}`} onClick={inPlace(() => onReference(r.id))}>
+                  {r.name}
+                </a>
               </li>
             ))}
           </ul>
@@ -162,7 +164,9 @@ export default function About() {
         <section className="about__cta">
           <h2>{a.cta.title}</h2>
           <p>{a.cta.text}</p>
-          <a className="btn btn--amber" href={ENQUIRE}>{a.cta.button}</a>
+          <a className="btn btn--amber" href="/?povprasevanje" onClick={inPlace(onEnquire)}>
+            {a.cta.button}
+          </a>
         </section>
 
         <section>
@@ -175,18 +179,11 @@ export default function About() {
               </div>
             ))}
           </dl>
+          <p className="about__legal">
+            <button onClick={onPrivacy}>{privacyLabel}</button>
+          </p>
         </section>
-      </main>
-
-      <footer className="about__footer">
-        <span>{t.footer.company}</span>
-        <a href="https://www.facebook.com/Webvisit360" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.instagram.com/webvisit360" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://kuula.co/profile/WEBVISIT360" target="_blank" rel="noopener">Kuula</a>
-        <button onClick={() => setPrivacyOpen(true)}>{t.footer.privacy}</button>
-      </footer>
-
-      {privacyOpen && <PrivacyNotice copy={t} contact={CONTACT.email} onClose={() => setPrivacyOpen(false)} />}
-    </div>
+      </div>
+    </article>
   );
 }

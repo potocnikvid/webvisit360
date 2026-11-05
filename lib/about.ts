@@ -19,8 +19,14 @@ export const REFERENCES = [
   { id: "menges", name: "Mengeš" },
 ] as const;
 
+/** Where the dive ends: the studio in Slovenska Bistrica (Tomšičeva 12). */
+export const STUDIO = { lat: 46.3926, lng: 15.5726, altitude: 0.001 } as const;
+
 const sl = {
-  back: "Na zemljevid",
+  back: "Nazaj na zemljevid",
+  here: "Slovenska Bistrica · tu nastajajo naši sprehodi",
+  pin: "Webvisit360 · Slovenska Bistrica",
+  entry: { title: "Zakaj 360°?", text: "Kdo smo in kako delamo" },
   hero: {
     kicker: "O nas",
     title: "Najprej se zaljubijo na prvi pogled. Potem pridejo.",
@@ -140,7 +146,10 @@ const sl = {
 export type AboutCopy = typeof sl;
 
 const en: AboutCopy = {
-  back: "To the map",
+  back: "Back to the map",
+  here: "Slovenska Bistrica · where our tours are made",
+  pin: "Webvisit360 · Slovenska Bistrica",
+  entry: { title: "Why 360°?", text: "Who we are and how we work" },
   hero: {
     kicker: "About",
     title: "First they fall in love at first sight. Then they come.",

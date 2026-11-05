@@ -2,10 +2,13 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { copy } from "@/lib/i18n";
+import { about } from "@/lib/about";
 
 type GlobeProps = {
   tours: { id: string; name: string }[];
   onSelect: (id: string) => void;
+  focus: { lat: number; lng: number; altitude: number; story?: boolean; arc?: number } | null;
+  studio?: { label: string } | null;
   you?: { lat: number; lng: number; precise: boolean; label: string } | null;
 };
 const globe = vi.hoisted(() => ({ props: null as unknown }));
@@ -65,6 +68,7 @@ beforeEach(() => {
 });
 afterEach(() => {
   cleanup();
+  window.history.replaceState(null, "", "/");
   vi.unstubAllGlobals();
 });
 
@@ -132,4 +136,48 @@ test("?povprasevanje opens the enquiry chat", async () => {
   render(<Experience visitor={null} />);
   expect(await screen.findByLabelText(t.chat.placeholder)).toBeTruthy();
   window.history.replaceState(null, "", "/");
+});
+
+/** Reduced motion: no flight delays, so the story appears at once. */
+const reducedMotion = () =>
+  vi.stubGlobal("matchMedia", (q: string) => ({ matches: q.includes("reduce"), media: q, addEventListener() {}, removeEventListener() {} }));
+const a = about.en;
+
+test("'Why 360°?' dives to the studio and opens the story; back returns to the map", async () => {
+  reducedMotion();
+  render(<Experience visitor={null} />);
+  fireEvent.click(await screen.findByRole("button", { name: new RegExp(a.entry.title) }));
+  expect(await screen.findByRole("heading", { level: 1, name: a.hero.title })).toBeTruthy();
+  expect(window.location.pathname).toBe("/o-nas");
+  expect(props().focus).toMatchObject({ lat: 46.3926, lng: 15.5726, story: true });
+  expect(props().studio).toMatchObject({ label: a.pin });
+
+  fireEvent.click(screen.getByRole("link", { name: `← ${a.back}` }));
+  await waitFor(() => expect(screen.queryByRole("heading", { level: 1, name: a.hero.title })).toBeNull());
+  expect(window.location.pathname).toBe("/");
+  expect(props().focus?.story).toBeFalsy();
+  expect(props().studio).toBeFalsy();
+});
+
+test("the browser's back button closes the story too", async () => {
+  reducedMotion();
+  render(<Experience visitor={null} />);
+  fireEvent.click(await screen.findByRole("button", { name: new RegExp(a.entry.title) }));
+  await screen.findByRole("heading", { level: 1, name: a.hero.title });
+  window.history.replaceState(null, "", "/");
+  fireEvent.popState(window);
+  await waitFor(() => expect(screen.queryByRole("heading", { level: 1, name: a.hero.title })).toBeNull());
+});
+
+test("/o-nas opens straight into the story", async () => {
+  render(<Experience visitor={null} initialStory />);
+  expect(screen.getByRole("heading", { level: 1, name: a.hero.title })).toBeTruthy();
+});
+
+test("a reference in the story closes it and opens that place", async () => {
+  reducedMotion();
+  render(<Experience visitor={null} initialStory />);
+  fireEvent.click(await screen.findByRole("link", { name: "Žalec" }));
+  expect(await screen.findByRole("heading", { name: "Občina Žalec" })).toBeTruthy();
+  expect(screen.queryByRole("heading", { level: 1, name: a.hero.title })).toBeNull();
 });
