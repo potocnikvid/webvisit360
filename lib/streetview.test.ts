@@ -15,7 +15,7 @@ describe("streetViewEmbedUrl", () => {
     const u = new URL(streetViewEmbedUrl(tour, "AIzaTEST")!);
     expect(u.origin + u.pathname).toBe("https://www.google.com/maps/embed/v1/streetview");
     expect(u.searchParams.get("key")).toBe("AIzaTEST");
-    expect(u.searchParams.get("pano")).toBe("CIHM0ogKEICAgICLvNmClAE");
+    expect(u.searchParams.get("pano")).toBe("F:CIHM0ogKEICAgICLvNmClAE");
   });
 
   test("falls back to the stored embed URL without a key", () => {

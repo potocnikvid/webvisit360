@@ -54,7 +54,7 @@ test("uses Google's official Embed API when a key is configured", () => {
   render(<GoogleTour tour={tour} copy={t} />);
   const src = screen.getByTitle(tour.name).getAttribute("src")!;
   vi.unstubAllEnvs();
-  expect(src).toContain("https://www.google.com/maps/embed/v1/streetview?key=AIzaTEST&pano=CIHM0ogKEICAgICLvNmClAE");
+  expect(src).toContain("https://www.google.com/maps/embed/v1/streetview?key=AIzaTEST&pano=F%3ACIHM0ogKEICAgICLvNmClAE");
 });
 
 test("offers the same panorama in Google Maps as a fallback", () => {

@@ -11,6 +11,7 @@ export function streetViewEmbedUrl(tour: { url: string }, key: string | undefine
   if (!key || !id) return tour.url;
   const u = new URL("https://www.google.com/maps/embed/v1/streetview");
   u.searchParams.set("key", key);
-  u.searchParams.set("pano", id);
+  // "F:" marks a user-uploaded photo; without it the API rejects the id as an invalid pano.
+  u.searchParams.set("pano", `F:${id}`);
   return u.toString();
 }
