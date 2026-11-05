@@ -3,10 +3,18 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { copy } from "@/lib/i18n";
 
+type GlobeProps = {
+  tours: { id: string; name: string }[];
+  onSelect: (id: string) => void;
+  you?: { lat: number; lng: number; precise: boolean; label: string } | null;
+};
+const globe = vi.hoisted(() => ({ props: null as unknown }));
+
 // The globe needs WebGL; a stub renders one button per place that "clicks the pin".
 vi.mock("next/dynamic", () => ({
   default: () =>
-    function GlobeStub(props: { tours: { id: string; name: string }[]; onSelect: (id: string) => void }) {
+    function GlobeStub(props: GlobeProps) {
+      globe.props = props;
       return (
         <div>
           {props.tours.map((t) => (
@@ -30,8 +38,24 @@ const tours = {
   ],
 };
 
+/** Stands in for the browser's location permission prompt. */
+const geolocation = (answer: "allow" | "deny") =>
+  Object.defineProperty(navigator, "geolocation", {
+    configurable: true,
+    value: {
+      getCurrentPosition: vi.fn((ok: PositionCallback, fail: PositionErrorCallback) =>
+        answer === "allow"
+          ? ok({ coords: { latitude: 46.2397, longitude: 15.2677 } } as GeolocationPosition)
+          : fail({ code: 1 } as GeolocationPositionError)),
+    },
+  });
+
+const ZALEC_IP = { lat: 46.25, lng: 15.16, city: "Žalec", country: "SI" };
+const props = () => globe.props as GlobeProps;
+
 beforeEach(() => {
   Element.prototype.scrollTo = () => {};
+  geolocation("deny");
   vi.stubGlobal("fetch", vi.fn(async (url: string) => {
     if (url.includes("tours.json")) return Response.json(tours);
     if (url.includes("geo.json")) return Response.json({ features: [] });
@@ -59,4 +83,24 @@ test("looking at a tour mid-chat keeps the conversation", async () => {
 test("a visitor with no known location can still ask for their exact location", async () => {
   render(<Experience visitor={null} />);
   expect(await screen.findByRole("button", { name: t.near.precise })).toBeTruthy();
+});
+
+test("asks for the exact location on arrival and marks the visitor there", async () => {
+  geolocation("allow");
+  render(<Experience visitor={null} />);
+  await waitFor(() => expect(props()?.you).toMatchObject({ lat: 46.2397, lng: 15.2677, precise: true, label: t.you.here }));
+  expect(await screen.findByText(t.near.kicker, { exact: false })).toBeTruthy();
+  expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledTimes(1);
+});
+
+test("if the visitor refuses, the approximate location is used, quietly", async () => {
+  render(<Experience visitor={ZALEC_IP} />);
+  await waitFor(() => expect(props()?.you).toMatchObject({ lat: 46.25, lng: 15.16, precise: false, label: t.you.around }));
+  expect(screen.queryByText(t.near.denied)).toBeNull();
+});
+
+test("no marker when the location is unknown", async () => {
+  render(<Experience visitor={null} />);
+  await screen.findByRole("button", { name: t.near.precise });
+  expect(props()?.you ?? null).toBeNull();
 });

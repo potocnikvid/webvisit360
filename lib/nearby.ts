@@ -29,3 +29,15 @@ export function countWithin(tours: Tour[], from: Point, km: number, type?: Place
     (t) => t.lat != null && t.lng != null && (!type || t.type === type) && distanceKm(from, { lat: t.lat, lng: t.lng }) <= km,
   ).length;
 }
+
+/**
+ * A globe view showing all the points: centred on their bounding box, zoomed out so the
+ * farthest one fits (altitude in globe radii, 0.012–0.35).
+ */
+export function frameView(points: Point[]): Point & { altitude: number } {
+  const lats = points.map((p) => p.lat);
+  const lngs = points.map((p) => p.lng);
+  const centre = { lat: (Math.min(...lats) + Math.max(...lats)) / 2, lng: (Math.min(...lngs) + Math.max(...lngs)) / 2 };
+  const radiusKm = Math.max(...points.map((p) => distanceKm(centre, p)));
+  return { ...centre, altitude: Math.min(0.35, Math.max(0.012, (radiusKm * 2) / 2500)) };
+}

@@ -100,6 +100,24 @@ a { color: inherit; text-decoration: none; }
 .marker.is-near .marker__dot { box-shadow: 0 0 0 3px rgba(246, 169, 59, .35), 0 0 14px rgba(246, 169, 59, .8); }
 .marker.is-near { z-index: 5; }
 
+/* "You are here": a blue location dot; approximate locations get a wider soft halo */
+.you { position: relative; width: 0; height: 0; pointer-events: none; z-index: 6; }
+.you__dot {
+  position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%;
+  background: #4ea3ff; border: 2.5px solid #fff; box-shadow: 0 1px 6px rgba(0, 0, 0, .45);
+}
+.you__halo {
+  position: absolute; left: -20px; top: -20px; width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(78, 163, 255, .28); animation: you-pulse 2.4s ease-out infinite;
+}
+.you--approx .you__halo { left: -38px; top: -38px; width: 76px; height: 76px; background: rgba(78, 163, 255, .16); animation: none; }
+.you__label {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); white-space: nowrap;
+  padding: 3px 9px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
+  color: #fff; background: rgba(30, 110, 210, .92); box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+}
+@keyframes you-pulse { from { transform: scale(.5); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+
 @keyframes beacon {
   0% { transform: scale(.6); opacity: .9; }
   100% { transform: scale(2.1); opacity: 0; }

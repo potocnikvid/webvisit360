@@ -10,7 +10,8 @@ type Props = {
   copy: Copy;
   locationError: boolean;
   onOpen: () => void;
-  onPrecise: () => void;
+  /** Absent once the exact location is known. */
+  onPrecise?: () => void;
 };
 
 /** "Closest to you" card shown after the fly-in to the visitor. */
@@ -26,9 +27,11 @@ export default function NearYou({ place, km, others, copy: t, locationError, onO
         <button className="btn btn--amber" onClick={onOpen}>
           {t.panel.enter}
         </button>
-        <button className="near__precise" onClick={onPrecise}>
-          {locationError ? t.near.denied : t.near.precise}
-        </button>
+        {onPrecise && (
+          <button className="near__precise" onClick={onPrecise}>
+            {locationError ? t.near.denied : t.near.precise}
+          </button>
+        )}
       </div>
     </section>
   );

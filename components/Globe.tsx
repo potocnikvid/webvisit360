@@ -24,7 +24,12 @@ type Props = {
   initialView?: { lat: number; lng: number; altitude: number };
   /** Places to ring as "near you". */
   highlightIds?: string[];
+  /** The visitor's own position ("You are here"); approximate ones are drawn wider. */
+  you?: { lat: number; lng: number; precise: boolean; label: string } | null;
 };
+
+type You = NonNullable<Props["you"]>;
+const YOU_ID = "__you";
 
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 const START = { lat: 38, lng: 2, altitude: 2.4 };
@@ -59,7 +64,7 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds }: Props) {
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -69,6 +74,28 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const labelsRef = useRef<() => void>(() => {});
   const nearRef = useRef(new Set<string>());
   nearRef.current = new Set(highlightIds);
+  const youRef = useRef(you);
+  youRef.current = you;
+  const youEl = useRef<HTMLElement | null>(null);
+
+  /** The visitor's marker: not interactive, label always shown. */
+  const youMarker = (me: You) => {
+    let m = youEl.current;
+    if (!m) {
+      m = document.createElement("div");
+      m.innerHTML = `<span class="you__halo"></span><span class="you__dot"></span><span class="you__label"></span>`;
+      youEl.current = m;
+    }
+    m.className = `you ${me.precise ? "" : "you--approx"}`;
+    m.querySelector(".you__label")!.textContent = me.label;
+    return m;
+  };
+
+  /** Tours with a location, plus the visitor's own marker. */
+  const markerData = () => [
+    ...toursRef.current.filter((t) => t.lat != null),
+    ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
+  ];
   toursRef.current = tours;
 
   // ---- create the globe once -------------------------------------------------
@@ -200,11 +227,18 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         // Keep labels clear of the page's own text and controls.
         const host = el.getBoundingClientRect();
         const placed: { l: number; r: number; t: number; b: number }[] = [];
-        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .topbar > *, .finder, .panel, .enquiry").forEach((n) => {
+        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .topbar > *, .finder, .panel, .chat, .footer").forEach((n) => {
           const r = n.getBoundingClientRect();
           if (r.width && r.height && getComputedStyle(n).opacity !== "0")
             placed.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });
         });
+        // The "You are here" label always shows; other labels make room for it.
+        const me = youRef.current;
+        if (me) {
+          const sc = g.getScreenCoords(me.lat, me.lng, 0);
+          const w = me.label.length * 6.9 + 30;
+          placed.push({ l: sc.x - w / 2, r: sc.x + w / 2, t: sc.y - 44, b: sc.y + 10 });
+        }
         const next = new Set<string>();
         for (const t of candidates) {
           if (next.size >= budget && t.id !== selected) break;
@@ -285,6 +319,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .htmlAltitude(0)
         .htmlTransitionDuration(0)
         .htmlElement((d) => {
+          if ((d as { id: string }).id === YOU_ID) return youMarker(youRef.current!);
           const t = d as Tour;
           let m = markers.current.get(t.id);
           if (!m) {
@@ -320,7 +355,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       globe.current = g;
       // Handy for automated visual checks in development.
       if (process.env.NODE_ENV !== "production") (window as unknown as { __globe: GlobeInstance }).__globe = g;
-      g.htmlElementsData(toursRef.current.filter((t) => t.lat != null));
+      g.htmlElementsData(markerData());
       onReady?.();
 
       // Orchestrated fly-in to the visitor, or to all of Slovenia.
@@ -346,8 +381,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
   // ---- data updates
   useEffect(() => {
-    globe.current?.htmlElementsData(tours.filter((t) => t.lat != null));
-  }, [tours]);
+    globe.current?.htmlElementsData(markerData());
+    labelsRef.current();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tours, you?.lat, you?.lng, you?.precise, you?.label]);
 
   useEffect(() => {
     markers.current.forEach((m, id) => m.classList.toggle("is-selected", id === selectedId));

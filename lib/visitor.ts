@@ -1,10 +1,24 @@
-/** The visitor's approximate location, from Vercel's IP geolocation headers. Never stored. */
-export type Visitor = { lat: number; lng: number; city: string | null; country: string | null };
+import { distanceKm } from "./nearby";
+
+/**
+ * Where the visitor is: approximate (Vercel's IP geolocation headers) or, once they allow it,
+ * precise (the browser's geolocation). Never stored.
+ */
+export type Visitor = { lat: number; lng: number; city: string | null; country: string | null; precise?: boolean };
 
 /** Slovenia and its neighbours: visitors here get the "near you" fly-in. */
 const NEAR_COUNTRIES = new Set(["SI", "HR", "AT", "IT", "HU"]);
 
 export const isNearCountry = (country: string | null) => country != null && NEAR_COUNTRIES.has(country);
+
+const SLOVENIA_CENTRE = { lat: 46.12, lng: 14.82 };
+
+/**
+ * Whether to show "near you": in Slovenia or a neighbour by IP, or (when the country is
+ * unknown or misleading, e.g. a VPN) within 350 km of Slovenia's centre.
+ */
+export const isNearby = (v: { lat: number; lng: number; country: string | null }) =>
+  isNearCountry(v.country) || distanceKm(v, SLOVENIA_CENTRE) <= 350;
 
 const decode = (s: string | null) => {
   if (!s) return null;

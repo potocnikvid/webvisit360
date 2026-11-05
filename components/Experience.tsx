@@ -5,8 +5,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PlaceType, Tour, ToursFile } from "@/lib/types";
 import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
 import { copy, pickLang, type Lang } from "@/lib/i18n";
-import { isNearCountry, type Visitor } from "@/lib/visitor";
-import { countWithin, nearest } from "@/lib/nearby";
+import { isNearby, type Visitor } from "@/lib/visitor";
+import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus } from "./Globe";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
@@ -25,13 +25,9 @@ const norm = (s: string) =>
 /** How many nearest places to ring and frame when a type is chosen. */
 const NEAR_COUNT = 5;
 
-/** A view that fits a set of places: centred on their mean, zoomed out to the farthest. */
-const frame = (places: { tour: Tour; km: number }[]) => {
-  const lat = places.reduce((s, p) => s + p.tour.lat!, 0) / places.length;
-  const lng = places.reduce((s, p) => s + p.tour.lng!, 0) / places.length;
-  const maxKm = Math.max(...places.map((p) => p.km));
-  return { lat, lng, altitude: Math.min(0.35, Math.max(0.012, maxKm / 2500)) };
-};
+/** A view showing the visitor and the places near them. */
+const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) =>
+  frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
 
 const LANG_KEY = "wv360-lang";
 
@@ -118,8 +114,8 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
     );
   }, [all, query, type]);
 
-  // "Near you" only for visitors in Slovenia and its neighbours.
-  const origin = visitor && isNearCountry(visitor.country) ? visitor : null;
+  // "Near you" only for visitors in or around Slovenia.
+  const origin = visitor && isNearby(visitor) ? visitor : null;
   const near = useMemo(
     () => (origin ? nearest(all, origin, { type: type === "all" ? undefined : type, limit: NEAR_COUNT }) : []),
     [all, origin, type],
@@ -130,7 +126,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
   );
   const highlightIds = useMemo(() => near.map((n) => n.tour.id), [near]);
   // Computed once, when the globe mounts: where the opening fly-in ends.
-  const initialView = useMemo(() => (near.length ? frame(near) : undefined), [data !== null]); // eslint-disable-line react-hooks/exhaustive-deps
+  const initialView = useMemo(() => (near.length ? frame(origin!, near) : undefined), [data !== null]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fly = useCallback((lat: number, lng: number, altitude: number, ms?: number, panel?: boolean) => {
     focusKey.current += 1;
@@ -150,7 +146,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
     [byId, fly],
   );
 
-  const home = useMemo(() => (near.length ? frame(near) : SLOVENIA), [near]);
+  const home = useMemo(() => (near.length ? frame(origin!, near) : SLOVENIA), [near]);
 
   const close = useCallback(() => {
     setSelectedId(null);
@@ -164,34 +160,43 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
     if (!origin) return;
     const places = nearest(all, origin, { type: next === "all" ? undefined : next, limit: NEAR_COUNT });
     if (places.length) {
-      const v = frame(places);
+      const v = frame(origin, places);
       fly(v.lat, v.lng, v.altitude, 1600);
     }
   };
 
-  const usePreciseLocation = () => {
+  // Ask the browser for the exact position. On arrival this is quiet: if the visitor says no
+  // (or never answers) we simply keep the approximate, IP-based location.
+  const requestPrecise = useCallback((quiet: boolean) => {
     navigator.geolocation?.getCurrentPosition(
-      (pos) => {
-        const next = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-          city: null,
-          // Keep the IP country; precise location without one is still "near".
-          country: visitor?.country ?? "SI",
-        };
-        setVisitor(next);
-        const places = nearest(all, next, { type: type === "all" ? undefined : type, limit: NEAR_COUNT });
-        if (places.length) {
-          const v = frame(places);
-          fly(v.lat, v.lng, v.altitude, 1600);
-        }
-      },
+      (pos) =>
+        // No country: a precise position counts as "near" by distance (see isNearby).
+        setVisitor({ lat: pos.coords.latitude, lng: pos.coords.longitude, city: null, country: null, precise: true }),
       () => {
+        if (quiet) return;
         setLocationError(true);
         window.setTimeout(() => setLocationError(false), 4000);
       },
+      { maximumAge: 10 * 60_000, timeout: 20_000 },
     );
-  };
+  }, []);
+  const usePreciseLocation = () => requestPrecise(false);
+
+  useEffect(() => requestPrecise(true), [requestPrecise]);
+
+  // Re-centre when the exact position arrives, unless the visitor is already busy looking at
+  // a tour, searching or chatting.
+  const busy = useRef(false);
+  busy.current = !!selectedId || enquiry || searchOpen;
+  useEffect(() => {
+    if (!visitor?.precise || !data || busy.current) return;
+    const places = nearest(data.items, visitor, { type: type === "all" ? undefined : type, limit: NEAR_COUNT });
+    if (places.length) {
+      const v = frame(visitor, places);
+      fly(v.lat, v.lng, v.altitude, 1600);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visitor, data]);
 
   // Esc closes the tour overlay first, then the panel.
   useEffect(() => {
@@ -218,6 +223,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
         <Globe
           tours={all}
           initialView={initialView}
+          you={origin ? { lat: origin.lat, lng: origin.lng, precise: !!origin.precise, label: origin.precise ? t.you.here : t.you.around } : null}
           highlightIds={highlightIds}
           geo={geo}
           selectedId={selectedId}
@@ -316,7 +322,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
             </ul>
           )}
         </div>
-        {!origin && !selected && !enquiry && (
+        {!visitor?.precise && !origin && !selected && !enquiry && (
           <button className="near__precise near__precise--alone" onClick={usePreciseLocation}>
             {locationError ? t.near.denied : t.near.precise}
           </button>
@@ -329,7 +335,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
             copy={t}
             locationError={locationError}
             onOpen={() => select(near[0].tour.id)}
-            onPrecise={usePreciseLocation}
+            onPrecise={visitor?.precise ? undefined : usePreciseLocation}
           />
         )}
       </div>
@@ -398,7 +404,7 @@ export default function Experience({ visitor: ipVisitor }: { visitor: Visitor | 
           hidden={!enquiry}
           copy={t}
           from={chatFrom}
-          context={{ town: visitor?.city ?? null, country: visitor?.country ?? null, type, viewed, lang: `${navigatorLang || "unknown"} (site shown in ${lang})` }}
+          context={{ town: visitor?.city ?? ipVisitor?.city ?? null, country: visitor?.country ?? ipVisitor?.country ?? null, type, viewed, lang: `${navigatorLang || "unknown"} (site shown in ${lang})` }}
           onClose={() => setEnquiry(false)}
           onPrivacy={() => setPrivacyOpen(true)}
         />

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { countWithin, distanceKm, nearest } from "./nearby";
+import { countWithin, distanceKm, frameView, nearest } from "./nearby";
 import type { PlaceType, Tour } from "./types";
 
 const CELJE = { lat: 46.2397, lng: 15.2677 };
@@ -47,4 +47,18 @@ describe("nearest", () => {
 test("countWithin counts only located places within the radius", () => {
   expect(countWithin(fixture, CELJE, 25)).toBe(3);
   expect(countWithin(fixture, CELJE, 25, "vino")).toBe(0);
+});
+
+describe("frameView", () => {
+  test("centres on everything it must show, the visitor included", () => {
+    const v = frameView([CELJE, { lat: 46.2516, lng: 15.1648 }, { lat: 46.237, lng: 15.0925 }]);
+    expect(v.lng).toBeGreaterThan(15.0925);
+    expect(v.lng).toBeLessThan(15.2677);
+    expect(distanceKm(v, CELJE)).toBeLessThan(10);
+  });
+
+  test("zooms out to fit far points and never closer than the minimum", () => {
+    expect(frameView([CELJE, { lat: 45.7, lng: 13.9 }]).altitude).toBeGreaterThan(frameView([CELJE, { lat: 46.25, lng: 15.17 }]).altitude);
+    expect(frameView([CELJE]).altitude).toBe(0.012);
+  });
 });

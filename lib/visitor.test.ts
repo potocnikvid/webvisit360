@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isNearCountry, parseVisitor } from "./visitor";
+import { isNearCountry, isNearby, parseVisitor } from "./visitor";
 
 const headers = (h: Record<string, string>) => (name: string) => h[name] ?? null;
 
@@ -37,4 +37,17 @@ test("isNearCountry covers Slovenia and its neighbours only", () => {
   expect(isNearCountry("AT")).toBe(true);
   expect(isNearCountry("DE")).toBe(false);
   expect(isNearCountry(null)).toBe(false);
+});
+
+describe("isNearby", () => {
+  test("trusts the IP country when it is Slovenia or a neighbour", () => {
+    expect(isNearby({ lat: 48.2, lng: 16.37, country: "AT" })).toBe(true);
+  });
+  test("a precise position near Slovenia counts even with no country (VPN, browser location)", () => {
+    expect(isNearby({ lat: 46.24, lng: 15.27, country: null })).toBe(true);
+  });
+  test("far away with no near country does not count", () => {
+    expect(isNearby({ lat: 52.52, lng: 13.4, country: "DE" })).toBe(false);
+    expect(isNearby({ lat: 52.52, lng: 13.4, country: null })).toBe(false);
+  });
 });
