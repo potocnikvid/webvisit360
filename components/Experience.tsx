@@ -20,7 +20,6 @@ const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
 
 const LOOK_OPTIONS: { id: Look; label: Record<Lang, string>; credit: string }[] = [
   { id: "satellite", label: { sl: "Satelit", en: "Satellite" }, credit: "Posnetki: Esri, Maxar, Earthstar Geographics" },
-  { id: "soft", label: { sl: "Mehka Zemlja", en: "Soft Earth" }, credit: "Sentinel-2 cloudless – s2maps.eu, EOX IT Services (Copernicus 2016)" },
   { id: "illustrated", label: { sl: "Ilustracija", en: "Illustrated" }, credit: "Meje: geoBoundaries, Natural Earth" },
 ];
 const LOOK_KEY = "wv360-look";

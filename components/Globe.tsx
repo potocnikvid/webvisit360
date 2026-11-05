@@ -11,7 +11,7 @@ type Feature = {
   geometry: unknown;
 };
 
-export type Look = "satellite" | "soft" | "illustrated";
+export type Look = "satellite" | "illustrated";
 
 export type Focus = { lat: number; lng: number; altitude: number; ms?: number; panel?: boolean; key: number };
 
@@ -68,10 +68,6 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
-// Sentinel-2 cloudless 2016 by EOX (CC BY 4.0, commercial use allowed with attribution).
-// The 2018+ mosaics are CC BY-NC-SA, so they can't be used on a commercial site.
-const EOX = (x: number, y: number, l: number) =>
-  `https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless_3857/default/g/${l}/${y}/${x}.jpg`;
 
 type LookStyle = {
   tiles: ((x: number, y: number, l: number) => string) | null;
@@ -86,8 +82,6 @@ type LookStyle = {
 const LOOKS: Record<Look, LookStyle> = {
   // Photographic, "blue hour over the Alps".
   satellite: { tiles: ESRI, maxLevel: 19, minAlt: 0.000025, ambient: ["#7f97d8", 2.1], sun: ["#ffc98a", 1.1], atmosphere: ["#6d8de0", 0.16] },
-  // Realistic but calmer: even-toned 10 m mosaic, soft daylight, no deep zoom.
-  soft: { tiles: EOX, maxLevel: 13, minAlt: 0.0006, ambient: ["#e3e9f6", 1.85], sun: ["#fff0d8", 0.55], atmosphere: ["#a9c1f2", 0.2] },
   // Illustrated: no imagery; dotted continents and flat municipality shapes.
   illustrated: { tiles: null, maxLevel: 0, minAlt: 0.0008, ambient: ["#ffffff", 2.4], sun: ["#ffffff", 0.5], atmosphere: ["#4f74d9", 0.22] },
 };
@@ -234,21 +228,70 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
 
       const countriesOutsideSlovenia = countries.filter((f) => f.properties.n !== "Slovenia");
-      // h3 (used for the illustrated dots) rejects Natural Earth's North Korea outline.
-      const dotCountries = countriesOutsideSlovenia.filter((f) => f.properties.n !== "North Korea");
-      // Building the dots takes a moment, so do it once and afterwards only toggle visibility.
-      let dotsBuilt = false;
-      const showDots = (on: boolean) => {
-        if (on && !dotsBuilt) {
-          dotsBuilt = true;
-          g.hexPolygonsData(dotCountries);
-          // The layer builds its meshes on the next update; re-apply visibility then.
-          window.setTimeout(() => showDots(lookRef.current === "illustrated" && borderMode === "dots"), 300);
-        }
-        g.scene().traverse((o) => {
-          if ((o as unknown as { __globeObjType?: string }).__globeObjType === "hexPolygon") o.visible = on;
-        });
+      // Land as dots for the illustrated look: ~11k precomputed points (public/data/land-dots.json,
+      // built by redesign/data/scripts/build_dots.mjs) drawn as ONE THREE.Points object - one draw
+      // call and one vertex per dot. (globe.gl's hexPolygons layer built ~250k triangles in ~180
+      // meshes and froze the page for over a second while computing them.)
+      let dots: import("three").Points | null = null;
+      // Dots sit ~1.7 globe units (~110 km) apart. Keep each about half that spacing on screen,
+      // so the continents read as a solid dot pattern at every distance, like a printed map.
+      const dotSize = (alt: number) => {
+        const unitsToPx = el.clientHeight / 2 / (Math.max(alt, 0.01) * R * Math.tan((25 * Math.PI) / 180));
+        return Math.min(12, Math.max(2.5, 0.55 * 1.7 * unitsToPx)) * Math.min(window.devicePixelRatio, 2);
       };
+      let dotsLoading = false;
+      const showDots = (on: boolean) => {
+        if (dots) dots.visible = on;
+        if (!on || dots || dotsLoading) return;
+        dotsLoading = true;
+        fetch("/data/land-dots.json")
+          .then((r) => r.json() as Promise<number[]>)
+          .then((flat) => {
+            if (disposed) return;
+            const pos = new Float32Array((flat.length / 2) * 3);
+            for (let i = 0, j = 0; i < flat.length; i += 2, j += 3) {
+              const c = g.getCoords(flat[i] / 100, flat[i + 1] / 100, 0.0004);
+              pos[j] = c.x;
+              pos[j + 1] = c.y;
+              pos[j + 2] = c.z;
+            }
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+            // Round dot sprite.
+            const cv = document.createElement("canvas");
+            cv.width = cv.height = 32;
+            const cx = cv.getContext("2d")!;
+            cx.fillStyle = "#fff";
+            cx.beginPath();
+            cx.arc(16, 16, 14, 0, Math.PI * 2);
+            cx.fill();
+            const mat = new THREE.PointsMaterial({
+              color: "#93a3c4",
+              size: dotSize(g.pointOfView().altitude),
+              sizeAttenuation: false,
+              map: new THREE.CanvasTexture(cv),
+              transparent: true,
+              opacity: 0.6,
+              alphaTest: 0.3,
+              depthWrite: false,
+            });
+            dots = new THREE.Points(geom, mat);
+            dots.visible = lookRef.current === "illustrated" && borderMode === "dots";
+            g.scene().add(dots);
+          })
+          .catch(() => {
+            dotsLoading = false;
+          });
+      };
+      // Up close the illustrated look draws neighbouring countries as land; only the ones
+      // around Slovenia can be on screen then, so skip the rest of the world (fewer draw calls).
+      const nearCountries = countriesOutsideSlovenia.filter((f) => {
+        const c = JSON.stringify(f.geometry).match(/-?\d+\.?\d*/g)!.map(Number);
+        let near = false;
+        for (let i = 0; i < c.length - 1 && !near; i += 2) near = c[i] > -5 && c[i] < 35 && c[i + 1] > 30 && c[i + 1] < 60;
+        return near;
+      });
+
       let borderMode = "";
       const applyZoom = (alt: number) => {
         // Illustrated: dotted continents from far away; up close (where the fixed-size dots
@@ -259,7 +302,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         borderMode = mode;
         if (illus) showDots(mode === "dots");
         g.polygonsData(
-          mode === "c" ? countries : mode === "m" || mode === "dots" ? munis : [...countriesOutsideSlovenia, ...munis],
+          mode === "c" ? countries : mode === "m" || mode === "dots" ? munis : mode === "land" ? [...nearCountries, ...munis] : [...countriesOutsideSlovenia, ...munis],
         );
       };
 
@@ -369,6 +412,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       g.onZoom((pov) => {
         sharpenTiles();
         fitClipping(pov.altitude);
+        if (dots?.visible) (dots.material as import("three").PointsMaterial).size = dotSize(pov.altitude);
         applyZoom(pov.altitude);
         scheduleDeclutter();
       });
@@ -411,14 +455,6 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       controls.autoRotate = false;
       fitClipping(START.altitude);
 
-      // Dotted continents for the illustrated look (Slovenia itself is drawn as municipalities).
-      g.hexPolygonResolution(3)
-        .hexPolygonMargin(0.42)
-        .hexPolygonUseDots(true)
-        .hexPolygonDotResolution(6)
-        .hexPolygonAltitude(0.0004)
-        .hexPolygonColor(() => "rgba(147,163,196,0.55)")
-        .hexPolygonsTransitionDuration(0);
 
       const applyLook = (l: Look) => {
         lookRef.current = l;
