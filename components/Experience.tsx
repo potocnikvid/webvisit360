@@ -10,12 +10,14 @@ import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 import { isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus, GlobeApi } from "./Globe";
-import type { Pov } from "@/lib/flight";
+import { peakFor, type Pov } from "@/lib/flight";
 import { about, STUDIO } from "@/lib/about";
 import Story from "./Story";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
 import NearYou from "./NearYou";
+import FeaturedTour from "./FeaturedTour";
+import { featured } from "@/lib/featured";
 import Chat from "./Chat";
 import PrivacyNotice from "./PrivacyNotice";
 
@@ -30,19 +32,27 @@ const norm = (s: string) =>
 /** How many nearest places to ring and frame when a type is chosen. */
 const NEAR_COUNT = 5;
 
-/** A view showing the visitor and the places near them. */
-const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) =>
-  frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
+/** Wide screens keep a column of cards on the right (see .cards in globals.css). */
+const CARDS_MIN_WIDTH = 900;
+const CARDS_WIDTH = 340;
+
+/** A view showing the visitor and the places near them, clear of the card column. */
+const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) => {
+  const v = frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
+  if (typeof window === "undefined" || window.innerWidth < CARDS_MIN_WIDTH) return v;
+  // Move the view east by half the column's width, so the places sit left of the cards.
+  const w = window.innerWidth;
+  const halfW = (26.8 * v.altitude * (w / window.innerHeight)) / Math.cos((v.lat * Math.PI) / 180);
+  return { ...v, lng: v.lng + halfW * (Math.min(CARDS_WIDTH, w * 0.32) / w) };
+};
 
 /** The About story: the camera dives into the studio's streets, then the page inks in over the map. */
 type StoryPhase = "closed" | "diving" | "open" | "leaving";
 const DIVE_MS = 4200;
 /** Share of the dive after which the page starts to appear over the map. */
 const REVEAL_AT = 0.86;
-const RETURN_MS = 3000;
+const RETURN_MS = 3400;
 const LEAVE_MS = 450;
-/** How high to pull back on the way: a little above the higher end of the flight. */
-const peakFor = (a: number, b: number) => Math.min(2.5, Math.max(0.15, Math.max(a, b) * 1.8));
 const reducedMotion = () => !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
 const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
@@ -85,6 +95,15 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   const storyRef = useRef(story);
   storyRef.current = story;
   const storyTimer = useRef(0);
+  // Flying back out of the story: the map stays quiet (no pins or labels) until it lands.
+  const [returning, setReturning] = useState(false);
+  const returnTimer = useRef(0);
+  const flyOut = useCallback(() => {
+    window.clearTimeout(returnTimer.current);
+    if (reducedMotion()) return setReturning(false);
+    setReturning(true);
+    returnTimer.current = window.setTimeout(() => setReturning(false), RETURN_MS * 0.8);
+  }, []);
   const globeApi = useRef<GlobeApi | null>(null);
   /** Where the camera was before the story, to fly back to. */
   const savedView = useRef<Pov | null>(null);
@@ -129,6 +148,11 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     [all, origin, near, type],
   );
   const highlightIds = useMemo(() => near.map((n) => n.tour.id), [near]);
+  // A standout tour ready to open on arrival, until the visitor opens one themselves.
+  const standout = useMemo(
+    () => (data && viewed.length === 0 ? featured(all, origin, near[0]?.tour.id) : null),
+    [data, all, origin, near, viewed.length],
+  );
   // Computed once, when the globe mounts: where the opening fly-in ends.
   const initialView = useMemo(() => (near.length ? frame(origin!, near) : undefined), [data !== null]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -162,10 +186,12 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       if (t.lat != null && t.lng != null) {
         const altitude = t.kind === "obcina" ? 0.03 : 0.01;
         // Out of the story, rise from the studio and swing over to the place.
-        flyTo({ lat: t.lat, lng: t.lng, altitude, panel: true, ...(fromStory && { arc: peakFor(altitude, STUDIO.altitude), ms: RETURN_MS }) });
+        const to = { lat: t.lat, lng: t.lng, altitude };
+        if (fromStory) flyOut();
+        flyTo({ ...to, panel: true, ...(fromStory && { arc: peakFor(globeApi.current?.pov() ?? STUDIO, to), ms: RETURN_MS }) });
       }
     },
-    [byId, flyTo, endStory],
+    [byId, flyTo, endStory, flyOut],
   );
 
   // Deep links from the About page: /?tour=<id> opens a place, /?povprasevanje opens the chat.
@@ -189,7 +215,9 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     setEnquiry(false);
     setSearchOpen(false);
     setTourOpen(false);
-    flyTo({ ...STUDIO, story: true, arc: peakFor(here.altitude, STUDIO.altitude), ms: DIVE_MS });
+    window.clearTimeout(returnTimer.current);
+    setReturning(false);
+    flyTo({ ...STUDIO, story: true, arc: peakFor(here, STUDIO), ms: DIVE_MS });
     if (window.location.pathname !== "/o-nas") window.history.pushState({ story: true }, "", "/o-nas");
     window.clearTimeout(storyTimer.current);
     if (reducedMotion()) return setStory("open");
@@ -202,13 +230,14 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     const back = savedView.current ?? home;
     savedView.current = null;
     const from = globeApi.current?.pov() ?? STUDIO;
-    flyTo({ lat: back.lat, lng: back.lng, altitude: back.altitude, arc: peakFor(back.altitude, from.altitude), ms: RETURN_MS });
+    flyOut();
+    flyTo({ lat: back.lat, lng: back.lng, altitude: back.altitude, arc: peakFor(from, back), ms: RETURN_MS });
     if (window.location.pathname === "/o-nas") window.history.replaceState(null, "", "/");
     window.clearTimeout(storyTimer.current);
     if (reducedMotion()) return setStory("closed");
     setStory("leaving");
     storyTimer.current = window.setTimeout(() => setStory("closed"), LEAVE_MS);
-  }, [home, flyTo]);
+  }, [home, flyTo, flyOut]);
 
   // The browser's back and forward buttons move between the map and the story.
   useEffect(() => {
@@ -217,7 +246,13 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     return () => window.removeEventListener("popstate", onPop);
   }, [openStory, closeStory]);
 
-  useEffect(() => () => window.clearTimeout(storyTimer.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(storyTimer.current);
+      window.clearTimeout(returnTimer.current);
+    },
+    [],
+  );
 
   // The tab title follows the URL (/o-nas or /).
   useEffect(() => {
@@ -314,7 +349,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   };
 
   return (
-    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" ? "has-story" : ""} ${ready ? "is-ready" : ""}`}>
+    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" || returning ? "has-story" : ""} ${story === "open" ? "story-open" : ""} ${ready ? "is-ready" : ""}`}>
       <div className="sky" aria-hidden />
       {geo && data && (
         <Globe
@@ -330,13 +365,14 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           onSelect={select}
           studio={story !== "closed" ? { lat: STUDIO.lat, lng: STUDIO.lng, label: a.pin } : null}
           intro={!initialStory}
+          quiet={story !== "closed" || returning}
           onReady={(api) => {
             globeApi.current = api;
             setReady(true);
             // Landing on /o-nas: the opening flight goes straight down to the studio, after the
             // same short pause the usual opening has (the tile engine is still starting up).
             if (initialStory)
-              window.setTimeout(() => flyTo({ ...STUDIO, story: true, arc: peakFor(api.pov().altitude, STUDIO.altitude), ms: 4200 }), 700);
+              window.setTimeout(() => flyTo({ ...STUDIO, story: true, arc: peakFor(api.pov(), STUDIO), ms: 4200 }), 700);
           }}
         />
       )}
@@ -382,8 +418,9 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             </div>
           </dl>
         )}
-        {/* Phones: under the numbers, with a small badge (the corner is taken by the finder). */}
-        <button className="why why--hero" onClick={openStory}>
+        {/* Right after the numbers: whoever read this far and wants more. On phones it carries a
+            small Trusted badge (on wider screens the badge sits in the corner). */}
+        <button className="why" onClick={openStory}>
           <img className="why__badge" src={TRUSTED_BADGE.src} alt="" width={128} height={32} />
           {whyText}
         </button>
@@ -440,16 +477,31 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             {locationError ? t.near.denied : t.near.precise}
           </button>
         )}
-        {!selected && !enquiry && near[0] && (
-          <NearYou
-            place={near[0].tour}
-            km={near[0].km}
-            others={nearOthers}
-            copy={t}
-            locationError={locationError}
-            onOpen={() => select(near[0].tour.id)}
-            onPrecise={visitor?.precise ? undefined : usePreciseLocation}
-          />
+        {!selected && !enquiry && (near[0] || standout) && (
+          <div className="cards">
+            {near[0] && (
+              <NearYou
+                place={near[0].tour}
+                km={near[0].km}
+                others={nearOthers}
+                copy={t}
+                locationError={locationError}
+                onOpen={() => select(near[0].tour.id)}
+                onPrecise={visitor?.precise ? undefined : usePreciseLocation}
+              />
+            )}
+            {standout && (
+              <FeaturedTour
+                item={standout}
+                copy={t}
+                onShow={() => select(standout.tour.id)}
+                onEnter={() => {
+                  select(standout.tour.id);
+                  setTourOpen(true);
+                }}
+              />
+            )}
+          </div>
         )}
       </div>
 
@@ -555,11 +607,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
         </div>
       )}
 
-      {/* Wider screens: "Why 360°?" and the Trusted badge together in the bottom-right corner. */}
+      {/* Wider screens: the Trusted badge in the bottom-right corner. */}
       <div className="corner">
-        <button className="why" onClick={openStory}>
-          {whyText}
-        </button>
         <img className="trusted-corner" src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={210} height={53} />
       </div>
 

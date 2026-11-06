@@ -1,7 +1,8 @@
 export type Pov = { lat: number; lng: number; altitude: number };
 
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
-const ease = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2);
+/** Sine ease in-out: a gentle start and landing, and a lower top speed than cubic. */
+const ease = (t: number) => 0.5 - Math.cos(Math.PI * t) / 2;
 const wrap = (lng: number) => ((((lng + 180) % 360) + 360) % 360) - 180;
 
 /** Share of the flight in which the camera moves sideways; the rest is climbing or diving. */
@@ -30,4 +31,16 @@ export function arcPov(from: Pov, to: Pov, t: number, peak: number): Pov {
     lng: wrap(from.lng + dLng * move),
     altitude: Math.exp(l0 + d * e + k * e * (1 - e)),
   };
+}
+
+/**
+ * How high a flight between two views should rise: just enough to keep both ends roughly in
+ * sight at the top (half the screen spans ~27° per unit of altitude), never above the higher
+ * end for short hops. So a nearby dive barely lifts, and a flight back never overshoots.
+ */
+export function peakFor(a: Pov, b: Pov): number {
+  const lat = ((a.lat + b.lat) / 2) * (Math.PI / 180);
+  const dLng = ((b.lng - a.lng + 540) % 360) - 180;
+  const dist = Math.hypot(b.lat - a.lat, dLng * Math.cos(lat)); // degrees
+  return Math.min(2.5, Math.max(a.altitude, b.altitude, dist / 30));
 }
