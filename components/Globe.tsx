@@ -54,6 +54,8 @@ type Props = {
   you?: { lat: number; lng: number; precise: boolean; label: string } | null;
   /** The type chosen in the chips: its places get big dots and names, the rest small dots. */
   focusType?: PlaceType | "all";
+  /** No label placement while the page hides the pins (story flights): it costs a layout read per frame. */
+  quiet?: boolean;
   /** Play the opening fly-in (off when the page drives the first flight itself). */
   intro?: boolean;
   /** The studio pin shown during the About story. */
@@ -94,7 +96,7 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all", studio, intro = true }: Props) {
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -109,6 +111,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const youRef = useRef(you);
   youRef.current = you;
   const youEl = useRef<HTMLElement | null>(null);
+  const quietRef = useRef(quiet);
+  quietRef.current = quiet;
   const studioRef = useRef(studio);
   studioRef.current = studio;
   const studioEl = useRef<HTMLElement | null>(null);
@@ -320,6 +324,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       let declutterRaf = 0;
       let declutterTimer = 0;
       const scheduleDeclutter = () => {
+        if (quietRef.current) return;
         // At most once per frame while moving, plus once more when the motion settles.
         if (!declutterRaf) declutterRaf = requestAnimationFrame(() => { declutterRaf = 0; declutter(); });
         window.clearTimeout(declutterTimer);
@@ -456,6 +461,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     labelsRef.current();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tours, you?.lat, you?.lng, you?.precise, you?.label, studio?.lat, studio?.lng, studio?.label]);
+
+  // Pins come back after a quiet flight: place their labels for where the camera is now.
+  useEffect(() => {
+    if (!quiet) labelsRef.current();
+  }, [quiet]);
 
   useEffect(() => {
     markers.current.forEach((m, id) => m.classList.toggle("is-selected", id === selectedId));

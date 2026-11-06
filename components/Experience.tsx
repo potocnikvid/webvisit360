@@ -10,7 +10,7 @@ import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 import { isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus, GlobeApi } from "./Globe";
-import type { Pov } from "@/lib/flight";
+import { peakFor, type Pov } from "@/lib/flight";
 import { about, STUDIO } from "@/lib/about";
 import Story from "./Story";
 import PanoPreview from "./PanoPreview";
@@ -39,10 +39,8 @@ type StoryPhase = "closed" | "diving" | "open" | "leaving";
 const DIVE_MS = 4200;
 /** Share of the dive after which the page starts to appear over the map. */
 const REVEAL_AT = 0.86;
-const RETURN_MS = 3000;
+const RETURN_MS = 3400;
 const LEAVE_MS = 450;
-/** How high to pull back on the way: a little above the higher end of the flight. */
-const peakFor = (a: number, b: number) => Math.min(2.5, Math.max(0.15, Math.max(a, b) * 1.8));
 const reducedMotion = () => !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
 const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
@@ -85,6 +83,15 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   const storyRef = useRef(story);
   storyRef.current = story;
   const storyTimer = useRef(0);
+  // Flying back out of the story: the map stays quiet (no pins or labels) until it lands.
+  const [returning, setReturning] = useState(false);
+  const returnTimer = useRef(0);
+  const flyOut = useCallback(() => {
+    window.clearTimeout(returnTimer.current);
+    if (reducedMotion()) return setReturning(false);
+    setReturning(true);
+    returnTimer.current = window.setTimeout(() => setReturning(false), RETURN_MS * 0.8);
+  }, []);
   const globeApi = useRef<GlobeApi | null>(null);
   /** Where the camera was before the story, to fly back to. */
   const savedView = useRef<Pov | null>(null);
@@ -162,10 +169,12 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       if (t.lat != null && t.lng != null) {
         const altitude = t.kind === "obcina" ? 0.03 : 0.01;
         // Out of the story, rise from the studio and swing over to the place.
-        flyTo({ lat: t.lat, lng: t.lng, altitude, panel: true, ...(fromStory && { arc: peakFor(altitude, STUDIO.altitude), ms: RETURN_MS }) });
+        const to = { lat: t.lat, lng: t.lng, altitude };
+        if (fromStory) flyOut();
+        flyTo({ ...to, panel: true, ...(fromStory && { arc: peakFor(globeApi.current?.pov() ?? STUDIO, to), ms: RETURN_MS }) });
       }
     },
-    [byId, flyTo, endStory],
+    [byId, flyTo, endStory, flyOut],
   );
 
   // Deep links from the About page: /?tour=<id> opens a place, /?povprasevanje opens the chat.
@@ -189,7 +198,9 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     setEnquiry(false);
     setSearchOpen(false);
     setTourOpen(false);
-    flyTo({ ...STUDIO, story: true, arc: peakFor(here.altitude, STUDIO.altitude), ms: DIVE_MS });
+    window.clearTimeout(returnTimer.current);
+    setReturning(false);
+    flyTo({ ...STUDIO, story: true, arc: peakFor(here, STUDIO), ms: DIVE_MS });
     if (window.location.pathname !== "/o-nas") window.history.pushState({ story: true }, "", "/o-nas");
     window.clearTimeout(storyTimer.current);
     if (reducedMotion()) return setStory("open");
@@ -202,13 +213,14 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     const back = savedView.current ?? home;
     savedView.current = null;
     const from = globeApi.current?.pov() ?? STUDIO;
-    flyTo({ lat: back.lat, lng: back.lng, altitude: back.altitude, arc: peakFor(back.altitude, from.altitude), ms: RETURN_MS });
+    flyOut();
+    flyTo({ lat: back.lat, lng: back.lng, altitude: back.altitude, arc: peakFor(from, back), ms: RETURN_MS });
     if (window.location.pathname === "/o-nas") window.history.replaceState(null, "", "/");
     window.clearTimeout(storyTimer.current);
     if (reducedMotion()) return setStory("closed");
     setStory("leaving");
     storyTimer.current = window.setTimeout(() => setStory("closed"), LEAVE_MS);
-  }, [home, flyTo]);
+  }, [home, flyTo, flyOut]);
 
   // The browser's back and forward buttons move between the map and the story.
   useEffect(() => {
@@ -217,7 +229,13 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     return () => window.removeEventListener("popstate", onPop);
   }, [openStory, closeStory]);
 
-  useEffect(() => () => window.clearTimeout(storyTimer.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(storyTimer.current);
+      window.clearTimeout(returnTimer.current);
+    },
+    [],
+  );
 
   // The tab title follows the URL (/o-nas or /).
   useEffect(() => {
@@ -314,7 +332,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   };
 
   return (
-    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" ? "has-story" : ""} ${ready ? "is-ready" : ""}`}>
+    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" || returning ? "has-story" : ""} ${story === "open" ? "story-open" : ""} ${ready ? "is-ready" : ""}`}>
       <div className="sky" aria-hidden />
       {geo && data && (
         <Globe
@@ -330,13 +348,14 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           onSelect={select}
           studio={story !== "closed" ? { lat: STUDIO.lat, lng: STUDIO.lng, label: a.pin } : null}
           intro={!initialStory}
+          quiet={story !== "closed" || returning}
           onReady={(api) => {
             globeApi.current = api;
             setReady(true);
             // Landing on /o-nas: the opening flight goes straight down to the studio, after the
             // same short pause the usual opening has (the tile engine is still starting up).
             if (initialStory)
-              window.setTimeout(() => flyTo({ ...STUDIO, story: true, arc: peakFor(api.pov().altitude, STUDIO.altitude), ms: 4200 }), 700);
+              window.setTimeout(() => flyTo({ ...STUDIO, story: true, arc: peakFor(api.pov(), STUDIO), ms: 4200 }), 700);
           }}
         />
       )}

@@ -181,3 +181,17 @@ test("a reference in the story closes it and opens that place", async () => {
   expect(await screen.findByRole("heading", { name: "Občina Žalec" })).toBeTruthy();
   expect(screen.queryByRole("heading", { level: 1, name: a.hero.title })).toBeNull();
 });
+
+test("the map stays quiet while the story is up, and the header darkens only once the page shows", async () => {
+  reducedMotion();
+  const { container } = render(<Experience visitor={null} />);
+  const main = () => container.querySelector("main")!;
+  expect(main().classList.contains("story-open")).toBe(false);
+  fireEvent.click((await screen.findAllByRole("button", { name: new RegExp(a.entry.title) }))[0]);
+  await screen.findByRole("heading", { level: 1, name: a.hero.title });
+  expect(main().classList.contains("story-open")).toBe(true);
+  expect((props() as unknown as { quiet: boolean }).quiet).toBe(true);
+  fireEvent.click(screen.getByRole("link", { name: `← ${a.back}` }));
+  await waitFor(() => expect(main().classList.contains("story-open")).toBe(false));
+  expect((props() as unknown as { quiet: boolean }).quiet).toBe(false);
+});
