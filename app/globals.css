@@ -398,35 +398,85 @@ a { color: inherit; text-decoration: none; }
   .gtour__maps { display: none; }
 }
 
-/* ---------- "Why 360°?" entry ---------- */
+/* ---------- "Why 360°?": right under the hero's numbers ---------- */
 .why {
-  display: flex; align-items: center; gap: 14px; margin-top: 22px; padding: 10px 14px 10px 12px;
-  border-radius: 14px; border: 1px solid var(--line); background: var(--glass); text-align: left;
+  display: inline-flex; align-items: center; gap: 14px; margin-top: 22px; padding: 11px 16px;
+  border-radius: 14px; text-align: left; pointer-events: auto;
+  border: 1px solid rgba(246, 169, 59, .55);
+  background: linear-gradient(rgba(246, 169, 59, .16), rgba(246, 169, 59, .08)), var(--glass);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  pointer-events: auto; transition: border-color .2s, transform .2s;
+  transition: border-color .2s, transform .2s, background .2s;
+  animation: why-glow 2.4s ease-out 2.2s 2; /* two soft pulses once the globe has landed */
 }
-.why:hover { border-color: rgba(246, 169, 59, .6); transform: translateY(-1px); }
+.why:hover { border-color: var(--amber); transform: translateY(-1px); background: linear-gradient(rgba(246, 169, 59, .24), rgba(246, 169, 59, .12)), var(--glass); }
+@keyframes why-glow {
+  0% { box-shadow: 0 0 0 0 rgba(246, 169, 59, .45); }
+  100% { box-shadow: 0 0 0 14px rgba(246, 169, 59, 0); }
+}
 .why__badge { display: none; width: 92px; height: auto; padding-right: 10px; border-right: 1px solid var(--line); }
+.why__text { display: flex; flex-direction: column; line-height: 1.25; }
+.why__text b { font: 600 16px/1.2 var(--display); color: var(--ember); letter-spacing: -.01em; }
+.why__text span { font-size: 13.5px; color: #c9d3ea; }
+.why__go { margin-left: 6px; color: var(--amber); font-size: 20px; transition: transform .2s; }
+.why:hover .why__go { transform: translateX(3px); }
 
-/* Bottom-right corner, above the footer (wider screens): "Why 360°?" over the Trusted badge.
+/* Bottom-right corner, above the footer (wider screens): the Trusted badge.
    Hidden while a side sheet or the story is open. */
 .corner {
   position: absolute; z-index: 4; right: var(--gutter); bottom: 58px;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 14px;
   transition: opacity .45s;
 }
-.corner .why { margin: 0; }
-.why--hero { display: none; }
 .trusted-corner {
   display: block; width: clamp(190px, 16vw, 240px); height: auto; pointer-events: none;
   filter: drop-shadow(0 2px 14px rgba(8, 18, 48, .95));
 }
 .has-panel .corner, .has-chat .corner, .has-story .corner { opacity: 0; pointer-events: none; }
-.why__text { display: flex; flex-direction: column; line-height: 1.25; }
-.why__text b { font: 600 14px/1.2 var(--display); color: var(--ember); letter-spacing: -.01em; }
-.why__text span { font-size: 13px; color: var(--mist); }
-.why__go { margin-left: 4px; color: var(--amber); font-size: 18px; transition: transform .2s; }
-.why:hover .why__go { transform: translateX(3px); }
+
+/* ---------- arrival cards: "closest to you" and a standout tour ---------- */
+/* Wide screens: a column on the right, above the badge (the left holds the hero and the
+   search). Narrower: a swipeable row above the search. */
+.cards { display: flex; flex-direction: column; gap: 10px; }
+@media (min-width: 900px) {
+  .cards { position: fixed; z-index: 6; right: var(--gutter); bottom: 140px; width: min(340px, 32vw); }
+}
+@media (max-width: 899px) {
+  .cards {
+    flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+    margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter);
+  }
+  .cards::-webkit-scrollbar { display: none; }
+  .cards > * { flex: 0 0 min(84%, 340px); scroll-snap-align: start; scroll-margin-left: var(--gutter); }
+}
+.featured { position: relative; overflow: hidden; }
+.featured__media {
+  position: relative; display: block; width: calc(100% + 32px); margin: -14px -16px 12px;
+  aspect-ratio: 16 / 7; padding: 0; border: 0; border-bottom: 1px solid var(--line);
+  background: #0a1434; cursor: pointer; overflow: hidden;
+}
+.featured__img {
+  position: absolute; inset: 0; background-size: cover; background-position: 50% 50%;
+  transition: transform .6s cubic-bezier(.2, .8, .2, 1);
+}
+/* A 360° cover slowly looks around, so the card feels alive before anyone clicks. */
+.featured__img.is-pano { background-size: auto 150%; animation: look-around 38s ease-in-out infinite alternate; }
+@keyframes look-around { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+.featured__media:hover .featured__img { transform: scale(1.04); }
+.featured__360 {
+  position: absolute; left: 10px; bottom: 8px; padding: 5px 7px; border-radius: 6px;
+  font: 600 11px/1 var(--display); letter-spacing: .04em; color: var(--ember); background: rgba(8, 18, 48, .78);
+}
+@media (max-height: 720px) and (min-width: 900px) {
+  .featured__media { aspect-ratio: 16 / 5; }
+}
+@media (max-width: 899px) {
+  /* In the row: a small square picture in the corner instead of a banner. */
+  .featured { padding-right: 88px; }
+  .featured__media {
+    position: absolute; right: 12px; top: 12px; width: 64px; height: 64px; margin: 0;
+    aspect-ratio: auto; border: 1px solid var(--line); border-radius: 10px;
+  }
+  .featured__360 { left: 4px; bottom: 4px; padding: 3px 4px; font-size: 9px; }
+}
 
 /* ---------- studio pin (About story) ---------- */
 .studio { position: relative; width: 0; height: 0; pointer-events: none; z-index: 8; }
@@ -455,6 +505,8 @@ a { color: inherit; text-decoration: none; }
   transition: opacity .45s, transform .45s, visibility 0s .45s;
 }
 .has-story .hero *, .has-story .finder * { pointer-events: none !important; }
+/* A transform on .finder would re-anchor the right-hand card column (position: fixed inside it). */
+.has-story .finder { transform: none; }
 .hero, .finder, .footer, .corner { transition: opacity .6s, transform .6s, visibility 0s; }
 .marker, .you { transition: opacity .6s, visibility 0s; }
 .has-story .marker, .has-story .you {
@@ -666,7 +718,6 @@ a { color: inherit; text-decoration: none; }
   .footer__mail { display: none; }
   .why { margin-top: 14px; padding: 8px 12px 8px 10px; gap: 10px; }
   .why__badge { display: block; }
-  .why--hero { display: flex; }
   .corner { display: none; }
   .why__text b { font-size: 13px; }
   .why__text span { font-size: 12px; }

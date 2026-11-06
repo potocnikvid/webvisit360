@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { copy } from "@/lib/i18n";
 import { about } from "@/lib/about";
@@ -194,4 +194,24 @@ test("the map stays quiet while the story is up, and the header darkens only onc
   fireEvent.click(screen.getByRole("link", { name: `← ${a.back}` }));
   await waitFor(() => expect(main().classList.contains("story-open")).toBe(false));
   expect((props() as unknown as { quiet: boolean }).quiet).toBe(false);
+});
+
+test("arrival shows a standout tour ready to open, and the About button under the numbers", async () => {
+  const flagship = {
+    id: "grand-plaza", kind: "business", type: "nastanitve", source: "3dvista", name: "Grand Plaza Hotel Ljubljana",
+    place: "Ljubljana", lat: 46.0583, lng: 14.5031, approx: false, url: "https://example.com/gp", cover: "/gp.jpg",
+    pano: true, scenes: 101, views: null, highlights: [],
+  };
+  vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+    if (url.includes("tours.json")) return Response.json({ ...tours, items: [...tours.items, flagship] });
+    return Response.json({ features: [] });
+  }));
+  const { container } = render(<Experience visitor={null} />);
+  const card = await screen.findByRole("region", { name: t.featured.flagship });
+  expect(within(card).getByRole("heading", { name: "Grand Plaza Hotel Ljubljana" })).toBeTruthy();
+  // The About button sits in the hero, right after the numbers.
+  expect(container.querySelector(".hero .stats + .why")).toBeTruthy();
+
+  fireEvent.click(within(card).getByRole("button", { name: t.panel.enter }));
+  expect(await screen.findByRole("dialog", { name: t.tour.label("Grand Plaza Hotel Ljubljana") })).toBeTruthy();
 });

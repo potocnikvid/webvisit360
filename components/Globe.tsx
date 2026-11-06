@@ -283,7 +283,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         // Keep labels clear of the page's own text and controls.
         const host = el.getBoundingClientRect();
         const placed: { l: number; r: number; t: number; b: number }[] = [];
-        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .panel, .chat, .footer, .corner").forEach((n) => {
+        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .cards > *, .panel, .chat, .footer, .corner").forEach((n) => {
           const r = n.getBoundingClientRect();
           if (r.width && r.height && getComputedStyle(n).opacity !== "0")
             placed.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });

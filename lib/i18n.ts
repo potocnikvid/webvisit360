@@ -50,6 +50,11 @@ const sl = {
     more: (n: number) => `in še ${n}… zožite iskanje`,
   },
   you: { here: "Vi ste tukaj", around: "Vi ste približno tukaj" },
+  featured: {
+    near: (km: string) => `Priporočamo v bližini · ${km}`,
+    flagship: "Za začetek: eden naših najlepših",
+    show: "Pokaži na zemljevidu",
+  },
   near: {
     kicker: "Najbližje vam",
     others: (n: number) => `in še ${n} ${slPlural(n, "sprehod", "sprehoda", "sprehodi", "sprehodov")} v 25 km`,
@@ -154,6 +159,11 @@ const en: Copy = {
     more: (n: number) => `and ${n} more… narrow your search`,
   },
   you: { here: "You are here", around: "You're around here" },
+  featured: {
+    near: (km: string) => `Worth a look nearby · ${km}`,
+    flagship: "To start: one of our finest",
+    show: "Show on the map",
+  },
   near: {
     kicker: "Closest to you",
     others: (n: number) => `and ${n} more ${n === 1 ? "tour" : "tours"} within 25 km`,

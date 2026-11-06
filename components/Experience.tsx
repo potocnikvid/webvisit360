@@ -16,6 +16,8 @@ import Story from "./Story";
 import PanoPreview from "./PanoPreview";
 import GoogleTour from "./GoogleTour";
 import NearYou from "./NearYou";
+import FeaturedTour from "./FeaturedTour";
+import { featured } from "@/lib/featured";
 import Chat from "./Chat";
 import PrivacyNotice from "./PrivacyNotice";
 
@@ -30,9 +32,19 @@ const norm = (s: string) =>
 /** How many nearest places to ring and frame when a type is chosen. */
 const NEAR_COUNT = 5;
 
-/** A view showing the visitor and the places near them. */
-const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) =>
-  frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
+/** Wide screens keep a column of cards on the right (see .cards in globals.css). */
+const CARDS_MIN_WIDTH = 900;
+const CARDS_WIDTH = 340;
+
+/** A view showing the visitor and the places near them, clear of the card column. */
+const frame = (from: { lat: number; lng: number }, places: { tour: Tour }[]) => {
+  const v = frameView([from, ...places.map((p) => ({ lat: p.tour.lat!, lng: p.tour.lng! }))]);
+  if (typeof window === "undefined" || window.innerWidth < CARDS_MIN_WIDTH) return v;
+  // Move the view east by half the column's width, so the places sit left of the cards.
+  const w = window.innerWidth;
+  const halfW = (26.8 * v.altitude * (w / window.innerHeight)) / Math.cos((v.lat * Math.PI) / 180);
+  return { ...v, lng: v.lng + halfW * (Math.min(CARDS_WIDTH, w * 0.32) / w) };
+};
 
 /** The About story: the camera dives into the studio's streets, then the page inks in over the map. */
 type StoryPhase = "closed" | "diving" | "open" | "leaving";
@@ -136,6 +148,11 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     [all, origin, near, type],
   );
   const highlightIds = useMemo(() => near.map((n) => n.tour.id), [near]);
+  // A standout tour ready to open on arrival, until the visitor opens one themselves.
+  const standout = useMemo(
+    () => (data && viewed.length === 0 ? featured(all, origin, near[0]?.tour.id) : null),
+    [data, all, origin, near, viewed.length],
+  );
   // Computed once, when the globe mounts: where the opening fly-in ends.
   const initialView = useMemo(() => (near.length ? frame(origin!, near) : undefined), [data !== null]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -401,8 +418,9 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             </div>
           </dl>
         )}
-        {/* Phones: under the numbers, with a small badge (the corner is taken by the finder). */}
-        <button className="why why--hero" onClick={openStory}>
+        {/* Right after the numbers: whoever read this far and wants more. On phones it carries a
+            small Trusted badge (on wider screens the badge sits in the corner). */}
+        <button className="why" onClick={openStory}>
           <img className="why__badge" src={TRUSTED_BADGE.src} alt="" width={128} height={32} />
           {whyText}
         </button>
@@ -459,16 +477,31 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             {locationError ? t.near.denied : t.near.precise}
           </button>
         )}
-        {!selected && !enquiry && near[0] && (
-          <NearYou
-            place={near[0].tour}
-            km={near[0].km}
-            others={nearOthers}
-            copy={t}
-            locationError={locationError}
-            onOpen={() => select(near[0].tour.id)}
-            onPrecise={visitor?.precise ? undefined : usePreciseLocation}
-          />
+        {!selected && !enquiry && (near[0] || standout) && (
+          <div className="cards">
+            {near[0] && (
+              <NearYou
+                place={near[0].tour}
+                km={near[0].km}
+                others={nearOthers}
+                copy={t}
+                locationError={locationError}
+                onOpen={() => select(near[0].tour.id)}
+                onPrecise={visitor?.precise ? undefined : usePreciseLocation}
+              />
+            )}
+            {standout && (
+              <FeaturedTour
+                item={standout}
+                copy={t}
+                onShow={() => select(standout.tour.id)}
+                onEnter={() => {
+                  select(standout.tour.id);
+                  setTourOpen(true);
+                }}
+              />
+            )}
+          </div>
         )}
       </div>
 
@@ -574,11 +607,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
         </div>
       )}
 
-      {/* Wider screens: "Why 360°?" and the Trusted badge together in the bottom-right corner. */}
+      {/* Wider screens: the Trusted badge in the bottom-right corner. */}
       <div className="corner">
-        <button className="why" onClick={openStory}>
-          {whyText}
-        </button>
         <img className="trusted-corner" src={TRUSTED_BADGE.src} alt={TRUSTED_BADGE.alt} width={210} height={53} />
       </div>
 
