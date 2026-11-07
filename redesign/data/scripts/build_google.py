@@ -21,9 +21,14 @@ TOURS = DATA / "tours.json"
 # Per-place panorama lists for the in-site viewer, loaded on demand by the site.
 SCENES = DATA.parent.parent / "public" / "data" / "google-scenes.json"
 
-# Views reported on the FPhoto profile (Fotografije tab); the export doesn't carry them.
-# Other profiles' views are not counted until someone reads them off their profile.
-PROFILE_VIEWS = 28_465_975
+# What each profile reports on its Fotografije tab: the export can't see views, and a run
+# may stop short of the full list. The site's numbers use these totals, so they also count
+# photos the map can't show yet. Update them when the profiles grow.
+FPHOTO = "116826668001266347582"
+PROFILES = {
+    FPHOTO: {"name": "Webvisit360 – FPhoto", "photos": 10_607, "views": 28_465_975},
+    "105852716857823588227": {"name": "Frenk Potočnik", "photos": 2_598, "views": 29_510_987},
+}
 
 # Google places (placeId) the name matcher would fold into a nearby tour they aren't:
 # they share nothing but the town's name. Kept as their own places.
@@ -42,14 +47,27 @@ def raw_files():
     return [RAW] + sorted(p for p in RAW.parent.glob("google_photos-*.json"))
 
 
+def profile_of(f):
+    return FPHOTO if f == RAW else f.stem.split("-", 1)[1]
+
+
 def load_photos():
-    photos, seen = [], set()
+    """All photos, each once, and how many each profile's export holds."""
+    photos, seen, per_profile = [], set(), {}
     for f in raw_files():
-        for p in json.load(open(f))["photos"]:
-            if p["id"] not in seen:
-                seen.add(p["id"])
-                photos.append(p)
-    return photos
+        new = [p for p in json.load(open(f))["photos"] if p["id"] not in seen]
+        seen.update(p["id"] for p in new)
+        photos += new
+        per_profile[profile_of(f)] = len(new)
+    return photos, per_profile
+
+
+def profile_totals(per_profile):
+    """Photos and views across profiles: the profile's own numbers, or the export's if larger."""
+    ids = set(PROFILES) | set(per_profile)
+    photos = sum(max(PROFILES.get(c, {}).get("photos", 0), per_profile.get(c, 0)) for c in ids)
+    views = sum(PROFILES.get(c, {}).get("views", 0) for c in ids)
+    return photos, views
 
 
 def norm(s):
@@ -88,7 +106,7 @@ def base(url):
 
 
 def main():
-    all_photos = load_photos()
+    all_photos, per_profile = load_photos()
     tours = json.load(open(TOURS))
     items = [t for t in tours["items"] if t["source"] != "google"]
     for t in items:
@@ -170,8 +188,7 @@ def main():
     tours["items"] = items + added
     st = tours["stats"]
     st["google"] = len(added)
-    st["googlePhotos"] = len(all_photos)
-    st["googleViews"] = PROFILE_VIEWS
+    st["googlePhotos"], st["googleViews"] = profile_totals(per_profile)
     st["placed"] = sum(1 for t in tours["items"] if t["lat"] is not None)
     json.dump(tours, open(TOURS, "w"), ensure_ascii=False, indent=1)
     json.dump(scenes, open(SCENES, "w"), separators=(",", ":"))
