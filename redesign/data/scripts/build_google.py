@@ -1,11 +1,15 @@
-"""Merge the Google Maps contributor export into tours.json.
+"""Merge the Google Maps contributor exports into tours.json.
 
-Input:  raw/google_photos.json  (from gmaps_console_export.js, run in the owner's browser)
+Input:  raw/google_photos.json  (Webvisit360 – FPhoto) and any raw/google_photos-<contrib>.json
+        (other profiles, e.g. Frenk Potočnik), all from gmaps_console_export.js run in the
+        owner's browser. Photos in more than one export are counted once; places shot from
+        several profiles become one place with all their panoramas.
 Output: tours.json gains items with source "google", kind "google" (one per place),
         plus stats.google*; places that already have a Kuula/3DVista tour are not
         duplicated (the existing item gets a `gmaps` link instead).
 
 Run from anywhere:  python3 -I build_google.py
+Then:               python3 -I classify.py --write   (types, and the copy in public/data)
 """
 import json, math, re, unicodedata
 from collections import defaultdict
@@ -17,8 +21,35 @@ TOURS = DATA / "tours.json"
 # Per-place panorama lists for the in-site viewer, loaded on demand by the site.
 SCENES = DATA.parent.parent / "public" / "data" / "google-scenes.json"
 
-# Reported on the public profile (Fotografije tab); the export doesn't carry it.
+# Views reported on the FPhoto profile (Fotografije tab); the export doesn't carry them.
+# Other profiles' views are not counted until someone reads them off their profile.
 PROFILE_VIEWS = 28_465_975
+
+# Google places (placeId) the name matcher would fold into a nearby tour they aren't:
+# they share nothing but the town's name. Kept as their own places.
+NOT_SAME = {
+    "ChIJJwW_U7Rmb0cRDucm5bJ3Sf4",  # Hotel Ptuj        (not Muzikafe Ptuj)
+    "ChIJWc_SbLRmb0cR3M25kvyER2Y",  # Ptuj Castle       (not Muzikafe Ptuj)
+    "ChIJDUPgXJ5mb0cRsPQ_ghz4AAQ",  # Ptuj, the town    (not Muzikafe Ptuj)
+    "ChIJ4cUzmrVvZUcRY5RgKAHwOiQ",  # Športni center Žalec       (not GŠ Žalec)
+    "ChIJvZMxZiRpe0cRhhNeMBWzo50",  # Belidim vape shop, Koper   (not Ghetaldus Optika, Koper)
+    "ChIJx4HG9tlFb0cRrN6i6ow_NkM",  # Avena trgovina, Ljutomer   (not Restavracija Mitra, Ljutomer)
+}
+
+
+def raw_files():
+    """FPhoto first, so its places keep their representative photo; then the others."""
+    return [RAW] + sorted(p for p in RAW.parent.glob("google_photos-*.json"))
+
+
+def load_photos():
+    photos, seen = [], set()
+    for f in raw_files():
+        for p in json.load(open(f))["photos"]:
+            if p["id"] not in seen:
+                seen.add(p["id"])
+                photos.append(p)
+    return photos
 
 
 def norm(s):
@@ -57,14 +88,14 @@ def base(url):
 
 
 def main():
-    raw = json.load(open(RAW))
+    all_photos = load_photos()
     tours = json.load(open(TOURS))
     items = [t for t in tours["items"] if t["source"] != "google"]
     for t in items:
         t.pop("gmaps", None)
 
     groups = defaultdict(list)
-    for p in raw["photos"]:
+    for p in all_photos:
         pl = p.get("place") or {}
         if not pl.get("name"):
             continue
@@ -94,9 +125,13 @@ def main():
         tk = tokens(pl["name"])
         dup = None
         for t in items:
-            if t["lat"] is None:
+            if t["lat"] is None or pl.get("placeId") in NOT_SAME:
                 continue
-            if dist_m((lat, lng), (t["lat"], t["lng"])) < 400 and tk & tokens(t["name"]):
+            same = tk & tokens(t["name"])
+            if same and dist_m((lat, lng), (t["lat"], t["lng"])) < 400:
+                if t["kind"] != "obcina" and same <= tokens(town(pl.get("address"))):
+                    print(f"check: {pl['name']!r} linked to {t['name']!r} only by the town name"
+                          f" (add {pl.get('placeId')} to NOT_SAME if they differ)")
                 dup = t
                 break
         if dup:
@@ -135,7 +170,7 @@ def main():
     tours["items"] = items + added
     st = tours["stats"]
     st["google"] = len(added)
-    st["googlePhotos"] = len(raw["photos"])
+    st["googlePhotos"] = len(all_photos)
     st["googleViews"] = PROFILE_VIEWS
     st["placed"] = sum(1 for t in tours["items"] if t["lat"] is not None)
     json.dump(tours, open(TOURS, "w"), ensure_ascii=False, indent=1)
