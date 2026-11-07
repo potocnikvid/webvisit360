@@ -2,11 +2,11 @@
  "stats": {
   "obcine": 17,
   "business": 150,
-  "placed": 737,
+  "placed": 795,
   "scenes": 4382,
   "kuulaViews": 4565897,
-  "google": 630,
-  "googlePhotos": 10607,
+  "google": 688,
+  "googlePhotos": 11207,
   "googleViews": 28465975
  },
  "items": [
@@ -66,12 +66,12 @@
     "Venise",
     "Zahod"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.32009189485279,14.950479549602006,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCCymC8wf3XW1nsoUWgtxJW!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCCymC8wf3XW1nsoUWgtxJW!2m2!1d46.32009189485279!2d14.950479549602006!3f0!4f0!5f0.78",
     "scenes": 7
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "luce",
@@ -135,12 +135,12 @@
     "Drevored Grascina",
     "Grad Zovnek"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.27706337437601,15.036539889528914,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhAPVBHV3Nrsev2DK2cIBRmU!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhAPVBHV3Nrsev2DK2cIBRmU!2m2!1d46.27706337437601!2d15.036539889528914!3f0!4f0!5f0.78",
     "scenes": 36
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "sredisce",
@@ -200,12 +200,12 @@
     "Fontana piva Žalec",
     "Gozdna Ucna Pot"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.25328980738812,15.162789650463054,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCDNnZhI1VhSkSI-AVzkWr4!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCDNnZhI1VhSkSI-AVzkWr4!2m2!1d46.25328980738812!2d15.162789650463054!3f0!4f0!5f0.78",
     "scenes": 43
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "slovenj-gradec",
@@ -285,12 +285,12 @@
     "Sveti Duh",
     "Vas Solcava"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.42006751541552,14.69195903918827,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhBJzxdvJ6IWtNGJU9ksO0D7!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhBJzxdvJ6IWtNGJU9ksO0D7!2m2!1d46.42006751541552!2d14.69195903918827!3f0!4f0!5f0.78",
     "scenes": 3
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "trbovlje",
@@ -318,12 +318,12 @@
     "Kolonija Njiva Spalnica",
     "Muzej"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.1562884617039,15.05568481050313,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhBeLBgxL3lsOOuTmdHfXQZ7!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhBeLBgxL3lsOOuTmdHfXQZ7!2m2!1d46.1562884617039!2d15.05568481050313!3f0!4f0!5f0.78",
     "scenes": 8
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "prebold",
@@ -355,12 +355,12 @@
     "Pod Resko Planino",
     "Sportni Park"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.24003985637304,15.092819564690473,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCWL6WX-vqINHX1OoqWCGgL!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCWL6WX-vqINHX1OoqWCGgL!2m2!1d46.24003985637304!2d15.092819564690473!3f0!4f0!5f0.78",
     "scenes": 8
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "sentilj",
@@ -424,12 +424,12 @@
     "Kmetija Sinkovic",
     "Kozjanski Dvor"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.071704788436406,15.554239813112977,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhB8pgEwO-Z2GBXzXcSQwitV!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhB8pgEwO-Z2GBXzXcSQwitV!2m2!1d46.071704788436406!2d15.554239813112977!3f0!4f0!5f0.78",
     "scenes": 4
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "tabor",
@@ -493,12 +493,12 @@
     "Senek",
     "Park Senek"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.28131005122406,15.07342187775284,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhADyc5UghZaK2fYe8QADPH_!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhADyc5UghZaK2fYe8QADPH_!2m2!1d46.28131005122406!2d15.07342187775284!3f0!4f0!5f0.78",
     "scenes": 17
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "menges",
@@ -562,12 +562,12 @@
     "Mozirska koca",
     "Mozirski Gaj"
    ],
+   "type": "obcina",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.33825985684501,14.964475471128472,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCAdHu7rl8E1tKnrOLM6Ywd!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCAdHu7rl8E1tKnrOLM6Ywd!2m2!1d46.33825985684501!2d14.964475471128472!3f0!4f0!5f0.78",
     "scenes": 2
-   },
-   "type": "obcina"
+   }
   },
   {
    "id": "inotherm",
@@ -610,11 +610,6 @@
     "Ucilnica",
     "Ucilnica P"
    ],
-   "gmaps": {
-    "url": "https://www.google.com/maps/@46.255408491634896,15.163066916656295,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhAq6JbIUnF2Qrk6C7QmLJxd!2e10",
-    "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhAq6JbIUnF2Qrk6C7QmLJxd!2m2!1d46.255408491634896!2d15.163066916656295!3f0!4f0!5f0.78",
-    "scenes": 11
-   },
    "type": "javno"
   },
   {
@@ -635,12 +630,12 @@
     "Hotel New",
     "Hotel"
    ],
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.05711371528563,14.506257387438254,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICz9_6UxgE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICz9_6UxgE!2m2!1d46.05711371528563!2d14.506257387438254!3f0!4f0!5f0.78",
     "scenes": 103
-   },
-   "type": "nastanitve"
+   }
   },
   {
    "id": "7d9xj",
@@ -676,12 +671,12 @@
    "views": 34,
    "highlights": [],
    "created": "2026",
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.049543199999995,14.502536399999999,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCBpM5nTaqjkWyepuOVQHOS!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCBpM5nTaqjkWyepuOVQHOS!2m2!1d46.049543199999995!2d14.502536399999999!3f0!4f0!5f0.78",
     "scenes": 48
-   },
-   "type": "nastanitve"
+   }
   },
   {
    "id": "7d5ZL",
@@ -825,12 +820,12 @@
    "views": 27,
    "highlights": [],
    "created": "2024",
+   "type": "sport",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.52485339896951,15.665144838798305,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDPt6flew!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDPt6flew!2m2!1d46.52485339896951!2d15.665144838798305!3f0!4f0!5f0.78",
     "scenes": 13
-   },
-   "type": "sport"
+   }
   },
   {
    "id": "7ZJF3",
@@ -920,12 +915,12 @@
    "views": 298,
    "highlights": [],
    "created": "2023",
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.07550568033789,14.484540658070582,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDuh8HnzwE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDuh8HnzwE!2m2!1d46.07550568033789!2d14.484540658070582!3f0!4f0!5f0.78",
     "scenes": 44
-   },
-   "type": "nastanitve"
+   }
   },
   {
    "id": "7XNKB",
@@ -943,12 +938,12 @@
    "views": 320,
    "highlights": [],
    "created": "2023",
+   "type": "vino",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.68252196679337,15.588178680185145,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIC5sI6DXQ!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIC5sI6DXQ!2m2!1d46.68252196679337!2d15.588178680185145!3f0!4f0!5f0.78",
     "scenes": 12
-   },
-   "type": "vino"
+   }
   },
   {
    "id": "7X764",
@@ -1056,12 +1051,12 @@
    "views": 2009,
    "highlights": [],
    "created": "2022",
+   "type": "gostinstvo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.05195860992412,14.503145550074223,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgID215fyBA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgID215fyBA!2m2!1d46.05195860992412!2d14.503145550074223!3f0!4f0!5f0.78",
     "scenes": 21
-   },
-   "type": "gostinstvo"
+   }
   },
   {
    "id": "79cy4",
@@ -1079,11 +1074,6 @@
    "views": 21,
    "highlights": [],
    "created": "2022",
-   "gmaps": {
-    "url": "https://www.google.com/maps/@45.54728576738837,13.725833431543865,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICGj-zXMQ!2e10",
-    "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICGj-zXMQ!2m2!1d45.54728576738837!2d13.725833431543865!3f0!4f0!5f0.78",
-    "scenes": 7
-   },
    "type": "zdravje"
   },
   {
@@ -1174,12 +1164,12 @@
    "views": 35,
    "highlights": [],
    "created": "2022",
+   "type": "gostinstvo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.24400527823413,14.351022645825676,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICu1uXgzAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICu1uXgzAE!2m2!1d46.24400527823413!2d14.351022645825676!3f0!4f0!5f0.78",
     "scenes": 19
-   },
-   "type": "gostinstvo"
+   }
   },
   {
    "id": "7v6MD",
@@ -1215,12 +1205,12 @@
    "views": 540,
    "highlights": [],
    "created": "2022",
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.49221206293637,15.535181483687586,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDOqP77Yw!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDOqP77Yw!2m2!1d46.49221206293637!2d15.535181483687586!3f0!4f0!5f0.78",
     "scenes": 36
-   },
-   "type": "nastanitve"
+   }
   },
   {
    "id": "7vJgx",
@@ -1292,12 +1282,12 @@
    "views": 21726,
    "highlights": [],
    "created": "2022",
+   "type": "podjetja",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.030901634158035,14.444739633194377,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhASh-NZUSe0o3in5ARmqoe5!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhASh-NZUSe0o3in5ARmqoe5!2m2!1d46.030901634158035!2d14.444739633194377!3f0!4f0!5f0.78",
     "scenes": 49
-   },
-   "type": "podjetja"
+   }
   },
   {
    "id": "7qwSC",
@@ -1333,12 +1323,12 @@
    "views": 289,
    "highlights": [],
    "created": "2022",
+   "type": "podjetja",
    "gmaps": {
     "url": "https://www.google.com/maps/@45.81273982227067,15.868326432884375,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDWoY6exQE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDWoY6exQE!2m2!1d45.81273982227067!2d15.868326432884375!3f0!4f0!5f0.78",
     "scenes": 27
-   },
-   "type": "podjetja"
+   }
   },
   {
    "id": "7qVnb",
@@ -1464,12 +1454,12 @@
    "views": 144,
    "highlights": [],
    "created": "2022",
+   "type": "znamenitosti",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.02749973783873,15.590282006368192,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhCjn5BUiFewfx0SK5o_jQ37!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhCjn5BUiFewfx0SK5o_jQ37!2m2!1d46.02749973783873!2d15.590282006368192!3f0!4f0!5f0.78",
     "scenes": 32
-   },
-   "type": "znamenitosti"
+   }
   },
   {
    "id": "7qZYh",
@@ -1541,12 +1531,12 @@
    "views": 77,
    "highlights": [],
    "created": "2022",
+   "type": "vino",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.631406412597094,15.631864327953675,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICCqeH55QE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICCqeH55QE!2m2!1d46.631406412597094!2d15.631864327953675!3f0!4f0!5f0.78",
     "scenes": 15
-   },
-   "type": "vino"
+   }
   },
   {
    "id": "7qFB4",
@@ -1564,12 +1554,12 @@
    "views": 38,
    "highlights": [],
    "created": "2022",
+   "type": "sport",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.19611068959783,14.615465672438056,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICCwqi8aA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICCwqi8aA!2m2!1d46.19611068959783!2d14.615465672438056!3f0!4f0!5f0.78",
     "scenes": 3
-   },
-   "type": "sport"
+   }
   },
   {
    "id": "7qFQM",
@@ -1875,12 +1865,12 @@
    "views": 320,
    "highlights": [],
    "created": "2021",
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.539569644069985,14.956823983313592,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICG9JSyugE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICG9JSyugE!2m2!1d46.539569644069985!2d14.956823983313592!3f0!4f0!5f0.78",
     "scenes": 25
-   },
-   "type": "nastanitve"
+   }
   },
   {
    "id": "7kngM",
@@ -1916,12 +1906,12 @@
    "views": 90,
    "highlights": [],
    "created": "2021",
+   "type": "zdravje",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.243431863698326,15.277983189699691,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICRiemxYA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICRiemxYA!2m2!1d46.243431863698326!2d15.277983189699691!3f0!4f0!5f0.78",
     "scenes": 14
-   },
-   "type": "zdravje"
+   }
   },
   {
    "id": "7kT96",
@@ -1975,12 +1965,12 @@
    "views": 263,
    "highlights": [],
    "created": "2021",
+   "type": "drugo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.146478874590876,14.598214414339882,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIC68_a6uwE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIC68_a6uwE!2m2!1d46.146478874590876!2d14.598214414339882!3f0!4f0!5f0.78",
     "scenes": 12
-   },
-   "type": "drugo"
+   }
   },
   {
    "id": "7kGzB",
@@ -2160,12 +2150,12 @@
    "views": 240,
    "highlights": [],
    "created": "2020",
+   "type": "podjetja",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.169175855253386,14.572128712491075,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICircy4aw!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICircy4aw!2m2!1d46.169175855253386!2d14.572128712491075!3f0!4f0!5f0.78",
     "scenes": 10
-   },
-   "type": "podjetja"
+   }
   },
   {
    "id": "7PHWs",
@@ -2273,12 +2263,12 @@
    "views": 1646,
    "highlights": [],
    "created": "2020",
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.153455156656776,15.233071591825148,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICC1eSF_wE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICC1eSF_wE!2m2!1d46.153455156656776!2d15.233071591825148!3f0!4f0!5f0.78",
     "scenes": 45
-   },
-   "type": "nastanitve"
+   }
   },
   {
    "id": "7PJJT",
@@ -2476,12 +2466,12 @@
    "views": 227,
    "highlights": [],
    "created": "2020",
+   "type": "trgovine",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.25390278605198,15.56954765699696,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgID8jfyAhQE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgID8jfyAhQE!2m2!1d46.25390278605198!2d15.56954765699696!3f0!4f0!5f0.78",
     "scenes": 50
-   },
-   "type": "trgovine"
+   }
   },
   {
    "id": "7lrSm",
@@ -2697,12 +2687,12 @@
    "views": 10,
    "highlights": [],
    "created": "2020",
+   "type": "zdravje",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.550437282135384,15.641079138578371,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDs8qOMvgE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDs8qOMvgE!2m2!1d46.550437282135384!2d15.641079138578371!3f0!4f0!5f0.78",
     "scenes": 9
-   },
-   "type": "zdravje"
+   }
   },
   {
    "id": "7lnFX",
@@ -2774,12 +2764,12 @@
    "views": 22,
    "highlights": [],
    "created": "2020",
+   "type": "gostinstvo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.37351098312545,15.777634941246724,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICshezz5gE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICshezz5gE!2m2!1d46.37351098312545!2d15.777634941246724!3f0!4f0!5f0.78",
     "scenes": 7
-   },
-   "type": "gostinstvo"
+   }
   },
   {
    "id": "7lFBY",
@@ -2815,12 +2805,12 @@
    "views": 115,
    "highlights": [],
    "created": "2020",
+   "type": "sport",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.073200597471065,14.497605780292446,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICswa3S1QE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICswa3S1QE!2m2!1d46.073200597471065!2d14.497605780292446!3f0!4f0!5f0.78",
     "scenes": 22
-   },
-   "type": "sport"
+   }
   },
   {
    "id": "7l9sL",
@@ -2946,12 +2936,12 @@
    "views": 439,
    "highlights": [],
    "created": "2020",
+   "type": "gostinstvo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.06419273427662,14.527373620220635,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgID4lYbbOg!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgID4lYbbOg!2m2!1d46.06419273427662!2d14.527373620220635!3f0!4f0!5f0.78",
     "scenes": 26
-   },
-   "type": "gostinstvo"
+   }
   },
   {
    "id": "7lvxt",
@@ -3023,12 +3013,12 @@
    "views": 9,
    "highlights": [],
    "created": "2020",
+   "type": "drugo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.052806901072394,14.511738947303773,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsOSd5QE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsOSd5QE!2m2!1d46.052806901072394!2d14.511738947303773!3f0!4f0!5f0.78",
     "scenes": 8
-   },
-   "type": "drugo"
+   }
   },
   {
    "id": "7lv6D",
@@ -3100,12 +3090,12 @@
    "views": 143,
    "highlights": [],
    "created": "2020",
+   "type": "drugo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.06392450346246,14.52680170789618,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsLSzJA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsLSzJA!2m2!1d46.06392450346246!2d14.52680170789618!3f0!4f0!5f0.78",
     "scenes": 26
-   },
-   "type": "drugo"
+   }
   },
   {
    "id": "7lvcZ",
@@ -3123,12 +3113,12 @@
    "views": 292,
    "highlights": [],
    "created": "2020",
+   "type": "trgovine",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.063997171055014,14.526925452769335,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsIzBoAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsIzBoAE!2m2!1d46.063997171055014!2d14.526925452769335!3f0!4f0!5f0.78",
     "scenes": 26
-   },
-   "type": "trgovine"
+   }
   },
   {
    "id": "7lvFN",
@@ -3164,12 +3154,12 @@
    "views": 207,
    "highlights": [],
    "created": "2020",
+   "type": "gostinstvo",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.52158440731796,16.19501615534576,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMss7qEA!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMss7qEA!2m2!1d46.52158440731796!2d16.19501615534576!3f0!4f0!5f0.78",
     "scenes": 11
-   },
-   "type": "gostinstvo"
+   }
   },
   {
    "id": "7lvY3",
@@ -3223,12 +3213,12 @@
    "views": 35,
    "highlights": [],
    "created": "2019",
+   "type": "zdravje",
    "gmaps": {
     "url": "https://www.google.com/maps/@45.958537793583794,15.493085668298898,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDM3vPCzAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDM3vPCzAE!2m2!1d45.958537793583794!2d15.493085668298898!3f0!4f0!5f0.78",
     "scenes": 4
-   },
-   "type": "zdravje"
+   }
   },
   {
    "id": "7lqsc",
@@ -3390,12 +3380,12 @@
    "views": 158162,
    "highlights": [],
    "created": "2019",
+   "type": "trgovine",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.08701299735235,14.476664315309682,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDM8OKBuAE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDM8OKBuAE!2m2!1d46.08701299735235!2d14.476664315309682!3f0!4f0!5f0.78",
     "scenes": 20
-   },
-   "type": "trgovine"
+   }
   },
   {
    "id": "7lkFk",
@@ -3431,11 +3421,31 @@
    "views": 498989,
    "highlights": [],
    "created": "2019",
+   "type": "nastanitve",
    "gmaps": {
     "url": "https://www.google.com/maps/@46.04968181396206,14.505845623207492,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDUjf_Y7wE!2e10",
     "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDUjf_Y7wE!2m2!1d46.04968181396206!2d14.505845623207492!3f0!4f0!5f0.78",
     "scenes": 31
-   },
+   }
+  },
+  {
+   "id": "g-Jzcr5k4uPZUcREAGkLpFNUyk",
+   "kind": "google",
+   "source": "google",
+   "name": "Grand Hotel Donat Superior",
+   "place": "Rogaška Slatina",
+   "category": "Hotel",
+   "address": "Zdraviliški trg 10, 3250 Rogaška Slatina",
+   "lat": 46.238196,
+   "lng": 15.641001,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3brvJA!2m2!1d46.23787622650438!2d15.64075570868251!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.23787622650438,15.64075570868251,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3brvJA!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMcUuYtgmUQZ6PK-h3hhj3yhhZYYsQR4z4bbqfifJVQAgRqZnVbmKmG5JDQc0UDpQtUOK0sr1QMbDIq0hmkRXfnCWRxNykRVj31rSOZmTLim20EyMBgNH82TzlMECh5AinH1QnH=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 156,
+   "views": null,
+   "highlights": [],
    "type": "nastanitve"
   },
   {
@@ -4719,6 +4729,26 @@
    "type": "trgovine"
   },
   {
+   "id": "g-JoaZJPP7TekcRmUJOytQp__8",
+   "kind": "google",
+   "source": "google",
+   "name": "Lido d.o.o.",
+   "place": "Vrhnika",
+   "category": "Trgovina s pohištvom",
+   "address": "Lesno Brdo 55, 1360 Vrhnika",
+   "lat": 46.000488,
+   "lng": 14.341155,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaLMw!2m2!1d46.00063920992622!2d14.341367235701576!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.00063920992622,14.341367235701576,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaLMw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPRS3-_Te03zJHlAKcXQdgo27KBe1pRr_0NRL0nb9Lz3GdaDa9AGVVadM5DHQYFaJazrVAsahbzXq63slGvcj4nVZ6PvyLF-_x1RnkdgzN2tsXWM6Um_o6YeqW333rwadlHgBdJ=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 30,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
    "id": "g-JWxfC9Ct3b0cRXrHlTFnZxu4",
    "kind": "google",
    "source": "google",
@@ -4817,6 +4847,26 @@
    "views": null,
    "highlights": [],
    "type": "zdravje"
+  },
+  {
+   "id": "g-JE2o7SRy4ekcRHGMHwYH-mlk",
+   "kind": "google",
+   "source": "google",
+   "name": "Hotel Creina 4 star",
+   "place": "Kranj",
+   "category": "Hotel",
+   "address": "Koroška cesta 5, 4000 Kranj",
+   "lat": 46.242024,
+   "lng": 14.354963,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frGYQ!2m2!1d46.242096572660266!2d14.354694456214803!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.242096572660266,14.354694456214803,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frGYQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNxYwk-TGjrNXKiJSzUow7au74xahKbAHpg_ublTi4C2frIoSsjcMFlyW8iizkbFfcErSnds4ScEm7zHyKlF5XSboyK4NJLD93ndfPEmU_3oBDddWg7BJTvO4VZ9dDhvl9pPSkP=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 29,
+   "views": null,
+   "highlights": [],
+   "type": "nastanitve"
   },
   {
    "id": "g-JN9JUH7VgZUcR51Vq1XsWKFc",
@@ -5539,6 +5589,26 @@
    "type": "trgovine"
   },
   {
+   "id": "g-JB0anic0hZUcRBiQObzKpRnI",
+   "kind": "google",
+   "source": "google",
+   "name": "Bomax podjetje za trgovino, uvoz, izvoz, proizvodnjo d.o.o., Muljava 22a, Ivančna Gorica",
+   "place": "Ivančna Gorica",
+   "category": "Kozmetični salon",
+   "address": "Muljava 22 A, 1295 Ivančna Gorica",
+   "lat": 45.901628,
+   "lng": 14.799736,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aaxjAE!2m2!1d45.90172066218296!2d14.799760497032288!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.90172066218296,14.799760497032288,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aaxjAE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNSFU5aQk3i79AZofG9186Y2WA1Wt7B-0evgPMwMdvu_Wh4Hoj0gvzVJIXH_hfiPA4ukgUqmZFj4rlB6xqacy-TvFV-YBokdqR6rthgJsS0yaJGAE58DyoNLyKjQyYGZZEyLdIrxA=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 25,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
    "id": "g-Jnw1Nsnudb0cR-rfoCqeLc-k",
    "kind": "google",
    "source": "google",
@@ -6257,6 +6327,26 @@
    "views": null,
    "highlights": [],
    "type": "nastanitve"
+  },
+  {
+   "id": "g-JFz0NWmsKZUcRRSQbtPmwz5U",
+   "kind": "google",
+   "source": "google",
+   "name": "Posestvo Krakovo – Vina Mastnak",
+   "place": "Sevnica",
+   "category": "Vinska klet",
+   "address": "Orešje nad Sevnico 10, 8290 Sevnica",
+   "lat": 46.046776,
+   "lng": 15.293634,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3cbNcQ!2m2!1d46.04662199452872!2d15.293647713956055!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.04662199452872,15.293647713956055,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3cbNcQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMgW06Y7AjjXZg6o0k3sMLnlOYRRspRcq7-zZfGhvb7s8Cl2vXJyIz8It_42gO4hJZQ_JbC-sXHcX4QCe4Uhj1h_n2DNtV8PB-rpUR37EQWPtz5fu9l1q3NuspEU8suL5-o5g43=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 21,
+   "views": null,
+   "highlights": [],
+   "type": "vino"
   },
   {
    "id": "g-JxTaudvxlZUcRZEYmRiBCKGE",
@@ -7299,6 +7389,26 @@
    "type": "trgovine"
   },
   {
+   "id": "g-JIe6inbp3b0cREx8TofaYecg",
+   "kind": "google",
+   "source": "google",
+   "name": "MDT & T d.o.o.",
+   "place": "Maribor",
+   "category": "Specialistična klinika",
+   "address": "Lavričeva ul. 1, 2000 Maribor",
+   "lat": 46.558133,
+   "lng": 15.635967,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3cb6Hg!2m2!1d46.55818273750197!2d15.635971342034479!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.55818273750197,15.635971342034479,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3cb6Hg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COBUemvjKzGFehgvhscr1p7kAUZ2fMhippk30tEXnCTuOUM4Sr_OFZ3a9eBkZTfTjWRmW12VJVuzLY2MuftLaaDKrtf40nzojD0C0dvu3FIwd0LeaPr8EtnvGr7w_TIzO3udvT9=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 18,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
    "id": "g-J0W1wXQANb0cRw_eRGafZEsM",
    "kind": "google",
    "source": "google",
@@ -8039,6 +8149,26 @@
    "type": "nastanitve"
   },
   {
+   "id": "g-JM1pdB14yZUcRxQZgLxRkbeg",
+   "kind": "google",
+   "source": "google",
+   "name": "Apartments Vila Stella",
+   "place": "Ljubljana",
+   "category": "Počitniški apartma",
+   "address": "Kodrova ulica 1, 1000 Ljubljana",
+   "lat": 46.069275,
+   "lng": 14.539394,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3fq89AE!2m2!1d46.06921869455339!2d14.539484933102136!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.06921869455339,14.539484933102136,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3fq89AE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPPjAI0mw7-A4tJ4YaTcNODkIMZrT1SdTuI9ZUeVllu-tXvGUm9Cp6WguDLqduJ8Pcab36nxZ8UJHJiEAX5NpMc8KtVJi-fM4guUYXiTLKzM8biZOG0ew517LGZtgK9Tek_V9A1ag=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 16,
+   "views": null,
+   "highlights": [],
+   "type": "nastanitve"
+  },
+  {
    "id": "g-JC5LJef6XekcR23K12z2Hnbk",
    "kind": "google",
    "source": "google",
@@ -8337,6 +8467,46 @@
    "views": null,
    "highlights": [],
    "type": "zdravje"
+  },
+  {
+   "id": "g-JR-eKPWQtZUcRA7Fu6vZh1CU",
+   "kind": "google",
+   "source": "google",
+   "name": "Sippo, svetovanje in projektiranje na področju okolja, d.o.o.",
+   "place": "Ljubljana",
+   "category": "Stanovanjski kompleks",
+   "address": "Vegova ulica 8, 1000 Ljubljana",
+   "lat": 46.048009,
+   "lng": 14.503032,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3cbQlwE!2m2!1d46.04792257189799!2d14.502897904338448!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.04792257189799,14.502897904338448,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3cbQlwE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CO6ebgghhLBQX55vDdLDfks4sOJCbTfsGcUNJBxki0kIZQ-X7-PRuDJKyI4bwZNA_ldoxYRlMvoKG5BvZOC9Aeb-rd9zxKXObw3bsZ5HIGSUP0sB2znr5xzooMcnENm8lyRgKAU=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 15,
+   "views": null,
+   "highlights": [],
+   "type": "podjetja"
+  },
+  {
+   "id": "g-Jj8UWdXUte0cRQemzK_JVHNE",
+   "kind": "google",
+   "source": "google",
+   "name": "Rakov Škocjan",
+   "place": null,
+   "category": null,
+   "address": null,
+   "lat": 45.78699,
+   "lng": 14.299827,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YbwgAE!2m2!1d45.78870859134216!2d14.298146492981367!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.78870859134216,14.298146492981367,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YbwgAE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COi76Pvscya4vHMpaNZjqVJG72DUzefL65cHF_2KGeBCYGssliUfbTAZWzk0Lr6aJb5_Al6SRa-BmlNvPkywK4nKI4QNEPbUvF2cfa7GiJmEstbdktdKlSpDMRng_n_dKOC6pJjTw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 15,
+   "views": null,
+   "highlights": [],
+   "type": "kraji"
   },
   {
    "id": "g-JZTVc1NBle0cRzE3HJLruCm4",
@@ -8812,6 +8982,26 @@
    "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMsIjgqgE!2m2!1d46.52971473051648!2d15.66958102633468!3f0!4f0!5f0.78",
    "mapsUrl": "https://www.google.com/maps/@46.52971473051648,15.66958102633468,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMsIjgqgE!2e10",
    "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COKm2d96D_af9BZdxFKQJhO6tFf1jc9FKQo51wm1f7-vTvrKFALSJiHY3eFpc5KgoB5hb_9FetkCYZ57iwcfteJ0vZsIIRU_O9_ZBvSJSQNaxSC5DtF27k7O5m5-VgvPQTdajcMJQ=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 14,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-Jd9-oM44yZUcRl96L_e3_--o",
+   "kind": "google",
+   "source": "google",
+   "name": "Scarabej skupina podjetje za zastopanje, trgovino in storitve d.o.o.",
+   "place": "Ljubljana",
+   "category": "Polaganje parketa",
+   "address": "Topniška ulica 54, 1000 Ljubljana",
+   "lat": 46.064404,
+   "lng": 14.517966,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3ca0igE!2m2!1d46.06440506304921!2d14.51795755172778!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.06440506304921,14.51795755172778,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3ca0igE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPtYO3zvGaYfuuDozYykUL7unrw_GjvkPz1ncZb9cJn0U8_DyD1sZrMCvmuTATEWPle6O4q1ELUfDj-D2q8k_fKPS8LGABO2w9T9p4xfe-uP1NLruykN91vHmo839_EEm6VOO4JTA=w2048-h1024-k-no",
    "pano": true,
    "scenes": 14,
    "views": null,
@@ -9599,6 +9789,26 @@
    "type": "zdravje"
   },
   {
+   "id": "g-JyVIO8SDNekcRFx-orQr9RXk",
+   "kind": "google",
+   "source": "google",
+   "name": "Gnezdo d.o.o., sonaravna gradnja in materiali",
+   "place": "Ljubljana - Šentvid",
+   "category": "Dobavitelj gradbenega materiala",
+   "address": "Štula 10, 1000 Ljubljana - Šentvid",
+   "lat": 46.095498,
+   "lng": 14.471545,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3bqTXw!2m2!1d46.0954145569132!2d14.471641028381002!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.0954145569132,14.471641028381002,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3bqTXw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMYxPsu2G6SbhkPZztw0XmyYgEPsP_h1c-Aj4-UwF3IoO2g4b_gGL98nDTAyPC5MTup-qThCODurrIcHtwXYY_2CtZVvq-yrwgKJz7HkOGbRf-aFvnbM3gUjXaX7qZHG2hGVVia=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 12,
+   "views": null,
+   "highlights": [],
+   "type": "podjetja"
+  },
+  {
    "id": "g-J8WHGWbhcZUcREG6_bGtpmM0",
    "kind": "google",
    "source": "google",
@@ -9617,6 +9827,26 @@
    "views": null,
    "highlights": [],
    "type": "znamenitosti"
+  },
+  {
+   "id": "g-J4cUzmrVvZUcRY5RgKAHwOiQ",
+   "kind": "google",
+   "source": "google",
+   "name": "Športni center Žalec",
+   "place": "Žalec",
+   "category": "Športni kompleks",
+   "address": "Aškerčeva ulica 15, 3310 Žalec",
+   "lat": 46.255406,
+   "lng": 15.163572,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIABIhAq6JbIUnF2Qrk6C7QmLJxd!2m2!1d46.255408491634896!2d15.163066916656295!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.255408491634896,15.163066916656295,3a,75y,90t/data=!3m4!1e1!3m2!1sCIABIhAq6JbIUnF2Qrk6C7QmLJxd!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMpW3l4BW2aBOJ6U5i9ph3qXloNyBRrvF3KpYglEdonv677vooJizZIZy8bQCpHFBIu-oiGfTyvlhLR7LybDSld7hTPNuPWVzw7bx-bBGXKGPJzgGDmLVip-hiDup-vkl9OU6OOqRYWxKMm=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 11,
+   "views": null,
+   "highlights": [],
+   "type": "sport"
   },
   {
    "id": "g-J18h2RQChb0cRfOEbcShGhAc",
@@ -10052,6 +10282,26 @@
    "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICUqJGf7gE!2m2!1d46.230014858421!2d15.5214582700991!3f0!4f0!5f0.78",
    "mapsUrl": "https://www.google.com/maps/@46.230014858421,15.5214582700991,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICUqJGf7gE!2e10",
    "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COHVp1dEoIgPc7mr3NbNrmVBjRV37ys4yI11fapHfOYJIMVPX89CEyrCXsyTVFC5uU8SxFyQDhqWUDxTjGdN4T4pGVVtybcrPpB3SJcUSMfEdTUVuLOUr4a3zDQh1RzctiThrlS=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 11,
+   "views": null,
+   "highlights": [],
+   "type": "vino"
+  },
+  {
+   "id": "g-Jyfpxsp6re0cRRo0kTb7wRew",
+   "kind": "google",
+   "source": "google",
+   "name": "MOVIA",
+   "place": "Dobrovo v Brdih",
+   "category": "Vinska klet",
+   "address": "Ceglo 18, 5212 Dobrovo v Brdih",
+   "lat": 45.977562,
+   "lng": 13.520133,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3fr1zQE!2m2!1d45.977508906428994!2d13.5199658191741!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.977508906428994,13.5199658191741,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3fr1zQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMfyao-sJ6-pz3Ka622T-ct1jTrIjGVYRY1TG3uT110PqTFukl_4_hPBulNpIJcAd9syZobqJtdWFRYaWzrnfbZzPQy5i4Esa52c5VIUtPSEFVkRAujyvbpQExx6XyRd9YU41Bz=w2048-h1024-k-no",
    "pano": true,
    "scenes": 11,
    "views": null,
@@ -10619,6 +10869,66 @@
    "type": "kraji"
   },
   {
+   "id": "g-Ji4HVS65nb0cRWPUBBxjAs74",
+   "kind": "google",
+   "source": "google",
+   "name": "Bar Code",
+   "place": "Ptuj",
+   "category": "Kavarna",
+   "address": "Ormoška cesta 15, 2250 Ptuj",
+   "lat": 46.418843,
+   "lng": 15.878986,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frb7QE!2m2!1d46.41886872850593!2d15.879191202530397!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.41886872850593,15.879191202530397,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frb7QE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNy3Q_SQOXWPryfgQx5PK3G7i9bXdsImdXZS49OZXzg2_exPEE2v9eT5gETvYLfxS7ltGVFMB-whxgAGDVVD00kdcIoBub7V6OocA7g0BbVJfrNrIzgsBPafZguydbLZmVbvGls=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 10,
+   "views": null,
+   "highlights": [],
+   "type": "gostinstvo"
+  },
+  {
+   "id": "g-JAzaqO8Fdb0cRAiGrCjVvHy4",
+   "kind": "google",
+   "source": "google",
+   "name": "Žiher Point",
+   "place": "Gorišnica",
+   "category": "Restavracija",
+   "address": "Moškanjci 1g, 2272 Gorišnica",
+   "lat": 46.416665,
+   "lng": 15.985692,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3fqXZw!2m2!1d46.4167218807439!2d15.985674342238664!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.4167218807439,15.985674342238664,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3fqXZw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CProOrS6V5jJ2muWBJ8TTcKSXfFotXZvRb3nPdy5gp17Gp0mogoSDupCRZ_tic5ucdffoscy26ZV46wX_XySitvUJldMbkM996XnDUlrRoy_mbLisKFFr3JIOTUd-5xGdymdtJL=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 10,
+   "views": null,
+   "highlights": [],
+   "type": "gostinstvo"
+  },
+  {
+   "id": "g-J7z2o1DRnZUcR8n07u-YlwJ8",
+   "kind": "google",
+   "source": "google",
+   "name": "Restavracija Jezero",
+   "place": null,
+   "category": "Dostava hrane",
+   "address": null,
+   "lat": 46.149078,
+   "lng": 14.986065,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3Ya-nwE!2m2!1d46.368908103111174!2d15.09282846215327!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.368908103111174,15.09282846215327,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3Ya-nwE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPtLQYsr0p8duTnZL4zJ73Bhs0Z5AtYMa2qCYwCfHPtxxeBEHi9ij_0wM1yS4gr-QgGCvHTz9xZrlU9lWLc0Dt88zHUie2nk7qOG40FUCf5QCA_yE0H93sYIPDGZ5D63GRLHcJHbw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 10,
+   "views": null,
+   "highlights": [],
+   "type": "gostinstvo"
+  },
+  {
    "id": "g-Jxdw3WqZvZUcRB52lcXFfYR4",
    "kind": "google",
    "source": "google",
@@ -11119,6 +11429,26 @@
    "type": "zdravje"
   },
   {
+   "id": "g-Jx4HG9tlFb0cRrN6i6ow_NkM",
+   "kind": "google",
+   "source": "google",
+   "name": "Avena, trgovina za zdravo življenje, Matejka Kosi s.p., PE Ljutomer",
+   "place": "Ljutomer",
+   "category": "Trgovina z zdravo hrano",
+   "address": "Prešernova ulica 25, 9240 Ljutomer",
+   "lat": 46.523815,
+   "lng": 16.193566,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDMit7XXQ!2m2!1d46.52363297160792!2d16.19378650075725!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.52363297160792,16.19378650075725,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDMit7XXQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CODGN9BT0YuwwK7Byoy_p0gGDksAfBYtbebiEKmQPryRIJFkBNJtqqQSwAiy7MOlOHb1LZ0aMigMGnL5wdF3VrIieZTaoT-X158XhJHUKoRaEA8SUSanVtx8i1KRtSdGS1f8mRU=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 9,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
    "id": "g-JdRKHK6uEZUcRX5CoIfbNMOM",
    "kind": "google",
    "source": "google",
@@ -11217,6 +11547,26 @@
    "views": null,
    "highlights": [],
    "type": "gostinstvo"
+  },
+  {
+   "id": "g-JoSgkz9YfZUcRTXC4qzk9Hhs",
+   "kind": "google",
+   "source": "google",
+   "name": "Klinika Križaj",
+   "place": "Ivančna Gorica",
+   "category": "Zobozdravnik",
+   "address": "Muljava 22a, 1295 Ivančna Gorica",
+   "lat": 45.901626,
+   "lng": 14.799736,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3brTJA!2m2!1d45.90158763487057!2d14.799643553175478!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.90158763487057,14.799643553175478,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3brTJA!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPrVg7wCrr7DaTXXu_kxuZh5ibAD5cpq2rjdOD_x87NiJBW4aKCRALy72HFXKb654w--w2AElVfPnYriqd4eNFPlmq0XEvbhZdbtAI11QEahx1BB1aJyXCiDOL4G7MpKjkxnJM=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 9,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
   },
   {
    "id": "g-Jn4p9wRqXekcRTeLZ3SN8q28",
@@ -12019,6 +12369,66 @@
    "type": "zdravje"
   },
   {
+   "id": "g-JFXcsYrMyZUcRxHT9Kzz77nA",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski, pedikerski in kozmetični salon",
+   "place": "Ljubljana",
+   "category": "Frizerski salon",
+   "address": "Derčeva ulica 31, 1000 Ljubljana",
+   "lat": 46.071071,
+   "lng": 14.483236,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aapYw!2m2!1d46.071154035802216!2d14.483228500197031!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.071154035802216,14.483228500197031,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aapYw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNyWNSMUhXOjkX1w80Zm5vfVRimxspfCagwSVkHVbUmqxxH5682vH2i7TtJB2-xQNakHn2HmlFaF7tHPtcuKZzOpRTvQ-jnN7FnF5voa01n4GG-q6E5a4aGd01_hNtLnZIII_EE=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 8,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JraPAe693b0cReFeWsJKdcRI",
+   "kind": "google",
+   "source": "google",
+   "name": "INTER MAK D.O.O. STANOVANJE",
+   "place": "Maribor",
+   "category": "Stanovanjski kompleks",
+   "address": "Koroška cesta 19, 2000 Maribor",
+   "lat": 46.557903,
+   "lng": 15.642118,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3ca8pgE!2m2!1d46.557937881573366!2d15.642157488211666!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.557937881573366,15.642157488211666,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3ca8pgE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CN3CkB8HmS5YqVFrI2a5R7xI2P6fjI6KfPHuviuwoXSMzRISsnbnQVjlYuCGW5Ff3lTHIa9_vzKq9HQeyVwuAI4RlRF4Awty4I-jHvmzIwuGYov9OxruGR6JLIh6tHbTyKz0Ip2CA=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 8,
+   "views": null,
+   "highlights": [],
+   "type": "podjetja"
+  },
+  {
+   "id": "g-JJwW_U7Rmb0cRDucm5bJ3Sf4",
+   "kind": "google",
+   "source": "google",
+   "name": "Hotel Ptuj",
+   "place": "Ptuj",
+   "category": "Hotel",
+   "address": "Prešernova ulica 6, 2250 Ptuj",
+   "lat": 46.420064,
+   "lng": 15.869272,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3br27wE!2m2!1d46.42015732524068!2d15.869283550008081!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.42015732524068,15.869283550008081,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3br27wE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPCUYhHrBRPR-q5aFXNtoBOyELNxmgE52EHpiBX-V0d-LJ27z0dUB4gmt2OcJwGhEFgsaHBzQLW4Qqdl_NuOnzPQ8u3rObnFMODyq1IUehdUbQfD08GxRHpf4CItHPHd9OnyZ5ZBg=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 8,
+   "views": null,
+   "highlights": [],
+   "type": "nastanitve"
+  },
+  {
    "id": "g-JvYTaZv5xZUcRCIkBj2DavVg",
    "kind": "google",
    "source": "google",
@@ -12399,6 +12809,26 @@
    "type": "gostinstvo"
   },
   {
+   "id": "g-JvZMxZiRpe0cRhhNeMBWzo50",
+   "kind": "google",
+   "source": "google",
+   "name": "Belidim - Premium Vape Shop / Svapo Koper Capodistria",
+   "place": "Koper",
+   "category": "Trgovina z elektronskimi cigaretami",
+   "address": "Pristaniška ulica 3, 6000 Koper",
+   "lat": 45.547299,
+   "lng": 13.725918,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICGj-zXMQ!2m2!1d45.54728576738837!2d13.725833431543865!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.54728576738837,13.725833431543865,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICGj-zXMQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CODP31TnbXQcvFIie_t7yG3rttcmS3LB96iaOO7jF6y5flXXCVW49w4rmjkliI6I6ta0V_3kKwSZcjVtXUpLoehPwOoDj8keoDaKVB7lbey_mFwZGtqpYbx02pOFM-Tib5plXwT=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 7,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
    "id": "g-JuXF0RfCVZUcRAqke9UxNRHI",
    "kind": "google",
    "source": "google",
@@ -12657,6 +13087,66 @@
    "views": null,
    "highlights": [],
    "type": "zdravje"
+  },
+  {
+   "id": "g-JX8ifcWEtZUcRCiGScNsI0J8",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski, pedikerski in kozmetični salon",
+   "place": "Ljubljana",
+   "category": "Frizerski salon",
+   "address": "Slovenska cesta 27, 1000 Ljubljana",
+   "lat": 46.051254,
+   "lng": 14.502725,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaHBg!2m2!1d46.0513028007552!2d14.502709438696122!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.0513028007552,14.502709438696122,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaHBg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMg2pA4XoA--A_fNtMPCa2mMph4bbqR7yImEsW2CO6TJ8m1pZNExvFz6yUdILtcNEUMtKhhk4l4oEeDLcGzuGRHBnloovfGSo4oLmdttre1zn-zm8BxCNoc_EitszQ_GTfNQqNh=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 7,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JBSIFz_EtZUcR1eapt-PcknI",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski salon",
+   "place": "Ljubljana",
+   "category": "Lepotni salon",
+   "address": "Slovenska cesta 11, 1000 Ljubljana",
+   "lat": 46.048414,
+   "lng": 14.501351,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaZTw!2m2!1d46.04843142938862!2d14.501414338671548!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.04843142938862,14.501414338671548,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaZTw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMMOP0ah3In0iZR_Tdk-ETy448dsVYBjlqro7hn97JebfK8hYOt9qwqrc3JZoXCeiTGVFz21B-ItfG-EmvJF-FUQ7Q9XmycKlRcy3Fg1iTM3Ngp8BZnTv9q7mFfy3MMEbkDhiU=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 7,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-Ji7ZUNbpmb0cR4fMzLcq1Z9g",
+   "kind": "google",
+   "source": "google",
+   "name": "Kavoteka",
+   "place": "Ptuj",
+   "category": "Kavarna",
+   "address": "Ulica 25. maja 13b, 2250 Ptuj",
+   "lat": 46.429356,
+   "lng": 15.869802,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aa26QE!2m2!1d46.42931766833735!2d15.86977443040908!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.42931766833735,15.86977443040908,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aa26QE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNAj73SpNSNAmFZp7GHETZ95_3Mtd1folDB_K6oGJ76Dk-xd0qVH1YortRT6KBYz7HiR0o4Ov7RWnQXzPiMKWYScAvcGvF4NgBHBPu5nDpYlxktXKGdgMuXRB9WPEalIi0t6YGTrw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 7,
+   "views": null,
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-JjyKTBQBdZUcRbakchjSZR7Q",
@@ -13337,6 +13827,166 @@
    "views": null,
    "highlights": [],
    "type": "zdravje"
+  },
+  {
+   "id": "g-JO0E5xa53b0cRjkdsPEBSZrI",
+   "kind": "google",
+   "source": "google",
+   "name": "Naturoteka plavica",
+   "place": "Maribor",
+   "category": "Trgovina z zelišči",
+   "address": "Slovenska ulica 17, 2000 Maribor",
+   "lat": 46.560243,
+   "lng": 15.645215,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3cboggE!2m2!1d46.56024591880561!2d15.64535535152381!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.56024591880561,15.64535535152381,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3cboggE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNu0_OD1FShCCSy1CWpYTsZIFd3pTIJ2PWBUD8p8HIL5-LbNtdcZlMiKbYAJku5Rl0cAlEmtRmXVoBjZtjI7eEW8SKLwxgpQmAyfbtwpC_ifiIVR1TmdLwtL7LC4QmdOXbrepMU=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-JaVdtVN4yZUcRUvRahFJIceM",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski salon",
+   "place": "Ljubljana",
+   "category": "Frizerski salon",
+   "address": "Dunajska c. 209, 1000 Ljubljana",
+   "lat": 46.088756,
+   "lng": 14.51371,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frGdg!2m2!1d46.08873078791729!2d14.513700087250303!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.08873078791729,14.513700087250303,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frGdg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPqii-D3-V5iZoa2UAcIk6fAqw-406qM6b8L50QxFslj8695ywVtCyJiQc4aJ4llgy7Idzt5qctpqmpeO_N3t_FFb0vvZEvT-QSJaUMS4rMZlGjPym4sbb7xlHuxvMvH_BIvi4=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-Jixz3hZ0yZUcRwSxDVicag5g",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - pedikerski salon",
+   "place": "Ljubljana",
+   "category": "Kozmetični salon",
+   "address": "Dalmatinova ulica 11, 1000 Ljubljana",
+   "lat": 46.053779,
+   "lng": 14.507781,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YbDHA!2m2!1d46.053766454313816!2d14.507702602505706!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.053766454313816,14.507702602505706,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YbDHA!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNbH_nKU2SAUjRzH56tjJunCuRR04c0m3_NMfG6of_up040pr8LEO5rjCOl00SApPDmWtuZIYkxyYboDl1biuRttGVWYDvimXMt4cE_98UlJWAQjftjfVjuYsNMelPPqhjPw4Lh=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JZblsX63KekcR00TA7i6nulY",
+   "kind": "google",
+   "source": "google",
+   "name": "KOŽELJ, d.o.o.",
+   "place": "Komenda",
+   "category": "Vinoteka",
+   "address": "Moste 54, 1218 Komenda",
+   "lat": 46.194878,
+   "lng": 14.544506,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaOrQE!2m2!1d46.19490357291746!2d14.544509737802748!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.19490357291746,14.544509737802748,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaOrQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNb9o5x9l2RYirx4LohZPpO_RS3uc88TNmpPGuMK489XNIrsp85thRTZoVNGSVYTZsbDw9OTUcftQHYrMTwmmkr8GU6PqkrEuUgmFbMwxOhbJ4V6tVaoOZqONJFAnRUPseatnZG3Q=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "vino"
+  },
+  {
+   "id": "g-JX_eeQVynZUcRw3gBCrSufZ8",
+   "kind": "google",
+   "source": "google",
+   "name": "Central's Cafe",
+   "place": "Sevnica",
+   "category": "Kavarna",
+   "address": "Trg svobode 5, 8290 Sevnica",
+   "lat": 46.009698,
+   "lng": 15.302841,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaNlQE!2m2!1d46.00961862241245!2d15.302729945129881!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.00961862241245,15.302729945129881,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaNlQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPGVqgW8i5c0H0NLQXV6hOoG_3Kj0QJ_at8FoImj1Swr5YQNukyMswVJBW2aFjF2z1bo5rBvsDIZbJ_GbOyD8btTYgwMn2AYDsir79wKemVLaN-yJanqFgYuR4KIOqJdDu0rlPMsQ=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "gostinstvo"
+  },
+  {
+   "id": "g-JfxvJaHR3b0cRK1utq3NkMfY",
+   "kind": "google",
+   "source": "google",
+   "name": "Mapol, servis, trgovina, d.o.o.",
+   "place": "Maribor",
+   "category": "Ponudnik vrtne tehnike",
+   "address": "Titova cesta 59, 2000 Maribor",
+   "lat": 46.543477,
+   "lng": 15.64917,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aaCMw!2m2!1d46.543515740552905!2d15.649219415241816!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.543515740552905,15.649219415241816,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aaCMw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNm0YnZqaKZ0gHMJUhOt_lj3OfmIMgy0E9iiZfnAMcxzQ0IyOuWCmiPSy5ifJrS9qVSqdXJkKZrxwaosT8QHYoEHQt1FxHfAJJzlY_rqZ7Js_77wexn23nLC_SvGrp9pyL3Rm75=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-JETf1imMtZUcR7iMfQ6Hxah4",
+   "kind": "google",
+   "source": "google",
+   "name": "Koželj Wines Dvor",
+   "place": "Ljubljana",
+   "category": "Vinoteka",
+   "address": "Dvorni trg 2, 1000 Ljubljana",
+   "lat": 46.049081,
+   "lng": 14.5046,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3bqTfw!2m2!1d46.04900414604673!2d14.504658161016867!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.04900414604673,14.504658161016867,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3bqTfw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPY1nTIHaFe5ySA5QCaWwkn6RJ1jrjUizwgIyoDtsr7qZVr6LcXQLyAtoLoTW-_GLGLDq_HvPrZM5j7aSo661A7Zl-uKH__gFgQuZmL1Ro0Lv46vI6OTYoEw_VUZX-vZ0N4lMmD=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "vino"
+  },
+  {
+   "id": "g-Jr3ffv_i3ekcRhUQAOszSH8M",
+   "kind": "google",
+   "source": "google",
+   "name": "Mlečna restavracija",
+   "place": "Kranj",
+   "category": "Restavracija",
+   "address": "Maistrov trg 13, 4000 Kranj",
+   "lat": 46.241062,
+   "lng": 14.3563,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3caPkwE!2m2!1d46.2411667460965!2d14.356297482853666!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.2411667460965,14.356297482853666,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3caPkwE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMpyLX0_o0v9Sc39eCzRUK-7OMbiyjEb8RPwfCtqkvo-LMqibx_rzlDeyfYIGBZncODpRLluR411F35UXloWJ4nW8UyRGsq-xxxrFaUfql3IOC6nBgtwT8Qpt4rWJ01PlWHxz-FGw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 6,
+   "views": null,
+   "highlights": [],
+   "type": "gostinstvo"
   },
   {
    "id": "g-J29Q-Ks9vZUcR3USjo_mXccI",
@@ -14179,6 +14829,146 @@
    "type": "znamenitosti"
   },
   {
+   "id": "g-JXYWch80hZUcR0OZhINOcI6U",
+   "kind": "google",
+   "source": "google",
+   "name": "Petra lepotni salon, Petra Markovič Globokar s.p.",
+   "place": "Ivančna Gorica",
+   "category": "Kozmetični salon",
+   "address": "Cesta 2. grupe odredov 29, 1295 Ivančna Gorica",
+   "lat": 45.941118,
+   "lng": 14.80399,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YbZsAE!2m2!1d45.901701260747885!2d14.799727884369407!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.901701260747885,14.799727884369407,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YbZsAE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPwFG2KRb7LNiSJOZNRTM40L5HypC0SOqzAzTz4wA2YatWDthCYfP7i4q6RC_MH1XYpOtMAyh5hHb0Q7smYAf00rrs0SuSfM8GlPufr3FG7dpQ4eJ20imREQ_wi5nUyqC7keSHVBw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-Jyct2MYAyZUcRinrPWfI7aas",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski, pedikerski in kozmetični salon",
+   "place": "Ljubljana",
+   "category": "Kozmetični salon",
+   "address": "Zaloška cesta 7, 1000 Ljubljana",
+   "lat": 46.053634,
+   "lng": 14.521354,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aa2FQ!2m2!1d46.05351193292328!2d14.521372682180049!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.05351193292328,14.521372682180049,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aa2FQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPYMG-7fYDeLZaTBQ1tp9WtIXqgG-6eP8CXaFAtnuIbXIZ4-iOtN1jKA_xvvxSAMf6Xm_FftnrV6fbYBJGVrv7eN3_iC3jSaDW68M96GEWRjYPu7q4hRDouHjacTryB967LJzrT=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JFdQUdWjWekcR7g26A-7JKyA",
+   "kind": "google",
+   "source": "google",
+   "name": "Izvir Ljubljanice pri Močilniku",
+   "place": "Vrhnika",
+   "category": "Naravni rezervat",
+   "address": "1360, Vrhnika",
+   "lat": 45.954672,
+   "lng": 14.292519,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaOuQE!2m2!1d45.9546722758252!2d14.292519220760973!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.9546722758252,14.292519220760973,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaOuQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CM2XsD6nbOZnOEk5UohJTG4xk3mTpJaUREWKDfloeHeUvWkLBhYOXqNCKlmybEUFp3t5DIM3SOqLdkhRqwlGrREtcNYaS6LHG4_fuHJzD3eOtUot927yNyKUYpcI01L1cCiYv13Gw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "znamenitosti"
+  },
+  {
+   "id": "g-J--9ALWktZUcRuJGuFgIxQKw",
+   "kind": "google",
+   "source": "google",
+   "name": "Apartment Star of ljubljana",
+   "place": "Ljubljana",
+   "category": "Stanovanjski kompleks",
+   "address": "Vegova ulica 8, 1000 Ljubljana",
+   "lat": 46.04805,
+   "lng": 14.502952,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3fqK3AE!2m2!1d46.047965160431346!2d14.502638479385618!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.047965160431346,14.502638479385618,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3fqK3AE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CO2YpcL6XsEs7aebuhYV4RRwnU5KJtDoi0EMS1G2HUyVl9huPFNUrXropdxApP_5OD0faGyRTCTcSG2pHCMs3VI93J7kzFRTnAQ9b-q4G5C-i83YAwQu5WidpvIP_WCG3iL2BHf=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "nastanitve"
+  },
+  {
+   "id": "g-JWc_SbLRmb0cR3M25kvyER2Y",
+   "kind": "google",
+   "source": "google",
+   "name": "Ptuj Castle",
+   "place": "Ptuj",
+   "category": "Muzej",
+   "address": "Na Gradu 1, 2250 Ptuj",
+   "lat": 46.421021,
+   "lng": 15.867535,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YalDQ!2m2!1d46.42090589258644!2d15.867749351478414!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.42090589258644,15.867749351478414,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YalDQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPCh-UPJ0eGDnz3MdCBC3SOZUHBrusXBFZvLLAts0Bk1ii_YRyWG0f32ULmHj66v1aHkxTKwbyLrmhE-Heugl9_1E6JgpCJUhSZcSLinM5bfQ3He4zZTftF9dPmOswmmefPSpOW=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "znamenitosti"
+  },
+  {
+   "id": "g-JT0TCc2MtZUcRz_1Sr8ImBU8",
+   "kind": "google",
+   "source": "google",
+   "name": "Vinoteka Movia",
+   "place": "Ljubljana",
+   "category": "Vinski bar",
+   "address": "Mestni trg 2, 1000 Ljubljana",
+   "lat": 46.049742,
+   "lng": 14.506893,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaRDw!2m2!1d46.049852981125035!2d14.506769061540478!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.049852981125035,14.506769061540478,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaRDw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPBsSdKQrATSqaVj4CDPpcYTmrHBGpTcyyIu402KqGgy6vVWFcLRaejDtNH9CZ7SyvjndlI4KQ3mA8PYEeEBGFPdlr16HCUlr3iQEnwrhOPC7PZV3aQJ2nnGVeoI9A6I29q8dw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "vino"
+  },
+  {
+   "id": "g-JPQm1QLtmb0cR58bdjL6EJA4",
+   "kind": "google",
+   "source": "google",
+   "name": "Digitalna Slikovna diagnostika, medicinska diagnostika in druge storitve, d.o.o.",
+   "place": "Ptuj",
+   "category": "Center medicine",
+   "address": "Puhova ulica 9a, 2250 Ptuj",
+   "lat": 46.418364,
+   "lng": 15.885332,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3caXWA!2m2!1d46.41826590156777!2d15.885281310128237!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.41826590156777,15.885281310128237,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3caXWA!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COsnsocING5U7sMtQF5L7DcNUO5lmi91HYhYMolh7vOtvRTQ_WxRXUxzZji9wdzyImsreuq5unTkWIKGGXkSbZJ7GDdDQFJ6zACxfEo3cmwgvwlVhzE49uxhwSgYXU1oSjxLgxk=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 5,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
    "id": "g-JzwO8HABRZUcR2dj8J4z-q0Q",
    "kind": "google",
    "source": "google",
@@ -14879,6 +15669,126 @@
    "type": "zdravje"
   },
   {
+   "id": "g-JgYCRh80hZUcRycMZVqyz-6A",
+   "kind": "google",
+   "source": "google",
+   "name": "Salon d.o.o.",
+   "place": "Ivančna Gorica",
+   "category": "Frizerski salon",
+   "address": "Muljava 22a, 1295 Ivančna Gorica",
+   "lat": 45.901626,
+   "lng": 14.799736,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3ca9dg!2m2!1d45.90156552127434!2d14.79970835220721!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.90156552127434,14.79970835220721,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3ca9dg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMG82NRgGj-CPXZKunBL6zgtY5KAcUtJ9H-XOBetjtJ8EbwxU9_JRhSVL1YSqWGg58CFNvlRwe1WcllvEA7LbGCS2sv-z16CEe9D8vZ7cND0L1IGTje7rYJ-HsOqxHDArvITc1M=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 4,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-J_fveGuwtZUcRVuRiI_j0Tow",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski salon",
+   "place": "Ljubljana",
+   "category": "Frizerski salon",
+   "address": "Stritarjeva ulica 9, 1000 Ljubljana",
+   "lat": 46.050602,
+   "lng": 14.50647,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frxLA!2m2!1d46.05074011784008!2d14.506423057328462!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.05074011784008,14.506423057328462,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frxLA!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COb6MLHQpQF0V3Z9Y7SNdIBIrrV2__vEAlsHc6HxmYXbnMXOGR9I-WN9WBq3-09omEceBGWj7dKJlv2EUfZI2t5b_GHHBc_AdmTSCcRgFWKf-MeENo2spXgjJEAQ843OYHiXq8=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 4,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-Ji3e-fKQyZUcRus9-z4QEyuA",
+   "kind": "google",
+   "source": "google",
+   "name": "Frizerski salon LASSANA",
+   "place": "Ljubljana",
+   "category": "Frizer",
+   "address": "Celovška cesta 49, 1000 Ljubljana",
+   "lat": 46.061984,
+   "lng": 14.495555,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaZ2wE!2m2!1d46.06193371636738!2d14.495513254582729!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.06193371636738,14.495513254582729,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaZ2wE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPRvxgxgmScF0YdBp1gjJ41nHcaGhxQhOJ003sel0CRzZSruHwizjx3OeCBZY3-RZdLezef7Jxa0V6Kop4e4X_bdbinSupAsX5sOMTD5kwBHUQ-hCNqsXHA4e8fXdd_7txnzliPmw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 4,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JwZZR030tZUcReQgOtWMcKJs",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski salon",
+   "place": "Ljubljana",
+   "category": "Frizerski salon",
+   "address": "Poljanska cesta 20, 1000 Ljubljana",
+   "lat": 46.049723,
+   "lng": 14.516463,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frj6gE!2m2!1d46.050017440509585!2d14.515405723265992!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.050017440509585,14.515405723265992,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frj6gE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COkjDjXVTHsXW8yE00Cbe1PBmMXQMXjcRrMYrW_S3t-W5YHW8mRUYVor0VsiHjLZ5GiTkHhQLXWk02aIuvhgErUR106NNG09nuvY0z5oQuAV9ro3uVBx0Tmdk1HMpOVCJA-zjqgSQ=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 4,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JrV7HjYotZUcRr5bqjXNgT_U",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski salon",
+   "place": "Ljubljana",
+   "category": "Frizerski salon",
+   "address": "Litijska cesta 38, 1000 Ljubljana",
+   "lat": 46.047019,
+   "lng": 14.544867,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YbYpQE!2m2!1d46.04711602074517!2d14.544822677435588!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.04711602074517,14.544822677435588,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YbYpQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COWLIFijG1HSrwj9Ez4AEMX_9e5JJyrnohx1-tyKXRJhBx3m4bJrHdfjNBwusPfapOA0OvwPvBBkNt-zsH3O4CBuXJ0vavrFE1DFS7e2EtXq9wo-t7bP4Grt2VRGCCcyhvhpscc=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 4,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JFcjmDL4tZUcRvfjGbQkkAbo",
+   "kind": "google",
+   "source": "google",
+   "name": "Apartment Urban Dreams Apart hiška d.o.o",
+   "place": "Ljubljana",
+   "category": "Počitniški apartma",
+   "address": "Slovenska cesta 12, 1000 Ljubljana",
+   "lat": 46.048525,
+   "lng": 14.501859,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3cbVAQ!2m2!1d46.04849892459752!2d14.501901511883135!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.04849892459752,14.501901511883135,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3cbVAQ!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNv6gxhVsyKGDbZR_PPctv-qpGUSN-DA3Cp_vBWOG4nT7ZrDlpcW_JltKVhaS2FNgBMuQWC2GG6Hvpg1YbQbzmKVPRIfG0F3QxZ37l7HEhCeaNvhJ76bxd5F9F42GopUhBMR70=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 4,
+   "views": null,
+   "highlights": [],
+   "type": "nastanitve"
+  },
+  {
    "id": "g-JjzTOxUxbZUcRW8oLX2cf3Cs",
    "kind": "google",
    "source": "google",
@@ -15539,6 +16449,126 @@
    "type": "trgovine"
   },
   {
+   "id": "g-JHZHtfvtwZUcR7yrPT4xx8YI",
+   "kind": "google",
+   "source": "google",
+   "name": "BELIDIM - Premium Vape & CBD shop",
+   "place": "Celje",
+   "category": "Trgovina z elektronskimi cigaretami",
+   "address": "Mariborska cesta 128, 3000 Celje",
+   "lat": 46.24291,
+   "lng": 15.278782,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frawAE!2m2!1d46.24324450505569!2d15.27882290471804!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.24324450505569,15.27882290471804,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frawAE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CP33rzqcLjfiJcfuoCfePWCr2SI6SCg-jnj7SUssUdAbzzAeXdAGrYpkYjDWtXcgICepELOR3Gfi7eWI2gOhi3dJfm8kBt4sHtFJXSWT6w00D9gaNi1_7Z5cQo2sdDFSgxy1dDR=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 3,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-JazCfYOkzZUcR-pd2kBuBn0E",
+   "kind": "google",
+   "source": "google",
+   "name": "Belidim BTC - Premium Vape Shop Ljubljana Slovenia Electronic Cigarette near you",
+   "place": "Ljubljana",
+   "category": "Trgovina z elektronskimi cigaretami",
+   "address": "Šmartinska c. 152, 1000 Ljubljana",
+   "lat": 46.066682,
+   "lng": 14.542991,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaPSA!2m2!1d46.06634496229382!2d14.543060996637253!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.06634496229382,14.543060996637253,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaPSA!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPNsJEYB_A2U-bP6mokjyCc9G9Z09hUXtQbGmADEH4892SU8ApHY6DmrzaV7uLZQ_HU3E3OXVMoZFwEzP6WlpAoxkaDUzhfc1sWZ2iiifUY_UhUl_P5U9VAOakaJ764Ym1CaJCq=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 3,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-Jd0sr1NYfZUcR29xSZRAzPts",
+   "kind": "google",
+   "source": "google",
+   "name": "Plavica",
+   "place": "Ivančna Gorica",
+   "category": "Trgovina z zelišči",
+   "address": "Muljava 22a, 1295 Ivančna Gorica",
+   "lat": 45.901626,
+   "lng": 14.799736,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3brXOg!2m2!1d45.90132644206627!2d14.799817240468403!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@45.90132644206627,14.799817240468403,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3brXOg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPVa5LaDvq0JXCxPrXtQ6It9o_7UEABpHpXbIy-9GzFo3A1lmedzudd7ywmc-VipCWHntVjwwyBTtX2KkaT4J24xgimZgwvfnug_QYtBaT-xpJy-NfwXz4lTLTBBgeO9BhCHxjr=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 3,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-JfyHHvWEtZUcR8WfPuL_Zt18",
+   "kind": "google",
+   "source": "google",
+   "name": "Lassana - frizerski in kozmetični salon",
+   "place": "Ljubljana",
+   "category": "Frizer",
+   "address": "Čopova ulica 2, 1000 Ljubljana",
+   "lat": 46.051804,
+   "lng": 14.505401,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaNaw!2m2!1d46.051757351309924!2d14.505401654824967!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.051757351309924,14.505401654824967,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaNaw!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMeeSMQJF88gIcstrxehQcuOfQWsZGb4cD6Wbfu8WLnuNcHRbO9fsOY1UxtHHzhVswNpn4po_iIx4ce9AwPJ1Z9KELJszmO0HpYbYFvpWwKHN9HfSBcldJVbOz2fGYKkB1bwBA=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 3,
+   "views": null,
+   "highlights": [],
+   "type": "zdravje"
+  },
+  {
+   "id": "g-JLyGMgKZ3b0cRMDROpdH14c4",
+   "kind": "google",
+   "source": "google",
+   "name": "Stara Trta, Prodaja In Degustacija Vin, D.O.O.",
+   "place": "Maribor",
+   "category": "Vinograd",
+   "address": "Gorkega ulica 1, 2000 Maribor",
+   "lat": 46.556732,
+   "lng": 15.644194,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3bqOlAE!2m2!1d46.556702195790784!2d15.644316700426236!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.556702195790784,15.644316700426236,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3bqOlAE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CPL1cSHXEzbvLVfizJQao4g-KRVu-KSLpYh5ERso-dyzcZyWuS_-gOKqvq0Nw9bwbk-mAMFerksKsAIjoIWkBUMBQjz1ABqzfD6I3n5StRCeHp4b_X42--MjcsZvPU6xUdQRu6-9A=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 3,
+   "views": null,
+   "highlights": [],
+   "type": "znamenitosti"
+  },
+  {
+   "id": "g-JXx3KhngyZUcRKN-43lNWc-8",
+   "kind": "google",
+   "source": "google",
+   "name": "Park Kodeljevo - Šport Ljubljana",
+   "place": "Ljubljana",
+   "category": "Športni kompleks",
+   "address": "Gortanova ulica 21, 1000 Ljubljana",
+   "lat": 46.050343,
+   "lng": 14.532998,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3frdOg!2m2!1d46.05002169988628!2d14.530510300113011!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.05002169988628,14.530510300113011,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3frdOg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNMC7Pe59LXzgqelFQhJhjzed104AhdnGuLZQu87bWneZqLHSKNuxwOlmqJtmEaxukCTLdJ-t-GE_2ILAYC3jTt2CHJ3-ATNg3JywdXi-r2NtigtC_BOcMZSkxp65U2EtTSh5wq=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 3,
+   "views": null,
+   "highlights": [],
+   "type": "sport"
+  },
+  {
    "id": "g-JwcBiC7BEZUcRYn4WlMfOIS4",
    "kind": "google",
    "source": "google",
@@ -15839,6 +16869,46 @@
    "type": "kraji"
   },
   {
+   "id": "g-JG3xcsi-EZUcR2jT3W6ULgzM",
+   "kind": "google",
+   "source": "google",
+   "name": "Boč",
+   "place": "Podplat",
+   "category": "Gorski vrh",
+   "address": "2319 Podplat",
+   "lat": 46.289444,
+   "lng": 15.599722,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aa2yQE!2m2!1d46.289444424813254!2d15.599722197950708!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.289444424813254,15.599722197950708,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aa2yQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CO7DWyCL8v-3ZJMbC9mVkoVB9MR4Mi1sJ9pXFe1ZnPbJREH34u37hI_Y7MNDBj1BDxK6V0OkQ6corh8b7NmxbN6zkVaEgsQpLi9NzGUV0yhCRfccZxd7QaYTAVVYTd5me9fpWqazg=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 2,
+   "views": null,
+   "highlights": [],
+   "type": "drugo"
+  },
+  {
+   "id": "g-JYXimaIHMekcR0rl4VQarPA0",
+   "kind": "google",
+   "source": "google",
+   "name": "Šmarna gora",
+   "place": "Ljubljana - Šmartno",
+   "category": "Gorski vrh",
+   "address": "1211 Ljubljana - Šmartno",
+   "lat": 46.133333,
+   "lng": 14.466667,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3brX4QE!2m2!1d46.12959257332536!2d14.463959962546447!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.12959257332536,14.463959962546447,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3brX4QE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNi00Ega-XQ-cnmG9NrIYTfnB4wUglZ-kIals11nOuxWLW1G_TqwiTVD7l593j-sDF0upAoKeSJpsZoQGeXmWmrtzE9PEdBzoTYxVW2cepvqVLlVrmUjkGAbZVscgs_gxRxne-yIQ=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 2,
+   "views": null,
+   "highlights": [],
+   "type": "drugo"
+  },
+  {
    "id": "g-J4UbfJ8dZZUcR96omIJ92mCI",
    "kind": "google",
    "source": "google",
@@ -16037,6 +17107,86 @@
    "views": null,
    "highlights": [],
    "type": "kraji"
+  },
+  {
+   "id": "g-JUW4Ax955b0cRxoIC5wnWMJU",
+   "kind": "google",
+   "source": "google",
+   "name": "Belidim - Premium Vape Shop Maribor",
+   "place": "Maribor",
+   "category": "Trgovina z elektronskimi cigaretami",
+   "address": "Tržaška cesta 67a, 2000 Maribor",
+   "lat": 46.522765,
+   "lng": 15.653507,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3aae8AE!2m2!1d46.52268375602321!2d15.653217962450984!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.52268375602321,15.653217962450984,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3aae8AE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COdJj1_EMhm_9ACUGGt6kLJ_CJ_EwOmSu4XLWCz33QKfO6NokgubIsL5boE__7RvkzsbAj8crhC91xueBJZQomllBiwGWSVQYj1yh671NylU8eFwHWa4futzRzqzfakckjH1L_-=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 1,
+   "views": null,
+   "highlights": [],
+   "type": "trgovine"
+  },
+  {
+   "id": "g-Jv6PPNYVwZUcR0Ow_ghz4AAQ",
+   "kind": "google",
+   "source": "google",
+   "name": "Celje",
+   "place": null,
+   "category": null,
+   "address": null,
+   "lat": 46.239749,
+   "lng": 15.267706,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3fqA2wE!2m2!1d46.239749484635716!2d15.267706297608015!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.239749484635716,15.267706297608015,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3fqA2wE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CM2OtcyF9tmQql2CFlN-xVBEbA7T1_wYIIOKYg8FfpYh6U15bqMNmbemBHaGiEBBOVXEkbRyNZFi-upX22PBHk2bzmJQpa_AECvSSaUPU_mKnjAM24MU5pZzspxtGrl12roM5D1=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 1,
+   "views": null,
+   "highlights": [],
+   "type": "kraji"
+  },
+  {
+   "id": "g-JDUPgXJ5mb0cRsPQ_ghz4AAQ",
+   "kind": "google",
+   "source": "google",
+   "name": "Ptuj",
+   "place": "Ptuj",
+   "category": null,
+   "address": "2250 Ptuj",
+   "lat": 46.419953,
+   "lng": 15.869688,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3YaMIg!2m2!1d46.41995350187652!2d15.869688403996326!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.41995350187652,15.869688403996326,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3YaMIg!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-COi_lqvDfcx6qOWMCBHTnQwQMPrWi4dRzU145MKvnRvwRFMzbNRCmsUNEGCHgwkW28Evnkp30hH83oyn0GWbny7ogmEd2136Sl9AZ4RbglNR7TvdsWR06sr6UqtBF1I-6DIgN1k=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 1,
+   "views": null,
+   "highlights": [],
+   "type": "kraji"
+  },
+  {
+   "id": "g-JX-5JKR9xZUcRzw7VYZ3ypK0",
+   "kind": "google",
+   "source": "google",
+   "name": "Celjski grad",
+   "place": "Celje",
+   "category": "Grad",
+   "address": "Cesta na Grad 78, 3000 Celje",
+   "lat": 46.219483,
+   "lng": 15.271976,
+   "approx": false,
+   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgICE3ab5hQE!2m2!1d46.219934276013404!2d15.271169007828279!3f0!4f0!5f0.78",
+   "mapsUrl": "https://www.google.com/maps/@46.219934276013404,15.271169007828279,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgICE3ab5hQE!2e10",
+   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CNBHPjvLa2kUsxdYZWzAfs8YBsH3AXSOYehsbL1kaZucIqNIGX7sqQcmJF7RNWbyKdrE_CXjKIL-s3Csa7AC_VZTAosoS24AFbaQcxCjuouiG-H4asjdPkQOStHMoW-7_fUBlvHEw=w2048-h1024-k-no",
+   "pano": true,
+   "scenes": 1,
+   "views": null,
+   "highlights": [],
+   "type": "znamenitosti"
   }
  ]
 }
