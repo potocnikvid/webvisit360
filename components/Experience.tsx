@@ -10,7 +10,7 @@ import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 import { isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus, GlobeApi, Look } from "./Globe";
-import { peakFor, type Pov } from "@/lib/flight";
+import { peakFor, selectFlight, type Pov } from "@/lib/flight";
 import { about, STUDIO } from "@/lib/about";
 import Story from "./Story";
 import PanoPreview from "./PanoPreview";
@@ -38,7 +38,7 @@ const norm = (s: string) =>
 /** How many nearest places to ring and frame when a type is chosen. */
 const NEAR_COUNT = 5;
 
-/** Wide screens keep a column of cards on the right (see .cards in globals.css). */
+/** Wide screens keep the standout tour's card on the right (see .cards in globals.css). */
 const CARDS_MIN_WIDTH = 900;
 const CARDS_WIDTH = 340;
 
@@ -213,11 +213,12 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       setViewed((v) => (v.includes(t.name) ? v : [...v, t.name]));
       setSearchOpen(false);
       if (t.lat != null && t.lng != null) {
-        const altitude = t.kind === "obcina" ? 0.03 : 0.01;
+        const from = globeApi.current?.pov();
+        const { altitude, ms } = selectFlight(t.kind, fromStory ? undefined : from);
         // Out of the story, rise from the studio and swing over to the place.
         const to = { lat: t.lat, lng: t.lng, altitude };
         if (fromStory) flyOut();
-        flyTo({ ...to, panel: true, ...(fromStory && { arc: peakFor(globeApi.current?.pov() ?? STUDIO, to), ms: RETURN_MS }) });
+        flyTo({ ...to, panel: true, ms, ...(fromStory && { arc: peakFor(from ?? STUDIO, to), ms: RETURN_MS }) });
       }
     },
     [byId, flyTo, endStory, flyOut],

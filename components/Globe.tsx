@@ -617,16 +617,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         window.clearTimeout(labelTimer);
         if (step.again != null) labelTimer = window.setTimeout(declutter, step.again);
         setPins();
-        // A name for a dot drawn on the map: the pin carries only the name, sized like the dot
-        // so the name sits just above it.
-        for (const id of labelOnly) {
-          const i = index.get(id)!;
-          const d = Math.round(shownRadius(i) * 4) / 2;
-          if (dotPx.get(id) === d) continue;
-          dotPx.set(id, d);
-          const dot = markers.current.get(id)?.querySelector<HTMLElement>(".marker__dot");
-          if (dot) dot.style.width = dot.style.height = `${d}px`;
-        }
+        sizePins();
       };
       let declutterRaf = 0;
       let declutterTimer = 0;
@@ -721,6 +712,12 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
       // Places pinned only for their name: their dot stays on the map.
       let labelOnly = new Set<string>();
+      // A place the mouse just left keeps its pin a moment, so its dot eases back and its name
+      // fades out instead of vanishing (HOVER_OUT_MS matches the label's fade in globals.css).
+      const HOVER_OUT_MS = 340;
+      let leavingId: string | null = null;
+      let leaveTimer = 0;
+      const named = () => (leavingId && !labels.pinned.has(leavingId) ? new Set([...labels.pinned, leavingId]) : labels.pinned);
       const dotPx = new Map<string, number>();
       let size = { W: el.clientWidth, H: el.clientHeight };
       const v = new THREE.Vector3();
@@ -756,11 +753,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       /** Give HTML pins to the places that need them (see pinIds); the rest stay dots. */
       const setPins = (force = false) => {
-        const next = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: labels.pinned });
+        const next = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: named() });
         const nextLabelOnly = new Set(
-          [...labels.pinned].filter((id) => {
+          [...named()].filter((id) => {
             const i = index.get(id);
-            return i != null && places[i].kind !== "obcina" && id !== selectedRef.current && !nearRef.current.has(id) && id !== hoveredId;
+            return i != null && places[i].kind !== "obcina" && id !== selectedRef.current && !nearRef.current.has(id) && id !== hoveredId && id !== leavingId;
           }),
         );
         const diff = (a: Set<string>, b: Set<string>) => [...a].filter((id) => !b.has(id)).concat([...b].filter((id) => !a.has(id)));
@@ -771,12 +768,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           const on = nextLabelOnly.has(id);
           const m = on ? markerEl(places[index.get(id)!]) : markers.current.get(id);
           m?.classList.toggle("is-label-only", on);
-          if (!on) {
-            const dot = m?.querySelector<HTMLElement>(".marker__dot");
-            if (dot) dot.style.width = dot.style.height = "";
-            dotPx.delete(id);
-          }
         }
+        for (const id of pinsChanged) if (!next.has(id)) unsize(id);
         pins = next;
         labelOnly = nextLabelOnly;
         for (const id of new Set([...pinsChanged, ...labelOnlyChanged])) {
@@ -785,7 +778,34 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         }
         placeDots.commit();
         if (pinsChanged.length || force) g.htmlElementsData(htmlData());
+        sizePins();
         wake();
+      };
+
+      /** Back to the pin's own size from globals.css. */
+      const unsize = (id: string) => {
+        if (!dotPx.delete(id)) return;
+        const dot = markers.current.get(id)?.querySelector<HTMLElement>(".marker__dot");
+        if (dot) dot.style.width = dot.style.height = "";
+      };
+      /**
+       * Pins that stand in for a dot drawn on the map (named, hovered or selected places) take
+       * that dot's size, so swapping one for the other never moves the dot or its name.
+       * Municipalities and nearby places keep their own pin look.
+       */
+      const sizePins = () => {
+        for (const id of pins) {
+          const i = index.get(id);
+          if (i == null || places[i].kind === "obcina" || nearRef.current.has(id)) {
+            unsize(id);
+            continue;
+          }
+          const d = Math.round(shownRadius(i) * 4) / 2;
+          if (dotPx.get(id) === d) continue;
+          dotPx.set(id, d);
+          const dot = markerEl(places[i]).querySelector<HTMLElement>(".marker__dot");
+          if (dot) dot.style.width = dot.style.height = `${d}px`;
+        }
       };
 
       const restyle = () => {
@@ -811,7 +831,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         heat = new Float32Array(places.length);
         room = new Float32Array(places.length).fill(MAX_ROOM);
         placeDots.setPositions(xyz);
-        pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: labels.pinned });
+        pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: named() });
         restyle();
         setPins(true);
       };
@@ -938,10 +958,19 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const onPin = (e: Event) => !!(e.target as Element | null)?.closest?.(".marker, .you, .studio");
       const hover = (id: string | null) => {
         if (id === hoveredId) return;
-        if (hoveredId) markers.current.get(hoveredId)?.classList.remove("is-hover");
+        const prev = hoveredId;
+        if (prev) markers.current.get(prev)?.classList.remove("is-hover");
         hoveredId = id;
-        if (id) markerEl(places[index.get(id)!]).classList.add("is-hover");
+        window.clearTimeout(leaveTimer);
+        leavingId = prev;
+        if (prev) leaveTimer = window.setTimeout(() => { leavingId = null; setPins(); }, HOVER_OUT_MS);
         setPins();
+        if (!id) return;
+        const m = markerEl(places[index.get(id)!]);
+        // A pin that was just put on the page has no "before" to transition from: let it be
+        // drawn once in its resting look (the dot's own size and colour), then light it up.
+        if (m.isConnected) m.classList.add("is-hover");
+        else requestAnimationFrame(() => requestAnimationFrame(() => { if (hoveredId === id) m.classList.add("is-hover"); }));
       };
       const onPointer = (ev: Event) => {
         wake();
@@ -1108,6 +1137,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         cancelAnimationFrame(watchRaf);
         cancelAnimationFrame(fadeRaf);
         cancelAnimationFrame(hoverRaf);
+        window.clearTimeout(leaveTimer);
         placesRef.current = { reload: () => {}, restyle: () => {}, fade: () => {} };
         pointerEvents.forEach((t) => el.removeEventListener(t, onPointer, { capture: true }));
         wakeRef.current = () => {};

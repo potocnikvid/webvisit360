@@ -65,6 +65,9 @@ a { color: inherit; text-decoration: none; }
   display: block; border-radius: 50%;
   background: var(--amber);
   box-shadow: 0 0 0 2px rgba(8, 18, 48, .55), 0 0 14px 3px rgba(246, 169, 59, .55);
+  /* Hover and selection grow the dot with a transform, never its size: the pin keeps its
+     box, so the name above it stays exactly where it is. */
+  transition: transform .2s cubic-bezier(.3, 1.6, .5, 1), background-color .16s ease, box-shadow .16s ease;
 }
 .marker--obcina .marker__dot { width: 14px; height: 14px; background: var(--ember); }
 .marker--obcina .marker__dot::after { /* slow beacon pulse */
@@ -86,23 +89,26 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap; font: 500 12.5px/1 var(--text); color: var(--snow);
   padding: 5px 8px; border-radius: 6px; background: rgba(8, 18, 48, .78);
   border: 1px solid var(--line);
-  /* Names come and go gently: they rise a little into place and fade (see lib/labels,
-     whose FADE_MS matches the fade-out). */
-  opacity: 0; transform: translate(-50%, 4px) scale(.95); transform-origin: 50% 100%;
-  transition: opacity .34s ease, transform .34s cubic-bezier(.2, .8, .2, 1); pointer-events: none;
+  /* Names fade in and out where they stand (see lib/labels, whose FADE_MS matches the
+     fade-out, and HOVER_OUT_MS in Globe). */
+  opacity: 0; transform: translateX(-50%); transform-origin: 50% 100%;
+  transition: opacity .34s ease; pointer-events: none;
 }
 .marker.has-label .marker__label,
 .marker:hover .marker__label,
 .marker.is-hover .marker__label,
 .marker:focus-visible .marker__label,
-.marker.is-selected .marker__label { opacity: 1; transform: translate(-50%, 0) scale(1); z-index: 2; }
+.marker.is-selected .marker__label { opacity: 1; z-index: 2; }
+/* Hovering: the name is there at once, without a slide. */
+.marker:hover .marker__label, .marker.is-hover .marker__label { transition-duration: .14s; }
 /* A pin made for its name has no "before" to transition from, so its name eases in by itself. */
 .marker.has-label .marker__label { animation: label-in .42s cubic-bezier(.2, .8, .2, 1) both; }
 @keyframes label-in {
-  from { opacity: 0; transform: translate(-50%, 5px) scale(.94); }
+  from { opacity: 0; }
 }
 .marker:hover .marker__dot, .marker.is-hover .marker__dot, .marker.is-selected .marker__dot {
   background: #fff; box-shadow: 0 0 0 3px var(--amber), 0 0 20px 6px rgba(246, 169, 59, .7);
+  transform: scale(1.3);
 }
 .marker:focus-visible { outline: none; }
 .marker:focus-visible .marker__dot { outline: 2px solid var(--snow); outline-offset: 3px; }
@@ -145,9 +151,10 @@ a { color: inherit; text-decoration: none; }
   width: 4px; height: 4px; background: rgba(214, 224, 245, .55); box-shadow: none;
 }
 .marker.is-dim .marker__dot::after { display: none; }
-.marker.is-dim:hover .marker__dot, .marker.is-dim.is-hover .marker__dot { width: 7px; height: 7px; background: #fff; }
+.marker.is-dim:hover .marker__dot, .marker.is-dim.is-hover .marker__dot { transform: scale(1.75); background: #fff; }
+/* 4 px drawn 3× larger: the ring and glow are a third of the usual, so they scale up to it. */
 .marker.is-dim.is-selected .marker__dot {
-  width: 12px; height: 12px; background: #fff; box-shadow: 0 0 0 3px var(--amber), 0 0 20px 6px rgba(246, 169, 59, .7);
+  transform: scale(3); background: #fff; box-shadow: 0 0 0 1px var(--amber), 0 0 7px 2px rgba(246, 169, 59, .7);
 }
 
 /* "You are here": a blue location dot; approximate locations get a wider soft halo */
@@ -511,11 +518,24 @@ a { color: inherit; text-decoration: none; }
 .has-panel .corner, .has-chat .corner, .has-story .corner { opacity: 0; pointer-events: none; }
 
 /* ---------- arrival cards: "closest to you" and a standout tour ---------- */
-/* Wide screens: a column on the right, above the badge (the left holds the hero and the
-   search). Narrower: a swipeable row above the search. */
+/* Wide screens: "closest to you" sits right above the search, the standout tour on the right
+   above the badge. Narrower: both in a swipeable row above the search. */
 .cards { display: flex; flex-direction: column; gap: 10px; }
 @media (min-width: 900px) {
-  .cards { position: fixed; z-index: 6; right: var(--gutter); bottom: 140px; width: min(340px, 32vw); }
+  .cards > .featured { position: fixed; z-index: 6; right: var(--gutter); bottom: 140px; width: min(340px, 32vw); }
+}
+/* Shorter laptop screens: the hero (top) and the finder (bottom) share the left column, so the
+   "closest to you" card gets tighter and the hero gives up its least important lines. */
+@media (min-width: 900px) and (max-height: 860px) {
+  .cards > .near:not(.featured) { padding: 11px 14px 10px; }
+  .cards > .near:not(.featured) .near__others { display: none; }
+  .cards > .near:not(.featured) .near__actions { margin-top: 8px; }
+}
+@media (min-width: 900px) and (max-height: 780px) {
+  .app:has(.cards > .near:not(.featured)) .hero > p { display: none; }
+}
+@media (min-width: 900px) and (max-height: 680px) {
+  .app:has(.cards > .near:not(.featured)) .hero .why { display: none; }
 }
 @media (max-width: 899px) {
   .cards {
@@ -583,7 +603,7 @@ a { color: inherit; text-decoration: none; }
   transition: opacity .45s, transform .45s, visibility 0s .45s;
 }
 .has-story .hero *, .has-story .finder * { pointer-events: none !important; }
-/* A transform on .finder would re-anchor the right-hand card column (position: fixed inside it). */
+/* A transform on .finder would re-anchor the standout card on the right (position: fixed inside it). */
 .has-story .finder { transform: none; }
 .hero, .finder, .footer, .corner { transition: opacity .6s, transform .6s, visibility 0s; }
 .marker, .you { transition: opacity .6s, visibility 0s; }
