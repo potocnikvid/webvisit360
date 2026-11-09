@@ -729,6 +729,21 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       controls.autoRotate = false;
       // Fired only by the visitor's own gestures, never by our camera flights.
       controls.addEventListener("start", () => onExploreRef.current?.());
+      // Pinch zoom on touch screens. OrbitControls scales the camera's distance from the
+      // globe's CENTRE by (finger spread ratio)^zoomSpeed, and globe.gl sets zoomSpeed to
+      // sqrt(altitude)/2, so near the ground a small pinch dived far (over Slovenia a 1.5x pinch
+      // zoomed ~3.7x, lower down it hit the closest zoom at once). With zoomSpeed =
+      // alt / (1 + alt) the height above the ground follows the fingers 1:1: spread them twice
+      // as far apart and you are twice as close, at any height. This listener runs after
+      // globe.gl's own, so it has the last word. Desktop wheel zoom keeps globe.gl's feel.
+      if (touch) {
+        const pinchSpeed = () => {
+          const alt = g.pointOfView().altitude;
+          controls.zoomSpeed = alt / (1 + alt);
+        };
+        controls.addEventListener("change", pinchSpeed);
+        pinchSpeed();
+      }
       fitClipping(START.altitude);
 
       // ---- Render only while something changes ------------------------------------
