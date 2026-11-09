@@ -102,6 +102,23 @@ a { color: inherit; text-decoration: none; }
 .marker.is-near .marker__dot { box-shadow: 0 0 0 3px rgba(246, 169, 59, .35), 0 0 14px rgba(246, 169, 59, .8); }
 .marker.is-near { z-index: 5; }
 
+/* Pins never sit on top of each other: the less important of two overlapping dots is tucked
+   away (see Globe.tsx) and comes back when zooming in gives it room. */
+.marker.is-tucked { opacity: 0; pointer-events: none; }
+
+/* Opening: pins stay hidden during the fly-in, then pop in as a wave from where the camera
+   lands (each pin gets its own --pop-delay). Names follow once the wave has finished. */
+.globe[data-pins="hidden"] .marker { opacity: 0 !important; pointer-events: none; }
+.globe[data-pins="in"] .marker__dot {
+  animation: pin-pop .55s cubic-bezier(.34, 1.7, .5, 1) var(--pop-delay, 0ms) both;
+}
+.globe:not([data-pins="shown"]) .marker__label { opacity: 0 !important; }
+@keyframes pin-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 /* A type chosen in the chips: its places grow and get names; everything else shrinks to a
    faint, unnamed dot (hover still shows the name). */
 .marker.is-focus { z-index: 4; }
@@ -155,6 +172,24 @@ a { color: inherit; text-decoration: none; }
 .brand { display: flex; align-items: center; gap: .55em; font: 400 clamp(23px, 1.9vw, 28.5px)/1 var(--display); letter-spacing: -.01em; }
 .brand img { width: 2em; height: 2em; border-radius: .44em; }
 .brand b { color: var(--amber); font-weight: 600; }
+/* Map look switch, top centre */
+.looks {
+  position: absolute; left: 50%; top: 18px; transform: translateX(-50%);
+  display: flex; padding: 4px; gap: 2px; border-radius: 999px;
+  background: var(--glass); border: 1px solid var(--line);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+.looks button {
+  border: 0; background: none; padding: 7px 14px; border-radius: 999px;
+  font-size: 13.5px; font-weight: 500; color: var(--mist); white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.looks button:hover { color: var(--snow); }
+.looks button.is-on { background: var(--snow); color: var(--night); }
+.credit {
+  position: absolute; right: 12px; bottom: 34px; z-index: 4; margin: 0;
+  font-size: 10.5px; color: rgba(147, 163, 196, .7); pointer-events: none;
+}
 .nav { display: flex; align-items: center; gap: 22px; font-size: 15px; color: var(--mist); }
 .nav a:hover { color: var(--snow); }
 
@@ -724,6 +759,9 @@ a { color: inherit; text-decoration: none; }
 /* ---------- mobile ---------- */
 @media (max-width: 760px) {
   .nav a { display: none; }
+  .looks { top: 66px; }
+  .looks button { padding: 6px 10px; font-size: 12.5px; }
+  .credit { display: none; }
   .hero { top: 76px; right: var(--gutter); }
   .hero p { font-size: 15px; }
   .stats { margin-top: 16px; }

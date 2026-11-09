@@ -40,6 +40,8 @@ const storyPin = (w: number) => (w <= 760 ? { x: 0.5, y: 0.17 } : { x: 0.74, y: 
 /** Rough visible half-height in degrees for globe.gl's default 50° fov. */
 const halfHeightDeg = (altitude: number) => 26.8 * altitude;
 
+export type Look = "satellite" | "illustrated";
+
 type Props = {
   tours: Tour[];
   geo: Feature[];
@@ -64,6 +66,8 @@ type Props = {
   intro?: boolean;
   /** The studio pin shown during the About story. */
   studio?: { lat: number; lng: number; label: string } | null;
+  /** Map style chosen with the switch at the top. */
+  look: Look;
 };
 
 type You = NonNullable<Props["you"]>;
@@ -77,6 +81,8 @@ const START = { lat: 38, lng: 2, altitude: 2.4 };
 // countries are drawn above COUNTRY_MIN, municipalities below MUNI_MAX.
 const COUNTRY_MIN = 0.3;
 const MUNI_MAX = 0.9;
+// Illustrated look: dotted continents above this altitude, flat land shapes below.
+const ILLUS_DOTS_ALT = 0.35;
 // Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
 const GOOGLE_VIEWS_PER_PHOTO = 2700;
 
@@ -85,6 +91,13 @@ const importance = (t: Tour) =>
   t.kind === "obcina"
     ? 1e12 + (t.scenes ?? 0)
     : t.views ?? (t.scenes ?? 0) * (t.source === "google" ? GOOGLE_VIEWS_PER_PHOTO : 1000);
+
+/** On-screen radius (px) of a place's dot, matching the sizes in globals.css (and lib/dots). */
+const dotRadius = (t: Tour, focus: PlaceType | "all") => {
+  if (isDimmed(t, focus)) return 2;
+  if (focus !== "all") return t.kind === "obcina" ? 8 : 6;
+  return t.kind === "obcina" ? 7 : t.kind === "business" ? 3.5 : 3;
+};
 
 /** Map label: municipality without "Občina", business up to its first separator, max ~30 chars. */
 const shortLabel = (t: Tour) => {
@@ -100,10 +113,29 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, onExplore, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false }: Props) {
+type LookStyle = {
+  tiles: ((x: number, y: number, l: number) => string) | null;
+  maxLevel: number;
+  /** Closest zoom, as altitude in globe radii. */
+  minAlt: number;
+  ambient: [string, number];
+  sun: [string, number];
+  atmosphere: [string, number];
+};
+
+const LOOKS: Record<Look, LookStyle> = {
+  // Photographic, "blue hour over the Alps".
+  satellite: { tiles: ESRI, maxLevel: 19, minAlt: 0.000025, ambient: ["#7f97d8", 2.1], sun: ["#ffc98a", 1.1], atmosphere: ["#6d8de0", 0.16] },
+  // Illustrated: no imagery; dotted continents and flat municipality shapes.
+  illustrated: { tiles: null, maxLevel: 0, minAlt: 0.0008, ambient: ["#ffffff", 2.4], sun: ["#ffffff", 0.5], atmosphere: ["#4f74d9", 0.22] },
+};
+
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, onExplore, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false , look }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
+  /** Each place's moment in the opening wave of pins (ms), once it has started. */
+  const popDelay = useRef(new Map<string, number>());
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const onExploreRef = useRef(onExplore);
@@ -187,10 +219,14 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       m.classList.toggle("is-dim", isDimmed(t, focusRef.current));
       m.classList.toggle("is-focus", focusRef.current !== "all" && t.type === focusRef.current);
       m.classList.toggle("is-selected", t.id === selectedRef.current);
+      const delay = popDelay.current.get(t.id);
+      if (delay != null) m.style.setProperty("--pop-delay", `${delay}ms`);
       markers.current.set(t.id, m);
     }
     return m;
   };
+  const lookRef = useRef<Look>(look);
+  const applyLookRef = useRef<(l: Look) => void>(() => {});
   toursRef.current = tours;
 
   // ---- create the globe once -------------------------------------------------
@@ -209,11 +245,6 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .height(el.clientHeight)
         .backgroundColor("rgba(0,0,0,0)")
         .showAtmosphere(true)
-        .atmosphereColor("#6d8de0")
-        .atmosphereAltitude(0.16)
-        .globeTileEngineUrl(ESRI)
-        // ESRI has real imagery to level 19 over Slovenia; 20 is just upscaled.
-        .globeTileEngineMaxLevel(19)
         .pointOfView(START, 0);
 
       // Phones and tablets: no hover, and a GPU that pays for every pixel. 1.5× keeps the
@@ -221,11 +252,12 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const touch = !window.matchMedia("(hover: hover)").matches;
       if (touch) g.renderer().setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-      // Blue-hour lighting: a cool, dim ambient and a low warm "sunset" key light.
-      const ambient = new THREE.AmbientLight("#7f97d8", 2.1);
-      const sun = new THREE.DirectionalLight("#ffc98a", 1.1);
+      // Lighting is restyled per look (see LOOKS); the sun sits low for a dusk feel.
+      const ambient = new THREE.AmbientLight();
+      const sun = new THREE.DirectionalLight();
       sun.position.set(-1, 0.35, 0.6);
       g.lights([ambient, sun]);
+      const globeMat = g.globeMaterial() as import("three").MeshPhongMaterial;
 
       // ---- polygons: country outlines far out, municipality borders up close
       const tourCap = new THREE.MeshBasicMaterial({
@@ -238,6 +270,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       tourCapHover.opacity = 0.42;
       // Areas without a tour have no fill at all: not drawn, but still there for the pointer.
       const noCap = new THREE.MeshBasicMaterial({ visible: false });
+      // Illustrated look: flat, opaque municipality shapes.
+      const flatCap = new THREE.MeshBasicMaterial({ color: "#2c4592" });
+      const flatTour = new THREE.MeshBasicMaterial({ color: "#c8862f" });
+      const flatTourHover = new THREE.MeshBasicMaterial({ color: "#f6a93b" });
+      const flatLand = new THREE.MeshBasicMaterial({ color: "#22397f" });
       const countries = geo.filter((f) => f.properties.k === "c");
       const munis = geo.filter((f) => f.properties.k === "m");
       let hovered: Feature | null = null;
@@ -245,16 +282,24 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       let showingCountries: boolean | null = null;
 
       // Keep borders hugging the ground (~40-50 m) so they don't float when zoomed in close.
-      g.polygonAltitude((f) => ((f as Feature).properties.tour ? 0.000008 : 0.000006))
-        .polygonCapMaterial((f) =>
-          (f as Feature).properties.tour ? (f === hovered ? tourCapHover : tourCap) : noCap,
-        )
+      g.polygonAltitude((f) => {
+        const p = (f as Feature).properties;
+        return p.tour ? 0.000008 : p.k === "m" ? 0.000006 : 0.000003;
+      })
+        .polygonCapMaterial((f) => {
+          const illus = lookRef.current === "illustrated";
+          if (illus && (f as Feature).properties.k === "c") return flatLand;
+          const flat = illus && (f as Feature).properties.k === "m";
+          if ((f as Feature).properties.tour) return f === hovered ? (flat ? flatTourHover : tourCapHover) : flat ? flatTour : tourCap;
+          return flat ? flatCap : noCap;
+        })
         // No side walls: they'd be invisible anyway, and three.js redraws a transparent
         // double-sided material twice per frame, re-checking its shader both times.
         .polygonSideColor(() => null as unknown as string)
         .polygonStrokeColor((f) => {
           const p = (f as Feature).properties;
-          if (p.k === "c") return "rgba(214,224,245,0.32)";
+          if (p.k === "c") return lookRef.current === "illustrated" ? "rgba(147,163,196,0.4)" : "rgba(214,224,245,0.32)";
+          if (lookRef.current === "illustrated") return p.tour ? "#ffd27a" : "rgba(8,18,54,0.7)";
           return p.tour ? "rgba(255,210,122,0.9)" : "rgba(214,224,245,0.28)";
         })
         .polygonsTransitionDuration(0)
@@ -300,12 +345,83 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
 
       const countriesOutsideSlovenia = countries.filter((f) => f.properties.n !== "Slovenia");
+      // Land as dots for the illustrated look: ~11k precomputed points (public/data/land-dots.json,
+      // built by redesign/data/scripts/build_dots.mjs) drawn as ONE THREE.Points object - one draw
+      // call and one vertex per dot. (globe.gl's hexPolygons layer built ~250k triangles in ~180
+      // meshes and froze the page for over a second while computing them.)
+      let dots: import("three").Points | null = null;
+      // Dots sit ~1.7 globe units (~110 km) apart. Keep each about half that spacing on screen,
+      // so the continents read as a solid dot pattern at every distance, like a printed map.
+      const dotSize = (alt: number) => {
+        const unitsToPx = el.clientHeight / 2 / (Math.max(alt, 0.01) * R * Math.tan((25 * Math.PI) / 180));
+        return Math.min(12, Math.max(2.5, 0.55 * 1.7 * unitsToPx)) * g.renderer().getPixelRatio();
+      };
+      let dotsLoading = false;
+      const showDots = (on: boolean) => {
+        if (dots) dots.visible = on;
+        if (!on || dots || dotsLoading) return;
+        dotsLoading = true;
+        fetch("/data/land-dots.json")
+          .then((r) => r.json() as Promise<number[]>)
+          .then((flat) => {
+            if (disposed) return;
+            const pos = new Float32Array((flat.length / 2) * 3);
+            for (let i = 0, j = 0; i < flat.length; i += 2, j += 3) {
+              const c = g.getCoords(flat[i] / 100, flat[i + 1] / 100, 0.0004);
+              pos[j] = c.x;
+              pos[j + 1] = c.y;
+              pos[j + 2] = c.z;
+            }
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+            // Round dot sprite.
+            const cv = document.createElement("canvas");
+            cv.width = cv.height = 32;
+            const cx = cv.getContext("2d")!;
+            cx.fillStyle = "#fff";
+            cx.beginPath();
+            cx.arc(16, 16, 14, 0, Math.PI * 2);
+            cx.fill();
+            const mat = new THREE.PointsMaterial({
+              color: "#93a3c4",
+              size: dotSize(g.pointOfView().altitude),
+              sizeAttenuation: false,
+              map: new THREE.CanvasTexture(cv),
+              transparent: true,
+              opacity: 0.6,
+              alphaTest: 0.3,
+              depthWrite: false,
+            });
+            dots = new THREE.Points(geom, mat);
+            dots.visible = lookRef.current === "illustrated" && borderMode === "dots";
+            g.scene().add(dots);
+            wakeRef.current();
+          })
+          .catch(() => {
+            dotsLoading = false;
+          });
+      };
+      // Up close the illustrated look draws neighbouring countries as land; only the ones
+      // around Slovenia can be on screen then, so skip the rest of the world (fewer draw calls).
+      const nearCountries = countriesOutsideSlovenia.filter((f) => {
+        const c = JSON.stringify(f.geometry).match(/-?\d+\.?\d*/g)!.map(Number);
+        let near = false;
+        for (let i = 0; i < c.length - 1 && !near; i += 2) near = c[i] > -5 && c[i] < 35 && c[i + 1] > 30 && c[i + 1] < 60;
+        return near;
+      });
+
       let borderMode = "";
       const applyZoom = (alt: number) => {
-        const mode = alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
+        // Illustrated: dotted continents from far away; up close (where the fixed-size dots
+        // would turn into huge discs) neighbouring countries become flat land shapes.
+        const illus = lookRef.current === "illustrated";
+        const mode = illus ? (alt > ILLUS_DOTS_ALT ? "dots" : "land") : alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
         if (mode === borderMode) return;
         borderMode = mode;
-        g.polygonsData(mode === "c" ? countries : mode === "m" ? munis : [...countriesOutsideSlovenia, ...munis]);
+        if (illus) showDots(mode === "dots");
+        g.polygonsData(
+          mode === "c" ? countries : mode === "m" || mode === "dots" ? munis : mode === "land" ? [...nearCountries, ...munis] : [...countriesOutsideSlovenia, ...munis],
+        );
       };
 
       // ---- Labels: greedy placement by importance, using projected screen positions
@@ -331,6 +447,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         ui = { at: now, W: host.width, H: host.height, boxes };
         return ui;
       };
+      // Pins tucked away because they'd overlap a more important one (see declutter).
+      const tucked = new Set<string>();
+      let order: number[] = [];
+      let orderFor = "";
       const declutter = () => {
         const alt = g.pointOfView().altitude;
         const { W, H, boxes } = pageBoxes();
@@ -339,8 +459,65 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const near = nearRef.current;
         const selected = selectedRef.current ?? undefined;
 
+        // ---- Dots: never draw one pin on top of another. Walk the places from most to least
+        // important and tuck away any whose dot would overlap a dot already placed on screen.
+        // A coarse screen grid keeps this cheap enough to run every frame (~800 places); the
+        // order only changes with the selection, nearby places, the chosen type or the list.
+        const focus = focusRef.current;
+        const key = `${selected}|${[...near].join(",")}|${focus}|${places.length}`;
+        if (key !== orderFor) {
+          orderFor = key;
+          const rank = (t: Tour) =>
+            (t.id === selected ? 4e12 : 0) + (near.has(t.id) ? 2e12 : 0) +
+            (focus !== "all" && t.type === focus ? 1e12 : 0) + importance(t);
+          order = places.map((_, i) => i).sort((a, b) => rank(places[b]) - rank(places[a]));
+        }
+        const CELL = 20;
+        const grid = new Map<number, { x: number; y: number; r: number }[]>();
+        const nextTucked = new Set<string>();
+        for (const i of order) {
+          const t = places[i];
+          const x = px[i];
+          const y = py[i];
+          // Off screen, or on the far side of the globe (NaN).
+          if (!(x >= -20 && y >= -20 && x <= W + 20 && y <= H + 20)) continue;
+          const r = dotRadius(t, focus);
+          const gx = Math.floor(x / CELL);
+          const gy = Math.floor(y / CELL);
+          let hit = false;
+          for (let dx = -1; dx <= 1 && !hit; dx++)
+            for (let dy = -1; dy <= 1 && !hit; dy++)
+              for (const q of grid.get((gx + dx) * 100003 + (gy + dy)) ?? [])
+                if (Math.hypot(q.x - x, q.y - y) < q.r + r + 1.5) {
+                  hit = true;
+                  break;
+                }
+          if (hit && t.id !== selected) {
+            nextTucked.add(t.id);
+            continue;
+          }
+          const cell = gx * 100003 + gy;
+          (grid.get(cell) ?? grid.set(cell, []).get(cell)!).push({ x, y, r });
+        }
+        const tuckChanged: string[] = [];
+        for (const id of tucked) if (!nextTucked.has(id)) {
+          markers.current.get(id)?.classList.remove("is-tucked");
+          tuckChanged.push(id);
+        }
+        for (const id of nextTucked) if (!tucked.has(id)) {
+          markers.current.get(id)?.classList.add("is-tucked");
+          tuckChanged.push(id);
+        }
+        tucked.clear();
+        nextTucked.forEach((id) => tucked.add(id));
+        if (tuckChanged.length) {
+          for (const id of tuckChanged) placeDots.setLook(index.get(id)!, lookOf(index.get(id)!));
+          placeDots.commit();
+          wake();
+        }
+
         const candidates = toursRef.current
-          .filter((t) => t.lat != null && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
+          .filter((t) => t.lat != null && !tucked.has(t.id) && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
           .sort((a, b) =>
             Number(b.id === selected) - Number(a.id === selected) ||
             Number(near.has(b.id)) - Number(near.has(a.id)) ||
@@ -433,6 +610,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       g.onZoom((pov) => {
         sharpenTiles();
         fitClipping(pov.altitude);
+        if (dots?.visible) (dots.material as import("three").PointsMaterial).size = dotSize(pov.altitude);
         applyZoom(pov.altitude);
         scheduleDeclutter();
       });
@@ -451,9 +629,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         });
 
       // ---- Places: every dot drawn on the map in one go; HTML pins only where needed
-      const dots = createDots(THREE);
-      dots.setPixelRatio(g.renderer().getPixelRatio());
-      g.scene().add(dots.object);
+      const placeDots = createDots(THREE);
+      placeDots.setPixelRatio(g.renderer().getPixelRatio());
+      g.scene().add(placeDots.object);
       let places: Tour[] = [];
       let index = new Map<string, number>();
       let xyz = new Float32Array(0);
@@ -481,6 +659,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         }
       };
 
+      /** A place's dot, unless an HTML pin stands in for it or it's tucked away. */
+      const lookOf = (i: number) => (pins.has(places[i].id) || tucked.has(places[i].id) ? null : dotLook(places[i], focusRef.current));
+
       const htmlData = () => [
         ...places.filter((t) => pins.has(t.id)),
         ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
@@ -495,16 +676,16 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         pins = next;
         for (const id of changed) {
           const i = index.get(id);
-          if (i != null) dots.setLook(i, pins.has(id) ? null : dotLook(places[i], focusRef.current));
+          if (i != null) placeDots.setLook(i, lookOf(i));
         }
-        dots.commit();
+        placeDots.commit();
         g.htmlElementsData(htmlData());
         wake();
       };
 
       const restyle = () => {
-        places.forEach((t, i) => dots.setLook(i, pins.has(t.id) ? null : dotLook(t, focusRef.current)));
-        dots.commit();
+        places.forEach((_, i) => placeDots.setLook(i, lookOf(i)));
+        placeDots.commit();
         wake();
       };
 
@@ -520,7 +701,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         });
         px = new Float32Array(places.length);
         py = new Float32Array(places.length);
-        dots.setPositions(xyz);
+        placeDots.setPositions(xyz);
         pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
         restyle();
         setPins(true);
@@ -536,7 +717,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const step = (now: number) => {
           const k = Math.min(1, (now - start) / 300);
           opacity = from + (to - from) * k;
-          dots.setOpacity(opacity);
+          placeDots.setOpacity(opacity);
           wake(100);
           if (k < 1) fadeRaf = requestAnimationFrame(step);
         };
@@ -546,8 +727,6 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       const controls = g.controls();
       controls.autoRotate = false;
-      // Allow zooming down to ~160 m above the ground (globe radius = 6371 km).
-      controls.minDistance = R * (1 + 0.000025);
       // Fired only by the visitor's own gestures, never by our camera flights.
       controls.addEventListener("start", () => onExploreRef.current?.());
       fitClipping(START.altitude);
@@ -624,6 +803,14 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const r = el.getBoundingClientRect();
         return { x: e.clientX - r.left, y: e.clientY - r.top };
       };
+      /** Screen positions of the dots that can be picked: tucked ones are hidden. */
+      const pickable = () => {
+        project();
+        for (const id of tucked) {
+          const i = index.get(id);
+          if (i != null) px[i] = NaN;
+        }
+      };
       const onPin = (e: Event) => !!(e.target as Element | null)?.closest?.(".marker, .you, .studio");
       const hover = (id: string | null) => {
         if (id === hoveredId) return;
@@ -639,7 +826,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         if (e.type === "pointerup" && down) {
           const p = local(e);
           if (Math.hypot(p.x - down.x, p.y - down.y) < 8 && performance.now() - down.at < 600 && !quietRef.current) {
-            project();
+            pickable();
             const i = nearest(px, py, p.x, p.y, e.pointerType === "mouse" ? 9 : 18);
             if (i >= 0) {
               dotPickedAt = performance.now();
@@ -654,7 +841,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           hoverRaf = requestAnimationFrame(() => {
             hoverRaf = 0;
             if (inPin || quietRef.current) return;
-            project();
+            pickable();
             const i = nearest(px, py, p.x, p.y, 9);
             hover(i >= 0 ? places[i].id : null);
           });
@@ -667,6 +854,37 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
       const pointerEvents = ["pointerdown", "pointermove", "pointerup", "pointercancel", "wheel"];
       pointerEvents.forEach((t) => el.addEventListener(t, onPointer, { capture: true, passive: true }));
+
+      const applyLook = (l: Look) => {
+        lookRef.current = l;
+        const st = LOOKS[l];
+        ambient.color.set(st.ambient[0]);
+        ambient.intensity = st.ambient[1];
+        sun.color.set(st.sun[0]);
+        sun.intensity = st.sun[1];
+        g.atmosphereColor(st.atmosphere[0]).atmosphereAltitude(st.atmosphere[1]);
+        // Swap imagery: drop the old tiles, then point the engine at the new source (or none).
+        g.globeTileEngineClearCache();
+        g.globeTileEngineUrl(st.tiles as unknown as (x: number, y: number, l: number) => string);
+        if (st.tiles) g.globeTileEngineMaxLevel(st.maxLevel);
+        // Ocean colour for the illustrated look; black (hidden under tiles) otherwise.
+        globeMat.color.set(l === "illustrated" ? "#081236" : "#000000");
+        globeMat.emissive?.set(l === "illustrated" ? "#060f2e" : "#000000");
+        globeMat.shininess = l === "illustrated" ? 0 : 30;
+        if (l !== "illustrated") showDots(false);
+        // Respect the look's closest zoom; nudge the camera out if it's already closer.
+        controls.minDistance = R * (1 + st.minAlt);
+        const pov = g.pointOfView();
+        if (pov.altitude < st.minAlt) g.pointOfView({ ...pov, altitude: st.minAlt * 1.5 }, 400);
+        borderMode = "";
+        applyZoom(pov.altitude);
+        g.polygonCapMaterial(g.polygonCapMaterial()).polygonStrokeColor(g.polygonStrokeColor());
+        el.dataset.look = l;
+        wake();
+      };
+      applyLookRef.current = applyLook;
+      applyLook(lookRef.current);
+
 
       const onResize = () => {
         g.width(el.clientWidth).height(el.clientHeight);
@@ -701,8 +919,62 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       // Orchestrated fly-in to the visitor, or to all of Slovenia.
       const t = intro ? window.setTimeout(() => g.pointOfView(initialView ?? SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700) : 0;
 
+      // ---- Pins appear only as the opening flight lands: a wave of pops spreading out from
+      // where the camera lands, municipalities first. (Hidden until then; see globals.css.)
+      // The dots on the map pop in the same way, in the shader (see globeDots).
+      let revealTimer = 0;
+      let revealDone = 0;
+      let waveRaf = 0;
+      const revealPins = () => {
+        if (el.dataset.pins !== "hidden") return;
+        window.clearTimeout(revealTimer);
+        const c = initialView ?? SLOVENIA;
+        const cosLat = Math.cos((c.lat * Math.PI) / 180);
+        let last = 0;
+        places.forEach((tour, i) => {
+          const d = Math.hypot((tour.lng! - c.lng) * cosLat, tour.lat! - c.lat); // degrees
+          const delay = Math.round(
+            Math.min(d, 2.5) * 480 + (tour.kind === "obcina" ? 0 : 260) + Math.random() * 140,
+          );
+          popDelay.current.set(tour.id, delay);
+          markers.current.get(tour.id)?.style.setProperty("--pop-delay", `${delay}ms`);
+          placeDots.setDelay(i, delay);
+          last = Math.max(last, delay);
+        });
+        placeDots.commit();
+        el.dataset.pins = "in";
+        const start = performance.now();
+        const wave = (now: number) => {
+          placeDots.setReveal(now - start);
+          wake(100);
+          waveRaf = now - start < last + 600 ? requestAnimationFrame(wave) : 0;
+        };
+        waveRaf = requestAnimationFrame(wave);
+        // Once every pin has popped, drop the animation so later class changes don't replay it,
+        // and let the names in.
+        revealDone = window.setTimeout(() => {
+          el.dataset.pins = "shown";
+          placeDots.setReveal(Infinity);
+          wake();
+          scheduleDeclutter();
+        }, last + 650);
+      };
+      if (intro && !reduced) {
+        el.dataset.pins = "hidden";
+        placeDots.setReveal(-1);
+        // Start the wave just before the camera settles.
+        revealTimer = window.setTimeout(revealPins, 700 + 3800 - 450);
+        // If the visitor grabs the globe first, don't keep them waiting.
+        controls.addEventListener("start", revealPins);
+      } else {
+        el.dataset.pins = "shown";
+      }
+
       cleanup = () => {
         window.clearTimeout(t);
+        window.clearTimeout(revealTimer);
+        window.clearTimeout(revealDone);
+        cancelAnimationFrame(waveRaf);
         window.clearTimeout(declutterTimer);
         cancelAnimationFrame(declutterRaf);
         window.removeEventListener("resize", onResize);
@@ -813,6 +1085,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       flying.current = false;
     };
   }, [focus]);
+
+  useEffect(() => {
+    if (look !== lookRef.current) applyLookRef.current(look);
+  }, [look]);
 
   useEffect(() => {
     const g = globe.current;
