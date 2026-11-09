@@ -4,12 +4,12 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PlaceType, Tour, ToursFile } from "@/lib/types";
 import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
-import { copy } from "@/lib/i18n";
+import { copy, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/useLang";
 import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 import { isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
-import type { Focus, GlobeApi } from "./Globe";
+import type { Focus, GlobeApi, Look } from "./Globe";
 import { peakFor, type Pov } from "@/lib/flight";
 import { about, STUDIO } from "@/lib/about";
 import Story from "./Story";
@@ -24,6 +24,12 @@ import PrivacyNotice from "./PrivacyNotice";
 const Globe = dynamic(() => import("./Globe"), { ssr: false });
 
 const SLOVENIA = { lat: 46.12, lng: 14.82, altitude: 0.085 };
+
+const LOOK_OPTIONS: { id: Look; label: Record<Lang, string>; credit: string }[] = [
+  { id: "satellite", label: { sl: "Satelit", en: "Satellite" }, credit: "Posnetki: Esri, Maxar, Earthstar Geographics" },
+  { id: "illustrated", label: { sl: "Ilustracija", en: "Illustrated" }, credit: "Meje: geoBoundaries, Natural Earth" },
+];
+const LOOK_KEY = "wv360-look";
 
 // Strip diacritics so "lasko" finds "Laško".
 const norm = (s: string) =>
@@ -94,6 +100,20 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   }, [enquiry]);
   const [focus, setFocus] = useState<Focus | null>(null);
   const [ready, setReady] = useState(false);
+  const [look, setLook] = useState<Look>("satellite");
+  // Remember the chosen look per browser (storage may be unavailable; that's fine).
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(LOOK_KEY) as Look | null;
+      if (saved && LOOK_OPTIONS.some((o) => o.id === saved)) setLook(saved);
+    } catch {}
+  }, []);
+  const chooseLook = (l: Look) => {
+    setLook(l);
+    try {
+      localStorage.setItem(LOOK_KEY, l);
+    } catch {}
+  };
   const focusKey = useRef(0);
   const [story, setStory] = useState<StoryPhase>(initialStory ? "open" : "closed");
   const storyRef = useRef(story);
@@ -385,6 +405,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             if (initialStory)
               window.setTimeout(() => flyTo({ ...STUDIO, story: true, arc: peakFor(api.pov(), STUDIO), ms: 4200 }), 700);
           }}
+          look={look}
         />
       )}
 
@@ -395,6 +416,19 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             webvisit<b>360</b>
           </span>
         </a>
+        <div className="looks" role="radiogroup" aria-label={lang === "sl" ? "Videz zemljevida" : "Map style"}>
+          {LOOK_OPTIONS.map((o) => (
+            <button
+              key={o.id}
+              role="radio"
+              aria-checked={look === o.id}
+              className={look === o.id ? "is-on" : ""}
+              onClick={() => chooseLook(o.id)}
+            >
+              {o.label[lang]}
+            </button>
+          ))}
+        </div>
         <nav className="nav">
           <a className="nav__link" href="/o-nas" onClick={aboutLink}>{t.nav.about}</a>
           <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
@@ -669,6 +703,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       </footer>
 
       {privacyOpen && <PrivacyNotice copy={t} contact={CONTACT.email} onClose={() => setPrivacyOpen(false)} />}
+
+      <p className="credit">{LOOK_OPTIONS.find((o) => o.id === look)?.credit}</p>
 
       {!ready && <div className="loader">{t.loading}</div>}
     </main>
