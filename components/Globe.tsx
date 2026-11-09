@@ -90,6 +90,13 @@ const importance = (t: Tour) =>
     ? 1e12 + (t.scenes ?? 0)
     : t.views ?? (t.scenes ?? 0) * (t.source === "google" ? GOOGLE_VIEWS_PER_PHOTO : 1000);
 
+/** On-screen radius (px) of a pin's dot, matching the sizes in globals.css. */
+const dotRadius = (t: Tour, m: HTMLElement) => {
+  if (m.classList.contains("is-dim")) return 2;
+  if (m.classList.contains("is-focus")) return t.kind === "obcina" ? 8 : 6;
+  return t.kind === "obcina" ? 7 : t.kind === "business" ? 3.5 : 3;
+};
+
 /** Map label: municipality without "Občina", business up to its first separator, max ~30 chars. */
 const shortLabel = (t: Tour) => {
   if (t.kind === "obcina") return t.name.replace(/^Občina /, "");
@@ -370,6 +377,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const LABEL_H = 24;
       const labelW = new Map<string, number>();
       const shown = new Set<string>();
+      const tucked = new Set<string>();
       const declutter = () => {
         const alt = g.pointOfView().altitude;
         const cam = g.camera().position;
@@ -380,8 +388,48 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const near = nearRef.current;
         const selected = [...markers.current.entries()].find(([, m]) => m.classList.contains("is-selected"))?.[0];
 
+        // ---- Dots: never draw one pin on top of another. Walk the pins from most to least
+        // important and tuck away any whose dot would overlap a dot already placed on screen.
+        // A coarse screen grid keeps this cheap enough to run every frame (~800 pins).
+        const rank = (t: Tour) =>
+          (t.id === selected ? 4e12 : 0) + (near.has(t.id) ? 2e12 : 0) +
+          (focusRef.current !== "all" && t.type === focusRef.current ? 1e12 : 0) + importance(t);
+        const ordered = toursRef.current.filter((t) => t.lat != null).sort((a, b) => rank(b) - rank(a));
+        const CELL = 20;
+        const grid = new Map<number, { x: number; y: number; r: number }[]>();
+        const nextTucked = new Set<string>();
+        for (const t of ordered) {
+          const m = markers.current.get(t.id);
+          if (!m || !m.isConnected) continue;
+          const p = g.getCoords(t.lat!, t.lng!, 0);
+          if (p.x * cam.x + p.y * cam.y + p.z * cam.z <= R * R * (1 + 1e-9) && camLen2 > R * R) continue;
+          const sc = g.getScreenCoords(t.lat!, t.lng!, 0);
+          if (sc.x < -20 || sc.y < -20 || sc.x > W + 20 || sc.y > H + 20) continue;
+          const r = dotRadius(t, m);
+          const gx = Math.floor(sc.x / CELL);
+          const gy = Math.floor(sc.y / CELL);
+          let hit = false;
+          for (let dx = -1; dx <= 1 && !hit; dx++)
+            for (let dy = -1; dy <= 1 && !hit; dy++)
+              for (const q of grid.get((gx + dx) * 100003 + (gy + dy)) ?? [])
+                if (Math.hypot(q.x - sc.x, q.y - sc.y) < q.r + r + 1.5) {
+                  hit = true;
+                  break;
+                }
+          if (hit && t.id !== selected) {
+            nextTucked.add(t.id);
+            continue;
+          }
+          const key = gx * 100003 + gy;
+          (grid.get(key) ?? grid.set(key, []).get(key)!).push({ x: sc.x, y: sc.y, r });
+        }
+        for (const id of tucked) if (!nextTucked.has(id)) markers.current.get(id)?.classList.remove("is-tucked");
+        for (const id of nextTucked) if (!tucked.has(id)) markers.current.get(id)?.classList.add("is-tucked");
+        tucked.clear();
+        nextTucked.forEach((id) => tucked.add(id));
+
         const candidates = toursRef.current
-          .filter((t) => t.lat != null && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
+          .filter((t) => t.lat != null && !tucked.has(t.id) && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
           .sort((a, b) =>
             Number(b.id === selected) - Number(a.id === selected) ||
             Number(near.has(b.id)) - Number(near.has(a.id)) ||
@@ -576,8 +624,48 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       // Orchestrated fly-in to the visitor, or to all of Slovenia.
       const t = intro ? window.setTimeout(() => g.pointOfView(initialView ?? SLOVENIA, reduced ? 0 : 3800), reduced ? 0 : 700) : 0;
 
+      // ---- Pins appear only as the opening flight lands: a wave of pops spreading out from
+      // where the camera lands, municipalities first. (Hidden until then; see globals.css.)
+      let revealTimer = 0;
+      let revealDone = 0;
+      const revealPins = () => {
+        if (el.dataset.pins !== "hidden") return;
+        window.clearTimeout(revealTimer);
+        const c = initialView ?? SLOVENIA;
+        const cosLat = Math.cos((c.lat * Math.PI) / 180);
+        let last = 0;
+        for (const tour of toursRef.current) {
+          const m = markers.current.get(tour.id);
+          if (!m || tour.lat == null) continue;
+          const d = Math.hypot((tour.lng! - c.lng) * cosLat, tour.lat - c.lat); // degrees
+          const delay = Math.round(
+            Math.min(d, 2.5) * 480 + (tour.kind === "obcina" ? 0 : 260) + Math.random() * 140,
+          );
+          m.style.setProperty("--pop-delay", `${delay}ms`);
+          last = Math.max(last, delay);
+        }
+        el.dataset.pins = "in";
+        // Once every pin has popped, drop the animation so later class changes don't replay it,
+        // and let the names in.
+        revealDone = window.setTimeout(() => {
+          el.dataset.pins = "shown";
+          scheduleDeclutter();
+        }, last + 650);
+      };
+      if (intro && !reduced) {
+        el.dataset.pins = "hidden";
+        // Start the wave just before the camera settles.
+        revealTimer = window.setTimeout(revealPins, 700 + 3800 - 450);
+        // If the visitor grabs the globe first, don't keep them waiting.
+        controls.addEventListener("start", revealPins);
+      } else {
+        el.dataset.pins = "shown";
+      }
+
       cleanup = () => {
         window.clearTimeout(t);
+        window.clearTimeout(revealTimer);
+        window.clearTimeout(revealDone);
         window.clearTimeout(declutterTimer);
         cancelAnimationFrame(declutterRaf);
         window.removeEventListener("resize", onResize);
