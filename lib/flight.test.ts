@@ -1,5 +1,5 @@
-import { expect, test } from "vitest";
-import { arcPov, peakFor } from "./flight";
+import { describe, expect, test } from "vitest";
+import { arcPov, peakFor, selectFlight } from "./flight";
 
 const home = { lat: 46.1, lng: 14.8, altitude: 0.08 };
 const studio = { lat: 46.39, lng: 15.57, altitude: 0.0016 };
@@ -54,4 +54,17 @@ test("altitude changes smoothly: no frame jumps more than a few percent of the z
   const jumps = steps.slice(1).map((l, i) => Math.abs(l - steps[i]));
   // 240 frames at 60 fps = 4 s; the log zoom spans ~4.8, so an even pace would be 0.02 per frame.
   expect(Math.max(...jumps)).toBeLessThan(0.04);
+});
+
+describe("selectFlight", () => {
+  test("from further out it dives to the place's usual view", () => {
+    expect(selectFlight("business", { lat: 46, lng: 15, altitude: 0.085 })).toEqual({ altitude: 0.01 });
+    expect(selectFlight("obcina", { lat: 46, lng: 15, altitude: 0.2 })).toEqual({ altitude: 0.03 });
+    expect(selectFlight("google")).toEqual({ altitude: 0.01 });
+  });
+
+  test("from closer in it keeps the zoom and only glides over, quicker", () => {
+    expect(selectFlight("business", { lat: 46, lng: 15, altitude: 0.002 })).toEqual({ altitude: 0.002, ms: 900 });
+    expect(selectFlight("obcina", { lat: 46, lng: 15, altitude: 0.01 })).toEqual({ altitude: 0.01, ms: 900 });
+  });
 });

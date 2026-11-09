@@ -44,3 +44,17 @@ export function peakFor(a: Pov, b: Pov): number {
   const dist = Math.hypot(b.lat - a.lat, dLng * Math.cos(lat)); // degrees
   return Math.min(2.5, Math.max(a.altitude, b.altitude, dist / 30));
 }
+
+/** How close a click on a place brings the camera: towns stay in view, other places closer. */
+export const SELECT_ALTITUDE = { obcina: 0.03, place: 0.01 } as const;
+
+/**
+ * The flight to a place picked on the map or in search. From further out it dives to the
+ * place's usual view; from closer in it keeps the zoom and only glides the place into view,
+ * so picking a dot in a town never throws the visitor back out of it.
+ */
+export function selectFlight(kind: string, from?: Pov): { altitude: number; ms?: number } {
+  const target = kind === "obcina" ? SELECT_ALTITUDE.obcina : SELECT_ALTITUDE.place;
+  if (!from || from.altitude > target) return { altitude: target };
+  return { altitude: from.altitude, ms: 900 };
+}
