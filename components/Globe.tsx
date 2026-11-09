@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import type { GlobeInstance } from "globe.gl";
 import type { PlaceType, Tour } from "@/lib/types";
 import { isDimmed, labelEligible } from "@/lib/markers";
+import { dotLook, nearest, pinIds } from "@/lib/dots";
+import { createDots } from "./globeDots";
 import { arcPov, type Pov } from "@/lib/flight";
 
 type Feature = {
@@ -90,10 +92,10 @@ const importance = (t: Tour) =>
     ? 1e12 + (t.scenes ?? 0)
     : t.views ?? (t.scenes ?? 0) * (t.source === "google" ? GOOGLE_VIEWS_PER_PHOTO : 1000);
 
-/** On-screen radius (px) of a pin's dot, matching the sizes in globals.css. */
-const dotRadius = (t: Tour, m: HTMLElement) => {
-  if (m.classList.contains("is-dim")) return 2;
-  if (m.classList.contains("is-focus")) return t.kind === "obcina" ? 8 : 6;
+/** On-screen radius (px) of a place's dot, matching the sizes in globals.css (and lib/dots). */
+const dotRadius = (t: Tour, focus: PlaceType | "all") => {
+  if (isDimmed(t, focus)) return 2;
+  if (focus !== "all") return t.kind === "obcina" ? 8 : 6;
   return t.kind === "obcina" ? 7 : t.kind === "business" ? 3.5 : 3;
 };
 
@@ -132,6 +134,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
+  /** Each place's moment in the opening wave of pins (ms), once it has started. */
+  const popDelay = useRef(new Map<string, number>());
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
   const onExploreRef = useRef(onExplore);
@@ -150,6 +154,19 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   const studioRef = useRef(studio);
   studioRef.current = studio;
   const studioEl = useRef<HTMLElement | null>(null);
+  const selectedRef = useRef(selectedId);
+  selectedRef.current = selectedId;
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
+  /** Keep drawing for a while, or stop now (see "Render only while something changes"). */
+  const wakeRef = useRef<(ms?: number) => void>(() => {});
+  const sleepRef = useRef<() => void>(() => {});
+  /** The places changed (list, type chosen, or the visitor/studio pins): redraw dots and pins. */
+  const placesRef = useRef<{ reload: () => void; restyle: () => void; fade: (to: number) => void }>({
+    reload: () => {},
+    restyle: () => {},
+    fade: () => {},
+  });
   /** Where the story's flight landed (the ground scrolls from here), and whether we're flying. */
   const storyBase = useRef<Pov | null>(null);
   const flying = useRef(false);
@@ -180,12 +197,34 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     return m;
   };
 
-  /** Tours with a location, plus the visitor's own marker. */
-  const markerData = () => [
-    ...toursRef.current.filter((t) => t.lat != null),
-    ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
-    ...(studioRef.current ? [{ id: STUDIO_ID, lat: studioRef.current.lat, lng: studioRef.current.lng }] : []),
-  ];
+  /** A place's HTML pin, made once and reused whenever the place needs a pin again. */
+  const markerEl = (t: Tour) => {
+    let m = markers.current.get(t.id);
+    if (!m) {
+      const b = document.createElement("button");
+      b.type = "button";
+      m = b;
+      m.className = `marker marker--${t.kind}`;
+      m.setAttribute("aria-label", t.name);
+      m.innerHTML = `<span class="marker__dot"></span><span class="marker__label"></span>`;
+      m.querySelector(".marker__label")!.textContent = shortLabel(t);
+      m.title = t.name;
+      m.addEventListener("click", (e) => {
+        e.stopPropagation();
+        onSelectRef.current(t.id);
+      });
+      // Stop the globe's drag controls from swallowing the click.
+      m.addEventListener("pointerdown", (e) => e.stopPropagation());
+      m.classList.toggle("is-near", nearRef.current.has(t.id));
+      m.classList.toggle("is-dim", isDimmed(t, focusRef.current));
+      m.classList.toggle("is-focus", focusRef.current !== "all" && t.type === focusRef.current);
+      m.classList.toggle("is-selected", t.id === selectedRef.current);
+      const delay = popDelay.current.get(t.id);
+      if (delay != null) m.style.setProperty("--pop-delay", `${delay}ms`);
+      markers.current.set(t.id, m);
+    }
+    return m;
+  };
   const lookRef = useRef<Look>(look);
   const applyLookRef = useRef<(l: Look) => void>(() => {});
   toursRef.current = tours;
@@ -208,6 +247,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .showAtmosphere(true)
         .pointOfView(START, 0);
 
+      // Phones and tablets: no hover, and a GPU that pays for every pixel. 1.5× keeps the
+      // imagery crisp (pins and text are HTML, so they stay sharp at any ratio).
+      const touch = !window.matchMedia("(hover: hover)").matches;
+      if (touch) g.renderer().setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
       // Lighting is restyled per look (see LOOKS); the sun sits low for a dusk feel.
       const ambient = new THREE.AmbientLight();
       const sun = new THREE.DirectionalLight();
@@ -224,7 +268,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       });
       const tourCapHover = tourCap.clone();
       tourCapHover.opacity = 0.42;
-      const noCap = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+      // Areas without a tour have no fill at all: not drawn, but still there for the pointer.
+      const noCap = new THREE.MeshBasicMaterial({ visible: false });
       // Illustrated look: flat, opaque municipality shapes.
       const flatCap = new THREE.MeshBasicMaterial({ color: "#2c4592" });
       const flatTour = new THREE.MeshBasicMaterial({ color: "#c8862f" });
@@ -233,6 +278,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const countries = geo.filter((f) => f.properties.k === "c");
       const munis = geo.filter((f) => f.properties.k === "m");
       let hovered: Feature | null = null;
+      let dotPickedAt = 0;
       let showingCountries: boolean | null = null;
 
       // Keep borders hugging the ground (~40-50 m) so they don't float when zoomed in close.
@@ -247,7 +293,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           if ((f as Feature).properties.tour) return f === hovered ? (flat ? flatTourHover : tourCapHover) : flat ? flatTour : tourCap;
           return flat ? flatCap : noCap;
         })
-        .polygonSideColor(() => "rgba(0,0,0,0)")
+        // No side walls: they'd be invisible anyway, and three.js redraws a transparent
+        // double-sided material twice per frame, re-checking its shader both times.
+        .polygonSideColor(() => null as unknown as string)
         .polygonStrokeColor((f) => {
           const p = (f as Feature).properties;
           if (p.k === "c") return lookRef.current === "illustrated" ? "rgba(147,163,196,0.4)" : "rgba(214,224,245,0.32)";
@@ -260,6 +308,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         // the pointer from far away once zoomed in.
         .lineHoverPrecision(0)
         .onPolygonHover((f) => {
+          if (touch) return; // a tap would leave its area lit up
           const next = f && (f as Feature).properties.tour ? (f as Feature) : null;
           if (next === hovered) return;
           hovered = next;
@@ -267,6 +316,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           g.polygonCapMaterial(g.polygonCapMaterial());
         })
         .onPolygonClick((f) => {
+          // A dot inside the area was tapped: that place wins over its municipality.
+          if (performance.now() - dotPickedAt < 400) return;
           const id = (f as Feature).properties.tour;
           if (id) onSelectRef.current(id);
         });
@@ -303,7 +354,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       // so the continents read as a solid dot pattern at every distance, like a printed map.
       const dotSize = (alt: number) => {
         const unitsToPx = el.clientHeight / 2 / (Math.max(alt, 0.01) * R * Math.tan((25 * Math.PI) / 180));
-        return Math.min(12, Math.max(2.5, 0.55 * 1.7 * unitsToPx)) * Math.min(window.devicePixelRatio, 2);
+        return Math.min(12, Math.max(2.5, 0.55 * 1.7 * unitsToPx)) * g.renderer().getPixelRatio();
       };
       let dotsLoading = false;
       const showDots = (on: boolean) => {
@@ -344,6 +395,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             dots = new THREE.Points(geom, mat);
             dots.visible = lookRef.current === "illustrated" && borderMode === "dots";
             g.scene().add(dots);
+            wakeRef.current();
           })
           .catch(() => {
             dotsLoading = false;
@@ -377,42 +429,66 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const LABEL_H = 24;
       const labelW = new Map<string, number>();
       const shown = new Set<string>();
+      type Box = { l: number; r: number; t: number; b: number };
+      // Where the page's own text and controls are. Measuring forces a layout, so while the
+      // camera moves this is reused; any change on the page (scheduleDeclutter(true)) or a
+      // short wait measures again.
+      let ui: { at: number; W: number; H: number; boxes: Box[] } | null = null;
+      const pageBoxes = () => {
+        const now = performance.now();
+        if (ui && now - ui.at < 400) return ui;
+        const host = el.getBoundingClientRect();
+        const boxes: Box[] = [];
+        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .cards > *, .panel, .chat, .footer, .corner").forEach((n) => {
+          const r = n.getBoundingClientRect();
+          if (r.width && r.height && getComputedStyle(n).opacity !== "0")
+            boxes.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });
+        });
+        ui = { at: now, W: host.width, H: host.height, boxes };
+        return ui;
+      };
+      // Pins tucked away because they'd overlap a more important one (see declutter).
       const tucked = new Set<string>();
+      let order: number[] = [];
+      let orderFor = "";
       const declutter = () => {
         const alt = g.pointOfView().altitude;
-        const cam = g.camera().position;
-        const camLen2 = cam.x * cam.x + cam.y * cam.y + cam.z * cam.z;
-        const W = el.clientWidth;
-        const H = el.clientHeight;
+        const { W, H, boxes } = pageBoxes();
+        project();
         const budget = labelBudget(alt);
         const near = nearRef.current;
-        const selected = [...markers.current.entries()].find(([, m]) => m.classList.contains("is-selected"))?.[0];
+        const selected = selectedRef.current ?? undefined;
 
-        // ---- Dots: never draw one pin on top of another. Walk the pins from most to least
+        // ---- Dots: never draw one pin on top of another. Walk the places from most to least
         // important and tuck away any whose dot would overlap a dot already placed on screen.
-        // A coarse screen grid keeps this cheap enough to run every frame (~800 pins).
-        const rank = (t: Tour) =>
-          (t.id === selected ? 4e12 : 0) + (near.has(t.id) ? 2e12 : 0) +
-          (focusRef.current !== "all" && t.type === focusRef.current ? 1e12 : 0) + importance(t);
-        const ordered = toursRef.current.filter((t) => t.lat != null).sort((a, b) => rank(b) - rank(a));
+        // A coarse screen grid keeps this cheap enough to run every frame (~800 places); the
+        // order only changes with the selection, nearby places, the chosen type or the list.
+        const focus = focusRef.current;
+        const key = `${selected}|${[...near].join(",")}|${focus}|${places.length}`;
+        if (key !== orderFor) {
+          orderFor = key;
+          const rank = (t: Tour) =>
+            (t.id === selected ? 4e12 : 0) + (near.has(t.id) ? 2e12 : 0) +
+            (focus !== "all" && t.type === focus ? 1e12 : 0) + importance(t);
+          order = places.map((_, i) => i).sort((a, b) => rank(places[b]) - rank(places[a]));
+        }
         const CELL = 20;
         const grid = new Map<number, { x: number; y: number; r: number }[]>();
         const nextTucked = new Set<string>();
-        for (const t of ordered) {
-          const m = markers.current.get(t.id);
-          if (!m || !m.isConnected) continue;
-          const p = g.getCoords(t.lat!, t.lng!, 0);
-          if (p.x * cam.x + p.y * cam.y + p.z * cam.z <= R * R * (1 + 1e-9) && camLen2 > R * R) continue;
-          const sc = g.getScreenCoords(t.lat!, t.lng!, 0);
-          if (sc.x < -20 || sc.y < -20 || sc.x > W + 20 || sc.y > H + 20) continue;
-          const r = dotRadius(t, m);
-          const gx = Math.floor(sc.x / CELL);
-          const gy = Math.floor(sc.y / CELL);
+        for (const i of order) {
+          const t = places[i];
+          const x = px[i];
+          const y = py[i];
+          // Off screen, or on the far side of the globe (NaN).
+          if (!(x >= -20 && y >= -20 && x <= W + 20 && y <= H + 20)) continue;
+          const r = dotRadius(t, focus);
+          const gx = Math.floor(x / CELL);
+          const gy = Math.floor(y / CELL);
           let hit = false;
           for (let dx = -1; dx <= 1 && !hit; dx++)
             for (let dy = -1; dy <= 1 && !hit; dy++)
               for (const q of grid.get((gx + dx) * 100003 + (gy + dy)) ?? [])
-                if (Math.hypot(q.x - sc.x, q.y - sc.y) < q.r + r + 1.5) {
+                if (Math.hypot(q.x - x, q.y - y) < q.r + r + 1.5) {
                   hit = true;
                   break;
                 }
@@ -420,13 +496,25 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             nextTucked.add(t.id);
             continue;
           }
-          const key = gx * 100003 + gy;
-          (grid.get(key) ?? grid.set(key, []).get(key)!).push({ x: sc.x, y: sc.y, r });
+          const cell = gx * 100003 + gy;
+          (grid.get(cell) ?? grid.set(cell, []).get(cell)!).push({ x, y, r });
         }
-        for (const id of tucked) if (!nextTucked.has(id)) markers.current.get(id)?.classList.remove("is-tucked");
-        for (const id of nextTucked) if (!tucked.has(id)) markers.current.get(id)?.classList.add("is-tucked");
+        const tuckChanged: string[] = [];
+        for (const id of tucked) if (!nextTucked.has(id)) {
+          markers.current.get(id)?.classList.remove("is-tucked");
+          tuckChanged.push(id);
+        }
+        for (const id of nextTucked) if (!tucked.has(id)) {
+          markers.current.get(id)?.classList.add("is-tucked");
+          tuckChanged.push(id);
+        }
         tucked.clear();
         nextTucked.forEach((id) => tucked.add(id));
+        if (tuckChanged.length) {
+          for (const id of tuckChanged) placeDots.setLook(index.get(id)!, lookOf(index.get(id)!));
+          placeDots.commit();
+          wake();
+        }
 
         const candidates = toursRef.current
           .filter((t) => t.lat != null && !tucked.has(t.id) && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
@@ -437,13 +525,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           );
 
         // Keep labels clear of the page's own text and controls.
-        const host = el.getBoundingClientRect();
-        const placed: { l: number; r: number; t: number; b: number }[] = [];
-        document.querySelectorAll(".hero h1, .hero p, .hero .stats, .hero .why, .topbar > *, .finder, .cards > *, .panel, .chat, .footer, .corner").forEach((n) => {
-          const r = n.getBoundingClientRect();
-          if (r.width && r.height && getComputedStyle(n).opacity !== "0")
-            placed.push({ l: r.left - host.left, r: r.right - host.left, t: r.top - host.top, b: r.bottom - host.top });
-        });
+        const placed: Box[] = [...boxes];
         // The "You are here" label always shows; other labels make room for it.
         const me = youRef.current;
         if (me) {
@@ -454,39 +536,40 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const next = new Set<string>();
         for (const t of candidates) {
           if (next.size >= budget && t.id !== selected) break;
-          const m = markers.current.get(t.id);
-          if (!m || !m.isConnected) continue;
-          // Skip points on the far side of the globe (p·c must exceed R² to be in view).
-          const p = g.getCoords(t.lat!, t.lng!, 0);
-          if (p.x * cam.x + p.y * cam.y + p.z * cam.z <= R * R * (1 + 1e-9) && camLen2 > R * R) continue;
-          const sc = g.getScreenCoords(t.lat!, t.lng!, 0);
-          if (sc.x < 0 || sc.y < 0 || sc.x > W || sc.y > H) continue;
+          const i = index.get(t.id);
+          if (i == null) continue;
+          // NaN: on the far side of the globe.
+          const x = px[i];
+          const y = py[i];
+          if (!(x >= 0 && y >= 0 && x <= W && y <= H)) continue;
           let w = labelW.get(t.id);
           if (w == null) {
-            w = (m.querySelector(".marker__label")!.textContent ?? "").length * 6.9 + 18;
+            w = shortLabel(t).length * 6.9 + 18;
             labelW.set(t.id, w);
           }
           const lift = t.kind === "obcina" ? 15 : 11;
-          const box = { l: sc.x - w / 2 - 4, r: sc.x + w / 2 + 4, t: sc.y - lift - LABEL_H - 3, b: sc.y - lift + 3 };
+          const box = { l: x - w / 2 - 4, r: x + w / 2 + 4, t: y - lift - LABEL_H - 3, b: y - lift + 3 };
           if (placed.some((q) => box.l < q.r && box.r > q.l && box.t < q.b && box.b > q.t)) continue;
           placed.push(box);
           next.add(t.id);
         }
         for (const id of shown) if (!next.has(id)) markers.current.get(id)?.classList.remove("has-label");
-        for (const id of next) if (!shown.has(id)) markers.current.get(id)?.classList.add("has-label");
+        for (const id of next) if (!shown.has(id)) markerEl(places[index.get(id)!]).classList.add("has-label");
         shown.clear();
         next.forEach((id) => shown.add(id));
+        setPins();
       };
       let declutterRaf = 0;
       let declutterTimer = 0;
-      const scheduleDeclutter = () => {
+      const scheduleDeclutter = (pageChanged = false) => {
+        if (pageChanged) ui = null;
         if (quietRef.current) return;
         // At most once per frame while moving, plus once more when the motion settles.
         if (!declutterRaf) declutterRaf = requestAnimationFrame(() => { declutterRaf = 0; declutter(); });
         window.clearTimeout(declutterTimer);
         declutterTimer = window.setTimeout(declutter, 200);
       };
-      labelsRef.current = scheduleDeclutter;
+      labelsRef.current = () => scheduleDeclutter(true);
 
       // Load one tile level sharper than three-slippy-map-globe's default at every
       // altitude (its thresholds are 8 / 2^level globe radii). Never use levels 0-2:
@@ -500,6 +583,13 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           if (Array.isArray(tiles.thresholds)) {
             tiles.thresholds = tiles.thresholds.map((_, i) => 8 / 2 ** (i + 1));
             (tiles as unknown as { minLevel: number }).minLevel = 3;
+            // A tile arriving is the one change nobody asks for: draw it.
+            const engine = o as unknown as { add: (...x: unknown[]) => unknown };
+            const add = engine.add.bind(engine);
+            engine.add = (...x) => {
+              wakeRef.current();
+              return add(...x);
+            };
             sharpened = true;
           }
         });
@@ -535,30 +625,105 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .htmlElement((d) => {
           if ((d as { id: string }).id === YOU_ID) return youMarker(youRef.current!);
           if ((d as { id: string }).id === STUDIO_ID) return studioMarker(studioRef.current!.label);
-          const t = d as Tour;
-          let m = markers.current.get(t.id);
-          if (!m) {
-            const b = document.createElement("button");
-            b.type = "button";
-            m = b;
-            m.className = `marker marker--${t.kind}`;
-            m.setAttribute("aria-label", t.name);
-            m.innerHTML = `<span class="marker__dot"></span><span class="marker__label"></span>`;
-            m.querySelector(".marker__label")!.textContent = shortLabel(t);
-            m.title = t.name;
-            m.addEventListener("click", (e) => {
-              e.stopPropagation();
-              onSelectRef.current(t.id);
-            });
-            // Stop the globe's drag controls from swallowing the click.
-            m.addEventListener("pointerdown", (e) => e.stopPropagation());
-            m.classList.toggle("is-near", nearRef.current.has(t.id));
-            m.classList.toggle("is-dim", isDimmed(t, focusRef.current));
-            m.classList.toggle("is-focus", focusRef.current !== "all" && t.type === focusRef.current);
-            markers.current.set(t.id, m);
-          }
-          return m;
+          return markerEl(d as Tour);
         });
+
+      // ---- Places: every dot drawn on the map in one go; HTML pins only where needed
+      const placeDots = createDots(THREE);
+      placeDots.setPixelRatio(g.renderer().getPixelRatio());
+      g.scene().add(placeDots.object);
+      let places: Tour[] = [];
+      let index = new Map<string, number>();
+      let xyz = new Float32Array(0);
+      let px = new Float32Array(0);
+      let py = new Float32Array(0);
+      let pins = new Set<string>();
+      let hoveredId: string | null = null;
+      let size = { W: el.clientWidth, H: el.clientHeight };
+      const v = new THREE.Vector3();
+
+      /** Screen position of every place (px, py); NaN for the far side of the globe. */
+      const project = () => {
+        const cam = g.camera();
+        cam.updateMatrixWorld();
+        const c = cam.position;
+        for (let i = 0; i < places.length; i++) {
+          const x = xyz[i * 3], y = xyz[i * 3 + 1], z = xyz[i * 3 + 2];
+          if (x * (c.x - x) + y * (c.y - y) + z * (c.z - z) <= 0) {
+            px[i] = py[i] = NaN;
+            continue;
+          }
+          v.set(x, y, z).project(cam);
+          px[i] = ((v.x + 1) / 2) * size.W;
+          py[i] = ((1 - v.y) / 2) * size.H;
+        }
+      };
+
+      /** A place's dot, unless an HTML pin stands in for it or it's tucked away. */
+      const lookOf = (i: number) => (pins.has(places[i].id) || tucked.has(places[i].id) ? null : dotLook(places[i], focusRef.current));
+
+      const htmlData = () => [
+        ...places.filter((t) => pins.has(t.id)),
+        ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
+        ...(studioRef.current ? [{ id: STUDIO_ID, lat: studioRef.current.lat, lng: studioRef.current.lng }] : []),
+      ];
+
+      /** Give HTML pins to the places that need them (see pinIds); the rest stay dots. */
+      const setPins = (force = false) => {
+        const next = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
+        const changed = [...next].filter((id) => !pins.has(id)).concat([...pins].filter((id) => !next.has(id)));
+        if (!changed.length && !force) return;
+        pins = next;
+        for (const id of changed) {
+          const i = index.get(id);
+          if (i != null) placeDots.setLook(i, lookOf(i));
+        }
+        placeDots.commit();
+        g.htmlElementsData(htmlData());
+        wake();
+      };
+
+      const restyle = () => {
+        places.forEach((_, i) => placeDots.setLook(i, lookOf(i)));
+        placeDots.commit();
+        wake();
+      };
+
+      const reload = () => {
+        places = toursRef.current.filter((t) => t.lat != null);
+        index = new Map(places.map((t, i) => [t.id, i]));
+        xyz = new Float32Array(places.length * 3);
+        places.forEach((t, i) => {
+          const c = g.getCoords(t.lat!, t.lng!, 0);
+          xyz[i * 3] = c.x;
+          xyz[i * 3 + 1] = c.y;
+          xyz[i * 3 + 2] = c.z;
+        });
+        px = new Float32Array(places.length);
+        py = new Float32Array(places.length);
+        placeDots.setPositions(xyz);
+        pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
+        restyle();
+        setPins(true);
+      };
+
+      // The story fades the pins out (CSS); the dots follow.
+      let fadeRaf = 0;
+      let opacity = 1;
+      const fade = (to: number) => {
+        cancelAnimationFrame(fadeRaf);
+        const from = opacity;
+        const start = performance.now();
+        const step = (now: number) => {
+          const k = Math.min(1, (now - start) / 300);
+          opacity = from + (to - from) * k;
+          placeDots.setOpacity(opacity);
+          wake(100);
+          if (k < 1) fadeRaf = requestAnimationFrame(step);
+        };
+        fadeRaf = requestAnimationFrame(step);
+      };
+      placesRef.current = { reload, restyle, fade };
 
       const controls = g.controls();
       controls.autoRotate = false;
@@ -566,6 +731,129 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       controls.addEventListener("start", () => onExploreRef.current?.());
       fitClipping(START.altitude);
 
+      // ---- Render only while something changes ------------------------------------
+      // globe.gl redraws the scene and repositions every HTML pin on every frame, even when
+      // nothing moves; on a phone that alone keeps the CPU busy. Draw while the camera
+      // moves, the visitor touches the map, tiles arrive or the page changes something,
+      // then pause. A slow heartbeat catches anything else.
+      const IDLE_MS = 700;
+      let awakeUntil = 0;
+      let running = true;
+      let watchRaf = 0;
+      const lastCam = [0, 0, 0, 0, 0, 0, 0];
+      const cameraMoved = () => {
+        const c = g.camera();
+        const now = [c.position.x, c.position.y, c.position.z, c.quaternion.x, c.quaternion.y, c.quaternion.z, c.quaternion.w];
+        // About a quarter of a pixel at the current height: the controls' easing tails off
+        // forever, but nobody sees it once it's below that.
+        const height = Math.max(c.position.length() - R, 1e-6);
+        let moved = false;
+        now.forEach((v, i) => {
+          if (Math.abs(v - lastCam[i]) > (i < 3 ? height * 3e-4 : 1e-6)) moved = true;
+          lastCam[i] = v;
+        });
+        return moved;
+      };
+      const watch = () => {
+        watchRaf = 0;
+        if (!running) return;
+        const now = performance.now();
+        if (cameraMoved()) awakeUntil = Math.max(awakeUntil, now + IDLE_MS);
+        if (now > awakeUntil) {
+          running = false;
+          g.pauseAnimation();
+          return;
+        }
+        watchRaf = requestAnimationFrame(watch);
+      };
+      const wake = (ms = IDLE_MS) => {
+        awakeUntil = Math.max(awakeUntil, performance.now() + ms);
+        if (pausedRef.current) return;
+        if (!running) {
+          running = true;
+          g.resumeAnimation();
+        }
+        if (!watchRaf) watchRaf = requestAnimationFrame(watch);
+      };
+      wakeRef.current = wake;
+      sleepRef.current = () => {
+        running = false;
+        g.pauseAnimation();
+      };
+      const heartbeat = window.setInterval(() => !running && wake(50), 1000);
+      // Camera moves we ask for (flights, the story's scrolling) keep it drawing until they land.
+      const pov = g.pointOfView.bind(g);
+      (g as unknown as { pointOfView: (p?: Partial<Pov>, ms?: number) => unknown }).pointOfView = (p, ms) => {
+        if (!p) return pov();
+        wake((ms ?? 0) + IDLE_MS);
+        return pov(p, ms);
+      };
+      controls.addEventListener("change", () => wake());
+
+      // Touch screens have no hover, so skip globe.gl's pointer raycasting (every 50 ms,
+      // against every tile and border) except around a tap, which still needs it to pick an
+      // area.
+      let tapTimer = 0;
+      if (touch) g.enablePointerInteraction(false);
+      // Dots aren't elements: a tap or click picks the nearest one on screen, and on desktop
+      // the dot under the mouse becomes a real pin (hover look, name and pointer cursor).
+      let down: { x: number; y: number; at: number } | null = null;
+      let hoverRaf = 0;
+      const local = (e: PointerEvent) => {
+        const r = el.getBoundingClientRect();
+        return { x: e.clientX - r.left, y: e.clientY - r.top };
+      };
+      /** Screen positions of the dots that can be picked: tucked ones are hidden. */
+      const pickable = () => {
+        project();
+        for (const id of tucked) {
+          const i = index.get(id);
+          if (i != null) px[i] = NaN;
+        }
+      };
+      const onPin = (e: Event) => !!(e.target as Element | null)?.closest?.(".marker, .you, .studio");
+      const hover = (id: string | null) => {
+        if (id === hoveredId) return;
+        if (hoveredId) markers.current.get(hoveredId)?.classList.remove("is-hover");
+        hoveredId = id;
+        if (id) markerEl(places[index.get(id)!]).classList.add("is-hover");
+        setPins();
+      };
+      const onPointer = (ev: Event) => {
+        wake();
+        const e = ev as PointerEvent;
+        if (e.type === "pointerdown") down = onPin(e) ? null : { ...local(e), at: performance.now() };
+        if (e.type === "pointerup" && down) {
+          const p = local(e);
+          if (Math.hypot(p.x - down.x, p.y - down.y) < 8 && performance.now() - down.at < 600 && !quietRef.current) {
+            pickable();
+            const i = nearest(px, py, p.x, p.y, e.pointerType === "mouse" ? 9 : 18);
+            if (i >= 0) {
+              dotPickedAt = performance.now();
+              onSelectRef.current(places[i].id);
+            }
+          }
+          down = null;
+        }
+        if (!touch && e.type === "pointermove" && !e.buttons && !hoverRaf) {
+          const inPin = onPin(e);
+          const p = local(e);
+          hoverRaf = requestAnimationFrame(() => {
+            hoverRaf = 0;
+            if (inPin || quietRef.current) return;
+            pickable();
+            const i = nearest(px, py, p.x, p.y, 9);
+            hover(i >= 0 ? places[i].id : null);
+          });
+        }
+        if (!touch) return;
+        window.clearTimeout(tapTimer);
+        if (e.type === "pointerdown") g.enablePointerInteraction(true);
+        else if (e.type === "pointerup" || e.type === "pointercancel")
+          tapTimer = window.setTimeout(() => g.enablePointerInteraction(false), 400);
+      };
+      const pointerEvents = ["pointerdown", "pointermove", "pointerup", "pointercancel", "wheel"];
+      pointerEvents.forEach((t) => el.addEventListener(t, onPointer, { capture: true, passive: true }));
 
       const applyLook = (l: Look) => {
         lookRef.current = l;
@@ -592,17 +880,24 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         applyZoom(pov.altitude);
         g.polygonCapMaterial(g.polygonCapMaterial()).polygonStrokeColor(g.polygonStrokeColor());
         el.dataset.look = l;
+        wake();
       };
       applyLookRef.current = applyLook;
       applyLook(lookRef.current);
 
-      const onResize = () => g.width(el.clientWidth).height(el.clientHeight);
+
+      const onResize = () => {
+        g.width(el.clientWidth).height(el.clientHeight);
+        size = { W: el.clientWidth, H: el.clientHeight };
+        ui = null;
+        wake();
+      };
       window.addEventListener("resize", onResize);
 
       globe.current = g;
       // Handy for automated visual checks in development.
       if (process.env.NODE_ENV !== "production") (window as unknown as { __globe: GlobeInstance }).__globe = g;
-      g.htmlElementsData(markerData());
+      reload();
       let groundRaf = 0;
       let groundPx = 0;
       onReady?.({
@@ -626,34 +921,47 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       // ---- Pins appear only as the opening flight lands: a wave of pops spreading out from
       // where the camera lands, municipalities first. (Hidden until then; see globals.css.)
+      // The dots on the map pop in the same way, in the shader (see globeDots).
       let revealTimer = 0;
       let revealDone = 0;
+      let waveRaf = 0;
       const revealPins = () => {
         if (el.dataset.pins !== "hidden") return;
         window.clearTimeout(revealTimer);
         const c = initialView ?? SLOVENIA;
         const cosLat = Math.cos((c.lat * Math.PI) / 180);
         let last = 0;
-        for (const tour of toursRef.current) {
-          const m = markers.current.get(tour.id);
-          if (!m || tour.lat == null) continue;
-          const d = Math.hypot((tour.lng! - c.lng) * cosLat, tour.lat - c.lat); // degrees
+        places.forEach((tour, i) => {
+          const d = Math.hypot((tour.lng! - c.lng) * cosLat, tour.lat! - c.lat); // degrees
           const delay = Math.round(
             Math.min(d, 2.5) * 480 + (tour.kind === "obcina" ? 0 : 260) + Math.random() * 140,
           );
-          m.style.setProperty("--pop-delay", `${delay}ms`);
+          popDelay.current.set(tour.id, delay);
+          markers.current.get(tour.id)?.style.setProperty("--pop-delay", `${delay}ms`);
+          placeDots.setDelay(i, delay);
           last = Math.max(last, delay);
-        }
+        });
+        placeDots.commit();
         el.dataset.pins = "in";
+        const start = performance.now();
+        const wave = (now: number) => {
+          placeDots.setReveal(now - start);
+          wake(100);
+          waveRaf = now - start < last + 600 ? requestAnimationFrame(wave) : 0;
+        };
+        waveRaf = requestAnimationFrame(wave);
         // Once every pin has popped, drop the animation so later class changes don't replay it,
         // and let the names in.
         revealDone = window.setTimeout(() => {
           el.dataset.pins = "shown";
+          placeDots.setReveal(Infinity);
+          wake();
           scheduleDeclutter();
         }, last + 650);
       };
       if (intro && !reduced) {
         el.dataset.pins = "hidden";
+        placeDots.setReveal(-1);
         // Start the wave just before the camera settles.
         revealTimer = window.setTimeout(revealPins, 700 + 3800 - 450);
         // If the visitor grabs the globe first, don't keep them waiting.
@@ -666,9 +974,19 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         window.clearTimeout(t);
         window.clearTimeout(revealTimer);
         window.clearTimeout(revealDone);
+        cancelAnimationFrame(waveRaf);
         window.clearTimeout(declutterTimer);
         cancelAnimationFrame(declutterRaf);
         window.removeEventListener("resize", onResize);
+        window.clearInterval(heartbeat);
+        window.clearTimeout(tapTimer);
+        cancelAnimationFrame(watchRaf);
+        cancelAnimationFrame(fadeRaf);
+        cancelAnimationFrame(hoverRaf);
+        placesRef.current = { reload: () => {}, restyle: () => {}, fade: () => {} };
+        pointerEvents.forEach((t) => el.removeEventListener(t, onPointer, { capture: true }));
+        wakeRef.current = () => {};
+        sleepRef.current = () => {};
         g._destructor?.();
         el.innerHTML = "";
       };
@@ -684,13 +1002,14 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
   // ---- data updates
   useEffect(() => {
-    globe.current?.htmlElementsData(markerData());
+    placesRef.current.reload();
     labelsRef.current();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tours, you?.lat, you?.lng, you?.precise, you?.label, studio?.lat, studio?.lng, studio?.label]);
 
   // Pins come back after a quiet flight: place their labels for where the camera is now.
   useEffect(() => {
+    placesRef.current.fade(quiet ? 0 : 1);
     if (!quiet) labelsRef.current();
   }, [quiet]);
 
@@ -712,6 +1031,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       m.classList.toggle("is-dim", isDimmed(t, focusType));
       m.classList.toggle("is-focus", focusType !== "all" && t.type === focusType);
     });
+    placesRef.current.restyle();
     labelsRef.current();
   }, [focusType, tours]);
 
@@ -773,8 +1093,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
   useEffect(() => {
     const g = globe.current;
     if (!g) return;
-    if (paused) g.pauseAnimation();
-    else g.resumeAnimation();
+    if (paused) sleepRef.current();
+    else wakeRef.current();
   }, [paused]);
 
   return <div ref={host} className="globe" data-labels="off" />;

@@ -77,7 +77,8 @@ a { color: inherit; text-decoration: none; }
   width: 6px; height: 6px; background: var(--sky);
   box-shadow: 0 0 0 1.5px rgba(8, 18, 48, .6), 0 0 10px 2px rgba(124, 196, 255, .45);
 }
-.marker--google:hover .marker__dot, .marker--google.is-selected .marker__dot {
+/* .is-hover: the mouse found this place's dot on the map (see Globe), before the pin itself is under it. */
+.marker--google:hover .marker__dot, .marker--google.is-hover .marker__dot, .marker--google.is-selected .marker__dot {
   background: #fff; box-shadow: 0 0 0 3px var(--sky), 0 0 18px 5px rgba(124, 196, 255, .6);
 }
 .marker__label {
@@ -89,14 +90,15 @@ a { color: inherit; text-decoration: none; }
 }
 .marker.has-label .marker__label,
 .marker:hover .marker__label,
+.marker.is-hover .marker__label,
 .marker:focus-visible .marker__label,
 .marker.is-selected .marker__label { opacity: 1; z-index: 2; }
-.marker:hover .marker__dot, .marker.is-selected .marker__dot {
+.marker:hover .marker__dot, .marker.is-hover .marker__dot, .marker.is-selected .marker__dot {
   background: #fff; box-shadow: 0 0 0 3px var(--amber), 0 0 20px 6px rgba(246, 169, 59, .7);
 }
 .marker:focus-visible { outline: none; }
 .marker:focus-visible .marker__dot { outline: 2px solid var(--snow); outline-offset: 3px; }
-.marker:hover, .marker.is-selected { z-index: 10; }
+.marker:hover, .marker.is-hover, .marker.is-selected { z-index: 10; }
 .marker.is-near .marker__dot { box-shadow: 0 0 0 3px rgba(246, 169, 59, .35), 0 0 14px rgba(246, 169, 59, .8); }
 .marker.is-near { z-index: 5; }
 
@@ -129,7 +131,7 @@ a { color: inherit; text-decoration: none; }
   width: 4px; height: 4px; background: rgba(214, 224, 245, .55); box-shadow: none;
 }
 .marker.is-dim .marker__dot::after { display: none; }
-.marker.is-dim:hover .marker__dot { width: 7px; height: 7px; background: #fff; }
+.marker.is-dim:hover .marker__dot, .marker.is-dim.is-hover .marker__dot { width: 7px; height: 7px; background: #fff; }
 .marker.is-dim.is-selected .marker__dot {
   width: 12px; height: 12px; background: #fff; box-shadow: 0 0 0 3px var(--amber), 0 0 20px 6px rgba(246, 169, 59, .7);
 }
@@ -798,6 +800,13 @@ a { color: inherit; text-decoration: none; }
   .trusted--large { width: 116px; }
   /* The type chips fold away behind the filter button next to the search; while they're
      open, the arrival cards step aside so everything fits on a phone. */
+  /* No frosted glass on phones: the blur is redone on every frame while the map moves,
+     which a phone's GPU feels. Slightly more opaque panels look nearly the same. */
+  :root { --glass: rgba(10, 20, 52, .86); }
+  .chip, .near, .search input, .results, .filter-toggle, .explore-back, .why, .panel, .chat {
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .near, .panel, .chat { background: rgba(10, 20, 52, .93); }
   .filter-toggle { display: inline-flex; }
   .search-row { order: -1; } /* bottom of the (reversed) finder: the chips open above it */
   .app:not(.filters-open) .chips { display: none; }
