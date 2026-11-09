@@ -693,7 +693,11 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       </div>
 
       <footer className="footer">
-        <span>{t.footer.company}</span>
+        <span>
+          <span className="footer__full">{t.footer.company}</span>
+          {/* Phones: the short form keeps the whole footer on one line. */}
+          <span className="footer__short">© Sinhron d.o.o.</span>
+        </span>
         <a href="/o-nas" onClick={aboutLink}>{t.nav.about}</a>
         <a className="footer__mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         <a href="https://www.facebook.com/Webvisit360" target="_blank" rel="noopener">Facebook</a>
