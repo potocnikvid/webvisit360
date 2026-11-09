@@ -379,6 +379,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     openStory();
   };
 
+  const HeroTitle = initialStory ? "p" : "h1";
+
   return (
     <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" || returning ? "has-story" : ""} ${story === "open" ? "story-open" : ""} ${ready ? "is-ready" : ""} ${filtersOpen ? "filters-open" : ""} ${exploring ? "exploring" : ""} ${searchOpen ? "searching" : ""}`}>
       <div className="sky" aria-hidden />
@@ -446,7 +448,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       </header>
 
       <section className="hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">{t.hero.title}</h1>
+        {/* On /o-nas the story's title is the page's one main heading. */}
+        <HeroTitle id="hero-title" className="hero__title">{t.hero.title}</HeroTitle>
         <p>{t.hero.text}</p>
         {stats && (
           <dl className="stats">
@@ -704,6 +707,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           <span className="footer__short">© Sinhron d.o.o.</span>
         </span>
         <a href="/o-nas" onClick={aboutLink}>{t.nav.about}</a>
+        <a className="footer__all" href="/sprehodi">{t.footer.allTours}</a>
         <a className="footer__mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
         <a href="https://www.facebook.com/Webvisit360" target="_blank" rel="noopener">Facebook</a>
         <a href="https://www.instagram.com/webvisit360" target="_blank" rel="noopener">Instagram</a>

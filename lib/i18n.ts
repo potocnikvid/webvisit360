@@ -11,7 +11,7 @@ export function pickLang(languages: readonly string[]): Lang {
 }
 
 /** Slovenian dual/plural: 1 panorama, 2 panorami, 3–4 panorame, 5+ panoram. */
-const slPlural = (n: number, one: string, two: string, few: string, many: string) => {
+export const slPlural = (n: number, one: string, two: string, few: string, many: string) => {
   const m = n % 100;
   return m === 1 ? one : m === 2 ? two : m === 3 || m === 4 ? few : many;
 };
@@ -123,7 +123,7 @@ const sl = {
     ],
     close: "Zapri",
   },
-  footer: { company: "© Agencija Sinhron d.o.o.", privacy: "Zasebnost" },
+  footer: { company: "© Agencija Sinhron d.o.o.", privacy: "Zasebnost", allTours: "Vsi sprehodi" },
 };
 
 export type Copy = typeof sl;
@@ -232,7 +232,7 @@ const en: Copy = {
     ],
     close: "Close",
   },
-  footer: { company: "© Agencija Sinhron d.o.o.", privacy: "Privacy" },
+  footer: { company: "© Agencija Sinhron d.o.o.", privacy: "Privacy", allTours: "All tours" },
 };
 
 export const copy: Record<Lang, Copy> = { sl, en };
