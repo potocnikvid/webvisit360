@@ -11,6 +11,8 @@ type Props = {
   /** Full-screen tour mode: no idle auto-pan, wider zoom range, no drag hint. */
   full?: boolean;
   copy: Copy;
+  /** A flat photo shown at once and kept if the 3D view can't start (defaults to the first src). */
+  poster?: string;
 };
 
 type Viewer = {
@@ -21,7 +23,7 @@ type Viewer = {
 };
 
 /** Draggable, zoomable 360° viewer for equirectangular images. */
-export default function PanoPreview({ src, alt, full = false, copy: t }: Props) {
+export default function PanoPreview({ src, alt, full = false, copy: t, poster }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const viewer = useRef<Viewer | null>(null);
   const [ready, setReady] = useState(false);
@@ -40,7 +42,15 @@ export default function PanoPreview({ src, alt, full = false, copy: t }: Props) 
       if (disposed || !el) return;
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      // A phone can refuse a second WebGL context (the globe already has one), especially
+      // under memory pressure; then keep the poster photo instead of an empty box.
+      let renderer: THREE_NS.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      } catch {
+        setState("error");
+        return;
+      }
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(el.clientWidth, el.clientHeight);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -191,8 +201,11 @@ export default function PanoPreview({ src, alt, full = false, copy: t }: Props) 
         },
       );
     });
+    // Never sit on "loading" forever: if nothing has arrived after 10 s, keep the poster.
+    const giveUp = window.setTimeout(() => !cancelled && !shown && setState("error"), 10000);
     return () => {
       cancelled = true;
+      window.clearTimeout(giveUp);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, key]);
@@ -205,10 +218,13 @@ export default function PanoPreview({ src, alt, full = false, copy: t }: Props) 
       aria-label={`360° ${full ? t.viewer.tour : t.viewer.preview}: ${alt}`}
       data-state={state}
     >
+      {/* A flat photo right away, under the 3D view; it stays if the 3D view can't start. */}
+      {!full && state !== "ready" && (
+        <img className="pano__poster" src={poster ?? srcs[0]} alt="" onError={(e) => (e.currentTarget.style.display = "none")} />
+      )}
       {state === "loading" && <span className="pano__hint">{t.viewer.loadingPano}</span>}
-      {state === "error" && (
-        // WebGL texture failed (network/CORS): show the panorama as a flat image instead.
-        <img className="panel__cover" src={srcs[0]} alt="" onError={(e) => (e.currentTarget.style.display = "none")} />
+      {full && state === "error" && (
+        <img className="panel__cover" src={poster ?? srcs[0]} alt="" onError={(e) => (e.currentTarget.style.display = "none")} />
       )}
       {state === "ready" && !full && <span className="pano__drag">{t.viewer.drag}</span>}
     </div>

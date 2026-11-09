@@ -71,6 +71,11 @@ const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
   });
 };
 
+/** A flat photo for the preview while (or if) the 3D view loads. Google can render a normal
+ *  camera view straight from the panorama, which reads better than the stretched 360 image. */
+const posterFor = (t: Tour) =>
+  t.source === "google" && t.cover ? `${t.cover.split("=")[0]}=w800-h500-k-no-pi-0-ya0-ro0-fo100` : t.cover ?? undefined;
+
 export default function Experience({ visitor: ipVisitor, initialStory = false }: { visitor: Visitor | null; initialStory?: boolean }) {
   const [data, setData] = useState<ToursFile | null>(null);
   const [geo, setGeo] = useState<any[] | null>(null);
@@ -595,7 +600,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           </button>
           <div className="panel__media">
             {selected.pano && selected.cover ? (
-              <PanoPreview key={selected.cover} copy={t} src={selected.cover} alt={selected.name} />
+              <PanoPreview key={selected.cover} copy={t} src={selected.cover} poster={posterFor(selected)} alt={selected.name} />
             ) : selected.cover ? (
               <img className="panel__cover" src={selected.cover} alt="" />
             ) : null}
