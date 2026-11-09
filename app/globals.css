@@ -110,6 +110,11 @@ a { color: inherit; text-decoration: none; }
   background: #fff; box-shadow: 0 0 0 3px var(--amber), 0 0 20px 6px rgba(246, 169, 59, .7);
   transform: scale(1.3);
 }
+/* The chosen place: white with a slim ring, at the dot's own size (hover grows it, selection doesn't). */
+.marker.is-selected .marker__dot {
+  transform: none; box-shadow: 0 0 0 2px var(--amber), 0 0 12px 3px rgba(246, 169, 59, .6);
+}
+.marker--google.is-selected .marker__dot { box-shadow: 0 0 0 2px var(--sky), 0 0 11px 3px rgba(124, 196, 255, .55); }
 .marker:focus-visible { outline: none; }
 .marker:focus-visible .marker__dot { outline: 2px solid var(--snow); outline-offset: 3px; }
 .marker:hover, .marker.is-hover, .marker.is-selected { z-index: 10; }
@@ -152,9 +157,9 @@ a { color: inherit; text-decoration: none; }
 }
 .marker.is-dim .marker__dot::after { display: none; }
 .marker.is-dim:hover .marker__dot, .marker.is-dim.is-hover .marker__dot { transform: scale(1.75); background: #fff; }
-/* 4 px drawn 3× larger: the ring and glow are a third of the usual, so they scale up to it. */
+/* 4 px drawn twice as large: the ring and glow are half the usual, so they scale up to it. */
 .marker.is-dim.is-selected .marker__dot {
-  transform: scale(3); background: #fff; box-shadow: 0 0 0 1px var(--amber), 0 0 7px 2px rgba(246, 169, 59, .7);
+  transform: scale(2); background: #fff; box-shadow: 0 0 0 1px var(--amber), 0 0 6px 1.5px rgba(246, 169, 59, .6);
 }
 
 /* "You are here": a blue location dot; approximate locations get a wider soft halo */

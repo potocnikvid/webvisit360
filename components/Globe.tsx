@@ -5,6 +5,7 @@ import type { GlobeInstance } from "globe.gl";
 import type { PlaceType, Tour } from "@/lib/types";
 import { isDimmed, labelEligible } from "@/lib/markers";
 import { FIRE_SIZE, dotLook, fireHeat, importance, labelAltitude, nearest, pinIds, standing } from "@/lib/dots";
+import { GRADED_MAX_LEVEL, GRADE_GLSL, imageryGrade, tileLevel } from "@/lib/imagery";
 import { createDots } from "./globeDots";
 import { LabelTimeline, chooseLabels, labelBudget, type Candidate } from "@/lib/labels";
 import { arcPov, type Pov } from "@/lib/flight";
@@ -631,6 +632,31 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
       labelsRef.current = () => scheduleDeclutter(true);
 
+      // The far-out satellite tiles are graded to match the aerial photos that replace them
+      // up close, fading in with the zoom (see lib/imagery). One shared program and uniform.
+      const grade = { value: 0 };
+      const gradeShader = (shader: { uniforms: Record<string, unknown>; fragmentShader: string }) => {
+        shader.uniforms.uGrade = grade;
+        shader.fragmentShader = `uniform float uGrade;\n${shader.fragmentShader}`.replace(
+          "#include <map_fragment>",
+          `#include <map_fragment>\n${GRADE_GLSL}`,
+        );
+      };
+      const gradeTile = (o: unknown) => {
+        const mesh = o as { geometry?: { parameters?: { phiLength?: number } }; material?: import("three").MeshLambertMaterial };
+        const phi = mesh.geometry?.parameters?.phiLength;
+        const mat = mesh.material;
+        if (!phi || !mat || !(mat as { isMeshLambertMaterial?: boolean }).isMeshLambertMaterial) return;
+        if (tileLevel(phi) > GRADED_MAX_LEVEL || mat.onBeforeCompile === gradeShader) return;
+        mat.onBeforeCompile = gradeShader;
+        mat.customProgramCacheKey = () => "esri-grade";
+        mat.needsUpdate = true;
+      };
+      const setGrade = (alt: number) => {
+        const v = imageryGrade(alt);
+        if (v !== grade.value) grade.value = v;
+      };
+
       // Load one tile level sharper than three-slippy-map-globe's default at every
       // altitude (its thresholds are 8 / 2^level globe radii). Never use levels 0-2:
       // ESRI's lowest levels are a lighter, hazier mosaic, so the whole globe would
@@ -647,6 +673,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             const engine = o as unknown as { add: (...x: unknown[]) => unknown };
             const add = engine.add.bind(engine);
             engine.add = (...x) => {
+              x.forEach(gradeTile);
               wakeRef.current();
               return add(...x);
             };
@@ -669,6 +696,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       g.onZoom((pov) => {
         sharpenTiles();
+        setGrade(pov.altitude);
         fitClipping(pov.altitude);
         if (dots?.visible) (dots.material as import("three").PointsMaterial).size = dotSize(pov.altitude);
         applyZoom(pov.altitude);
@@ -1049,7 +1077,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       globe.current = g;
       // Handy for automated visual checks in development.
-      if (process.env.NODE_ENV !== "production") (window as unknown as { __globe: GlobeInstance }).__globe = g;
+      if (process.env.NODE_ENV !== "production") Object.assign(window, { __globe: g, __grade: grade });
       reload();
       let groundRaf = 0;
       let groundPx = 0;
