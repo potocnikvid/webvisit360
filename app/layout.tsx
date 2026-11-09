@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Unbounded, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import JsonLd from "@/components/JsonLd";
+import RememberSource from "@/components/RememberSource";
 import { SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 
 const display = Unbounded({
@@ -47,6 +50,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={organizationLd()} />
         <JsonLd data={websiteLd()} />
         {children}
+        {/* Visits, where they come from and key clicks (cookieless), and real load speed. */}
+        <RememberSource />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

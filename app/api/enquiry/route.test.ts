@@ -67,6 +67,15 @@ describe("POST /api/enquiry", () => {
     expect(send).toHaveBeenCalledTimes(1);
   });
 
+  test("the email says where the visit came from; a malformed source never blocks the enquiry", async () => {
+    const source = { referrer: "chatgpt.com", utm: {}, ad: null, landing: "/" };
+    await post({ enquiry, context, transcript: [], source });
+    expect(send.mock.calls[0][0].text).toContain("Od kod: ChatGPT · začetna stran /");
+    const res = await post({ enquiry, context, transcript: [], source: { referrer: 42 } });
+    expect(res.status).toBe(200);
+    expect(send.mock.calls[1][0].text).not.toContain("Od kod");
+  });
+
   test("the visitor's fallback email never shows the internal price estimate", async () => {
     send.mockResolvedValue({ data: null, error: { message: "boom" } });
     const { mailto } = await (await post({ enquiry, context, transcript: [] })).json();

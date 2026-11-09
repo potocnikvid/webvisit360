@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { track } from "@vercel/analytics";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PlaceType, Tour, ToursFile } from "@/lib/types";
 import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
@@ -211,6 +212,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       setSelectedId(id);
       setEnquiry(false);
       setViewed((v) => (v.includes(t.name) ? v : [...v, t.name]));
+      track("Place opened", { kind: t.kind, type: t.type });
       setSearchOpen(false);
       if (t.lat != null && t.lng != null) {
         const from = globeApi.current?.pov();
@@ -224,6 +226,18 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     [byId, flyTo, endStory, flyOut],
   );
 
+  /** Into a place's 360° tour (counted as a key click in the analytics). */
+  const enterTour = (t: Tour) => {
+    track("Tour entered", { kind: t.kind, type: t.type });
+    setTourOpen(true);
+  };
+  /** The enquiry chat, noting where it was opened from: the header, a place, the About story or a link. */
+  const openEnquiry = useCallback((from: "header" | "place" | "story" | "link", place: string | null = null) => {
+    track("Enquiry opened", { from });
+    setChatFrom(place);
+    setEnquiry(true);
+  }, []);
+
   // Deep links from the About page: /?tour=<id> opens a place, /?povprasevanje opens the chat.
   const linked = useRef(false);
   useEffect(() => {
@@ -232,8 +246,8 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
     const q = new URLSearchParams(window.location.search);
     const id = pendingTour.current ?? q.get("tour");
     if (id && byId.has(id)) select(id);
-    else if (q.has("povprasevanje")) setEnquiry(true);
-  }, [data, byId, select]);
+    else if (q.has("povprasevanje")) openEnquiry("link");
+  }, [data, byId, select, openEnquiry]);
 
   const home = useMemo(() => (near.length ? frame(origin!, near) : SLOVENIA), [near]);
 
@@ -442,7 +456,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
             {t.langSwitch.label}
           </button>
-          <button className="btn btn--ghost" onClick={() => { setSelectedId(null); setChatFrom(null); setEnquiry(true); }}>
+          <button className="btn btn--ghost" onClick={() => { setSelectedId(null); openEnquiry("header"); }}>
             {t.wantOwn}
           </button>
         </nav>
@@ -586,7 +600,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
                 onShow={() => select(standout.tour.id)}
                 onEnter={() => {
                   select(standout.tour.id);
-                  setTourOpen(true);
+                  enterTour(standout.tour);
                 }}
               />
             )}
@@ -637,10 +651,10 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
               </ul>
             )}
             <div className="panel__actions">
-              <button className="btn btn--amber" onClick={() => setTourOpen(true)}>
+              <button className="btn btn--amber" onClick={() => enterTour(selected)}>
                 {t.panel.enter}
               </button>
-              <button className="btn btn--ghost" onClick={() => { setChatFrom(selected.name); setSelectedId(null); setEnquiry(true); }}>
+              <button className="btn btn--ghost" onClick={() => { setSelectedId(null); openEnquiry("place", selected.name); }}>
                 {t.panel.wantThis}
               </button>
               {selected.mapsUrl && (
@@ -669,10 +683,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           copy={a}
           leaving={story === "leaving"}
           onBack={closeStory}
-          onEnquire={() => {
-            setChatFrom(null);
-            setEnquiry(true);
-          }}
+          onEnquire={() => openEnquiry("story")}
           onReference={showReference}
           onPrivacy={() => setPrivacyOpen(true)}
           privacyLabel={t.footer.privacy}
