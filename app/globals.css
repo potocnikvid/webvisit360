@@ -388,6 +388,10 @@ a { color: inherit; text-decoration: none; }
 .panel__cover { width: 100%; height: 100%; object-fit: cover; display: block; animation: drift 18s ease-in-out infinite alternate; }
 @keyframes drift { to { transform: scale(1.08) translate(-2%, 1%); } }
 
+.pano__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+.pano { isolation: isolate; }
+.pano canvas { transition: opacity .4s; }
+.pano[data-state="loading"] canvas, .pano[data-state="error"] canvas { opacity: 0; }
 .pano { position: absolute; inset: 0; cursor: grab; touch-action: none; overflow: hidden; }
 .pano:active { cursor: grabbing; }
 .pano canvas { display: block; }

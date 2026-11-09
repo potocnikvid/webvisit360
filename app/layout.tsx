@@ -17,7 +17,16 @@ export const metadata: Metadata = {
   title: "Webvisit360 · 360° virtualni sprehodi",
   description:
     "360° virtualni sprehodi za občine, hotele, vinarje in trgovine. Sprehodite se, preden pridete.",
-  icons: { icon: "/favicon.ico" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/favicon/android-chrome-192x192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/favicon/apple-touch-icon.png",
+  },
+  manifest: "/favicon/site.webmanifest",
 };
 
 export const viewport: Viewport = {
