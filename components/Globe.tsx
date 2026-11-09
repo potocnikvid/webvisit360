@@ -38,6 +38,8 @@ const storyPin = (w: number) => (w <= 760 ? { x: 0.5, y: 0.17 } : { x: 0.74, y: 
 /** Rough visible half-height in degrees for globe.gl's default 50° fov. */
 const halfHeightDeg = (altitude: number) => 26.8 * altitude;
 
+export type Look = "satellite" | "illustrated";
+
 type Props = {
   tours: Tour[];
   geo: Feature[];
@@ -62,6 +64,8 @@ type Props = {
   intro?: boolean;
   /** The studio pin shown during the About story. */
   studio?: { lat: number; lng: number; label: string } | null;
+  /** Map style chosen with the switch at the top. */
+  look: Look;
 };
 
 type You = NonNullable<Props["you"]>;
@@ -75,6 +79,8 @@ const START = { lat: 38, lng: 2, altitude: 2.4 };
 // countries are drawn above COUNTRY_MIN, municipalities below MUNI_MAX.
 const COUNTRY_MIN = 0.3;
 const MUNI_MAX = 0.9;
+// Illustrated look: dotted continents above this altitude, flat land shapes below.
+const ILLUS_DOTS_ALT = 0.35;
 // Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
 const GOOGLE_VIEWS_PER_PHOTO = 2700;
 
@@ -98,7 +104,24 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, onExplore, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false }: Props) {
+type LookStyle = {
+  tiles: ((x: number, y: number, l: number) => string) | null;
+  maxLevel: number;
+  /** Closest zoom, as altitude in globe radii. */
+  minAlt: number;
+  ambient: [string, number];
+  sun: [string, number];
+  atmosphere: [string, number];
+};
+
+const LOOKS: Record<Look, LookStyle> = {
+  // Photographic, "blue hour over the Alps".
+  satellite: { tiles: ESRI, maxLevel: 19, minAlt: 0.000025, ambient: ["#7f97d8", 2.1], sun: ["#ffc98a", 1.1], atmosphere: ["#6d8de0", 0.16] },
+  // Illustrated: no imagery; dotted continents and flat municipality shapes.
+  illustrated: { tiles: null, maxLevel: 0, minAlt: 0.0008, ambient: ["#ffffff", 2.4], sun: ["#ffffff", 0.5], atmosphere: ["#4f74d9", 0.22] },
+};
+
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, onExplore, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false , look }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
@@ -156,6 +179,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
     ...(youRef.current ? [{ id: YOU_ID, lat: youRef.current.lat, lng: youRef.current.lng }] : []),
     ...(studioRef.current ? [{ id: STUDIO_ID, lat: studioRef.current.lat, lng: studioRef.current.lng }] : []),
   ];
+  const lookRef = useRef<Look>(look);
+  const applyLookRef = useRef<(l: Look) => void>(() => {});
   toursRef.current = tours;
 
   // ---- create the globe once -------------------------------------------------
@@ -174,18 +199,14 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         .height(el.clientHeight)
         .backgroundColor("rgba(0,0,0,0)")
         .showAtmosphere(true)
-        .atmosphereColor("#6d8de0")
-        .atmosphereAltitude(0.16)
-        .globeTileEngineUrl(ESRI)
-        // ESRI has real imagery to level 19 over Slovenia; 20 is just upscaled.
-        .globeTileEngineMaxLevel(19)
         .pointOfView(START, 0);
 
-      // Blue-hour lighting: a cool, dim ambient and a low warm "sunset" key light.
-      const ambient = new THREE.AmbientLight("#7f97d8", 2.1);
-      const sun = new THREE.DirectionalLight("#ffc98a", 1.1);
+      // Lighting is restyled per look (see LOOKS); the sun sits low for a dusk feel.
+      const ambient = new THREE.AmbientLight();
+      const sun = new THREE.DirectionalLight();
       sun.position.set(-1, 0.35, 0.6);
       g.lights([ambient, sun]);
+      const globeMat = g.globeMaterial() as import("three").MeshPhongMaterial;
 
       // ---- polygons: country outlines far out, municipality borders up close
       const tourCap = new THREE.MeshBasicMaterial({
@@ -197,20 +218,33 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       const tourCapHover = tourCap.clone();
       tourCapHover.opacity = 0.42;
       const noCap = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false });
+      // Illustrated look: flat, opaque municipality shapes.
+      const flatCap = new THREE.MeshBasicMaterial({ color: "#2c4592" });
+      const flatTour = new THREE.MeshBasicMaterial({ color: "#c8862f" });
+      const flatTourHover = new THREE.MeshBasicMaterial({ color: "#f6a93b" });
+      const flatLand = new THREE.MeshBasicMaterial({ color: "#22397f" });
       const countries = geo.filter((f) => f.properties.k === "c");
       const munis = geo.filter((f) => f.properties.k === "m");
       let hovered: Feature | null = null;
       let showingCountries: boolean | null = null;
 
       // Keep borders hugging the ground (~40-50 m) so they don't float when zoomed in close.
-      g.polygonAltitude((f) => ((f as Feature).properties.tour ? 0.000008 : 0.000006))
-        .polygonCapMaterial((f) =>
-          (f as Feature).properties.tour ? (f === hovered ? tourCapHover : tourCap) : noCap,
-        )
+      g.polygonAltitude((f) => {
+        const p = (f as Feature).properties;
+        return p.tour ? 0.000008 : p.k === "m" ? 0.000006 : 0.000003;
+      })
+        .polygonCapMaterial((f) => {
+          const illus = lookRef.current === "illustrated";
+          if (illus && (f as Feature).properties.k === "c") return flatLand;
+          const flat = illus && (f as Feature).properties.k === "m";
+          if ((f as Feature).properties.tour) return f === hovered ? (flat ? flatTourHover : tourCapHover) : flat ? flatTour : tourCap;
+          return flat ? flatCap : noCap;
+        })
         .polygonSideColor(() => "rgba(0,0,0,0)")
         .polygonStrokeColor((f) => {
           const p = (f as Feature).properties;
-          if (p.k === "c") return "rgba(214,224,245,0.32)";
+          if (p.k === "c") return lookRef.current === "illustrated" ? "rgba(147,163,196,0.4)" : "rgba(214,224,245,0.32)";
+          if (lookRef.current === "illustrated") return p.tour ? "#ffd27a" : "rgba(8,18,54,0.7)";
           return p.tour ? "rgba(255,210,122,0.9)" : "rgba(214,224,245,0.28)";
         })
         .polygonsTransitionDuration(0)
@@ -253,12 +287,82 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
 
       const countriesOutsideSlovenia = countries.filter((f) => f.properties.n !== "Slovenia");
+      // Land as dots for the illustrated look: ~11k precomputed points (public/data/land-dots.json,
+      // built by redesign/data/scripts/build_dots.mjs) drawn as ONE THREE.Points object - one draw
+      // call and one vertex per dot. (globe.gl's hexPolygons layer built ~250k triangles in ~180
+      // meshes and froze the page for over a second while computing them.)
+      let dots: import("three").Points | null = null;
+      // Dots sit ~1.7 globe units (~110 km) apart. Keep each about half that spacing on screen,
+      // so the continents read as a solid dot pattern at every distance, like a printed map.
+      const dotSize = (alt: number) => {
+        const unitsToPx = el.clientHeight / 2 / (Math.max(alt, 0.01) * R * Math.tan((25 * Math.PI) / 180));
+        return Math.min(12, Math.max(2.5, 0.55 * 1.7 * unitsToPx)) * Math.min(window.devicePixelRatio, 2);
+      };
+      let dotsLoading = false;
+      const showDots = (on: boolean) => {
+        if (dots) dots.visible = on;
+        if (!on || dots || dotsLoading) return;
+        dotsLoading = true;
+        fetch("/data/land-dots.json")
+          .then((r) => r.json() as Promise<number[]>)
+          .then((flat) => {
+            if (disposed) return;
+            const pos = new Float32Array((flat.length / 2) * 3);
+            for (let i = 0, j = 0; i < flat.length; i += 2, j += 3) {
+              const c = g.getCoords(flat[i] / 100, flat[i + 1] / 100, 0.0004);
+              pos[j] = c.x;
+              pos[j + 1] = c.y;
+              pos[j + 2] = c.z;
+            }
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+            // Round dot sprite.
+            const cv = document.createElement("canvas");
+            cv.width = cv.height = 32;
+            const cx = cv.getContext("2d")!;
+            cx.fillStyle = "#fff";
+            cx.beginPath();
+            cx.arc(16, 16, 14, 0, Math.PI * 2);
+            cx.fill();
+            const mat = new THREE.PointsMaterial({
+              color: "#93a3c4",
+              size: dotSize(g.pointOfView().altitude),
+              sizeAttenuation: false,
+              map: new THREE.CanvasTexture(cv),
+              transparent: true,
+              opacity: 0.6,
+              alphaTest: 0.3,
+              depthWrite: false,
+            });
+            dots = new THREE.Points(geom, mat);
+            dots.visible = lookRef.current === "illustrated" && borderMode === "dots";
+            g.scene().add(dots);
+          })
+          .catch(() => {
+            dotsLoading = false;
+          });
+      };
+      // Up close the illustrated look draws neighbouring countries as land; only the ones
+      // around Slovenia can be on screen then, so skip the rest of the world (fewer draw calls).
+      const nearCountries = countriesOutsideSlovenia.filter((f) => {
+        const c = JSON.stringify(f.geometry).match(/-?\d+\.?\d*/g)!.map(Number);
+        let near = false;
+        for (let i = 0; i < c.length - 1 && !near; i += 2) near = c[i] > -5 && c[i] < 35 && c[i + 1] > 30 && c[i + 1] < 60;
+        return near;
+      });
+
       let borderMode = "";
       const applyZoom = (alt: number) => {
-        const mode = alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
+        // Illustrated: dotted continents from far away; up close (where the fixed-size dots
+        // would turn into huge discs) neighbouring countries become flat land shapes.
+        const illus = lookRef.current === "illustrated";
+        const mode = illus ? (alt > ILLUS_DOTS_ALT ? "dots" : "land") : alt > MUNI_MAX ? "c" : alt > COUNTRY_MIN ? "cm" : "m";
         if (mode === borderMode) return;
         borderMode = mode;
-        g.polygonsData(mode === "c" ? countries : mode === "m" ? munis : [...countriesOutsideSlovenia, ...munis]);
+        if (illus) showDots(mode === "dots");
+        g.polygonsData(
+          mode === "c" ? countries : mode === "m" || mode === "dots" ? munis : mode === "land" ? [...nearCountries, ...munis] : [...countriesOutsideSlovenia, ...munis],
+        );
       };
 
       // ---- Labels: greedy placement by importance, using projected screen positions
@@ -368,6 +472,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       g.onZoom((pov) => {
         sharpenTiles();
         fitClipping(pov.altitude);
+        if (dots?.visible) (dots.material as import("three").PointsMaterial).size = dotSize(pov.altitude);
         applyZoom(pov.altitude);
         scheduleDeclutter();
       });
@@ -409,11 +514,39 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       const controls = g.controls();
       controls.autoRotate = false;
-      // Allow zooming down to ~160 m above the ground (globe radius = 6371 km).
-      controls.minDistance = R * (1 + 0.000025);
       // Fired only by the visitor's own gestures, never by our camera flights.
       controls.addEventListener("start", () => onExploreRef.current?.());
       fitClipping(START.altitude);
+
+
+      const applyLook = (l: Look) => {
+        lookRef.current = l;
+        const st = LOOKS[l];
+        ambient.color.set(st.ambient[0]);
+        ambient.intensity = st.ambient[1];
+        sun.color.set(st.sun[0]);
+        sun.intensity = st.sun[1];
+        g.atmosphereColor(st.atmosphere[0]).atmosphereAltitude(st.atmosphere[1]);
+        // Swap imagery: drop the old tiles, then point the engine at the new source (or none).
+        g.globeTileEngineClearCache();
+        g.globeTileEngineUrl(st.tiles as unknown as (x: number, y: number, l: number) => string);
+        if (st.tiles) g.globeTileEngineMaxLevel(st.maxLevel);
+        // Ocean colour for the illustrated look; black (hidden under tiles) otherwise.
+        globeMat.color.set(l === "illustrated" ? "#081236" : "#000000");
+        globeMat.emissive?.set(l === "illustrated" ? "#060f2e" : "#000000");
+        globeMat.shininess = l === "illustrated" ? 0 : 30;
+        if (l !== "illustrated") showDots(false);
+        // Respect the look's closest zoom; nudge the camera out if it's already closer.
+        controls.minDistance = R * (1 + st.minAlt);
+        const pov = g.pointOfView();
+        if (pov.altitude < st.minAlt) g.pointOfView({ ...pov, altitude: st.minAlt * 1.5 }, 400);
+        borderMode = "";
+        applyZoom(pov.altitude);
+        g.polygonCapMaterial(g.polygonCapMaterial()).polygonStrokeColor(g.polygonStrokeColor());
+        el.dataset.look = l;
+      };
+      applyLookRef.current = applyLook;
+      applyLook(lookRef.current);
 
       const onResize = () => g.width(el.clientWidth).height(el.clientHeight);
       window.addEventListener("resize", onResize);
@@ -544,6 +677,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       flying.current = false;
     };
   }, [focus]);
+
+  useEffect(() => {
+    if (look !== lookRef.current) applyLookRef.current(look);
+  }, [look]);
 
   useEffect(() => {
     const g = globe.current;
