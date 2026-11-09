@@ -14,10 +14,12 @@ export function labelEligible(
   t: Marked,
   alt: number,
   focus: PlaceType | "all",
-  { selectedId, nearIds }: { selectedId: string | null; nearIds: Set<string> },
+  { selectedId, nearIds, revealAlt }: { selectedId: string | null; nearIds: Set<string>; revealAlt?: number },
 ): boolean {
   if (t.id === selectedId || nearIds.has(t.id)) return true;
-  if (isDimmed(t, focus)) return false;
+  // Faint dots (another type chosen) get their names once zoomed in enough for their
+  // importance (see lib/dots labelAltitude).
+  if (isDimmed(t, focus)) return revealAlt != null && alt < revealAlt;
   if (focus !== "all") return alt < MUNI_LABEL_ALT;
   return t.kind === "obcina" ? alt < MUNI_LABEL_ALT : alt < PLACE_LABEL_ALT;
 }

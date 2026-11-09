@@ -102,6 +102,12 @@ a { color: inherit; text-decoration: none; }
 .marker.is-near .marker__dot { box-shadow: 0 0 0 3px rgba(246, 169, 59, .35), 0 0 14px rgba(246, 169, 59, .8); }
 .marker.is-near { z-index: 5; }
 
+/* A name for a dot drawn on the map (see Globe): the pin carries only the name, the dot
+   itself stays on the map (fired up and glowing when zoomed in). Hovering shows the pin's
+   own dot as usual. */
+.marker.is-label-only .marker__dot { visibility: hidden; }
+.marker.is-label-only:hover .marker__dot { visibility: visible; }
+
 /* Pins never sit on top of each other: the less important of two overlapping dots is tucked
    away (see Globe.tsx) and comes back when zooming in gives it room. */
 .marker.is-tucked { opacity: 0; pointer-events: none; }
