@@ -102,6 +102,12 @@ a { color: inherit; text-decoration: none; }
 .marker.is-near .marker__dot { box-shadow: 0 0 0 3px rgba(246, 169, 59, .35), 0 0 14px rgba(246, 169, 59, .8); }
 .marker.is-near { z-index: 5; }
 
+/* A name for a dot drawn on the map (see Globe): the pin carries only the name, the dot
+   itself stays on the map (fired up and glowing when zoomed in). Hovering shows the pin's
+   own dot as usual. */
+.marker.is-label-only .marker__dot { visibility: hidden; }
+.marker.is-label-only:hover .marker__dot { visibility: visible; }
+
 /* Pins never sit on top of each other: the less important of two overlapping dots is tucked
    away (see Globe.tsx) and comes back when zooming in gives it room. */
 .marker.is-tucked { opacity: 0; pointer-events: none; }
@@ -764,10 +770,11 @@ a { color: inherit; text-decoration: none; }
 /* ---------- mobile ---------- */
 @media (max-width: 760px) {
   .nav a { display: none; }
-  .looks { top: 66px; }
+  /* The style switch sits under the top bar; the hero starts below it. */
+  .looks { top: 66px; z-index: 5; }
   .looks button { padding: 6px 10px; font-size: 12.5px; }
   .credit { display: none; }
-  .hero { top: 76px; right: var(--gutter); }
+  .hero { top: 118px; right: var(--gutter); }
   .hero p { font-size: 15px; }
   .stats { margin-top: 16px; }
   .panel, .chat {
@@ -814,7 +821,7 @@ a { color: inherit; text-decoration: none; }
   /* No frosted glass on phones: the blur is redone on every frame while the map moves,
      which a phone's GPU feels. Slightly more opaque panels look nearly the same. */
   :root { --glass: rgba(10, 20, 52, .86); }
-  .chip, .near, .search input, .results, .filter-toggle, .explore-back, .why, .panel, .chat {
+  .chip, .near, .search input, .results, .filter-toggle, .explore-back, .why, .panel, .chat, .looks {
     backdrop-filter: none; -webkit-backdrop-filter: none;
   }
   .near, .panel, .chat { background: rgba(10, 20, 52, .93); }
@@ -845,6 +852,12 @@ a { color: inherit; text-decoration: none; }
   @keyframes sheet-in { from { transform: translateY(40px); opacity: 0; } }
 }
 
+/* Short phones have no room for both: the hero keeps its place under the top bar and the
+   style switch appears in map mode, once the intro has stepped aside. */
+@media (max-width: 760px) and (max-height: 699px) {
+  .hero { top: 76px; }
+  .app:not(.exploring) .looks { display: none; }
+}
 /* Short phones: the hero keeps its title, numbers and "why" button; the intro line goes. */
 @media (max-width: 760px) and (max-height: 650px) {
   .hero p { display: none; }
