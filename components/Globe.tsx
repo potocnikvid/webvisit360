@@ -6,6 +6,7 @@ import type { PlaceType, Tour } from "@/lib/types";
 import { isDimmed, labelEligible } from "@/lib/markers";
 import { FIRE_SIZE, dotLook, fireHeat, importance, labelAltitude, nearest, pinIds, standing } from "@/lib/dots";
 import { createDots } from "./globeDots";
+import { LabelTimeline, chooseLabels, labelBudget, type Candidate } from "@/lib/labels";
 import { arcPov, type Pov } from "@/lib/flight";
 
 type Feature = {
@@ -98,8 +99,6 @@ const shortLabel = (t: Tour) => {
   return s;
 };
 
-/** Most labels on screen at once, growing as you zoom in. */
-const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 0.015 ? 40 : 60);
 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
@@ -419,7 +418,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       // (no DOM measuring), so it can run every frame while the globe moves.
       const LABEL_H = 24;
       const labelW = new Map<string, number>();
-      const shown = new Set<string>();
+      const labels = new LabelTimeline();
+      let labelTimer = 0;
+      let lastAlt = Infinity;
+      let zoomedOutAt = -Infinity;
       type Box = { l: number; r: number; t: number; b: number };
       // Where the page's own text and controls are. Measuring forces a layout, so while the
       // camera moves this is reused; any change on the page (scheduleDeclutter(true)) or a
@@ -446,7 +448,6 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const alt = g.pointOfView().altitude;
         const { W, H, boxes } = pageBoxes();
         project();
-        const budget = labelBudget(alt);
         const near = nearRef.current;
         const selected = selectedRef.current ?? undefined;
 
@@ -467,7 +468,11 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         const grid = new Map<number, { x: number; y: number; r: number; i: number }[]>();
         const nextTucked = new Set<string>();
         const onScreen: number[] = [];
-        for (const i of order) {
+        // Places whose names are showing go first, so a less important dot never tucks away
+        // a name that's already on screen.
+        const named = labels.pinned;
+        const tuckOrder = [...order.filter((i) => named.has(places[i].id)), ...order.filter((i) => !named.has(places[i].id))];
+        for (const i of tuckOrder) {
           const t = places[i];
           const x = px[i];
           const y = py[i];
@@ -546,37 +551,13 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         }
         if (easing && !declutterRaf) declutterRaf = requestAnimationFrame(() => { declutterRaf = 0; declutter(); });
 
-        const candidates = toursRef.current
-          .filter((t) => {
-            if (t.lat == null || tucked.has(t.id)) return false;
-            const i = index.get(t.id);
-            const revealAlt = i != null && t.kind !== "obcina" ? labelAltitude(stand[i]) : undefined;
-            return labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near, revealAlt });
-          })
-          .sort((a, b) =>
-            Number(b.id === selected) - Number(a.id === selected) ||
-            Number(near.has(b.id)) - Number(near.has(a.id)) ||
-            importance(b) - importance(a),
-          );
-
-        // Keep labels clear of the page's own text and controls.
-        const placed: Box[] = [...boxes];
-        // The "You are here" label always shows; other labels make room for it.
-        const me = youRef.current;
-        if (me) {
-          const sc = g.getScreenCoords(me.lat, me.lng, 0);
-          const w = me.label.length * 6.9 + 30;
-          placed.push({ l: sc.x - w / 2, r: sc.x + w / 2, t: sc.y - 44, b: sc.y + 10 });
-        }
-        const next = new Set<string>();
-        for (const t of candidates) {
-          if (next.size >= budget && t.id !== selected) break;
-          const i = index.get(t.id);
-          if (i == null) continue;
+        // ---- Names (see lib/labels): the ones showing keep their place; new ones appear where
+        // they fit, once they've kept fitting for a moment; leaving ones fade out.
+        const boxOf = (t: Tour, i: number): Box | null => {
           // NaN: on the far side of the globe.
           const x = px[i];
           const y = py[i];
-          if (!(x >= 0 && y >= 0 && x <= W && y <= H)) continue;
+          if (!(x >= 0 && y >= 0 && x <= W && y <= H)) return null;
           let w = labelW.get(t.id);
           if (w == null) {
             w = shortLabel(t).length * 6.9 + 18;
@@ -584,15 +565,57 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           }
           // Above the dot as drawn now (fired-up dots are larger).
           const lift = t.kind === "obcina" ? 15 : Math.max(11, shownRadius(i) + 8);
-          const box = { l: x - w / 2 - 4, r: x + w / 2 + 4, t: y - lift - LABEL_H - 3, b: y - lift + 3 };
-          if (placed.some((q) => box.l < q.r && box.r > q.l && box.t < q.b && box.b > q.t)) continue;
-          placed.push(box);
-          next.add(t.id);
+          return { l: x - w / 2 - 4, r: x + w / 2 + 4, t: y - lift - LABEL_H - 3, b: y - lift + 3 };
+        };
+        // Most important first: the selected and nearby places, the chosen type, then by
+        // importance (the same cached order the dots use).
+        const incumbents: Candidate[] = [];
+        const newcomers: Candidate[] = [];
+        const showing = labels.shown;
+        for (const i of order) {
+          const t = places[i];
+          if (tucked.has(t.id)) continue;
+          const revealAlt = t.kind !== "obcina" ? labelAltitude(stand[i]) : undefined;
+          // A name that's showing stays until you zoom out a good bit past where it appeared.
+          const at = showing.has(t.id) ? alt / 1.25 : alt;
+          if (!labelEligible(t, at, focus, { selectedId: selected ?? null, nearIds: near, revealAlt })) continue;
+          const box = boxOf(t, i);
+          if (box) (showing.has(t.id) ? incumbents : newcomers).push({ id: t.id, box });
         }
-        for (const id of shown) if (!next.has(id)) markers.current.get(id)?.classList.remove("has-label");
-        for (const id of next) if (!shown.has(id)) markerEl(places[index.get(id)!]).classList.add("has-label");
-        shown.clear();
-        next.forEach((id) => shown.add(id));
+        // Keep names clear of the page's own text and controls, the visitor's own label, and
+        // names still fading out.
+        const blocked: Box[] = [...boxes];
+        const me = youRef.current;
+        if (me) {
+          const sc = g.getScreenCoords(me.lat, me.lng, 0);
+          const w = me.label.length * 6.9 + 30;
+          blocked.push({ l: sc.x - w / 2, r: sc.x + w / 2, t: sc.y - 44, b: sc.y + 10 });
+        }
+        for (const id of labels.leaving.keys()) {
+          const i = index.get(id);
+          const box = i != null ? boxOf(places[i], i) : null;
+          if (box) blocked.push(box);
+        }
+        // Zooming out squeezes everything together: names that appear now would only collide a
+        // moment later, so while that goes on only the selected and nearby places may gain one.
+        const now = performance.now();
+        if (alt > lastAlt * 1.0005) zoomedOutAt = now;
+        lastAlt = alt;
+        const settling = now - zoomedOutAt < 300;
+        const { keep, fresh } = chooseLabels(
+          incumbents,
+          settling ? newcomers.filter((c) => c.id === selected || near.has(c.id)) : newcomers,
+          blocked,
+          labelBudget(alt),
+        );
+        const step = labels.update(keep, fresh, now, (id) => id === selected || near.has(id));
+        // Done zooming out: look once more so new names can come in.
+        if (settling && step.again == null) step.again = 320;
+        for (const id of step.removed) markers.current.get(id)?.classList.remove("has-label");
+        for (const id of step.added) markerEl(places[index.get(id)!]).classList.add("has-label");
+        // Something is still waiting to appear or fading out: look again then.
+        window.clearTimeout(labelTimer);
+        if (step.again != null) labelTimer = window.setTimeout(declutter, step.again);
         setPins();
         // A name for a dot drawn on the map: the pin carries only the name, sized like the dot
         // so the name sits just above it.
@@ -733,9 +756,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
 
       /** Give HTML pins to the places that need them (see pinIds); the rest stay dots. */
       const setPins = (force = false) => {
-        const next = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
+        const next = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: labels.pinned });
         const nextLabelOnly = new Set(
-          [...shown].filter((id) => {
+          [...labels.pinned].filter((id) => {
             const i = index.get(id);
             return i != null && places[i].kind !== "obcina" && id !== selectedRef.current && !nearRef.current.has(id) && id !== hoveredId;
           }),
@@ -788,7 +811,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         heat = new Float32Array(places.length);
         room = new Float32Array(places.length).fill(MAX_ROOM);
         placeDots.setPositions(xyz);
-        pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
+        pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: labels.pinned });
         restyle();
         setPins(true);
       };
@@ -1077,6 +1100,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         window.clearTimeout(revealDone);
         cancelAnimationFrame(waveRaf);
         window.clearTimeout(declutterTimer);
+        window.clearTimeout(labelTimer);
         cancelAnimationFrame(declutterRaf);
         window.removeEventListener("resize", onResize);
         window.clearInterval(heartbeat);

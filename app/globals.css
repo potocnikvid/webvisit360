@@ -86,13 +86,21 @@ a { color: inherit; text-decoration: none; }
   white-space: nowrap; font: 500 12.5px/1 var(--text); color: var(--snow);
   padding: 5px 8px; border-radius: 6px; background: rgba(8, 18, 48, .78);
   border: 1px solid var(--line);
-  opacity: 0; transition: opacity .2s; pointer-events: none;
+  /* Names come and go gently: they rise a little into place and fade (see lib/labels,
+     whose FADE_MS matches the fade-out). */
+  opacity: 0; transform: translate(-50%, 4px) scale(.95); transform-origin: 50% 100%;
+  transition: opacity .34s ease, transform .34s cubic-bezier(.2, .8, .2, 1); pointer-events: none;
 }
 .marker.has-label .marker__label,
 .marker:hover .marker__label,
 .marker.is-hover .marker__label,
 .marker:focus-visible .marker__label,
-.marker.is-selected .marker__label { opacity: 1; z-index: 2; }
+.marker.is-selected .marker__label { opacity: 1; transform: translate(-50%, 0) scale(1); z-index: 2; }
+/* A pin made for its name has no "before" to transition from, so its name eases in by itself. */
+.marker.has-label .marker__label { animation: label-in .42s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes label-in {
+  from { opacity: 0; transform: translate(-50%, 5px) scale(.94); }
+}
 .marker:hover .marker__dot, .marker.is-hover .marker__dot, .marker.is-selected .marker__dot {
   background: #fff; box-shadow: 0 0 0 3px var(--amber), 0 0 20px 6px rgba(246, 169, 59, .7);
 }
