@@ -19,7 +19,7 @@ describe("isDimmed", () => {
 });
 
 describe("labelEligible", () => {
-  test("dimmed places never get a name", () => {
+  test("dimmed places get no name without a reveal altitude", () => {
     expect(labelEligible(shop, 0.01, "nastanitve", none)).toBe(false);
   });
   test("the chosen type is named from further out than usual", () => {
@@ -34,5 +34,9 @@ describe("labelEligible", () => {
     expect(labelEligible(zalec, 0.4, "all", none)).toBe(true);
     expect(labelEligible(shop, 0.2, "all", none)).toBe(true);
     expect(labelEligible(shop, 0.3, "all", none)).toBe(false);
+  });
+  test("faint dots of other types get names once zoomed in past their reveal altitude", () => {
+    expect(labelEligible(shop, 0.02, "nastanitve", { ...none, revealAlt: 0.01 })).toBe(false);
+    expect(labelEligible(shop, 0.008, "nastanitve", { ...none, revealAlt: 0.01 })).toBe(true);
   });
 });

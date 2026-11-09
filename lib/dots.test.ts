@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { dotLook, nearest, pinIds } from "./dots";
+import { dotLook, fireHeat, labelAltitude, nearest, pinIds, standing } from "./dots";
 
 const hotel = { id: "hotel", kind: "business", type: "nastanitve" } as const;
 const photo = { id: "photo", kind: "google", type: "gostinstvo" } as const;
@@ -48,5 +48,37 @@ describe("nearest", () => {
   test("nothing within the radius, and points on the far side (NaN) never count", () => {
     expect(nearest(xs, ys, 30, 30, 9)).toBe(-1);
     expect(nearest(new Float32Array([NaN]), new Float32Array([12]), 10, 12, 9)).toBe(-1);
+  });
+});
+
+describe("standing", () => {
+  test("ranks places by views (Google photos by photos), most important first; municipalities aside", () => {
+    const s = standing([
+      { id: "small", kind: "business", source: "kuula", views: 100, scenes: 3 },
+      { id: "big", kind: "business", source: "kuula", views: 90_000, scenes: 40 },
+      { id: "photo", kind: "google", source: "google", views: null, scenes: 10 },
+      { id: "zalec", kind: "obcina", source: "3dvista", views: null, scenes: 99 },
+    ]);
+    expect(s.get("big")).toBe(0);
+    expect(s.get("photo")).toBe(0.5);
+    expect(s.get("small")).toBe(1);
+    expect(s.has("zalec")).toBe(false);
+  });
+});
+
+describe("zooming in", () => {
+  test("the most important places get names first (from higher up), the rest closer in", () => {
+    expect(labelAltitude(0)).toBeGreaterThan(labelAltitude(0.5));
+    expect(labelAltitude(0.5)).toBeGreaterThan(labelAltitude(1));
+    expect(labelAltitude(1)).toBeGreaterThan(0.003); // still a town-level view
+  });
+
+  test("dots fire up smoothly, important ones first, and every one is fully fired in a town", () => {
+    expect(fireHeat(0, 0.05)).toBe(0); // all of Slovenia: plain dots
+    const top = fireHeat(0, 0.008);
+    const low = fireHeat(1, 0.008);
+    expect(top).toBeGreaterThan(low);
+    expect(fireHeat(0, 0.006)).toBeGreaterThan(fireHeat(0, 0.009)); // grows as you zoom in
+    expect(fireHeat(1, 0.0004)).toBe(1);
   });
 });
