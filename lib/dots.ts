@@ -54,6 +54,49 @@ export function pinIds(
   return ids;
 }
 
+// Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
+const GOOGLE_VIEWS_PER_PHOTO = 2700;
+
+/** How important a place is: municipalities first, then by views (or panoramas). */
+export const importance = (t: Pick<Tour, "kind" | "scenes" | "views" | "source">) =>
+  t.kind === "obcina"
+    ? 1e12 + (t.scenes ?? 0)
+    : t.views ?? (t.scenes ?? 0) * (t.source === "google" ? GOOGLE_VIEWS_PER_PHOTO : 1000);
+
+/**
+ * Each place's standing among the places (municipalities aside): 0 for the most important,
+ * 1 for the least. Zooming in brings out names and "fires up" dots in this order.
+ */
+export function standing(tours: Pick<Tour, "id" | "kind" | "scenes" | "views" | "source">[]): Map<string, number> {
+  const ranked = tours.filter((t) => t.kind !== "obcina").sort((a, b) => importance(b) - importance(a));
+  const n = Math.max(ranked.length - 1, 1);
+  return new Map(ranked.map((t, i) => [t.id, i / n]));
+}
+
+// Altitudes in globe radii (0.085 shows all of Slovenia; 0.005 a town and its surroundings).
+// The most important place gets its name from about a regional view, the least important
+// only at town level; in between it's spread evenly on a log scale.
+const LABEL_TOP = 0.035;
+const LABEL_ALL = 0.004;
+// Dots start warming up a little closer in, and finish over a 2.5x zoom.
+const FIRE_TOP = 0.012;
+const FIRE_ALL = 0.0012;
+const FIRE_SPAN = 2.5;
+const between = (top: number, all: number, s: number) => top * (all / top) ** s;
+
+/** Below this altitude a place of this standing may show its name. */
+export const labelAltitude = (standing: number) => between(LABEL_TOP, LABEL_ALL, standing);
+
+/** How far a dot has "fired up" (0 = plain, 1 = large and warm) at this altitude. */
+export function fireHeat(standing: number, alt: number): number {
+  const start = between(FIRE_TOP, FIRE_ALL, standing);
+  const k = Math.min(1, Math.max(0, Math.log(start / alt) / Math.log(FIRE_SPAN)));
+  return k * k * (3 - 2 * k);
+}
+
+/** Fired-up dot diameter (px); a dot never shrinks below its own size. */
+export const FIRE_SIZE = 10;
+
 /** Index of the screen point nearest to (x, y) within `radius` px, or -1. NaN points are skipped. */
 export function nearest(xs: Float32Array, ys: Float32Array, x: number, y: number, radius: number): number {
   let best = -1;

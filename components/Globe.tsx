@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import type { GlobeInstance } from "globe.gl";
 import type { PlaceType, Tour } from "@/lib/types";
 import { isDimmed, labelEligible } from "@/lib/markers";
-import { dotLook, nearest, pinIds } from "@/lib/dots";
+import { FIRE_SIZE, dotLook, fireHeat, importance, labelAltitude, nearest, pinIds, standing } from "@/lib/dots";
 import { createDots } from "./globeDots";
 import { arcPov, type Pov } from "@/lib/flight";
 
@@ -83,15 +83,6 @@ const COUNTRY_MIN = 0.3;
 const MUNI_MAX = 0.9;
 // Illustrated look: dotted continents above this altitude, flat land shapes below.
 const ILLUS_DOTS_ALT = 0.35;
-// Rough Google views per photo (profile total 28.5M / 10.6k photos), to rank Google places.
-const GOOGLE_VIEWS_PER_PHOTO = 2700;
-
-/** How important a place is when competing for label space. */
-const importance = (t: Tour) =>
-  t.kind === "obcina"
-    ? 1e12 + (t.scenes ?? 0)
-    : t.views ?? (t.scenes ?? 0) * (t.source === "google" ? GOOGLE_VIEWS_PER_PHOTO : 1000);
-
 /** On-screen radius (px) of a place's dot, matching the sizes in globals.css (and lib/dots). */
 const dotRadius = (t: Tour, focus: PlaceType | "all") => {
   if (isDimmed(t, focus)) return 2;
@@ -473,8 +464,9 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           order = places.map((_, i) => i).sort((a, b) => rank(places[b]) - rank(places[a]));
         }
         const CELL = 20;
-        const grid = new Map<number, { x: number; y: number; r: number }[]>();
+        const grid = new Map<number, { x: number; y: number; r: number; i: number }[]>();
         const nextTucked = new Set<string>();
+        const onScreen: number[] = [];
         for (const i of order) {
           const t = places[i];
           const x = px[i];
@@ -497,7 +489,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             continue;
           }
           const cell = gx * 100003 + gy;
-          (grid.get(cell) ?? grid.set(cell, []).get(cell)!).push({ x, y, r });
+          (grid.get(cell) ?? grid.set(cell, []).get(cell)!).push({ x, y, r, i });
+          onScreen.push(i);
         }
         const tuckChanged: string[] = [];
         for (const id of tucked) if (!nextTucked.has(id)) {
@@ -516,8 +509,50 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
           wake();
         }
 
+        // ---- Zoomed in, dots fire up: they grow and warm to a soft orange, the most important
+        // places first, then gradually all of them. Each grows only as far as its nearest
+        // neighbour on screen leaves room, eased over a few frames so nothing pops.
+        let fireChanged = false;
+        let easing = false;
+        const roomNow = new Float32Array(places.length).fill(MAX_ROOM);
+        for (const i of onScreen) {
+          if (fireHeat(stand[i], alt) <= 0) continue;
+          const x = px[i];
+          const y = py[i];
+          const gx = Math.floor(x / CELL);
+          const gy = Math.floor(y / CELL);
+          let d = Infinity;
+          for (let dx = -1; dx <= 1; dx++)
+            for (let dy = -1; dy <= 1; dy++)
+              for (const q of grid.get((gx + dx) * 100003 + (gy + dy)) ?? [])
+                if (q.i !== i) d = Math.min(d, Math.hypot(q.x - x, q.y - y));
+          roomNow[i] = Math.min(MAX_ROOM, d / 2 - 1.5);
+        }
+        for (let i = 0; i < places.length; i++) {
+          const h = places[i].kind === "obcina" ? 0 : fireHeat(stand[i], alt);
+          let r = room[i] + (roomNow[i] - room[i]) * 0.35;
+          if (Math.abs(roomNow[i] - r) < 0.15) r = roomNow[i];
+          else easing = true;
+          if (h !== heat[i] || r !== room[i]) {
+            heat[i] = h;
+            room[i] = r;
+            placeDots.setFire(i, h, r);
+            fireChanged = true;
+          }
+        }
+        if (fireChanged) {
+          placeDots.commitFire();
+          wake();
+        }
+        if (easing && !declutterRaf) declutterRaf = requestAnimationFrame(() => { declutterRaf = 0; declutter(); });
+
         const candidates = toursRef.current
-          .filter((t) => t.lat != null && !tucked.has(t.id) && labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near }))
+          .filter((t) => {
+            if (t.lat == null || tucked.has(t.id)) return false;
+            const i = index.get(t.id);
+            const revealAlt = i != null && t.kind !== "obcina" ? labelAltitude(stand[i]) : undefined;
+            return labelEligible(t, alt, focusRef.current, { selectedId: selected ?? null, nearIds: near, revealAlt });
+          })
           .sort((a, b) =>
             Number(b.id === selected) - Number(a.id === selected) ||
             Number(near.has(b.id)) - Number(near.has(a.id)) ||
@@ -547,7 +582,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
             w = shortLabel(t).length * 6.9 + 18;
             labelW.set(t.id, w);
           }
-          const lift = t.kind === "obcina" ? 15 : 11;
+          // Above the dot as drawn now (fired-up dots are larger).
+          const lift = t.kind === "obcina" ? 15 : Math.max(11, shownRadius(i) + 8);
           const box = { l: x - w / 2 - 4, r: x + w / 2 + 4, t: y - lift - LABEL_H - 3, b: y - lift + 3 };
           if (placed.some((q) => box.l < q.r && box.r > q.l && box.t < q.b && box.b > q.t)) continue;
           placed.push(box);
@@ -558,6 +594,16 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         shown.clear();
         next.forEach((id) => shown.add(id));
         setPins();
+        // A name for a dot drawn on the map: the pin carries only the name, sized like the dot
+        // so the name sits just above it.
+        for (const id of labelOnly) {
+          const i = index.get(id)!;
+          const d = Math.round(shownRadius(i) * 4) / 2;
+          if (dotPx.get(id) === d) continue;
+          dotPx.set(id, d);
+          const dot = markers.current.get(id)?.querySelector<HTMLElement>(".marker__dot");
+          if (dot) dot.style.width = dot.style.height = `${d}px`;
+        }
       };
       let declutterRaf = 0;
       let declutterTimer = 0;
@@ -629,7 +675,7 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         });
 
       // ---- Places: every dot drawn on the map in one go; HTML pins only where needed
-      const placeDots = createDots(THREE);
+      const placeDots = createDots(THREE, FIRE_SIZE);
       placeDots.setPixelRatio(g.renderer().getPixelRatio());
       g.scene().add(placeDots.object);
       let places: Tour[] = [];
@@ -639,6 +685,20 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       let py = new Float32Array(0);
       let pins = new Set<string>();
       let hoveredId: string | null = null;
+      // Zoomed-in look per place (see declutter): standing (0 = most important), heat, room.
+      const MAX_ROOM = FIRE_SIZE / 2 + 1;
+      let stand = new Float32Array(0);
+      let heat = new Float32Array(0);
+      let room = new Float32Array(0);
+      /** Radius (px) a place's dot is drawn at right now, matching the shader. */
+      const shownRadius = (i: number) => {
+        const base = dotRadius(places[i], focusRef.current) * 2;
+        const grown = Math.max(base, base + (FIRE_SIZE - base) * heat[i]);
+        return Math.min(grown, Math.max(base, 2 * room[i])) / 2;
+      };
+      // Places pinned only for their name: their dot stays on the map.
+      let labelOnly = new Set<string>();
+      const dotPx = new Map<string, number>();
       let size = { W: el.clientWidth, H: el.clientHeight };
       const v = new THREE.Vector3();
 
@@ -660,7 +720,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       };
 
       /** A place's dot, unless an HTML pin stands in for it or it's tucked away. */
-      const lookOf = (i: number) => (pins.has(places[i].id) || tucked.has(places[i].id) ? null : dotLook(places[i], focusRef.current));
+      const lookOf = (i: number) => {
+        const id = places[i].id;
+        return tucked.has(id) || (pins.has(id) && !labelOnly.has(id)) ? null : dotLook(places[i], focusRef.current);
+      };
 
       const htmlData = () => [
         ...places.filter((t) => pins.has(t.id)),
@@ -671,15 +734,34 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       /** Give HTML pins to the places that need them (see pinIds); the rest stay dots. */
       const setPins = (force = false) => {
         const next = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
-        const changed = [...next].filter((id) => !pins.has(id)).concat([...pins].filter((id) => !next.has(id)));
-        if (!changed.length && !force) return;
+        const nextLabelOnly = new Set(
+          [...shown].filter((id) => {
+            const i = index.get(id);
+            return i != null && places[i].kind !== "obcina" && id !== selectedRef.current && !nearRef.current.has(id) && id !== hoveredId;
+          }),
+        );
+        const diff = (a: Set<string>, b: Set<string>) => [...a].filter((id) => !b.has(id)).concat([...b].filter((id) => !a.has(id)));
+        const pinsChanged = diff(next, pins);
+        const labelOnlyChanged = diff(nextLabelOnly, labelOnly);
+        if (!pinsChanged.length && !labelOnlyChanged.length && !force) return;
+        for (const id of labelOnlyChanged) {
+          const on = nextLabelOnly.has(id);
+          const m = on ? markerEl(places[index.get(id)!]) : markers.current.get(id);
+          m?.classList.toggle("is-label-only", on);
+          if (!on) {
+            const dot = m?.querySelector<HTMLElement>(".marker__dot");
+            if (dot) dot.style.width = dot.style.height = "";
+            dotPx.delete(id);
+          }
+        }
         pins = next;
-        for (const id of changed) {
+        labelOnly = nextLabelOnly;
+        for (const id of new Set([...pinsChanged, ...labelOnlyChanged])) {
           const i = index.get(id);
           if (i != null) placeDots.setLook(i, lookOf(i));
         }
         placeDots.commit();
-        g.htmlElementsData(htmlData());
+        if (pinsChanged.length || force) g.htmlElementsData(htmlData());
         wake();
       };
 
@@ -701,6 +783,10 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
         });
         px = new Float32Array(places.length);
         py = new Float32Array(places.length);
+        const st = standing(places);
+        stand = Float32Array.from(places, (t) => st.get(t.id) ?? 0);
+        heat = new Float32Array(places.length);
+        room = new Float32Array(places.length).fill(MAX_ROOM);
         placeDots.setPositions(xyz);
         pins = pinIds(places, { selectedId: selectedRef.current, nearIds: nearRef.current, hoveredId, labelled: shown });
         restyle();

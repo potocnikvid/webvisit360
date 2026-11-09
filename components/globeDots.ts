@@ -14,7 +14,11 @@ const vertexShader = /* glsl */ `
   attribute vec2 aGlow; // blur, spread
   attribute vec4 aGlowColor;
   attribute float aDelay;
+  // Zoomed in: x = heat (0 plain → 1 fired up: larger, warm orange), y = the largest radius
+  // (px) the dot has room for before touching a neighbour.
+  attribute vec2 aFire;
   uniform float uPixelRatio;
+  uniform float uFireSize;
   // The opening wave (see Globe's revealPins): ms since it started; < 0 before it.
   uniform float uReveal;
   varying float vAlpha;
@@ -39,13 +43,16 @@ const vertexShader = /* glsl */ `
       gl_PointSize = 0.0;
       return;
     }
-    vSize = aSize;
-    vExtent = aSize * 0.5 + max(aRing, aGlow.y + aGlow.x * 0.8) + 1.0;
-    vColor = aColor;
-    vRing = aRing;
-    vRingColor = aRingColor;
-    vGlow = aGlow;
-    vGlowColor = aGlowColor;
+    float heat = aFire.x;
+    float grown = max(aSize, mix(aSize, uFireSize, heat));
+    vSize = min(grown, max(aSize, 2.0 * aFire.y));
+    // Warm up toward a soft orange with the business pins' amber glow and dark outline.
+    vColor = mix(aColor, vec4(1.0, 0.70, 0.36, 1.0), heat);
+    vRing = mix(aRing, 2.0, heat);
+    vRingColor = mix(aRingColor, vec4(0.031, 0.071, 0.188, 0.55), heat);
+    vGlow = mix(aGlow, vec2(14.0, 3.0), heat);
+    vGlowColor = mix(aGlowColor, vec4(0.965, 0.663, 0.231, 0.55), heat);
+    vExtent = vSize * 0.5 + max(vRing, vGlow.y + vGlow.x * 0.8) + 1.0;
     gl_PointSize = 2.0 * vExtent * uPixelRatio * max(pop, 0.0);
     gl_Position = projectionMatrix * viewMatrix * vec4(wp, 1.0);
   }
@@ -94,6 +101,10 @@ export type Dots = {
   /** Send changed looks to the GPU. */
   commit: () => void;
   setOpacity: (o: number) => void;
+  /** How fired up place i is (0–1) and the radius (px) it has room for. */
+  setFire: (i: number, heat: number, room: number) => void;
+  /** Send changed heat/room values to the GPU (cheap: two numbers per place). */
+  commitFire: () => void;
   /** When place i pops in during the opening wave (ms after it starts). */
   setDelay: (i: number, ms: number) => void;
   /** Time into the opening wave (ms); negative hides every dot, Infinity shows them all. */
@@ -101,10 +112,10 @@ export type Dots = {
   setPixelRatio: (r: number) => void;
 };
 
-export function createDots(THREE: typeof THREE_NS): Dots {
+export function createDots(THREE: typeof THREE_NS, fireSize: number): Dots {
   const geometry = new THREE.BufferGeometry();
   const material = new THREE.ShaderMaterial({
-    uniforms: { uPixelRatio: { value: 1 }, uOpacity: { value: 1 }, uReveal: { value: 1e9 } },
+    uniforms: { uPixelRatio: { value: 1 }, uOpacity: { value: 1 }, uReveal: { value: 1e9 }, uFireSize: { value: fireSize } },
     vertexShader,
     fragmentShader,
     transparent: true,
@@ -126,6 +137,7 @@ export function createDots(THREE: typeof THREE_NS): Dots {
       aGlow: new THREE.BufferAttribute(new Float32Array(n * 2), 2),
       aGlowColor: new THREE.BufferAttribute(new Float32Array(n * 4), 4),
       aDelay: new THREE.BufferAttribute(new Float32Array(n), 1),
+      aFire: new THREE.BufferAttribute(new Float32Array(n * 2), 2),
     };
     for (const a of Object.values(attrs)) a.setUsage(THREE.DynamicDrawUsage);
     geometry.setAttribute("position", new THREE.BufferAttribute(xyz, 3));
@@ -152,6 +164,14 @@ export function createDots(THREE: typeof THREE_NS): Dots {
     setLook,
     commit,
     setOpacity: (o) => (material.uniforms.uOpacity.value = o),
+    setFire: (i, heat, room) => {
+      const a = attrs.aFire.array as Float32Array;
+      a[i * 2] = heat;
+      a[i * 2 + 1] = room;
+    },
+    commitFire: () => {
+      attrs.aFire.needsUpdate = true;
+    },
     setDelay: (i, ms) => ((attrs.aDelay.array as Float32Array)[i] = ms),
     setReveal: (ms) => (material.uniforms.uReveal.value = Number.isFinite(ms) ? ms : 1e9),
     setPixelRatio: (r) => (material.uniforms.uPixelRatio.value = r),
