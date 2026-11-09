@@ -28,6 +28,13 @@ describe("POST /api/enquiry", () => {
     expect(send.mock.calls[0][0]).toMatchObject({ to: "vid@example.com", replyTo: "ana@hotel-lipa.si" });
   });
 
+  test("sends to info@webvisit360.com when ENQUIRY_TO isn't set", async () => {
+    delete process.env.ENQUIRY_TO;
+    const res = await post({ enquiry, context, transcript: [] });
+    expect(res.status).toBe(200);
+    expect(send.mock.calls[0][0]).toMatchObject({ to: "info@webvisit360.com" });
+  });
+
   test("pretends success but sends nothing when the honeypot is filled", async () => {
     const res = await post({ enquiry, context, transcript: [], website: "spam.example" });
     expect(await res.json()).toEqual({ ok: true });

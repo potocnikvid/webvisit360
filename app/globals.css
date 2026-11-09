@@ -148,14 +148,16 @@ a { color: inherit; text-decoration: none; }
   pointer-events: none;
 }
 .topbar > * { pointer-events: auto; }
-.brand { display: flex; align-items: center; gap: 10px; font: 400 18px/1 var(--display); letter-spacing: -.01em; }
-.brand img { border-radius: 8px; }
+/* The logo is always at least 20% wider than the Trusted badge (corner: 190–240 px wide);
+   everything in it scales with its font size. */
+.brand { display: flex; align-items: center; gap: .55em; font: 400 clamp(23px, 1.9vw, 28.5px)/1 var(--display); letter-spacing: -.01em; }
+.brand img { width: 2em; height: 2em; border-radius: .44em; }
 .brand b { color: var(--amber); font-weight: 600; }
 .nav { display: flex; align-items: center; gap: 22px; font-size: 15px; color: var(--mist); }
 .nav a:hover { color: var(--snow); }
 
 .hero {
-  position: absolute; z-index: 4; left: var(--gutter); top: 96px;
+  position: absolute; z-index: 4; left: var(--gutter); top: 112px;
   max-width: 470px; pointer-events: none;
   transition: opacity .4s, transform .4s;
 }
@@ -219,7 +221,27 @@ a { color: inherit; text-decoration: none; }
 .swatch--business { background: var(--amber); width: 6px; height: 6px; }
 .swatch--google { background: var(--sky); width: 6px; height: 6px; }
 
-.search { position: relative; }
+.search-row { display: flex; gap: 8px; }
+.search { position: relative; flex: 1; min-width: 0; }
+/* Phones only (see the mobile block): opens the type chips. */
+.filter-toggle {
+  display: none; align-items: center; gap: 7px; flex: none; max-width: 48%; padding: 0 14px;
+  border-radius: 12px; font-size: 14px; color: var(--snow);
+  background: var(--glass); border: 1px solid var(--line);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.filter-toggle svg { flex: none; color: var(--amber); }
+.filter-toggle span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.filter-toggle.is-on { border-color: rgba(246, 169, 59, .6); }
+/* Phones only: "Show intro" in map mode, and "Cancel" in the full-screen search. */
+.explore-back, .search__cancel { display: none; }
+.explore-back {
+  align-self: center; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px;
+  font-size: 13px; color: var(--snow); background: var(--glass); border: 1px solid var(--line);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: fade .3s;
+}
+.explore-back svg { color: var(--amber); }
+.search__cancel { padding: 0 2px; border: 0; background: none; color: var(--ember); font-size: 15px; }
 .search input {
   width: 100%; padding: 13px 16px; border-radius: 12px;
   font: 400 15px var(--text); color: var(--snow);
@@ -594,7 +616,8 @@ a { color: inherit; text-decoration: none; }
 
 .about__facts .stats { margin: 0; }
 
-.trusted--large { margin: 0; width: clamp(170px, 24vw, 220px); }
+/* Kept at most ~80% of the logo's width (see .brand). */
+.trusted--large { margin: 0; width: clamp(150px, 16vw, 220px); }
 
 .about__problem p { font-size: 17px; }
 
@@ -699,7 +722,6 @@ a { color: inherit; text-decoration: none; }
 /* ---------- mobile ---------- */
 @media (max-width: 760px) {
   .nav a { display: none; }
-  .brand span { font-size: 14px; }
   .hero { top: 76px; right: var(--gutter); }
   .hero p { font-size: 15px; }
   .stats { margin-top: 16px; }
@@ -732,10 +754,54 @@ a { color: inherit; text-decoration: none; }
   .studio__label { font-size: 12px; padding: 5px 8px; }
   .nav { gap: 8px; }
   .nav .btn { padding: 8px 12px; font-size: 13px; white-space: nowrap; }
-  .brand { gap: 7px; }
-  .brand img { width: 30px; height: 30px; }
+  .brand { font-size: 14px; }
+  .brand img { width: 30px; height: 30px; border-radius: 7px; }
+  /* Under the 142 px logo: the badge stays under 118 px (see .brand). */
+  .trusted--large { width: 116px; }
+  /* The type chips fold away behind the filter button next to the search; while they're
+     open, the arrival cards step aside so everything fits on a phone. */
+  .filter-toggle { display: inline-flex; }
+  .search-row { order: -1; } /* bottom of the (reversed) finder: the chips open above it */
+  .app:not(.filters-open) .chips { display: none; }
+  .filters-open .cards, .filters-open .near__precise--alone { display: none; }
+  .filters-open .hero { opacity: 0; visibility: hidden; transform: translateY(-8px); }
+  .filters-open .chips { animation: sheet-in .25s ease-out; }
+  /* Map mode: once the visitor moves the map, only the header, the search and the filter
+     button stay; "Show intro" brings the rest back. */
+  .exploring .hero { opacity: 0; visibility: hidden; transform: translateY(-8px); }
+  .exploring .cards, .exploring .near__precise--alone { display: none; }
+  .explore-back { display: inline-flex; }
+  /* Searching: the search fills the screen, input on top (clear of the keyboard), results below. */
+  .searching .search {
+    position: fixed; inset: 0; z-index: 12;
+    display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto 1fr; gap: 10px 12px;
+    padding: 14px var(--gutter) 0; background: rgba(8, 18, 48, .97);
+  }
+  .searching .results {
+    position: static; grid-column: 1 / -1; min-height: 0; max-height: none;
+    padding: 0 0 20px; border: 0; border-radius: 0; background: none;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .searching .search__cancel { display: block; }
   .lang { padding: 6px 8px; }
   @keyframes sheet-in { from { transform: translateY(40px); opacity: 0; } }
+}
+
+/* Short phones: the hero keeps its title, numbers and "why" button; the intro line goes. */
+@media (max-width: 760px) and (max-height: 650px) {
+  .hero p { display: none; }
+  .hero h1 { margin-bottom: 0; }
+  .stats { margin-top: 12px; }
+  .why { margin-top: 10px; }
+}
+/* The narrowest phones: the header button may wrap onto two lines so everything fits. */
+@media (max-width: 360px) {
+  .brand { font-size: 13.5px; }
+  .brand img { width: 28px; height: 28px; }
+  .nav { gap: 6px; }
+  .lang { padding: 6px 7px; }
+  .nav .btn { white-space: normal; max-width: 108px; padding: 6px 10px; font-size: 12.5px; line-height: 1.15; text-align: center; }
+  .why__badge { width: 80px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

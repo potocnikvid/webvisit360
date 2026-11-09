@@ -48,7 +48,10 @@ const sl = {
     noLocation: "brez lokacije",
     none: "Ni zadetkov.",
     more: (n: number) => `in še ${n}… zožite iskanje`,
+    cancel: "Prekliči",
   },
+  /** Phones: after the visitor moves the map, the intro and cards step aside until this. */
+  showIntro: "Pokaži uvod",
   you: { here: "Vi ste tukaj", around: "Vi ste približno tukaj" },
   featured: {
     near: (km: string) => `Priporočamo v bližini · ${km}`,
@@ -157,7 +160,9 @@ const en: Copy = {
     noLocation: "no location",
     none: "No results.",
     more: (n: number) => `and ${n} more… narrow your search`,
+    cancel: "Cancel",
   },
+  showIntro: "Show intro",
   you: { here: "You are here", around: "You're around here" },
   featured: {
     near: (km: string) => `Worth a look nearby · ${km}`,

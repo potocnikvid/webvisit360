@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { copy } from "@/lib/i18n";
 import { about } from "@/lib/about";
@@ -10,6 +10,7 @@ type GlobeProps = {
   focus: { lat: number; lng: number; altitude: number; story?: boolean; arc?: number } | null;
   studio?: { label: string } | null;
   you?: { lat: number; lng: number; precise: boolean; label: string } | null;
+  onExplore?: () => void;
 };
 const globe = vi.hoisted(() => ({ props: null as unknown }));
 
@@ -214,4 +215,27 @@ test("arrival shows a standout tour ready to open, and the About button under th
 
   fireEvent.click(within(card).getByRole("button", { name: t.panel.enter }));
   expect(await screen.findByRole("dialog", { name: t.tour.label("Grand Plaza Hotel Ljubljana") })).toBeTruthy();
+});
+
+test("moving the map switches to map mode until the visitor asks for the intro again", async () => {
+  const { container } = render(<Experience visitor={null} />);
+  await screen.findByRole("button", { name: "pin Občina Žalec" });
+  const app = container.querySelector("main")!;
+  expect(app.classList.contains("exploring")).toBe(false);
+  expect(screen.queryByRole("button", { name: t.showIntro })).toBeNull();
+
+  act(() => props().onExplore?.());
+  expect(app.classList.contains("exploring")).toBe(true);
+
+  fireEvent.click(screen.getByRole("button", { name: t.showIntro }));
+  expect(app.classList.contains("exploring")).toBe(false);
+});
+
+test("the search has its own Cancel while open", async () => {
+  const { container } = render(<Experience visitor={null} />);
+  const input = await screen.findByLabelText(t.search.label);
+  fireEvent.focus(input);
+  expect(container.querySelector("main")!.classList.contains("searching")).toBe(true);
+  fireEvent.click(screen.getByRole("button", { name: t.search.cancel }));
+  expect(container.querySelector("main")!.classList.contains("searching")).toBe(false);
 });

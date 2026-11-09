@@ -22,8 +22,8 @@ const Body = z.object({
   website: z.string().optional(),
 });
 
-/** Where enquiries are delivered. Server-only: never sent to the browser, which only shows CONTACT.email. */
-const to = () => process.env.ENQUIRY_TO || "vid.slovenia7@gmail.com";
+/** Where enquiries are delivered: the public company inbox unless ENQUIRY_TO overrides it. */
+const to = () => process.env.ENQUIRY_TO || CONTACT.email;
 
 const fail = (status: number, subject: string, body: string) =>
   Response.json({ ok: false, mailto: mailtoHref(CONTACT.email, subject, body.slice(0, 1500)) }, { status });

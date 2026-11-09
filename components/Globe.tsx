@@ -46,6 +46,8 @@ type Props = {
   paused: boolean;
   onSelect: (id: string) => void;
   onReady?: (api: GlobeApi) => void;
+  /** The visitor started dragging, pinching or zooming the map themselves. */
+  onExplore?: () => void;
   /** Where the opening fly-in ends (defaults to all of Slovenia). */
   initialView?: { lat: number; lng: number; altitude: number };
   /** Places to ring as "near you". */
@@ -96,12 +98,14 @@ const labelBudget = (alt: number) => (alt > 0.15 ? 18 : alt > 0.05 ? 28 : alt > 
 const ESRI = (x: number, y: number, l: number) =>
   `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${l}/${y}/${x}`;
 
-export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false }: Props) {
+export default function Globe({ tours, geo, selectedId, focus, paused, onSelect, onReady, onExplore, initialView, highlightIds, you, focusType = "all", studio, intro = true, quiet = false }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const globe = useRef<GlobeInstance | null>(null);
   const markers = useRef(new Map<string, HTMLElement>());
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+  const onExploreRef = useRef(onExplore);
+  onExploreRef.current = onExplore;
   const toursRef = useRef(tours);
   const labelsRef = useRef<() => void>(() => {});
   const nearRef = useRef(new Set<string>());
@@ -407,6 +411,8 @@ export default function Globe({ tours, geo, selectedId, focus, paused, onSelect,
       controls.autoRotate = false;
       // Allow zooming down to ~160 m above the ground (globe radius = 6371 km).
       controls.minDistance = R * (1 + 0.000025);
+      // Fired only by the visitor's own gestures, never by our camera flights.
+      controls.addEventListener("start", () => onExploreRef.current?.());
       fitClipping(START.altitude);
 
       const onResize = () => g.width(el.clientWidth).height(el.clientHeight);
