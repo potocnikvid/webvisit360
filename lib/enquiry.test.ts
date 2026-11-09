@@ -57,3 +57,10 @@ test("renderEnquiryEmail has the essentials, transcript last", () => {
 test("mailtoHref encodes subject and body", () => {
   expect(mailtoHref("a@b.si", "Povpraševanje", "x y")).toBe("mailto:a@b.si?subject=Povpra%C5%A1evanje&body=x%20y");
 });
+
+test("the email says where the visit came from; the visitor's own copy doesn't", () => {
+  const source = { referrer: "google.si", utm: {}, ad: null, landing: "/sprehodi/zalec" };
+  expect(renderEnquiryEmail(enquiry, ctx, [], { source }).text).toContain("Od kod: Google (iskanje) · začetna stran /sprehodi/zalec");
+  expect(renderEnquiryEmail(enquiry, ctx, [], { source, forVisitor: true }).text).not.toContain("Od kod");
+  expect(renderEnquiryEmail(enquiry, ctx, []).text).not.toContain("Od kod");
+});

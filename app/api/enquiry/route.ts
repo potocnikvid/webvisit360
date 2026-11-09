@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { z } from "zod";
 import { EnquirySchema, mailtoHref, renderEnquiryEmail, type ChatContext, type TranscriptLine } from "@/lib/enquiry";
+import { SourceSchema } from "@/lib/attribution";
 import { clientIp, limit } from "@/lib/limits";
 import { CONTACT } from "@/lib/contact";
 
@@ -20,6 +21,8 @@ const Body = z.object({
     .array(z.object({ role: z.enum(["visitor", "assistant"]), text: z.string().transform((t) => t.slice(0, 4000)) }))
     .max(60),
   website: z.string().optional(),
+  // Where the visit came from (see lib/attribution); a malformed one is simply left out.
+  source: SourceSchema.nullable().optional().catch(null),
 });
 
 /** Where enquiries are delivered: the public company inbox unless ENQUIRY_TO overrides it. */
@@ -31,7 +34,7 @@ const fail = (status: number, subject: string, body: string) =>
 export async function POST(req: Request) {
   const parsed = Body.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return fail(400, "Povpraševanje", "");
-  const { context, transcript, website } = parsed.data;
+  const { context, transcript, website, source } = parsed.data;
   const ctx = context as ChatContext;
   const lines = transcript as TranscriptLine[];
   // Bots fill the hidden field; tell them it worked and do nothing.
@@ -41,7 +44,7 @@ export async function POST(req: Request) {
   if (!enquiry.success) {
     return fail(400, "Povpraševanje", lines.map((l) => l.text).join("\n"));
   }
-  const { subject, text } = renderEnquiryEmail(enquiry.data, ctx, lines);
+  const { subject, text } = renderEnquiryEmail(enquiry.data, ctx, lines, { source });
   // What the visitor sees in their own fallback email: no internal estimate.
   const summary = renderEnquiryEmail(enquiry.data, ctx, [], { forVisitor: true }).text;
 

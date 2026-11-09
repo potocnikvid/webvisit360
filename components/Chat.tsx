@@ -8,6 +8,8 @@ import { EnquirySchema, mailtoHref, type ChatContext, type Proposal, type Transc
 import type { Copy } from "@/lib/i18n";
 import { readNdjson } from "@/lib/ndjson";
 import { CONTACT } from "@/lib/contact";
+import { track } from "@vercel/analytics";
+import { visitSource } from "@/lib/attribution";
 
 
 type Props = {
@@ -143,10 +145,11 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
       const res = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ enquiry: enquiry.data, context, transcript: transcript(lines), website: honeypot || undefined }),
+        body: JSON.stringify({ enquiry: enquiry.data, context, transcript: transcript(lines), website: honeypot || undefined, source: visitSource() }),
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; mailto?: string };
       if (json.ok) {
+        track("Enquiry sent", { about: from ? "place" : "general" });
         setStatus("sent");
         setProposal(null);
         return;

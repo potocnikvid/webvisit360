@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { copy } from "./i18n";
 import type { PlaceType } from "./types";
+import { describeSource, type Source } from "./attribution";
 
 const Project = z.object({
   placeType: z.string().min(1).max(100),
@@ -55,7 +56,12 @@ export const priceRange = (panoramas: number) => ({ low: panoramas * 20, high: p
  * The email to Vid. With `forVisitor`, only what the visitor told us: it becomes the body of
  * the visitor's own fallback email, so the internal estimate and site context stay out.
  */
-export function renderEnquiryEmail(e: Enquiry, ctx: ChatContext, transcript: TranscriptLine[], { forVisitor = false } = {}) {
+export function renderEnquiryEmail(
+  e: Enquiry,
+  ctx: ChatContext,
+  transcript: TranscriptLine[],
+  { forVisitor = false, source }: { forVisitor?: boolean; source?: Source | null } = {},
+) {
   const { low, high } = priceRange(e.estimatedPanoramas);
   const internal = !forVisitor;
   const lines = [
@@ -73,6 +79,7 @@ export function renderEnquiryEmail(e: Enquiry, ctx: ChatContext, transcript: Tra
     internal && (ctx.town || ctx.country) ? `Obiskovalec približno iz: ${[ctx.town, ctx.country].filter(Boolean).join(", ")}` : null,
     internal && `Izbrana vrsta na strani: ${ctx.type === "all" ? copy.sl.filter.all : copy.sl.types[ctx.type]}`,
     internal && ctx.viewed.length ? `Ogledani sprehodi: ${ctx.viewed.join(", ")}` : null,
+    internal && source ? `Od kod: ${describeSource(source)}` : null,
   ].filter((l): l is string => typeof l === "string");
   if (transcript.length) {
     lines.push("", "— Pogovor —");
