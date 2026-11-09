@@ -70,6 +70,10 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   const [geo, setGeo] = useState<any[] | null>(null);
   const [type, setType] = useState<PlaceType | "all">("obcina");
   const [moreTypes, setMoreTypes] = useState(false);
+  // Phones only: the type chips fold away behind one button next to the search.
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  // Phones only: once the visitor moves the map, the hero and cards step aside (map mode).
+  const [exploring, setExploring] = useState(false);
   const [visitor, setVisitor] = useState(ipVisitor);
   const [locationError, setLocationError] = useState(false);
   const { lang, switchLang } = useLang();
@@ -273,6 +277,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
 
   const chooseType = (next: PlaceType | "all") => {
     setType(next);
+    setFiltersOpen(false);
     setSelectedId(null);
     if (!origin) return;
     const places = nearest(all, origin, { type: next === "all" ? undefined : next, limit: NEAR_COUNT });
@@ -322,12 +327,13 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       if (privacyOpen) setPrivacyOpen(false);
       else if (tourOpen) setTourOpen(false);
       else if (searchOpen) setSearchOpen(false);
+      else if (filtersOpen) setFiltersOpen(false);
       else if (storyRef.current !== "closed" && !enquiry) closeStory();
       else if (selectedId) close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [privacyOpen, tourOpen, searchOpen, selectedId, close, closeStory, enquiry]);
+  }, [privacyOpen, tourOpen, searchOpen, filtersOpen, selectedId, close, closeStory, enquiry]);
 
   const stats = data?.stats;
   const totalViews = stats ? stats.kuulaViews + (stats.googleViews ?? 0) : 0;
@@ -349,7 +355,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   };
 
   return (
-    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" || returning ? "has-story" : ""} ${story === "open" ? "story-open" : ""} ${ready ? "is-ready" : ""}`}>
+    <main className={`app ${selected ? "has-panel" : ""} ${enquiry ? "has-chat" : ""} ${story !== "closed" || returning ? "has-story" : ""} ${story === "open" ? "story-open" : ""} ${ready ? "is-ready" : ""} ${filtersOpen ? "filters-open" : ""} ${exploring ? "exploring" : ""} ${searchOpen ? "searching" : ""}`}>
       <div className="sky" aria-hidden />
       {geo && data && (
         <Globe
@@ -363,6 +369,11 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           focus={focus}
           paused={tourOpen}
           onSelect={select}
+          onExplore={() => {
+            if (storyRef.current !== "closed") return;
+            setExploring(true);
+            setFiltersOpen(false);
+          }}
           studio={story !== "closed" ? { lat: STUDIO.lat, lng: STUDIO.lng, label: a.pin } : null}
           intro={!initialStory}
           quiet={story !== "closed" || returning}
@@ -427,7 +438,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
       </section>
 
       <div className="finder">
-        <div className="chips" role="radiogroup" aria-label={t.filter.label}>
+        <div className="chips" id="type-chips" role="radiogroup" aria-label={t.filter.label}>
           {[...MAIN_TYPES, ...(moreTypes ? PLACE_TYPES.filter((x) => !MAIN_TYPES.includes(x)) : []), "all" as const].map((k) => (
             <button
               key={k}
@@ -444,6 +455,7 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
           </button>
         </div>
 
+        <div className="search-row">
         <div className={`search ${searchOpen ? "is-open" : ""}`}>
           <input
             type="search"
@@ -453,9 +465,18 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
               setQuery(e.target.value);
               setSearchOpen(true);
             }}
-            onFocus={() => setSearchOpen(true)}
+            onFocus={() => {
+              setSearchOpen(true);
+              setFiltersOpen(false);
+            }}
             aria-label={t.search.label}
           />
+          {/* Phones: the search fills the screen while open; this closes it. */}
+          {searchOpen && (
+            <button className="search__cancel" onClick={() => setSearchOpen(false)}>
+              {t.search.cancel}
+            </button>
+          )}
           {searchOpen && (
             <ul className="results" role="listbox">
               {results.slice(0, 60).map((x) => (
@@ -472,6 +493,31 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
             </ul>
           )}
         </div>
+          {/* Phones: shows the chosen type and opens the chips (always shown on wider screens). */}
+          <button
+            className={`filter-toggle ${filtersOpen ? "is-on" : ""}`}
+            aria-expanded={filtersOpen}
+            aria-controls="type-chips"
+            aria-label={`${t.filter.label}: ${type === "all" ? t.filter.all : t.types[type]}`}
+            onClick={() => {
+              setSearchOpen(false);
+              setFiltersOpen((v) => !v);
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden>
+              <path d="M2 4h12M4.5 8h7M7 12h2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+            </svg>
+            <span>{type === "all" ? t.filter.all : t.types[type]}</span>
+          </button>
+        </div>
+        {exploring && (
+          <button className="explore-back" onClick={() => setExploring(false)}>
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden>
+              <path d="M2.5 7.5 6 4l3.5 3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            </svg>
+            {t.showIntro}
+          </button>
+        )}
         {!visitor?.precise && !origin && !selected && !enquiry && (
           <button className="near__precise near__precise--alone" onClick={usePreciseLocation}>
             {locationError ? t.near.denied : t.near.precise}

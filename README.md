@@ -24,7 +24,7 @@ to pretend to be somewhere, e.g. `DEV_VISITOR=46.2397,15.2677,Celje,SI`.
 |---|---|---|
 | `ANTHROPIC_API_KEY` | the enquiry chat (Claude Haiku 5.5) | from platform.claude.com |
 | `RESEND_API_KEY` | emailing enquiries | from resend.com |
-| `ENQUIRY_TO` | where enquiries are delivered (server-only, never shown on the site) | defaults to the owner's inbox |
+| `ENQUIRY_TO` | where enquiries are delivered (server-only, never shown on the site) | defaults to info@webvisit360.com |
 | `ENQUIRY_FROM` | sender | default `Webvisit360 <onboarding@resend.dev>`; after verifying the domain e.g. `Webvisit360 <ponudbe@webvisit360.com>` |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | rate limits | set by the Upstash integration on Vercel |
 | `CHAT_DAILY_CONVERSATIONS` | global daily chat cap | default `500` |
