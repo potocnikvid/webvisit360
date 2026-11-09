@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Unbounded, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
+import JsonLd from "@/components/JsonLd";
+import { SITE_URL, organizationLd, websiteLd } from "@/lib/seo";
 
 const display = Unbounded({
   subsets: ["latin", "latin-ext"],
@@ -14,9 +16,11 @@ const text = Schibsted_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Webvisit360 · 360° virtualni sprehodi",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Webvisit360 · 360° virtualni sprehodi", template: "%s · Webvisit360" },
   description:
     "360° virtualni sprehodi za občine, hotele, vinarje in trgovine. Sprehodite se, preden pridete.",
+  applicationName: "Webvisit360",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "48x48" },
@@ -38,7 +42,12 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="sl" className={`${display.variable} ${text.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* Who runs the site, for search engines and AI tools (every page). */}
+        <JsonLd data={organizationLd()} />
+        <JsonLd data={websiteLd()} />
+        {children}
+      </body>
     </html>
   );
 }
