@@ -1,8 +1,6 @@
-import { headers } from "next/headers";
 import Experience from "@/components/Experience";
 import JsonLd from "@/components/JsonLd";
 import { faqLd, pageMeta } from "@/lib/seo";
-import { parseVisitor } from "@/lib/visitor";
 
 export const metadata = pageMeta({
   title: "O nas",
@@ -12,16 +10,11 @@ export const metadata = pageMeta({
 });
 
 /** The globe, opened straight into the About story (the same page the map's "Why 360°?" opens). */
-export default async function Page() {
-  const h = await headers();
-  const visitor = parseVisitor(
-    (name) => h.get(name),
-    process.env.NODE_ENV !== "production" ? process.env.DEV_VISITOR : undefined,
-  );
+export default function Page() {
   return (
     <>
       <JsonLd data={faqLd()} />
-      <Experience visitor={visitor} initialStory />
+      <Experience initialStory />
     </>
   );
 }

@@ -49,3 +49,16 @@ export function parseVisitor(get: (name: string) => string | null, devFallback?:
   if (!valid(lat, lng)) return null;
   return { lat, lng, city: decode(get("x-vercel-ip-city")), country: get("x-vercel-ip-country") };
 }
+
+/** A location from /api/visitor, checked before use (anything else is ignored). */
+export function asVisitor(v: unknown): Visitor | null {
+  if (!v || typeof v !== "object") return null;
+  const { lat, lng, city, country } = v as Record<string, unknown>;
+  if (typeof lat !== "number" || typeof lng !== "number" || !valid(lat, lng)) return null;
+  return {
+    lat,
+    lng,
+    city: typeof city === "string" ? city.slice(0, 100) : null,
+    country: typeof country === "string" ? country.slice(0, 2) : null,
+  };
+}
