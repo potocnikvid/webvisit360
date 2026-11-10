@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isNearCountry, isNearby, parseVisitor } from "./visitor";
+import { asVisitor, isNearCountry, isNearby, parseVisitor } from "./visitor";
 
 const headers = (h: Record<string, string>) => (name: string) => h[name] ?? null;
 
@@ -49,5 +49,15 @@ describe("isNearby", () => {
   test("far away with no near country does not count", () => {
     expect(isNearby({ lat: 52.52, lng: 13.4, country: "DE" })).toBe(false);
     expect(isNearby({ lat: 52.52, lng: 13.4, country: null })).toBe(false);
+  });
+});
+
+describe("asVisitor", () => {
+  test("accepts a location from /api/visitor and ignores anything else", () => {
+    expect(asVisitor({ lat: 46.25, lng: 15.16, city: "Žalec", country: "SI" })).toEqual({ lat: 46.25, lng: 15.16, city: "Žalec", country: "SI" });
+    expect(asVisitor({ lat: 46.25, lng: 15.16 })).toEqual({ lat: 46.25, lng: 15.16, city: null, country: null });
+    expect(asVisitor(null)).toBeNull();
+    expect(asVisitor({ lat: "46", lng: 15 })).toBeNull();
+    expect(asVisitor({ lat: 146, lng: 15 })).toBeNull();
   });
 });

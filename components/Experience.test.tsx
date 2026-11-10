@@ -104,6 +104,14 @@ test("if the visitor refuses, the approximate location is used, quietly", async 
   expect(screen.queryByText(t.near.denied)).toBeNull();
 });
 
+test("the approximate location comes from /api/visitor (the page itself is static)", async () => {
+  const chat = (globalThis.fetch as ReturnType<typeof vi.fn>).getMockImplementation()!;
+  vi.stubGlobal("fetch", vi.fn(async (url: string) => (url.includes("/api/visitor") ? Response.json(ZALEC_IP) : chat(url))));
+  render(<Experience />);
+  await waitFor(() => expect(props()?.you).toMatchObject({ lat: 46.25, lng: 15.16, precise: false }));
+  expect(await screen.findByText(t.near.kicker, { exact: false })).toBeTruthy();
+});
+
 test("no marker when the location is unknown", async () => {
   render(<Experience visitor={null} />);
   await screen.findByRole("button", { name: t.near.precise });

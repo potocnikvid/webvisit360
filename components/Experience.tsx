@@ -8,7 +8,7 @@ import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
 import { copy, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/useLang";
 import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
-import { isNearby, type Visitor } from "@/lib/visitor";
+import { asVisitor, isNearby, type Visitor } from "@/lib/visitor";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus, GlobeApi, Look } from "./Globe";
 import { peakFor, selectFlight, type Pov } from "@/lib/flight";
@@ -77,7 +77,15 @@ const uniqueBy = <T,>(xs: T[], key: (x: T) => string) => {
 const posterFor = (t: Tour) =>
   t.source === "google" && t.cover ? `${t.cover.split("=")[0]}=w800-h500-k-no-pi-0-ya0-ro0-fo100` : t.cover ?? undefined;
 
-export default function Experience({ visitor: ipVisitor, initialStory = false }: { visitor: Visitor | null; initialStory?: boolean }) {
+/** The opening waits this long at most for the visitor's approximate location. */
+const LOCATE_WAIT_MS = 1200;
+
+/**
+ * The map, its search and panels. The page around it is static; the visitor's approximate
+ * location comes from /api/visitor (`visitor` sets it directly, for tests).
+ */
+export default function Experience({ visitor: givenVisitor = null, initialStory = false }: { visitor?: Visitor | null; initialStory?: boolean }) {
+  const [ipVisitor, setIpVisitor] = useState<Visitor | null>(givenVisitor);
   const [data, setData] = useState<ToursFile | null>(null);
   const [geo, setGeo] = useState<any[] | null>(null);
   const [type, setType] = useState<PlaceType | "all">("obcina");
@@ -146,7 +154,20 @@ export default function Experience({ visitor: ipVisitor, initialStory = false }:
   useEffect(() => setNavigatorLang(navigator.language), []);
 
   useEffect(() => {
-    fetch("/data/tours.json").then((r) => r.json()).then(setData);
+    // The approximate location decides where the opening fly-in ends, so the map waits for it
+    // briefly (it's quick: an edge route). If it comes later, only the cards catch up.
+    const located = fetch("/api/visitor")
+      .then((r) => (r.ok ? r.json() : null))
+      .then(asVisitor)
+      .catch(() => null)
+      .then((v) => {
+        if (!v) return;
+        setIpVisitor(v);
+        // An exact position from the browser always wins over the IP's guess.
+        setVisitor((cur) => (cur?.precise ? cur : v));
+      });
+    const waited = Promise.race([located, new Promise((r) => window.setTimeout(r, LOCATE_WAIT_MS))]);
+    Promise.all([fetch("/data/tours.json").then((r) => r.json()), waited]).then(([tours]) => setData(tours));
     fetch("/data/geo.json").then((r) => r.json()).then((g) => setGeo(g.features));
   }, []);
 

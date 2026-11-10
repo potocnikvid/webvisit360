@@ -1,7 +1,5 @@
-import { headers } from "next/headers";
 import { pageMeta } from "@/lib/seo";
 import Experience from "@/components/Experience";
-import { parseVisitor } from "@/lib/visitor";
 
 export const metadata = {
   ...pageMeta({
@@ -13,11 +11,6 @@ export const metadata = {
   title: { absolute: "Webvisit360 · 360° virtualni sprehodi" },
 };
 
-export default async function Page() {
-  const h = await headers();
-  const visitor = parseVisitor(
-    (name) => h.get(name),
-    process.env.NODE_ENV !== "production" ? process.env.DEV_VISITOR : undefined,
-  );
-  return <Experience visitor={visitor} />;
+export default function Page() {
+  return <Experience />;
 }
