@@ -2,8 +2,9 @@ import { z } from "zod";
 
 /**
  * Where a visitor came from, so each enquiry email says which channel brought the lead
- * (Google, Facebook, ChatGPT, a campaign link...). Kept for the visit only (sessionStorage),
- * and sent only with an enquiry the visitor chooses to send.
+ * (Google, Facebook, ChatGPT, a campaign link...). Kept for the visit only (sessionStorage);
+ * sent in full only with an enquiry the visitor chooses to send, and as a short channel label with
+ * the cookieless click events.
  */
 
 const UTM = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
@@ -52,33 +53,51 @@ export function sourceOf(url: string, referrer: string, ownHost: string): Source
   return { referrer: ref, utm, ad, landing: (u.pathname + (q ? `?${q}` : "")).slice(0, 300) };
 }
 
-/** Readable names for the usual sources; search engines are marked as such. */
-const KNOWN: [RegExp, string][] = [
-  [/^gemini\.google\.com$/, "Gemini"],
-  [/(^|\.)google\.[a-z.]+$/, "Google (iskanje)"],
-  [/(^|\.)bing\.com$/, "Bing (iskanje)"],
-  [/(^|\.)duckduckgo\.com$/, "DuckDuckGo (iskanje)"],
-  [/(^|\.)(facebook\.com|fb\.com|fb\.me)$/, "Facebook"],
-  [/(^|\.)instagram\.com$/, "Instagram"],
-  [/(^|\.)linkedin\.com$|^lnkd\.in$/, "LinkedIn"],
-  [/(^|\.)(chatgpt\.com|openai\.com)$/, "ChatGPT"],
-  [/(^|\.)perplexity\.ai$/, "Perplexity"],
-  [/^copilot\.microsoft\.com$/, "Copilot"],
-  [/(^|\.)claude\.ai$/, "Claude"],
+/** Readable names for the usual sources; `search` marks search engines. */
+const KNOWN: { re: RegExp; name: string; search?: true }[] = [
+  { re: /^gemini\.google\.com$/, name: "Gemini" },
+  { re: /(^|\.)google\.[a-z.]+$/, name: "Google", search: true },
+  { re: /(^|\.)bing\.com$/, name: "Bing", search: true },
+  { re: /(^|\.)duckduckgo\.com$/, name: "DuckDuckGo", search: true },
+  { re: /(^|\.)(facebook\.com|fb\.com|fb\.me)$/, name: "Facebook" },
+  { re: /(^|\.)instagram\.com$/, name: "Instagram" },
+  { re: /(^|\.)linkedin\.com$|^lnkd\.in$/, name: "LinkedIn" },
+  { re: /(^|\.)(chatgpt\.com|openai\.com)$/, name: "ChatGPT" },
+  { re: /(^|\.)perplexity\.ai$/, name: "Perplexity" },
+  { re: /^copilot\.microsoft\.com$/, name: "Copilot" },
+  { re: /(^|\.)claude\.ai$/, name: "Claude" },
 ];
+const known = (host: string) => KNOWN.find((k) => k.re.test(host));
+const ownTour = (host: string) => /(^|\.)webvisit360\.com$/.test(host);
+const adName = (ad: NonNullable<Source["ad"]>) => (ad === "google" ? "Google Ads" : "Microsoft Ads");
 
 /** One line for the enquiry email (Slovenian), e.g. "Google (iskanje) · začetna stran /sprehodi/zalec". */
 export function describeSource(s: Source): string {
   const parts: string[] = [];
   if (s.utm.utm_source) parts.push(`kampanja: ${[s.utm.utm_source, s.utm.utm_medium, s.utm.utm_campaign].filter(Boolean).join(" / ")}`);
-  if (s.ad) parts.push(`plačan oglas (${s.ad === "google" ? "Google Ads" : "Microsoft Ads"})`);
+  if (s.ad) parts.push(`plačan oglas (${adName(s.ad)})`);
   if (s.referrer) {
-    const known = KNOWN.find(([re]) => re.test(s.referrer!));
-    const label = known ? known[1] : /(^|\.)webvisit360\.com$/.test(s.referrer) ? `virtualni sprehod ${s.referrer}` : s.referrer;
-    parts.push(s.ad ? label.replace(" (iskanje)", "") : label);
+    const k = known(s.referrer);
+    // After an ad click the search engine is the ad's host, not a search result.
+    const label = k ? (k.search && !s.ad ? `${k.name} (iskanje)` : k.name) : ownTour(s.referrer) ? `virtualni sprehod ${s.referrer}` : s.referrer;
+    parts.push(label);
   }
   if (!parts.length) parts.push("neposredno (vpisan naslov, zaznamek ali aplikacija)");
   return `${parts.join(" · ")} · začetna stran ${s.landing}`;
+}
+
+/**
+ * The visit's channel as one short label for the analytics events, so clicks and enquiries can be
+ * broken down by where the visit came from. Ads win, then campaign tags, then the referrer.
+ */
+export function channelOf(s: Source | null): string {
+  if (!s) return "Unknown";
+  if (s.ad) return adName(s.ad);
+  if (s.utm.utm_source) return `Campaign: ${s.utm.utm_source}`.slice(0, 100);
+  if (!s.referrer) return "Direct";
+  const k = known(s.referrer);
+  if (k) return k.search ? `${k.name} search` : k.name;
+  return ownTour(s.referrer) ? "Webvisit360 tour" : s.referrer;
 }
 
 const KEY = "wv360-source";
@@ -102,4 +121,9 @@ export function visitSource(): Source | null {
   } catch {
     return null;
   }
+}
+
+/** The visit's channel for an analytics event (see channelOf). */
+export function visitChannel(): string {
+  return channelOf(visitSource());
 }

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { describeSource, sourceOf } from "./attribution";
+import { channelOf, describeSource, sourceOf } from "./attribution";
 
 const site = "www.webvisit360.com";
 const at = (path: string) => `https://www.webvisit360.com${path}`;
@@ -32,5 +32,31 @@ describe("sourceOf", () => {
     expect(describeSource(sourceOf(at("/?fbclid=123"), "", site)!)).toMatch(/^Facebook ·/);
     expect(describeSource(sourceOf(at("/"), "https://zalec.webvisit360.com/", site)!)).toMatch(/^virtualni sprehod zalec\.webvisit360\.com ·/);
     expect(describeSource(sourceOf(at("/"), "https://www.example.org/blog", site)!)).toMatch(/^example\.org ·/);
+  });
+});
+
+describe("channelOf", () => {
+  const ch = (path: string, ref = "") => channelOf(sourceOf(at(path), ref, site));
+
+  test("ads win, then campaign tags, then the referrer", () => {
+    expect(ch("/?gclid=abc&utm_source=newsletter", "https://www.google.com/")).toBe("Google Ads");
+    expect(ch("/?msclkid=abc")).toBe("Microsoft Ads");
+    expect(ch("/?utm_source=newsletter&utm_medium=email", "https://www.google.com/")).toBe("Campaign: newsletter");
+  });
+
+  test("known sources get short names; search engines are marked", () => {
+    expect(ch("/", "https://www.google.si/")).toBe("Google search");
+    expect(ch("/", "https://www.bing.com/")).toBe("Bing search");
+    expect(ch("/", "https://gemini.google.com/")).toBe("Gemini");
+    expect(ch("/", "https://chatgpt.com/")).toBe("ChatGPT");
+    expect(ch("/?fbclid=1")).toBe("Facebook");
+    expect(ch("/", "https://l.instagram.com/")).toBe("Instagram");
+  });
+
+  test("our own tours, other sites, direct and unknown", () => {
+    expect(ch("/", "https://zalec.webvisit360.com/")).toBe("Webvisit360 tour");
+    expect(ch("/", "https://www.example.org/blog")).toBe("example.org");
+    expect(ch("/")).toBe("Direct");
+    expect(channelOf(null)).toBe("Unknown");
   });
 });

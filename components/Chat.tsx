@@ -9,7 +9,7 @@ import type { Copy } from "@/lib/i18n";
 import { readNdjson } from "@/lib/ndjson";
 import { CONTACT } from "@/lib/contact";
 import { track } from "@vercel/analytics";
-import { visitSource } from "@/lib/attribution";
+import { visitChannel, visitSource } from "@/lib/attribution";
 
 
 type Props = {
@@ -149,7 +149,7 @@ export default function Chat({ copy: t, context, from, onClose, onPrivacy, hidde
       });
       const json = (await res.json().catch(() => ({}))) as { ok?: boolean; mailto?: string };
       if (json.ok) {
-        track("Enquiry sent", { about: from ? "place" : "general" });
+        track("Enquiry sent", { about: from ? "place" : "general", channel: visitChannel() });
         setStatus("sent");
         setProposal(null);
         return;

@@ -9,6 +9,7 @@ import { copy, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/useLang";
 import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
 import { asVisitor, isNearby, type Visitor } from "@/lib/visitor";
+import { visitChannel } from "@/lib/attribution";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
 import type { Focus, GlobeApi, Look } from "./Globe";
 import { peakFor, selectFlight, type Pov } from "@/lib/flight";
@@ -233,7 +234,7 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
       setSelectedId(id);
       setEnquiry(false);
       setViewed((v) => (v.includes(t.name) ? v : [...v, t.name]));
-      track("Place opened", { kind: t.kind, type: t.type });
+      track("Place opened", { place: `${t.kind}/${t.type}`, channel: visitChannel() });
       setSearchOpen(false);
       if (t.lat != null && t.lng != null) {
         const from = globeApi.current?.pov();
@@ -249,12 +250,12 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
 
   /** Into a place's 360° tour (counted as a key click in the analytics). */
   const enterTour = (t: Tour) => {
-    track("Tour entered", { kind: t.kind, type: t.type });
+    track("Tour entered", { place: `${t.kind}/${t.type}`, channel: visitChannel() });
     setTourOpen(true);
   };
   /** The enquiry chat, noting where it was opened from: the header, a place, the About story or a link. */
   const openEnquiry = useCallback((from: "header" | "place" | "story" | "link", place: string | null = null) => {
-    track("Enquiry opened", { from });
+    track("Enquiry opened", { from, channel: visitChannel() });
     setChatFrom(place);
     setEnquiry(true);
   }, []);
