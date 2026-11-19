@@ -101,7 +101,7 @@
   "slug": "nazarje",
   "name": "Nazarje",
   "kind": "obcina",
-  "url": "https://nazarje-virtualtour.vercel.app",
+  "url": "https://nazarje.webvisit360.com",
   "lat": 46.3197,
   "lng": 14.9469,
   "title": "NAZARJE-360",
@@ -157,7 +157,7 @@
    "PANORAMA-NAZARJE-ZAHOD4"
   ],
   "startPano": "panorama_EC89BEB8_F423_5BD9_41E6_36C6F8238E3B",
-  "cover": "https://nazarje-virtualtour.vercel.app/media/panorama_EC89BEB8_F423_5BD9_41E6_36C6F8238E3B_hd_t.jpg"
+  "cover": "https://nazarje.webvisit360.com/media/panorama_EC89BEB8_F423_5BD9_41E6_36C6F8238E3B_hd_t.jpg"
  },
  {
   "slug": "luce",
@@ -321,7 +321,7 @@
   "slug": "sredisce",
   "name": "Središče ob Dravi",
   "kind": "obcina",
-  "url": "https://sredisce-virtualtour.vercel.app",
+  "url": "https://sredisce-ob-dravi.webvisit360.com",
   "lat": 46.3956,
   "lng": 16.2683,
   "title": "SREDIŠČE OB DRAVI-360",
@@ -401,7 +401,7 @@
    "Župnijska-cerkev-sv-Duha-5 copy"
   ],
   "startPano": "panorama_584891AE_4365_EA3B_41CA_2DB08206C6CB",
-  "cover": "https://sredisce-virtualtour.vercel.app/media/panorama_584891AE_4365_EA3B_41CA_2DB08206C6CB_hd_t.jpg"
+  "cover": "https://sredisce-ob-dravi.webvisit360.com/media/panorama_584891AE_4365_EA3B_41CA_2DB08206C6CB_hd_t.jpg"
  },
  {
   "slug": "zalec",
@@ -644,7 +644,7 @@
   "slug": "solcava",
   "name": "Solčava",
   "kind": "obcina",
-  "url": "https://solcava-virtualtour.vercel.app",
+  "url": "https://solcava.webvisit360.com",
   "lat": 46.4194,
   "lng": 14.6928,
   "title": "SOLČAVA-360",
@@ -685,7 +685,7 @@
    "VAS-SOLCAVA-2 copy"
   ],
   "startPano": "panorama_306A1DAC_232E_FE2C_41B7_735EEDAFDE96",
-  "cover": "https://solcava-virtualtour.vercel.app/media/panorama_306A1DAC_232E_FE2C_41B7_735EEDAFDE96_hd_t.jpg"
+  "cover": "https://solcava.webvisit360.com/media/panorama_306A1DAC_232E_FE2C_41B7_735EEDAFDE96_hd_t.jpg"
  },
  {
   "slug": "trbovlje",
@@ -985,7 +985,7 @@
   "slug": "kozje",
   "name": "Kozje",
   "kind": "obcina",
-  "url": "https://kozje-virtualtour.vercel.app",
+  "url": "https://kozje.webvisit360.com",
   "lat": 46.0733,
   "lng": 15.5517,
   "title": "KOZJE-VIRTUALNI SPREHOD-360",
@@ -1078,7 +1078,7 @@
    "KOZJE-KROZISCE-1 copy"
   ],
   "startPano": "panorama_09688A6A_1ADD_2CBC_41B8_110508FA1A3A",
-  "cover": "https://kozje-virtualtour.vercel.app/media/panorama_09688A6A_1ADD_2CBC_41B8_110508FA1A3A_hd_t.jpg"
+  "cover": "https://kozje.webvisit360.com/media/panorama_09688A6A_1ADD_2CBC_41B8_110508FA1A3A_hd_t.jpg"
  },
  {
   "slug": "tabor",
