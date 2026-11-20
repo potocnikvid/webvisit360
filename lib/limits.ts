@@ -5,11 +5,20 @@ import { MAX_VISITOR_MESSAGES } from "./chat";
 
 type Kind = "chat" | "send" | "conversation" | "message";
 
+/**
+ * True when Upstash Redis credentials are set. Accepts both namings: Upstash's own
+ * (UPSTASH_REDIS_REST_*) and the KV_REST_API_* names the Vercel Marketplace integration
+ * sets; Redis.fromEnv() reads either.
+ */
+export const redisConfigured = () =>
+  !!(process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL) &&
+  !!(process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN);
+
 let limiters: Record<Kind, Ratelimit> | null = null;
 let warned = false;
 
 function get(): Record<Kind, Ratelimit> | null {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (!redisConfigured()) {
     if (!warned) console.warn("Upstash Redis is not configured: chat and enquiry rate limits are off.");
     warned = true;
     return null;

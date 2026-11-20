@@ -33,3 +33,19 @@ test("an Upstash failure lets the visitor through and is logged", async () => {
   delete process.env.UPSTASH_REDIS_REST_URL;
   delete process.env.UPSTASH_REDIS_REST_TOKEN;
 });
+
+test("Redis counts as configured with either Upstash's or Vercel's variable names", async () => {
+  const { redisConfigured } = await import("./limits");
+  const keys = ["UPSTASH_REDIS_REST_URL", "UPSTASH_REDIS_REST_TOKEN", "KV_REST_API_URL", "KV_REST_API_TOKEN"];
+  const saved = Object.fromEntries(keys.map((k) => [k, process.env[k]]));
+  keys.forEach((k) => delete process.env[k]);
+  expect(redisConfigured()).toBe(false);
+  process.env.KV_REST_API_URL = "https://x.upstash.io";
+  process.env.KV_REST_API_TOKEN = "t";
+  expect(redisConfigured()).toBe(true);
+  delete process.env.KV_REST_API_TOKEN;
+  expect(redisConfigured()).toBe(false);
+  process.env.UPSTASH_REDIS_REST_TOKEN = "t";
+  expect(redisConfigured()).toBe(true);
+  keys.forEach((k) => (saved[k] === undefined ? delete process.env[k] : (process.env[k] = saved[k])));
+});
