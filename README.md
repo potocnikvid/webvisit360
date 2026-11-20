@@ -43,6 +43,15 @@ is logged).
    and optionally `ENQUIRY_TO`. Later verify `webvisit360.com` in Resend and set `ENQUIRY_FROM`.
 3. Vercel Marketplace: add Upstash Redis to the `webvisit` project.
 
+## Tour visits
+
+The 3DVista tours (`*.webvisit360.com`) ping `/api/tour-visit` once when they open. Each visit is
+counted per month in Upstash Redis, with no cookies or IPs stored, only the tour and the referring site.
+The counter is off until Upstash is connected (owner setup step 3). Read the numbers in the Upstash
+console's Data Browser: `wv360:tours:<YYYY-MM>` (visits per tour) and
+`wv360:tourrefs:<YYYY-MM>:<tour id>` (visits per referring site). Vercel Web Analytics is not used
+for the tours: on the Hobby plan its 50,000 monthly events are shared with this site.
+
 The only contact the site shows is in `lib/contact.ts` (info@webvisit360.com and the company
 details). Visitors' fallback emails go there too; personal addresses never reach the browser.
 

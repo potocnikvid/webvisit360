@@ -964,6 +964,12 @@ html:has(.doc), body:has(.doc) { height: auto; overflow: auto; }
   color: var(--snow); text-decoration: none; background: var(--glass); border: 1px solid var(--line);
 }
 .doc__chips a:hover { border-color: var(--amber); color: var(--ember); }
+.embed { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; max-width: 760px; }
+.embed__code {
+  width: 100%; resize: vertical; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line);
+  background: rgba(8, 18, 48, .6); color: #c9d3ea; font: 12.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.embed__code:focus { outline: 2px solid var(--amber); outline-offset: 1px; }
 .doc__tags li { padding: 5px 10px; border-radius: 6px; font-size: 13.5px; background: rgba(147, 163, 196, .12); color: #d5ddef; }
 .doc__towns { columns: 3 220px; column-gap: 28px; margin: 0; padding: 0; list-style: none; }
 .doc__towns li { break-inside: avoid; padding: 5px 0; font-size: 15px; color: #c9d3ea; }

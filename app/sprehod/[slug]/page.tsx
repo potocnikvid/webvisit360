@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import DocShell from "@/components/DocShell";
+import EmbedCode from "@/components/EmbedCode";
 import JsonLd from "@/components/JsonLd";
+import { embedCode, embeddable } from "@/lib/embed";
 import { nearestTo, slugify } from "@/lib/catalog";
 import { copy } from "@/lib/i18n";
 import { ENQUIRY_PATH, breadcrumbLd, catalog, mapPath, pageMeta, placeLd, placePath, townPath, typeLabel } from "@/lib/seo";
@@ -90,6 +92,17 @@ export default async function Page({ params }: Props) {
               <li key={h}>{h}</li>
             ))}
           </ul>
+        </section>
+      )}
+
+      {embeddable(t.url) && (
+        <section>
+          <h2>Vdelajte sprehod na svojo stran</h2>
+          <p className="doc__lead">
+            Kopirajte kodo in jo prilepite na svojo spletno stran: obiskovalci se bodo sprehodili kar pri vas, brez
+            odhajanja s strani.
+          </p>
+          <EmbedCode code={embedCode(t, placePath(p))} />
         </section>
       )}
 
