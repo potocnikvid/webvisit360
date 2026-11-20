@@ -7,7 +7,7 @@ import type { PlaceType, Tour, ToursFile } from "@/lib/types";
 import { MAIN_TYPES, PLACE_TYPES, compact, fmt } from "@/lib/types";
 import { copy, type Lang } from "@/lib/i18n";
 import { useLang } from "@/lib/useLang";
-import { CONTACT, TRUSTED_BADGE } from "@/lib/contact";
+import { CONTACT, SOCIAL, TRUSTED_BADGE } from "@/lib/contact";
 import { asVisitor, isNearby, type Visitor } from "@/lib/visitor";
 import { visitChannel } from "@/lib/attribution";
 import { countWithin, frameView, nearest } from "@/lib/nearby";
@@ -743,9 +743,9 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
         <a href="/o-nas" onClick={aboutLink}>{t.nav.about}</a>
         <a className="footer__all" href="/sprehodi">{t.footer.allTours}</a>
         <a className="footer__mail" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-        <a href="https://www.facebook.com/Webvisit360" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.instagram.com/webvisit360" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://kuula.co/profile/WEBVISIT360" target="_blank" rel="noopener">Kuula</a>
+        {SOCIAL.map((s) => (
+          <a key={s.name} href={s.url} target="_blank" rel="noopener">{s.name}</a>
+        ))}
         <button onClick={() => setPrivacyOpen(true)}>{t.footer.privacy}</button>
       </footer>
 

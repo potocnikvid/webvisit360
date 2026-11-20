@@ -17,7 +17,7 @@ export const CONTACT = {
 /** The studio's public profiles (footer, structured data). */
 export const SOCIAL = [
   { name: "Facebook", url: "https://www.facebook.com/Webvisit360" },
-  { name: "Instagram", url: "https://www.instagram.com/webvisit360" },
+  { name: "Instagram", url: "https://www.instagram.com/webvisit360.fphoto" },
   { name: "Kuula", url: "https://kuula.co/profile/WEBVISIT360" },
 ] as const;
 
