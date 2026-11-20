@@ -26,7 +26,7 @@ to pretend to be somewhere, e.g. `DEV_VISITOR=46.2397,15.2677,Celje,SI`.
 | `RESEND_API_KEY` | emailing enquiries | from resend.com |
 | `ENQUIRY_TO` | where enquiries are delivered (server-only, never shown on the site) | defaults to info@webvisit360.com |
 | `ENQUIRY_FROM` | sender | default `Webvisit360 <onboarding@resend.dev>`; after verifying the domain e.g. `Webvisit360 <ponudbe@webvisit360.com>` |
-| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | rate limits | set by the Upstash integration on Vercel |
+| `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (or `KV_REST_API_URL`, `KV_REST_API_TOKEN`) | rate limits, tour visit counts | set by the Upstash integration on Vercel; either naming works |
 | `CHAT_DAILY_CONVERSATIONS` | global daily chat cap | default `500` |
 | `DEV_VISITOR` | local testing only | `lat,lng,City,CC` |
 

@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { redisConfigured } from "./limits";
 import { toursFile } from "./seo";
 
 /**
@@ -53,7 +54,7 @@ let redis: Redis | null | undefined;
 let warned = false;
 function db(): Redis | null {
   if (redis !== undefined) return redis;
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  if (!redisConfigured()) {
     if (!warned) console.warn("Upstash Redis is not configured: tour visits are not counted.");
     warned = true;
     return null;
