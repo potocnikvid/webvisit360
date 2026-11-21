@@ -236,6 +236,19 @@ test("arrival shows a standout tour ready to open, and the About button under th
   expect(await screen.findByRole("dialog", { name: t.tour.label("Grand Plaza Hotel Ljubljana") })).toBeTruthy();
 });
 
+test("the About button waits for the numbers, so nothing pushes it down", async () => {
+  let release!: () => void;
+  const ready = new Promise<void>((r) => (release = r));
+  vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+    if (url.includes("tours.json")) { await ready; return Response.json(tours); }
+    return Response.json({ features: [] });
+  }));
+  const { container } = render(<Experience visitor={null} />);
+  expect(container.querySelector(".hero .why")).toBeNull();
+  release();
+  await waitFor(() => expect(container.querySelector(".hero .stats + .why")).toBeTruthy());
+});
+
 test("moving the map switches to map mode until the visitor asks for the intro again", async () => {
   const { container } = render(<Experience visitor={null} />);
   await screen.findByRole("button", { name: "pin Občina Žalec" });

@@ -535,11 +535,14 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
           </dl>
         )}
         {/* Right after the numbers: whoever read this far and wants more. On phones it carries a
-            small Trusted badge (on wider screens the badge sits in the corner). */}
-        <button className="why" onClick={openStory}>
-          <img className="why__badge" src={TRUSTED_BADGE.src} alt="" width={128} height={32} />
-          {whyText}
-        </button>
+            small Trusted badge (on wider screens the badge sits in the corner). It arrives with
+            the numbers and rises in last, so nothing above it pushes it down. */}
+        {stats && (
+          <button className="why" onClick={openStory}>
+            <img className="why__badge" src={TRUSTED_BADGE.src} alt="" width={128} height={32} />
+            {whyText}
+          </button>
+        )}
       </section>
 
       <div className="finder">
