@@ -19,8 +19,9 @@ export const slPlural = (n: number, one: string, two: string, few: string, many:
 const sl = {
   brandHome: "Webvisit360 domov",
   wantOwn: "Želim svoj sprehod",
-  nav: { about: "O nas" },
+  nav: { about: "O nas", allTours: "Vsi sprehodi" },
   langSwitch: { label: "EN", aria: "Preklopi v angleščino" },
+  menu: { open: "Odpri meni", close: "Zapri meni", lang: "English" },
   hero: {
     title: "Sprehodite se, preden pridete.",
     text: "360° virtualni sprehodi za občine, hotele, vinarje in trgovine. Vsaka lučka na zemljevidu je resničen sprehod, ki ga lahko odprete takoj.",
@@ -61,8 +62,6 @@ const sl = {
   near: {
     kicker: "Najbližje vam",
     others: (n: number) => `in še ${n} ${slPlural(n, "sprehod", "sprehoda", "sprehodi", "sprehodov")} v 25 km`,
-    precise: "Uporabi mojo natančno lokacijo",
-    denied: "Lokacije ni bilo mogoče pridobiti.",
   },
   panel: {
     close: "Zapri",
@@ -76,9 +75,10 @@ const sl = {
     enter: "Vstopite v sprehod",
     wantThis: "Želim takšen sprehod",
     openInMaps: "Odpri v Google Zemljevidih ↗",
+    page: "Več o sprehodu →",
   },
   panoramas: (n: number) => `${n} ${slPlural(n, "panorama", "panorami", "panorame", "panoram")}`,
-  tour: { label: (name: string) => `Sprehod: ${name}`, back: "← Nazaj na zemljevid" },
+  tour: { label: (name: string) => `Sprehod: ${name}`, back: "← Nazaj na zemljevid", backShort: "← Zemljevid" },
   loading: "Nalagam zemljevid…",
   viewer: {
     preview: "predogled",
@@ -133,8 +133,9 @@ export type Copy = typeof sl;
 const en: Copy = {
   brandHome: "Webvisit360 home",
   wantOwn: "Get your own tour",
-  nav: { about: "About" },
+  nav: { about: "About", allTours: "All tours" },
   langSwitch: { label: "SL", aria: "Switch to Slovenian" },
+  menu: { open: "Open menu", close: "Close menu", lang: "Slovenščina" },
   hero: {
     title: "Walk around before you arrive.",
     text: "360° virtual tours for municipalities, hotels, wineries and shops. Every light on the map is a real tour you can open right now.",
@@ -174,8 +175,6 @@ const en: Copy = {
   near: {
     kicker: "Closest to you",
     others: (n: number) => `and ${n} more ${n === 1 ? "tour" : "tours"} within 25 km`,
-    precise: "Use my exact location",
-    denied: "Couldn't get your location.",
   },
   panel: {
     close: "Close",
@@ -189,9 +188,10 @@ const en: Copy = {
     enter: "Enter the tour",
     wantThis: "I want a tour like this",
     openInMaps: "Open in Google Maps ↗",
+    page: "More about this tour →",
   },
   panoramas: (n: number) => `${n} ${n === 1 ? "panorama" : "panoramas"}`,
-  tour: { label: (name: string) => `Tour: ${name}`, back: "← Back to the map" },
+  tour: { label: (name: string) => `Tour: ${name}`, back: "← Back to the map", backShort: "← Map" },
   loading: "Loading the map…",
   viewer: {
     preview: "preview",

@@ -212,18 +212,27 @@ a { color: inherit; text-decoration: none; }
 }
 .looks button:hover { color: var(--snow); }
 .looks button.is-on { background: var(--snow); color: var(--night); }
+/* Imagery credit: small, bottom-left, in the strip under the finder. */
 .credit {
-  position: absolute; right: 12px; bottom: 34px; z-index: 4; margin: 0;
-  font-size: 10.5px; color: rgba(147, 163, 196, .7); pointer-events: none;
+  position: absolute; left: var(--gutter); bottom: 6px; z-index: 4; margin: 0;
+  font-size: 9.5px; line-height: 1.2; letter-spacing: .01em; color: rgba(147, 163, 196, .55); pointer-events: none;
 }
 .nav { display: flex; align-items: center; gap: 22px; font-size: 15px; color: var(--mist); }
 .nav a:hover { color: var(--snow); }
+/* "All tours" needs the room beside the centred look switch; narrower screens have it in the footer. */
+@media (max-width: 1059px) { .nav__link--all { display: none; } }
 
 .hero {
   position: absolute; z-index: 4; left: var(--gutter); top: 112px;
   max-width: 470px; pointer-events: none;
   transition: opacity .4s, transform .4s;
 }
+/* Arrival: the hero's lines settle in one after another. */
+.hero > * { animation: rise-in .7s cubic-bezier(.2, .8, .2, 1) both; }
+.hero > :nth-child(2) { animation-delay: .08s; }
+.hero > :nth-child(3) { animation-delay: .16s; }
+.hero > :nth-child(4) { animation-delay: .24s; }
+@keyframes rise-in { from { opacity: 0; transform: translateY(12px); } }
 .hero .hero__title {
   margin: 0 0 14px; font: 600 clamp(30px, 4.2vw, 52px)/1.04 var(--display);
   letter-spacing: -.035em; text-wrap: balance;
@@ -262,14 +271,63 @@ a { color: inherit; text-decoration: none; }
   color: var(--mist); border: 1px solid var(--line); background: transparent;
 }
 .lang:hover { color: var(--snow); }
+/* Phones: one button for the header's links and the language switch (see .menu).
+   Its three bars fold into an × while the menu is open. */
+.menu-toggle {
+  display: none; align-items: center; justify-content: center; width: 34px; height: 30px; padding: 0;
+  border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--mist);
+  transition: color .2s, border-color .2s, background .2s;
+}
+.menu-toggle:hover, .menu-toggle.is-open { color: var(--snow); border-color: rgba(238, 242, 248, .4); }
+.menu-toggle.is-open { background: rgba(147, 163, 196, .14); }
+.menu-toggle__bars { position: relative; width: 15px; height: 11px; }
+.menu-toggle__bars i {
+  position: absolute; left: 0; width: 100%; height: 1.6px; border-radius: 2px; background: currentColor;
+  transition: transform .32s cubic-bezier(.65, 0, .35, 1), opacity .2s, top .32s cubic-bezier(.65, 0, .35, 1);
+}
+.menu-toggle__bars i:nth-child(1) { top: 0; }
+.menu-toggle__bars i:nth-child(2) { top: 4.7px; }
+.menu-toggle__bars i:nth-child(3) { top: 9.4px; }
+.menu-toggle.is-open .menu-toggle__bars i:nth-child(1) { top: 4.7px; transform: rotate(45deg); }
+.menu-toggle.is-open .menu-toggle__bars i:nth-child(2) { opacity: 0; transform: scaleX(.2); }
+.menu-toggle.is-open .menu-toggle__bars i:nth-child(3) { top: 4.7px; transform: rotate(-45deg); }
+.menu-scrim { position: fixed; inset: 0; z-index: 8; pointer-events: none; }
+.menu-scrim.is-open { pointer-events: auto; }
+/* Grows out of the button's corner; the items follow a beat later, one after another. */
+.menu {
+  position: absolute; z-index: 9; top: 58px; right: var(--gutter);
+  display: flex; flex-direction: column; min-width: 190px; padding: 6px; border-radius: 14px;
+  background: rgba(10, 20, 52, .96); border: 1px solid var(--line);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .4);
+  transform-origin: calc(100% - 150px) 0;
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.94);
+  transition: opacity .16s ease, transform .2s ease, visibility 0s .2s;
+}
+.menu.is-open {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .2s ease, transform .34s cubic-bezier(.2, .9, .3, 1.12), visibility 0s;
+}
+.menu > * { opacity: 0; transform: translateY(-4px); transition: opacity .12s, transform .12s; }
+.menu.is-open > * { opacity: 1; transform: none; transition: opacity .25s, transform .3s cubic-bezier(.2, .8, .2, 1); }
+.menu.is-open > :nth-child(1) { transition-delay: .05s; }
+.menu.is-open > :nth-child(2) { transition-delay: .09s; }
+.menu.is-open > :nth-child(3) { transition-delay: .13s; }
+.menu a, .menu button {
+  padding: 12px 14px; border-radius: 9px; border: 0; background: none; text-align: left;
+  color: var(--snow); font: 500 15px/1.2 var(--text);
+}
+.menu a:hover, .menu button:hover, .menu a:active, .menu button:active { background: rgba(147, 163, 196, .12); }
+.menu button { color: var(--mist); border-top: 1px solid var(--line); border-radius: 0 0 9px 9px; margin-top: 4px; }
+@media (min-width: 761px) { .menu, .menu-scrim { display: none; } }
 
 /* "Closest to you" card, stacked above the search box */
 .near {
   padding: 14px 16px 12px; border-radius: 14px;
   background: rgba(10, 20, 52, .82); border: 1px solid var(--line);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  animation: panel-in .45s cubic-bezier(.2, .8, .2, 1);
+  animation: rise-in .55s cubic-bezier(.2, .8, .2, 1) both;
 }
+.cards > :nth-child(2) { animation-delay: .1s; }
 .near__kicker { margin: 0 0 4px; color: var(--amber); font-size: 13px; font-weight: 500; }
 .near__title { margin: 0; font: 600 19px/1.15 var(--display); letter-spacing: -.02em; }
 .near__others { margin: 4px 0 0; color: var(--mist); font-size: 13.5px; }
@@ -277,7 +335,6 @@ a { color: inherit; text-decoration: none; }
 .near__actions .btn { padding: 9px 14px; font-size: 14px; }
 .near__precise { color: var(--mist); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; }
 .near__precise:hover { color: var(--snow); }
-.near__precise--alone { align-self: flex-start; padding: 4px 2px; }
 
 .swatch { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .swatch--obcina { background: var(--ember); box-shadow: 0 0 0 2px rgba(255, 210, 122, .3); }
@@ -449,7 +506,11 @@ a { color: inherit; text-decoration: none; }
   padding: 13px 18px; border-radius: 12px; border: 1px solid transparent; font-weight: 600; font-size: 15px;
   transition: background .15s, transform .15s;
 }
-.btn:active { transform: translateY(1px); }
+.btn:active { transform: translateY(1px) scale(.98); }
+/* Taps answer with a small press instead of the browser's grey flash. */
+a, button { -webkit-tap-highlight-color: transparent; }
+.chip, .filter-toggle, .why, .lang, .menu-toggle, .explore-back { transition: transform .15s, background .2s, border-color .2s, color .2s; }
+.chip:active, .filter-toggle:active, .menu-toggle:active, .explore-back:active, .why:active { transform: scale(.96); }
 .btn--amber { background: var(--amber); color: #1b1203; }
 .btn--amber:hover { background: var(--ember); }
 .btn--ghost { background: transparent; border-color: rgba(238, 242, 248, .28); color: var(--snow); }
@@ -473,7 +534,11 @@ a { color: inherit; text-decoration: none; }
 .pano--full { position: absolute; inset: 0; }
 .gtour iframe { height: 100%; }
 /* Google's place card sits top-left, so our controls go top-centre for Google tours. */
-.tour--google .tour__bar { left: 50%; transform: translateX(-50%); }
+/* The tours keep their own logo top-left and their controls top-right and along the bottom,
+   so our way back sits top-centre, where they leave room. */
+.tour__bar { left: 50%; transform: translateX(-50%); white-space: nowrap; animation: tour-bar-in .5s .3s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes tour-bar-in { from { opacity: 0; transform: translate(-50%, -10px); } }
+.tour__back--short { display: none; }
 .gtour__maps {
   position: absolute; z-index: 3; top: 14px; right: 64px; padding: 8px 12px; border-radius: 10px;
   font-size: 13.5px; white-space: nowrap; color: var(--snow); background: rgba(8, 18, 48, .8); border: 1px solid var(--line);
@@ -485,6 +550,12 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 760px) {
   .tour--google .tour__bar { top: auto; bottom: 34px; }
+  /* Phones: a short "← Map" between the tour's logo and its icons. */
+  .tour__bar { top: 10px; }
+  .tour__bar .btn { padding: 8px 13px; font-size: 13.5px; }
+  .tour__back { display: none; }
+  .tour__back--short { display: inline; }
+  .tour__name { display: none; }
   .gtour__maps { display: none; }
 }
 
@@ -543,10 +614,14 @@ a { color: inherit; text-decoration: none; }
   .app:has(.cards > .near:not(.featured)) .hero .why { display: none; }
 }
 @media (max-width: 899px) {
+  /* The row runs edge to edge (the finder itself is at most 480 px wide), so a card that
+     doesn't fit is cut by the screen's edge, never in the middle of it. */
   .cards {
     flex-direction: row; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
-    margin: 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter);
+    width: 100vw; margin: 0 0 0 calc(-1 * var(--gutter)); padding: 2px var(--gutter);
+    scroll-padding-inline: var(--gutter);
   }
+  .cards::after { content: ""; flex: 0 0 1px; } /* keeps the right gutter after the last card */
   .cards::-webkit-scrollbar { display: none; }
   .cards > * { flex: 0 0 min(84%, 340px); scroll-snap-align: start; scroll-margin-left: var(--gutter); }
 }
@@ -573,9 +648,9 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 899px) {
   /* In the row: a small square picture in the corner instead of a banner. */
-  .featured { padding-right: 88px; }
+  .featured { padding-right: 80px; }
   .featured__media {
-    position: absolute; right: 12px; top: 12px; width: 64px; height: 64px; margin: 0;
+    position: absolute; right: 11px; top: 11px; width: 58px; height: 58px; margin: 0;
     aspect-ratio: auto; border: 1px solid var(--line); border-radius: 10px;
   }
   .featured__360 { left: 4px; bottom: 4px; padding: 3px 4px; font-size: 9px; }
@@ -768,19 +843,41 @@ a { color: inherit; text-decoration: none; }
 
 .about__person p { font-size: 17px; }
 
-.about__faq { display: grid; gap: 8px; max-width: 780px; }
-
-.about__faq details { border: 1px solid var(--line); border-radius: 12px; background: rgba(20, 36, 79, .35); }
-
-.about__faq summary { padding: 14px 18px; cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
-
+/* Questions: the row lights up on hover, the + turns into an ×, and the answer slides open
+   (and closed, where the browser can animate <details>; elsewhere it still fades in). */
+.about__faq { display: grid; gap: 8px; max-width: 780px; interpolate-size: allow-keywords; }
+.about__faq details {
+  border: 1px solid var(--line); border-radius: 12px; background: rgba(20, 36, 79, .35);
+  transition: border-color .3s, background-color .3s, box-shadow .3s, transform .25s cubic-bezier(.2, .8, .2, 1);
+}
+.about__faq details:hover { border-color: rgba(246, 169, 59, .35); transform: translateX(3px); }
+.about__faq details[open] {
+  border-color: rgba(246, 169, 59, .55); background-color: rgba(20, 36, 79, .78) !important;
+  box-shadow: 0 10px 30px rgba(4, 9, 26, .35); transform: none;
+}
+.about__faq summary {
+  padding: 14px 18px; cursor: pointer; font-weight: 500; list-style: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  border-radius: 12px; transition: color .2s;
+}
+.about__faq summary:hover, .about__faq details[open] summary { color: var(--ember); }
+.about__faq summary:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 .about__faq summary::-webkit-details-marker { display: none; }
-
-.about__faq summary::after { content: "+"; color: var(--amber); font-size: 20px; line-height: 1; }
-
-.about__faq details[open] summary::after { content: "–"; }
-
+.about__faq summary::after {
+  content: "+"; flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  color: var(--amber); font-size: 20px; line-height: 1; background: rgba(246, 169, 59, .1);
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1), background .25s;
+}
+.about__faq summary:hover::after { background: rgba(246, 169, 59, .2); }
+.about__faq details[open] summary::after { transform: rotate(135deg); background: rgba(246, 169, 59, .22); }
+.about__faq details::details-content {
+  block-size: 0; overflow: hidden;
+  transition: block-size .4s cubic-bezier(.2, .8, .2, 1), content-visibility .4s allow-discrete;
+}
+.about__faq details[open]::details-content { block-size: auto; }
 .about__faq details p { padding: 0 18px 16px; margin: 0; }
+.about__faq details[open] p { animation: faq-in .45s cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes faq-in { from { opacity: 0; transform: translateY(-6px); } }
 
 .about__cta {
   margin-top: clamp(36px, 6vw, 64px); padding: clamp(28px, 5vw, 48px) !important; border-radius: 20px; text-align: center;
@@ -803,24 +900,31 @@ a { color: inherit; text-decoration: none; }
 /* ---------- mobile ---------- */
 @media (max-width: 760px) {
   .nav a { display: none; }
+  .nav .lang { display: none; }
+  .menu-toggle { display: inline-flex; }
   /* The style switch sits under the top bar; the hero starts below it. */
   .looks { top: 66px; z-index: 5; }
   .looks button { padding: 6px 10px; font-size: 12.5px; }
   .credit { display: none; }
-  .hero { top: 118px; right: var(--gutter); }
-  .hero p { font-size: 15px; }
-  .stats { margin-top: 16px; }
+  /* Phones: the hero is a compact block (title, numbers, "why"), so the map shows through.
+     The intro line goes; the pins and the "closest to you" card make the point on their own. */
+  .hero { top: 106px; right: var(--gutter); }
+  .hero .hero__title { font-size: clamp(25px, 7.2vw, 32px); margin-bottom: 0; }
+  .hero p { display: none; }
+  .stats { margin-top: 10px; }
   .panel, .chat {
     top: auto; left: 0; right: 0; bottom: 0; width: 100%;
     max-height: 78vh; border-radius: 18px 18px 0 0; border-bottom: 0;
     animation-name: sheet-in;
   }
   .panel__media { aspect-ratio: 16 / 10; }
-  .panel__actions { flex-direction: row; }
+  .panel__actions { flex-direction: row; flex-wrap: wrap; }
   .panel__actions .btn { flex: 1; padding: 12px 10px; font-size: 14px; }
+  /* The text links go under the two buttons, each on its own line. */
+  .panel__actions .panel__link { flex-basis: 100%; text-align: center; }
   .has-panel .finder, .has-chat .finder { display: none; }
   .chat { max-height: 86vh; height: 86vh; }
-  .finder { bottom: 48px; }
+  .finder { bottom: 40px; gap: 8px; }
   .footer { left: var(--gutter); right: var(--gutter); max-width: none; justify-content: flex-start; bottom: 8px; font-size: 11px; gap: 2px 10px; }
   .footer__mail { display: none; }
   /* Always one line on phones: the links stay whole, the company name gives way (…). */
@@ -829,11 +933,23 @@ a { color: inherit; text-decoration: none; }
   .footer > span { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .footer__full { display: none; }
   .footer__short { display: inline; }
-  .why { margin-top: 14px; padding: 8px 12px 8px 10px; gap: 10px; }
-  .why__badge { display: block; }
+  .why { margin-top: 12px; padding: 6px 12px 6px 8px; gap: 9px; border-radius: 12px; }
+  .why__badge { display: block; width: 66px; padding-right: 8px; }
   .corner { display: none; }
-  .why__text b { font-size: 13px; }
-  .why__text span { font-size: 12px; }
+  .why__text b { font-size: 13.5px; }
+  .why__text span { display: none; }
+  .why__go { margin-left: 2px; font-size: 17px; }
+  /* Arrival cards: tighter, and the standout card's picture is the "show on map" button. */
+  .near { padding: 11px 13px 11px; border-radius: 13px; }
+  .near__kicker { font-size: 12px; margin-bottom: 2px; }
+  .near__title { font-size: 17px; }
+  .near__others { font-size: 12.5px; margin-top: 2px; }
+  .near__actions { margin-top: 9px; }
+  .near__actions .btn { padding: 7px 12px; font-size: 13.5px; border-radius: 10px; }
+  .featured .near__precise { display: none; }
+  .cards > * { flex-basis: min(80%, 320px); }
+  .search input { padding: 11px 14px; }
+  .filter-toggle { border-radius: 12px; }
   .story {
     background:
       radial-gradient(60% 18% at 50% 17%, rgba(8, 18, 48, .1), rgba(8, 18, 48, .5) 100%),
@@ -861,13 +977,13 @@ a { color: inherit; text-decoration: none; }
   .filter-toggle { display: inline-flex; }
   .search-row { order: -1; } /* bottom of the (reversed) finder: the chips open above it */
   .app:not(.filters-open) .chips { display: none; }
-  .filters-open .cards, .filters-open .near__precise--alone { display: none; }
+  .filters-open .cards { display: none; }
   .filters-open .hero { opacity: 0; visibility: hidden; transform: translateY(-8px); }
   .filters-open .chips { animation: sheet-in .25s ease-out; }
   /* Map mode: once the visitor moves the map, only the header, the search and the filter
      button stay; "Show intro" brings the rest back. */
   .exploring .hero { opacity: 0; visibility: hidden; transform: translateY(-8px); }
-  .exploring .cards, .exploring .near__precise--alone { display: none; }
+  .exploring .cards { display: none; }
   .explore-back { display: inline-flex; }
   /* Searching: the search fills the screen, input on top (clear of the keyboard), results below. */
   .searching .search {
@@ -888,15 +1004,13 @@ a { color: inherit; text-decoration: none; }
 /* Short phones have no room for both: the hero keeps its place under the top bar and the
    style switch appears in map mode, once the intro has stepped aside. */
 @media (max-width: 760px) and (max-height: 699px) {
-  .hero { top: 76px; }
+  .hero { top: 72px; }
   .app:not(.exploring) .looks { display: none; }
 }
 /* Short phones: the hero keeps its title, numbers and "why" button; the intro line goes. */
 @media (max-width: 760px) and (max-height: 650px) {
-  .hero p { display: none; }
-  .hero .hero__title { margin-bottom: 0; }
-  .stats { margin-top: 12px; }
-  .why { margin-top: 10px; }
+  .stats { margin-top: 8px; }
+  .why { margin-top: 8px; }
 }
 /* The narrowest phones: the header button may wrap onto two lines so everything fits. */
 @media (max-width: 360px) {
@@ -914,8 +1028,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- plain pages: all tours, towns, places (crawlable; see app/sprehodi, app/sprehod) ---------- */
-/* The map locks page scrolling; these pages scroll normally. */
-html:has(.doc), body:has(.doc) { height: auto; overflow: auto; }
+/* The map locks page scrolling; these pages scroll normally. The window scrolls, not <body>,
+   so the sticky header has the window to stick to. */
+html:has(.doc) { height: auto; overflow: auto; }
+body:has(.doc) { height: auto; overflow: visible; }
 .doc {
   min-height: 100vh; display: flex; flex-direction: column;
   background:
@@ -928,9 +1044,14 @@ html:has(.doc), body:has(.doc) { height: auto; overflow: auto; }
 .doc :where(a:not(.btn)):hover { text-decoration-color: var(--ember); }
 .doc .brand, .doc .btn, .doc__nav a { text-decoration: none; }
 .doc .brand { color: var(--snow); }
+/* The header stays on top while the page scrolls, over a blurred strip of what's under it.
+   The bar spans the window; its content lines up with the 1120 px column below. */
 .doc__top {
+  position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  padding: 18px var(--gutter); max-width: 1120px; width: 100%; margin: 0 auto;
+  padding: 14px max(var(--gutter), calc((100% - 1120px) / 2 + var(--gutter)));
+  background: rgba(8, 18, 48, .72); border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 .doc__nav { display: flex; gap: 20px; font-size: 15px; }
 .doc__nav a { color: var(--mist); }
@@ -993,5 +1114,10 @@ html:has(.doc), body:has(.doc) { height: auto; overflow: auto; }
 .doc__foot a { color: var(--mist); }
 @media (max-width: 560px) {
   .doc__nav { gap: 14px; font-size: 14px; }
+  .doc__top { padding-top: 12px; padding-bottom: 12px; }
   .doc__actions .btn { flex: 1 1 100%; }
+}
+/* Narrow phones: the sticky header stays one row; the logo already leads to the map. */
+@media (max-width: 480px) {
+  .doc__nav-map { display: none; }
 }
