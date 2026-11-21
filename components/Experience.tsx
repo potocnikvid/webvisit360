@@ -20,6 +20,7 @@ import GoogleTour from "./GoogleTour";
 import NearYou from "./NearYou";
 import FeaturedTour from "./FeaturedTour";
 import { featured } from "@/lib/featured";
+import { buildCatalog } from "@/lib/catalog";
 import Chat from "./Chat";
 import PrivacyNotice from "./PrivacyNotice";
 
@@ -95,8 +96,9 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
   const [filtersOpen, setFiltersOpen] = useState(false);
   // Phones only: once the visitor moves the map, the hero and cards step aside (map mode).
   const [exploring, setExploring] = useState(false);
+  // Phones only: the header's links and language switch fold into one menu button.
+  const [menuOpen, setMenuOpen] = useState(false);
   const [visitor, setVisitor] = useState(ipVisitor);
-  const [locationError, setLocationError] = useState(false);
   const { lang, switchLang } = useLang();
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
@@ -175,6 +177,10 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
   const all = data?.items ?? [];
   const byId = useMemo(() => new Map(all.map((t) => [t.id, t])), [all]);
   const selected = selectedId ? byId.get(selectedId) ?? null : null;
+  // Each own tour's crawlable page (/sprehod/…), built from the same list as the static pages,
+  // so the map panel links to the page the server generated for it.
+  const pages = useMemo(() => buildCatalog(all).placeById, [all]);
+  const selectedPage = selected ? pages.get(selected.id) ?? null : null;
 
   const results = useMemo(() => {
     const q = norm(query.trim());
@@ -349,24 +355,19 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
     }
   };
 
-  // Ask the browser for the exact position. On arrival this is quiet: if the visitor says no
-  // (or never answers) we simply keep the approximate, IP-based location.
-  const requestPrecise = useCallback((quiet: boolean) => {
+  // Ask the browser for the exact position, quietly, on arrival: if the visitor says no (or
+  // never answers) we simply keep the approximate, IP-based location.
+  const requestPrecise = useCallback(() => {
     navigator.geolocation?.getCurrentPosition(
       (pos) =>
         // No country: a precise position counts as "near" by distance (see isNearby).
         setVisitor({ lat: pos.coords.latitude, lng: pos.coords.longitude, city: null, country: null, precise: true }),
-      () => {
-        if (quiet) return;
-        setLocationError(true);
-        window.setTimeout(() => setLocationError(false), 4000);
-      },
+      () => {},
       { maximumAge: 10 * 60_000, timeout: 20_000 },
     );
   }, []);
-  const usePreciseLocation = () => requestPrecise(false);
 
-  useEffect(() => requestPrecise(true), [requestPrecise]);
+  useEffect(() => requestPrecise(), [requestPrecise]);
 
   // Re-centre when the exact position arrives, unless the visitor is already busy looking at
   // a tour, searching or chatting.
@@ -386,7 +387,8 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      if (privacyOpen) setPrivacyOpen(false);
+      if (menuOpen) setMenuOpen(false);
+      else if (privacyOpen) setPrivacyOpen(false);
       else if (tourOpen) setTourOpen(false);
       else if (searchOpen) setSearchOpen(false);
       else if (filtersOpen) setFiltersOpen(false);
@@ -395,7 +397,7 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [privacyOpen, tourOpen, searchOpen, filtersOpen, selectedId, close, closeStory, enquiry]);
+  }, [menuOpen, privacyOpen, tourOpen, searchOpen, filtersOpen, selectedId, close, closeStory, enquiry]);
 
   const stats = data?.stats;
   const totalViews = stats ? stats.kuulaViews + (stats.googleViews ?? 0) : 0;
@@ -474,15 +476,39 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
           ))}
         </div>
         <nav className="nav">
+          <a className="nav__link nav__link--all" href="/sprehodi">{t.nav.allTours}</a>
           <a className="nav__link" href="/o-nas" onClick={aboutLink}>{t.nav.about}</a>
           <button className="lang" onClick={switchLang} aria-label={t.langSwitch.aria}>
             {t.langSwitch.label}
+          </button>
+          <button
+            className={`menu-toggle ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? t.menu.close : t.menu.open}
+            aria-expanded={menuOpen}
+            aria-controls="site-menu"
+          >
+            <span className="menu-toggle__bars" aria-hidden>
+              <i />
+              <i />
+              <i />
+            </span>
           </button>
           <button className="btn btn--ghost" onClick={() => { setSelectedId(null); openEnquiry("header"); }}>
             {t.wantOwn}
           </button>
         </nav>
       </header>
+
+      {/* Always in the page, so it can animate both ways; inert while closed. */}
+      <div className={`menu-scrim ${menuOpen ? "is-open" : ""}`} onClick={() => setMenuOpen(false)} />
+      <nav className={`menu ${menuOpen ? "is-open" : ""}`} id="site-menu" aria-hidden={!menuOpen} inert={!menuOpen}>
+        <a href="/sprehodi">{t.nav.allTours}</a>
+        <a href="/o-nas" onClick={(e) => { setMenuOpen(false); aboutLink(e); }}>{t.nav.about}</a>
+        <button onClick={() => { setMenuOpen(false); switchLang(); }} aria-label={t.langSwitch.aria}>
+          {t.menu.lang}
+        </button>
+      </nav>
 
       <section className="hero" aria-labelledby="hero-title">
         {/* On /o-nas the story's title is the page's one main heading. */}
@@ -597,11 +623,6 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
             {t.showIntro}
           </button>
         )}
-        {!visitor?.precise && !origin && !selected && !enquiry && (
-          <button className="near__precise near__precise--alone" onClick={usePreciseLocation}>
-            {locationError ? t.near.denied : t.near.precise}
-          </button>
-        )}
         {!selected && !enquiry && (near[0] || standout) && (
           <div className="cards">
             {near[0] && (
@@ -610,9 +631,7 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
                 km={near[0].km}
                 others={nearOthers}
                 copy={t}
-                locationError={locationError}
                 onOpen={() => select(near[0].tour.id)}
-                onPrecise={visitor?.precise ? undefined : usePreciseLocation}
               />
             )}
             {standout && (
@@ -679,6 +698,11 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
               <button className="btn btn--ghost" onClick={() => { setSelectedId(null); openEnquiry("place", selected.name); }}>
                 {t.panel.wantThis}
               </button>
+              {selectedPage && (
+                <a className="panel__link panel__link--center" href={`/sprehod/${selectedPage.slug}`}>
+                  {t.panel.page}
+                </a>
+              )}
               {selected.mapsUrl && (
                 <a className="panel__link panel__link--center" href={selected.mapsUrl} target="_blank" rel="noopener">
                   {t.panel.openInMaps}
@@ -721,10 +745,11 @@ export default function Experience({ visitor: givenVisitor = null, initialStory 
             <iframe src={selected.url} title={selected.name} allow="fullscreen; xr-spatial-tracking; gyroscope; accelerometer" allowFullScreen />
           )}
           <div className="tour__bar">
-            <button className="btn btn--dark" onClick={() => setTourOpen(false)}>
-              {t.tour.back}
+            <button className="btn btn--dark" onClick={() => setTourOpen(false)} aria-label={t.tour.back.replace("← ", "")}>
+              <span className="tour__back">{t.tour.back}</span>
+              <span className="tour__back tour__back--short" aria-hidden>{t.tour.backShort}</span>
             </button>
-            <span>{selected.name}</span>
+            <span className="tour__name">{selected.name}</span>
           </div>
         </div>
       )}

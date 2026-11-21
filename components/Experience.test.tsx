@@ -85,9 +85,21 @@ test("looking at a tour mid-chat keeps the conversation", async () => {
   await waitFor(() => expect(screen.getByText("We run a hotel.")).toBeTruthy());
 });
 
-test("a visitor with no known location can still ask for their exact location", async () => {
+test("a tour's panel links to its own page", async () => {
   render(<Experience visitor={null} />);
-  expect(await screen.findByRole("button", { name: t.near.precise })).toBeTruthy();
+  fireEvent.click(await screen.findByRole("button", { name: "pin Občina Žalec" }));
+  const link = await screen.findByRole("link", { name: t.panel.page });
+  expect(link.getAttribute("href")).toBe("/sprehod/obcina-zalec");
+});
+
+test("the header menu leads to all tours and closes on Escape", async () => {
+  render(<Experience visitor={null} />);
+  fireEvent.click(await screen.findByRole("button", { name: t.menu.open }));
+  const menu = document.getElementById("site-menu")!;
+  expect(menu.getAttribute("aria-hidden")).toBe("false");
+  expect(within(menu).getByRole("link", { name: t.nav.allTours }).getAttribute("href")).toBe("/sprehodi");
+  fireEvent.keyDown(window, { key: "Escape" });
+  await waitFor(() => expect(menu.getAttribute("aria-hidden")).toBe("true"));
 });
 
 test("asks for the exact location on arrival and marks the visitor there", async () => {
@@ -101,7 +113,6 @@ test("asks for the exact location on arrival and marks the visitor there", async
 test("if the visitor refuses, the approximate location is used, quietly", async () => {
   render(<Experience visitor={ZALEC_IP} />);
   await waitFor(() => expect(props()?.you).toMatchObject({ lat: 46.25, lng: 15.16, precise: false, label: t.you.around }));
-  expect(screen.queryByText(t.near.denied)).toBeNull();
 });
 
 test("the approximate location comes from /api/visitor (the page itself is static)", async () => {
@@ -114,7 +125,7 @@ test("the approximate location comes from /api/visitor (the page itself is stati
 
 test("no marker when the location is unknown", async () => {
   render(<Experience visitor={null} />);
-  await screen.findByRole("button", { name: t.near.precise });
+  await screen.findByRole("button", { name: "pin Občina Žalec" });
   expect(props()?.you ?? null).toBeNull();
 });
 

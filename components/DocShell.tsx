@@ -17,7 +17,7 @@ export default function DocShell({ crumbs, children }: { crumbs: Crumb[]; childr
           </span>
         </a>
         <nav className="doc__nav">
-          <a href="/">Zemljevid</a>
+          <a className="doc__nav-map" href="/">Zemljevid</a>
           <a href="/sprehodi">Vsi sprehodi</a>
           <a href="/o-nas">O nas</a>
         </nav>
