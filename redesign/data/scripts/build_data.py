@@ -56,7 +56,8 @@ def scene_highlights(labels, drop_words):
 items = []
 for t in json.load(open(D + "tours3dv.json")):
     lat, lng = t["lat"], t["lng"]
-    if t["slug"] == "inotherm": lat, lng = 45.8159, 15.8580
+    # Inotherm's HQ and showroom: Prigorica 98, Dolenja vas (Ribnica), not Zagreb.
+    if t["slug"] == "inotherm": lat, lng = 45.715331, 14.746237
     drop = [t["name"].upper(), t["name"], t["slug"].replace("-", " "), "obcina", "občina", "panorama"]
     items.append({"id": t["slug"], "kind": "obcina" if t["kind"] == "obcina" else "business", "source": "3dvista",
         "name": ("Občina " + t["name"]) if t["kind"] == "obcina" else t["name"], "place": t["name"],
@@ -80,6 +81,8 @@ for k in json.load(open(D + "kuula.json")):
         lat, lng = jitter(cid, *T[o]); place = o; approx = True
     else:
         lat = lng = None
+    if cid == "7KXS1":  # the same Inotherm showroom (the geocoder matched the name to Zagreb)
+        lat, lng, place, approx = 45.715331, 14.746237, "Ribnica", False
     name = RENAME.get(cid) or nice(k["name"])
     items.append({"id": cid, "kind": "business", "source": "kuula", "name": name, "place": place,
         "lat": lat, "lng": lng, "approx": approx, "url": k["url"] + "?logo=1&info=1&fs=1&vr=0&thumbs=1",

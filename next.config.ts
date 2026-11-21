@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       { source: "/contact", destination: "/?povprasevanje", permanent: true },
       { source: "/photo", destination: "/", permanent: true },
       { source: "/video", destination: "/", permanent: true },
+      // Inotherm was placed in Zagreb by mistake; its HQ and showroom are in Prigorica (Ribnica).
+      // The Inotherm tour's credit and shared embed codes still link the old address.
+      { source: "/sprehod/inotherm-zagreb", destination: "/sprehod/inotherm-ribnica", permanent: true },
     ];
   },
 };

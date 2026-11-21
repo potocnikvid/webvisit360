@@ -2,11 +2,11 @@
  "stats": {
   "obcine": 17,
   "business": 150,
-  "placed": 795,
+  "placed": 794,
   "scenes": 4424,
   "kuulaViews": 4565897,
-  "google": 688,
-  "googlePhotos": 13205,
+  "google": 687,
+  "googlePhotos": 13171,
   "googleViews": 57976962
  },
  "items": [
@@ -575,8 +575,8 @@
    "source": "3dvista",
    "name": "Inotherm",
    "place": "Inotherm",
-   "lat": 45.8159,
-   "lng": 15.858,
+   "lat": 45.715331,
+   "lng": 14.746237,
    "approx": false,
    "url": "https://inotherm.webvisit360.com",
    "cover": "https://inotherm.webvisit360.com/media/panorama_FCAF2C2C_C1F2_AC10_41E7_D250F813DF76_hd_t.jpg",
@@ -586,7 +586,12 @@
    "highlights": [
     "Vrata +"
    ],
-   "type": "podjetja"
+   "type": "podjetja",
+   "gmaps": {
+    "url": "https://www.google.com/maps/@45.71612113855536,14.74570060263283,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDrqNPnxQE!2e10",
+    "embed": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDrqNPnxQE!2m2!1d45.71612113855536!2d14.74570060263283!3f0!4f0!5f0.78",
+    "scenes": 34
+   }
   },
   {
    "id": "gszalec",
@@ -900,9 +905,9 @@
    "kind": "business",
    "source": "kuula",
    "name": "Inotherm",
-   "place": "Zagreb",
-   "lat": 45.8147974,
-   "lng": 15.8413447,
+   "place": "Ribnica",
+   "lat": 45.7133743,
+   "lng": 14.7487602,
    "approx": false,
    "url": "https://kuula.co/share/collection/7KXS1?logo=1&info=1&fs=1&vr=0&thumbs=1",
    "cover": "https://files.kuula.io/668b-9bb2-a3ca-e167/01-cover.jpg",
@@ -4379,26 +4384,6 @@
    "views": null,
    "highlights": [],
    "type": "trgovine"
-  },
-  {
-   "id": "g-JXcLtIN_nZEcR4Y-KgHahzsk",
-   "kind": "google",
-   "source": "google",
-   "name": "Inotherm d.o.o.",
-   "place": "Dolenja vas",
-   "category": "Dobavitelj vrat",
-   "address": "Prigorica 98, 1331 Dolenja vas",
-   "lat": 45.715331,
-   "lng": 14.746237,
-   "approx": false,
-   "url": "https://www.google.com/maps/embed?pb=!4v1!6m8!1m7!1sCIHM0ogKEICAgIDrqNPnxQE!2m2!1d45.71612113855536!2d14.74570060263283!3f0!4f0!5f0.78",
-   "mapsUrl": "https://www.google.com/maps/@45.71612113855536,14.74570060263283,3a,75y,90t/data=!3m4!1e1!3m2!1sCIHM0ogKEICAgIDrqNPnxQE!2e10",
-   "cover": "https://lh3.googleusercontent.com/gps-cs/AAjk-CMkE83FlUsNeK6i1hzJscqzryn3VsJkHzZ2V1BNviMT1aDFndi1vpnQC2aFoalOGMcPP6B_kMXCGn0W-LK97eM8P_kzPT_EAfhxnHRlTHHNDGykKcxiiLw3P_465pWJ6lMYeKNbzA=w2048-h1024-k-no",
-   "pano": true,
-   "scenes": 34,
-   "views": null,
-   "highlights": [],
-   "type": "podjetja"
   },
   {
    "id": "g-JBUJVCYB2b0cR-ApX8yGhluQ",
