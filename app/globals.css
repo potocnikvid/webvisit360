@@ -232,6 +232,8 @@ a { color: inherit; text-decoration: none; }
 .hero > :nth-child(2) { animation-delay: .08s; }
 .hero > :nth-child(3) { animation-delay: .16s; }
 .hero > :nth-child(4) { animation-delay: .24s; }
+/* "Zakaj 360°?" comes last: it rises in after the numbers, then pulses (see .why). */
+.hero > .why { animation-delay: .45s, 2.6s; }
 @keyframes rise-in { from { opacity: 0; transform: translateY(12px); } }
 .hero .hero__title {
   margin: 0 0 14px; font: 600 clamp(30px, 4.2vw, 52px)/1.04 var(--display);
@@ -567,7 +569,9 @@ a, button { -webkit-tap-highlight-color: transparent; }
   background: linear-gradient(rgba(246, 169, 59, .16), rgba(246, 169, 59, .08)), var(--glass);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   transition: border-color .2s, transform .2s, background .2s;
-  animation: why-glow 2.4s ease-out 2.2s 2; /* two soft pulses once the globe has landed */
+  /* Rises in with the rest of the hero (its own animation would otherwise replace that one),
+     then two soft pulses once the globe has landed. */
+  animation: rise-in .7s cubic-bezier(.2, .8, .2, 1) both, why-glow 2.4s ease-out 2;
 }
 .why:hover { border-color: var(--amber); transform: translateY(-1px); background: linear-gradient(rgba(246, 169, 59, .24), rgba(246, 169, 59, .12)), var(--glass); }
 @keyframes why-glow {
@@ -624,6 +628,10 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .cards::after { content: ""; flex: 0 0 1px; } /* keeps the right gutter after the last card */
   .cards::-webkit-scrollbar { display: none; }
   .cards > * { flex: 0 0 min(84%, 340px); scroll-snap-align: start; scroll-margin-left: var(--gutter); }
+  /* In the row the cards share one height, so each card's button sits at its bottom edge and
+     the buttons line up, whatever is written above them. */
+  .cards > .near { display: flex; flex-direction: column; }
+  .cards > .near > .near__actions { margin-top: auto; padding-top: 10px; }
 }
 .featured { position: relative; overflow: hidden; }
 .featured__media {
@@ -941,10 +949,16 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .why__go { margin-left: 2px; font-size: 17px; }
   /* Arrival cards: tighter, and the standout card's picture is the "show on map" button. */
   .near { padding: 11px 13px 11px; border-radius: 13px; }
+  .featured { padding-right: 80px; } /* room for the picture in the corner (the line above resets it) */
   .near__kicker { font-size: 12px; margin-bottom: 2px; }
-  .near__title { font-size: 17px; }
+  .near__title {
+    font-size: 17px;
+    /* Long names wrap to two lines at most, then end in "…". */
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+  }
   .near__others { font-size: 12.5px; margin-top: 2px; }
   .near__actions { margin-top: 9px; }
+  .cards > .near > .near__actions { margin-top: auto; padding-top: 9px; }
   .near__actions .btn { padding: 7px 12px; font-size: 13.5px; border-radius: 10px; }
   .featured .near__precise { display: none; }
   .cards > * { flex-basis: min(80%, 320px); }
