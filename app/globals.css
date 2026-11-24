@@ -1135,25 +1135,3 @@ body:has(.doc) { height: auto; overflow: visible; }
 @media (max-width: 480px) {
   .doc__nav-map { display: none; }
 }
-
-/* Private visits page (/obiski) */
-.visits__warn { padding: 12px 16px; border-radius: 12px; background: rgba(246, 169, 59, .12); border: 1px solid rgba(246, 169, 59, .4); color: var(--ember); }
-.visits__months { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 0 22px; font-size: 15px; }
-.visits__months b { font: 600 18px/1.2 var(--display); color: var(--snow); }
-.visits__months a { color: var(--mist); text-decoration: none; }
-.visits__months a:hover { color: var(--snow); }
-.visits__bars { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; height: 170px; margin: 0; padding: 0; list-style: none; }
-.visits__bars li a { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; padding-bottom: 22px; text-decoration: none; }
-.visits__bar { display: block; width: 100%; min-height: 2px; border-radius: 6px 6px 2px 2px; background: var(--horizon); }
-.visits__bars li[aria-current] .visits__bar { background: var(--amber); }
-.visits__bars li a:hover .visits__bar { background: var(--sky); }
-.visits__bar-n { order: -1; margin-bottom: 4px; font-size: 11.5px; color: var(--mist); white-space: nowrap; }
-.visits__bar-m { position: absolute; bottom: 0; font-size: 12px; color: var(--mist); }
-.visits__scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
-.visits__table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
-.visits__table th, .visits__table td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.visits__table thead th { color: var(--mist); font-weight: 500; font-size: 13px; background: var(--glass); }
-.visits__table tbody th, .visits__table thead th:first-child { text-align: left; font-weight: 500; }
-.visits__table tbody tr:last-child > * { border-bottom: 0; }
-.visits__table td.visits__refs, .visits__table thead th:last-child { text-align: left; color: var(--mist); font-size: 13.5px; font-variant-numeric: normal; }
-.visits__table .visits__page { font-size: 12px; color: var(--mist); }

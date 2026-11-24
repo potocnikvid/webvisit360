@@ -9,9 +9,11 @@ import { toursFile } from "./seo";
  * is not used for the tours on purpose: on the Hobby plan its 50,000 monthly events are shared
  * with webvisit360.com, and busy tours would pause the site's own analytics.
  *
- * Read them at /obiski (app/obiski/page.tsx, lib/tourStats.ts) or in the Upstash console:
+ * Read them in the admin app (admin.webvisit360.com, repo potocnikvid/webvisit360-admin) or in the
+ * Upstash console:
  *   wv360:tours:<YYYY-MM>            hash: tour id -> visits
  *   wv360:tourrefs:<YYYY-MM>:<id>    hash: referring site -> visits
+ *   wv360:tourdays:<YYYY-MM-DD>      hash: tour id -> visits that day (Slovenian time; since 2026-11-24)
  */
 
 /** Tour id by host, for every tour we host ourselves. */
@@ -50,6 +52,10 @@ export const isBot = (userAgent: string | null) => !userAgent || BOT.test(userAg
 
 export const monthKey = (d: Date) => d.toISOString().slice(0, 7);
 
+const DAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Ljubljana", year: "numeric", month: "2-digit", day: "2-digit" });
+/** The day in Slovenia, "YYYY-MM-DD", so daily charts break at local midnight. */
+export const dayKey = (d: Date) => DAY.format(d);
+
 let redis: Redis | null | undefined;
 let warned = false;
 function db(): Redis | null {
@@ -71,6 +77,7 @@ export async function countVisit(id: string, ref: string, now = new Date()): Pro
     const p = r.pipeline();
     p.hincrby(`wv360:tours:${month}`, id, 1);
     p.hincrby(`wv360:tourrefs:${month}:${id}`, ref, 1);
+    p.hincrby(`wv360:tourdays:${dayKey(now)}`, id, 1);
     await p.exec();
     return true;
   } catch (err) {
