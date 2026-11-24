@@ -28,6 +28,7 @@ to pretend to be somewhere, e.g. `DEV_VISITOR=46.2397,15.2677,Celje,SI`.
 | `ENQUIRY_FROM` | sender | default `Webvisit360 <onboarding@resend.dev>`; after verifying the domain e.g. `Webvisit360 <ponudbe@webvisit360.com>` |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` (or `KV_REST_API_URL`, `KV_REST_API_TOKEN`) | rate limits, tour visit counts | set by the Upstash integration on Vercel; either naming works |
 | `CHAT_DAILY_CONVERSATIONS` | global daily chat cap | default `500` |
+| `STATS_PASSWORD` | the private visits page, `/obiski` | any password; without it the page is a 404 |
 | `DEV_VISITOR` | local testing only | `lat,lng,City,CC` |
 
 Without `ANTHROPIC_API_KEY` or `RESEND_API_KEY` the site still works; the chat then offers a
@@ -42,14 +43,19 @@ is logged).
    verified, Resend only delivers to the account's own address); add `RESEND_API_KEY`,
    and optionally `ENQUIRY_TO`. Later verify `webvisit360.com` in Resend and set `ENQUIRY_FROM`.
 3. Vercel Marketplace: add Upstash Redis to the `webvisit` project.
+4. Choose a password for the visits page and add it as `STATS_PASSWORD` (Production):
+   `vercel env add STATS_PASSWORD production`, then redeploy.
 
 ## Tour visits
 
 The 3DVista tours (`*.webvisit360.com`) ping `/api/tour-visit` once when they open. Each visit is
 counted per month in Upstash Redis, with no cookies or IPs stored, only the tour and the referring site.
-The counter is off until Upstash is connected (owner setup step 3). Read the numbers in the Upstash
-console's Data Browser: `wv360:tours:<YYYY-MM>` (visits per tour) and
-`wv360:tourrefs:<YYYY-MM>:<tour id>` (visits per referring site). Vercel Web Analytics is not used
+The counter is off until Upstash is connected (owner setup step 3). Read the numbers at
+[/obiski](https://www.webvisit360.com/obiski) (password: `STATS_PASSWORD`, any user name): visits
+per month, per tour, and the referring sites. New tours appear there by themselves once they are
+in `public/data/tours.json`. The raw keys, for the Upstash console's Data Browser, are
+`wv360:tours:<YYYY-MM>` (visits per tour) and `wv360:tourrefs:<YYYY-MM>:<tour id>` (visits per
+referring site). Vercel Web Analytics is not used
 for the tours: on the Hobby plan its 50,000 monthly events are shared with this site.
 
 The only contact the site shows is in `lib/contact.ts` (info@webvisit360.com and the company
