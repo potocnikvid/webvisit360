@@ -9,7 +9,7 @@ vi.mock("@upstash/redis", () => ({
 process.env.UPSTASH_REDIS_REST_URL = "https://example.upstash.io";
 process.env.UPSTASH_REDIS_REST_TOKEN = "test";
 const { POST } = await import("./route");
-const { referrerHost, tourIdForOrigin } = await import("@/lib/tourVisits");
+const { dayKey, referrerHost, tourIdForOrigin } = await import("@/lib/tourVisits");
 
 const CHROME = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/131.0 Safari/537.36";
 const ping = (origin: string | null, body = "", ua: string | null = CHROME) =>
@@ -50,6 +50,14 @@ describe("tour visit pings", () => {
     expect(res.headers.get("access-control-allow-origin")).toBe("https://solcava.webvisit360.com");
     expect(hincrby).toHaveBeenCalledWith(`wv360:tours:${month}`, "solcava", 1);
     expect(hincrby).toHaveBeenCalledWith(`wv360:tourrefs:${month}:solcava`, "google.com", 1);
+    expect(hincrby).toHaveBeenCalledWith(`wv360:tourdays:${dayKey(new Date())}`, "solcava", 1);
+  });
+
+  test("days follow Slovenian time", () => {
+    expect(dayKey(new Date("2026-11-24T22:30:00Z"))).toBe("2026-11-24");
+    expect(dayKey(new Date("2026-11-24T23:30:00Z"))).toBe("2026-11-25");
+    expect(dayKey(new Date("2026-07-01T21:59:00Z"))).toBe("2026-07-01");
+    expect(dayKey(new Date("2026-07-01T22:01:00Z"))).toBe("2026-07-02");
   });
 
   test("ignores other sites, missing origins and bots", async () => {
