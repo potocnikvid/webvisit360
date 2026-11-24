@@ -31,6 +31,7 @@ describe("tour visit pings", () => {
   test("knows our tours by host, and nothing else", () => {
     expect(tourIdForOrigin("https://solcava.webvisit360.com")).toBe("solcava");
     expect(tourIdForOrigin("https://gssol.webvisit360.com")).toBe("gssol");
+    expect(tourIdForOrigin("https://gs-sentjur.webvisit360.com")).toBe("gs-sentjur");
     expect(tourIdForOrigin("http://solcava.webvisit360.com")).toBeNull();
     expect(tourIdForOrigin("https://evil.example")).toBeNull();
     expect(tourIdForOrigin(null)).toBeNull();

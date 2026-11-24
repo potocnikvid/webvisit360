@@ -20,6 +20,7 @@ TOURS = [
  ("inotherm","Inotherm","business","https://inotherm.webvisit360.com",None,None),
  ("gszalec","GŠ Žalec","business","https://gszalec.webvisit360.com",46.2514,15.1650),
  ("gssol","GŠ Slavka Osterca Ljutomer","business","https://gssol.webvisit360.com",46.5208,16.1975),
+ ("gs-sentjur","GŠ skladateljev Ipavcev Šentjur","business","https://gs-sentjur.webvisit360.com",46.2234,15.3980),
  ("grand-plaza","Grand Plaza Hotel Ljubljana","business","https://grandplazahotel.webvisit360.com",46.0583,14.5031),
 ]
 UA={"User-Agent":"Mozilla/5.0"}

@@ -1,9 +1,9 @@
 {
  "stats": {
   "obcine": 17,
-  "business": 150,
-  "placed": 794,
-  "scenes": 4424,
+  "business": 151,
+  "placed": 795,
+  "scenes": 4464,
   "kuulaViews": 4565897,
   "google": 687,
   "googlePhotos": 13171,
@@ -646,6 +646,30 @@
     "Učilnica za violino",
     "Učilnica za petje",
     "Učilnica za trobento"
+   ],
+   "type": "javno"
+  },
+  {
+   "id": "gs-sentjur",
+   "kind": "business",
+   "source": "3dvista",
+   "name": "GŠ skladateljev Ipavcev Šentjur",
+   "place": "Šentjur",
+   "lat": 46.2234,
+   "lng": 15.398,
+   "url": "https://gs-sentjur.webvisit360.com",
+   "cover": "https://gs-sentjur.webvisit360.com/media/panorama_D62E7BEC_C146_66D6_41E6_5FCFD4D5697D_hd_t.jpg",
+   "pano": true,
+   "scenes": 40,
+   "views": null,
+   "highlights": [
+    "Dvorana",
+    "Vhod",
+    "Hodniki",
+    "Stopnišče",
+    "Dvigalo",
+    "Učilnice",
+    "Okolica šole"
    ],
    "type": "javno"
   },
