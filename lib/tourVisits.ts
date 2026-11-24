@@ -9,7 +9,7 @@ import { toursFile } from "./seo";
  * is not used for the tours on purpose: on the Hobby plan its 50,000 monthly events are shared
  * with webvisit360.com, and busy tours would pause the site's own analytics.
  *
- * Read the numbers in the Upstash console (Data Browser):
+ * Read them at /obiski (app/obiski/page.tsx, lib/tourStats.ts) or in the Upstash console:
  *   wv360:tours:<YYYY-MM>            hash: tour id -> visits
  *   wv360:tourrefs:<YYYY-MM>:<id>    hash: referring site -> visits
  */
